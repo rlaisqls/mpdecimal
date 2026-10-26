@@ -1,0 +1,15 @@
+[package]
+name = "systest"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+# Not a member of a workspace of the root crate, whose Cargo.toml is written
+# by c2rust/install.py.
+[workspace]
+
+[dependencies]
+mpdecimal = { path = ".." }
+
+[features]
+test-hooks = ["mpdecimal/test-hooks"]
