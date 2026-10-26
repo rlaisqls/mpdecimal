@@ -1,10 +1,10 @@
 use crate::common::*;
-use crate::shim::mpd_c2rust_assert_fail;
-use crate::mpalloc::mpd_free;
 use crate::constants::mpd_moduli;
+use crate::difradix2::fnt_dif2;
+use crate::mpalloc::mpd_free;
 use crate::numbertheory::_mpd_getkernel;
 use crate::numbertheory::_mpd_init_fnt_params;
-use crate::difradix2::fnt_dif2;
+use crate::shim::mpd_c2rust_assert_fail;
 use crate::transpose::transpose_pow2;
 unsafe extern "C" fn std_setmodulus(modnum: ::core::ffi::c_int, umod: *mut mpd_uint_t) {
     *umod = *(&raw const mpd_moduli as *const mpd_uint_t).offset(modnum as isize);
@@ -40,7 +40,8 @@ pub unsafe extern "C" fn six_step_fnt(
     };
     let log2n: mpd_size_t = mpd_bsr(n) as mpd_size_t;
     let C: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
-    let R: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
+    let R: mpd_size_t =
+        (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
     if transpose_pow2(a, R, C) == 0 {
         return 0 as ::core::ffi::c_int;
     }
@@ -130,7 +131,8 @@ pub unsafe extern "C" fn six_step_fnt(
     };
     let log2n: mpd_size_t = mpd_bsr(n) as mpd_size_t;
     let C: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
-    let R: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
+    let R: mpd_size_t =
+        (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
     if transpose_pow2(a, R, C) == 0 {
         return 0 as ::core::ffi::c_int;
     }
@@ -220,7 +222,8 @@ pub unsafe extern "C" fn inv_six_step_fnt(
     };
     let log2n: mpd_size_t = mpd_bsr(n) as mpd_size_t;
     let C: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
-    let R: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
+    let R: mpd_size_t =
+        (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
     tparams = _mpd_init_fnt_params(C, 1 as ::core::ffi::c_int, modnum);
     if tparams.is_null() {
         return 0 as ::core::ffi::c_int;
@@ -310,7 +313,8 @@ pub unsafe extern "C" fn inv_six_step_fnt(
     };
     let log2n: mpd_size_t = mpd_bsr(n) as mpd_size_t;
     let C: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
-    let R: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
+    let R: mpd_size_t =
+        (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
     tparams = _mpd_init_fnt_params(C, 1 as ::core::ffi::c_int, modnum);
     if tparams.is_null() {
         return 0 as ::core::ffi::c_int;

@@ -1,8 +1,8 @@
 use crate::common::*;
-use crate::shim::mpd_c2rust_assert_fail;
+use crate::difradix2::fnt_dif2;
 use crate::mpalloc::mpd_free;
 use crate::numbertheory::_mpd_init_fnt_params;
-use crate::difradix2::fnt_dif2;
+use crate::shim::mpd_c2rust_assert_fail;
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn std_fnt(

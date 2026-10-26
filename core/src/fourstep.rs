@@ -1,10 +1,10 @@
 use crate::common::*;
-use crate::shim::mpd_c2rust_assert_fail;
 use crate::constants::mpd_moduli;
 use crate::numbertheory::_mpd_getkernel;
 use crate::numbertheory::_mpd_init_w3table;
-use crate::sixstep::six_step_fnt;
+use crate::shim::mpd_c2rust_assert_fail;
 use crate::sixstep::inv_six_step_fnt;
+use crate::sixstep::six_step_fnt;
 unsafe extern "C" fn std_setmodulus(modnum: ::core::ffi::c_int, umod: *mut mpd_uint_t) {
     *umod = *(&raw const mpd_moduli as *const mpd_uint_t).offset(modnum as isize);
 }

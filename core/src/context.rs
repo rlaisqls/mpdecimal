@@ -1,7 +1,7 @@
 use crate::common::*;
+use crate::mpalloc::MPD_MINALLOC;
 use crate::shim::mpd_c2rust_raise;
 use crate::shim::mpd_c2rust_stderr;
-use crate::mpalloc::MPD_MINALLOC;
 extern "C" {
     fn fprintf(stream: *mut FILE, format: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
     fn fputc(c: ::core::ffi::c_int, stream: *mut FILE) -> ::core::ffi::c_int;

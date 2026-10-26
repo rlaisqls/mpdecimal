@@ -1,12 +1,12 @@
 use crate::common::*;
-use crate::shim::mpd_c2rust_assert_fail;
-use crate::shim::mpd_c2rust_stderr;
-use crate::mpalloc::mpd_free;
-use crate::mpalloc::mpd_alloc;
-use crate::mpdecimal::mpd_uint_zero;
 use crate::constants::mpd_pow10;
 #[cfg(target_pointer_width = "64")]
 use crate::constants::mprime_rdx;
+use crate::mpalloc::mpd_alloc;
+use crate::mpalloc::mpd_free;
+use crate::mpdecimal::mpd_uint_zero;
+use crate::shim::mpd_c2rust_assert_fail;
+use crate::shim::mpd_c2rust_stderr;
 extern "C" {
     fn fprintf(stream: *mut FILE, format: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
     fn fputc(c: ::core::ffi::c_int, stream: *mut FILE) -> ::core::ffi::c_int;
@@ -168,23 +168,19 @@ unsafe extern "C" fn _mpd_divmod_pow10(
             }
             6 => {
                 *q = v.wrapping_div(1000000_u32) as mpd_uint_t;
-                *r =
-                    v.wrapping_sub((*q).wrapping_mul(1000000_u32)) as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(1000000_u32)) as mpd_uint_t;
             }
             7 => {
                 *q = v.wrapping_div(10000000_u32) as mpd_uint_t;
-                *r = v.wrapping_sub((*q).wrapping_mul(10000000_u32))
-                    as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(10000000_u32)) as mpd_uint_t;
             }
             8 => {
                 *q = v.wrapping_div(100000000_u32) as mpd_uint_t;
-                *r = v.wrapping_sub((*q).wrapping_mul(100000000_u32))
-                    as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(100000000_u32)) as mpd_uint_t;
             }
             9 => {
                 *q = v.wrapping_div(1000000000_u32) as mpd_uint_t;
-                *r = v.wrapping_sub((*q).wrapping_mul(1000000000_u32))
-                    as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(1000000000_u32)) as mpd_uint_t;
             }
             _ => {}
         }
@@ -248,11 +244,7 @@ pub unsafe extern "C" fn _mpd_baseadd(
     carry
 }
 #[cfg_attr(feature = "test-hooks", no_mangle)]
-pub unsafe extern "C" fn _mpd_baseaddto(
-    w: *mut mpd_uint_t,
-    u: *const mpd_uint_t,
-    n: mpd_size_t,
-) {
+pub unsafe extern "C" fn _mpd_baseaddto(w: *mut mpd_uint_t, u: *const mpd_uint_t, n: mpd_size_t) {
     let mut s: mpd_uint_t;
     let mut carry: mpd_uint_t = 0 as mpd_uint_t;
     let mut i: mpd_size_t;
@@ -368,11 +360,7 @@ pub unsafe extern "C" fn _mpd_basesub(
     }
 }
 #[cfg_attr(feature = "test-hooks", no_mangle)]
-pub unsafe extern "C" fn _mpd_basesubfrom(
-    w: *mut mpd_uint_t,
-    u: *const mpd_uint_t,
-    n: mpd_size_t,
-) {
+pub unsafe extern "C" fn _mpd_basesubfrom(w: *mut mpd_uint_t, u: *const mpd_uint_t, n: mpd_size_t) {
     let mut d: mpd_uint_t;
     let mut borrow: mpd_uint_t = 0 as mpd_uint_t;
     let mut i: mpd_size_t;
@@ -423,12 +411,7 @@ pub unsafe extern "C" fn _mpd_shortmul(
         if lo < carry {
             hi = hi.wrapping_add(1);
         }
-        _mpd_div_words_r(
-            &raw mut carry,
-            w.add(i) as *mut mpd_uint_t,
-            hi,
-            lo,
-        );
+        _mpd_div_words_r(&raw mut carry, w.add(i) as *mut mpd_uint_t, hi, lo);
         i = i.wrapping_add(1);
     }
     *w.add(i) = carry;
@@ -455,12 +438,7 @@ pub unsafe extern "C" fn _mpd_basemul(
         carry = 0 as mpd_uint_t;
         i = 0 as mpd_size_t;
         while i < m {
-            _mpd_mul_words(
-                &raw mut hi,
-                &raw mut lo,
-                *u.add(i),
-                *v.add(j),
-            );
+            _mpd_mul_words(&raw mut hi, &raw mut lo, *u.add(i), *v.add(j));
             lo = (*w.add(i.wrapping_add(j))).wrapping_add(lo);
             if lo < *w.add(i.wrapping_add(j)) {
                 hi = hi.wrapping_add(1);
@@ -503,13 +481,7 @@ pub unsafe extern "C" fn _mpd_shortdiv(
         if lo < *u.add(i) {
             hi = hi.wrapping_add(1);
         }
-        _mpd_div_words(
-            w.add(i) as *mut mpd_uint_t,
-            &raw mut rem,
-            hi,
-            lo,
-            v,
-        );
+        _mpd_div_words(w.add(i) as *mut mpd_uint_t, &raw mut rem, hi, lo, v);
         i = i.wrapping_sub(1);
     }
     rem
@@ -543,9 +515,8 @@ pub unsafe extern "C" fn _mpd_basedivmod(
         );
     };
     let m: mpd_size_t = sub_size_t(nplusm, n);
-    let d: mpd_uint_t = (MPD_RADIX as mpd_uint_t).wrapping_div(
-        (*vconst.add(n.wrapping_sub(1 as mpd_size_t))).wrapping_add(1 as mpd_uint_t),
-    );
+    let d: mpd_uint_t = (MPD_RADIX as mpd_uint_t)
+        .wrapping_div((*vconst.add(n.wrapping_sub(1 as mpd_size_t))).wrapping_add(1 as mpd_uint_t));
     if nplusm >= MPD_MINALLOC_MAX as mpd_size_t {
         u = mpd_alloc(
             nplusm.wrapping_add(1 as mpd_size_t),
@@ -571,9 +542,7 @@ pub unsafe extern "C" fn _mpd_basedivmod(
     while j != MPD_SIZE_MAX as mpd_size_t {
         rhat = _mpd_shortdiv(
             &raw mut w2 as *mut mpd_uint_t,
-            u.add(j)
-                .add(n)
-                .offset(-1_isize),
+            u.add(j).add(n).offset(-1_isize),
             2 as mpd_size_t,
             *v.add(n.wrapping_sub(1 as mpd_size_t)),
         );
@@ -589,17 +558,14 @@ pub unsafe extern "C" fn _mpd_basedivmod(
                 );
                 if w2[1_usize] <= rhat
                     && (w2[1_usize] != rhat
-                        || w2[0_usize]
-                            <= *u.add(j.wrapping_add(n).wrapping_sub(2 as mpd_size_t)))
-                    {
-                        break;
-                    }
+                        || w2[0_usize] <= *u.add(j.wrapping_add(n).wrapping_sub(2 as mpd_size_t)))
+                {
+                    break;
+                }
             }
             qhat = qhat.wrapping_sub(1 as mpd_uint_t);
             rhat = rhat.wrapping_add(*v.add(n.wrapping_sub(1 as mpd_size_t)));
-            if rhat < *v.add(n.wrapping_sub(1 as mpd_size_t))
-                || rhat >= MPD_RADIX as mpd_uint_t
-            {
+            if rhat < *v.add(n.wrapping_sub(1 as mpd_size_t)) || rhat >= MPD_RADIX as mpd_uint_t {
                 break;
             }
         }
@@ -625,13 +591,7 @@ pub unsafe extern "C" fn _mpd_basedivmod(
         *q.add(j) = qhat;
         if carry != 0 {
             *q.add(j) = (*q.add(j)).wrapping_sub(1 as mpd_uint_t);
-            _mpd_baseadd(
-                u.add(j),
-                u.add(j),
-                v,
-                n.wrapping_add(1 as mpd_size_t),
-                n,
-            );
+            _mpd_baseadd(u.add(j), u.add(j), v, n.wrapping_add(1 as mpd_size_t), n);
         }
         j = j.wrapping_sub(1);
     }
@@ -985,12 +945,7 @@ pub unsafe extern "C" fn _mpd_shortmul_c(
         if lo < carry {
             hi = hi.wrapping_add(1);
         }
-        _mpd_div_words_r(
-            &raw mut carry,
-            w.add(i) as *mut mpd_uint_t,
-            hi,
-            lo,
-        );
+        _mpd_div_words_r(&raw mut carry, w.add(i) as *mut mpd_uint_t, hi, lo);
         i = i.wrapping_add(1);
     }
     carry
@@ -1018,13 +973,7 @@ pub unsafe extern "C" fn _mpd_shortmul_b(
         if lo < carry {
             hi = hi.wrapping_add(1);
         }
-        _mpd_div_words(
-            &raw mut carry,
-            w.add(i) as *mut mpd_uint_t,
-            hi,
-            lo,
-            b,
-        );
+        _mpd_div_words(&raw mut carry, w.add(i) as *mut mpd_uint_t, hi, lo, b);
         i = i.wrapping_add(1);
     }
     carry
@@ -1052,13 +1001,7 @@ pub unsafe extern "C" fn _mpd_shortdiv_b(
         if lo < *u.add(i) {
             hi = hi.wrapping_add(1);
         }
-        _mpd_div_words(
-            w.add(i) as *mut mpd_uint_t,
-            &raw mut rem,
-            hi,
-            lo,
-            v,
-        );
+        _mpd_div_words(w.add(i) as *mut mpd_uint_t, &raw mut rem, hi, lo, v);
         i = i.wrapping_sub(1);
     }
     rem

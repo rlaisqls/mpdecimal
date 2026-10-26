@@ -2,111 +2,111 @@ use crate::common::*;
 use crate::context::mpd_addstatus_raise;
 use crate::io::mpd_qformat;
 use crate::io::mpd_qset_string;
-use crate::mpdecimal::mpd_qmaxcoeff;
-use crate::mpdecimal::mpd_qset_ssize;
-use crate::mpdecimal::mpd_qset_i32;
-use crate::mpdecimal::mpd_qset_uint;
-use crate::mpdecimal::mpd_qset_u32;
-use crate::mpdecimal::mpd_qset_i64;
-use crate::mpdecimal::mpd_qset_u64;
-use crate::mpdecimal::mpd_qsset_ssize;
-use crate::mpdecimal::mpd_qsset_i32;
-use crate::mpdecimal::mpd_qsset_uint;
-use crate::mpdecimal::mpd_qsset_u32;
-use crate::mpdecimal::mpd_qget_ssize;
-use crate::mpdecimal::mpd_qget_uint;
+use crate::mpdecimal::mpd_qabs;
 use crate::mpdecimal::mpd_qabs_uint;
-use crate::mpdecimal::mpd_qget_i32;
-use crate::mpdecimal::mpd_qget_u32;
-use crate::mpdecimal::mpd_qget_i64;
-use crate::mpdecimal::mpd_qget_u64;
+use crate::mpdecimal::mpd_qadd;
+use crate::mpdecimal::mpd_qadd_i32;
+use crate::mpdecimal::mpd_qadd_i64;
+use crate::mpdecimal::mpd_qadd_ssize;
+use crate::mpdecimal::mpd_qadd_u32;
+use crate::mpdecimal::mpd_qadd_u64;
+use crate::mpdecimal::mpd_qadd_uint;
+use crate::mpdecimal::mpd_qand;
+use crate::mpdecimal::mpd_qceil;
 use crate::mpdecimal::mpd_qcheck_nan;
 use crate::mpdecimal::mpd_qcheck_nans;
-use crate::mpdecimal::mpd_qfinalize;
+use crate::mpdecimal::mpd_qcmp;
+use crate::mpdecimal::mpd_qcompare;
+use crate::mpdecimal::mpd_qcompare_signal;
 use crate::mpdecimal::mpd_qcopy;
 use crate::mpdecimal::mpd_qcopy_abs;
 use crate::mpdecimal::mpd_qcopy_negate;
 use crate::mpdecimal::mpd_qcopy_sign;
-use crate::mpdecimal::mpd_qand;
-use crate::mpdecimal::mpd_qinvert;
-use crate::mpdecimal::mpd_qlogb;
-use crate::mpdecimal::mpd_qor;
-use crate::mpdecimal::mpd_qscaleb;
-use crate::mpdecimal::mpd_qxor;
-use crate::mpdecimal::mpd_qrotate;
-use crate::mpdecimal::mpd_qshiftl;
-use crate::mpdecimal::mpd_qshiftr;
-use crate::mpdecimal::mpd_qshift;
-use crate::mpdecimal::mpd_qshiftn;
-use crate::mpdecimal::mpd_qcmp;
-use crate::mpdecimal::mpd_qcompare;
-use crate::mpdecimal::mpd_qcompare_signal;
-use crate::mpdecimal::mpd_qround_to_intx;
-use crate::mpdecimal::mpd_qround_to_int;
-use crate::mpdecimal::mpd_qtrunc;
+use crate::mpdecimal::mpd_qdiv;
+use crate::mpdecimal::mpd_qdiv_i32;
+use crate::mpdecimal::mpd_qdiv_i64;
+use crate::mpdecimal::mpd_qdiv_ssize;
+use crate::mpdecimal::mpd_qdiv_u32;
+use crate::mpdecimal::mpd_qdiv_u64;
+use crate::mpdecimal::mpd_qdiv_uint;
+use crate::mpdecimal::mpd_qdivint;
+use crate::mpdecimal::mpd_qdivmod;
+use crate::mpdecimal::mpd_qexp;
+use crate::mpdecimal::mpd_qexport_u16;
+use crate::mpdecimal::mpd_qexport_u32;
+use crate::mpdecimal::mpd_qfinalize;
 use crate::mpdecimal::mpd_qfloor;
-use crate::mpdecimal::mpd_qceil;
-use crate::mpdecimal::mpd_qabs;
+use crate::mpdecimal::mpd_qfma;
+use crate::mpdecimal::mpd_qget_i32;
+use crate::mpdecimal::mpd_qget_i64;
+use crate::mpdecimal::mpd_qget_ssize;
+use crate::mpdecimal::mpd_qget_u32;
+use crate::mpdecimal::mpd_qget_u64;
+use crate::mpdecimal::mpd_qget_uint;
+use crate::mpdecimal::mpd_qimport_u16;
+use crate::mpdecimal::mpd_qimport_u32;
+use crate::mpdecimal::mpd_qinvert;
+use crate::mpdecimal::mpd_qinvroot;
+use crate::mpdecimal::mpd_qln;
+use crate::mpdecimal::mpd_qlog10;
+use crate::mpdecimal::mpd_qlogb;
 use crate::mpdecimal::mpd_qmax;
 use crate::mpdecimal::mpd_qmax_mag;
+use crate::mpdecimal::mpd_qmaxcoeff;
 use crate::mpdecimal::mpd_qmin;
 use crate::mpdecimal::mpd_qmin_mag;
 use crate::mpdecimal::mpd_qminus;
-use crate::mpdecimal::mpd_qplus;
+use crate::mpdecimal::mpd_qmul;
+use crate::mpdecimal::mpd_qmul_i32;
+use crate::mpdecimal::mpd_qmul_i64;
+use crate::mpdecimal::mpd_qmul_ssize;
+use crate::mpdecimal::mpd_qmul_u32;
+use crate::mpdecimal::mpd_qmul_u64;
+use crate::mpdecimal::mpd_qmul_uint;
 use crate::mpdecimal::mpd_qnext_minus;
 use crate::mpdecimal::mpd_qnext_plus;
 use crate::mpdecimal::mpd_qnext_toward;
-use crate::mpdecimal::mpd_qquantize;
-use crate::mpdecimal::mpd_qrescale;
-use crate::mpdecimal::mpd_qreduce;
-use crate::mpdecimal::mpd_qadd;
-use crate::mpdecimal::mpd_qadd_ssize;
-use crate::mpdecimal::mpd_qadd_i32;
-use crate::mpdecimal::mpd_qadd_uint;
-use crate::mpdecimal::mpd_qadd_u32;
-use crate::mpdecimal::mpd_qsub;
-use crate::mpdecimal::mpd_qsub_ssize;
-use crate::mpdecimal::mpd_qsub_i32;
-use crate::mpdecimal::mpd_qsub_uint;
-use crate::mpdecimal::mpd_qsub_u32;
-use crate::mpdecimal::mpd_qmul;
-use crate::mpdecimal::mpd_qmul_ssize;
-use crate::mpdecimal::mpd_qmul_i32;
-use crate::mpdecimal::mpd_qmul_uint;
-use crate::mpdecimal::mpd_qmul_u32;
-use crate::mpdecimal::mpd_qfma;
-use crate::mpdecimal::mpd_qdiv;
-use crate::mpdecimal::mpd_qdiv_ssize;
-use crate::mpdecimal::mpd_qdiv_i32;
-use crate::mpdecimal::mpd_qdiv_uint;
-use crate::mpdecimal::mpd_qdiv_u32;
-use crate::mpdecimal::mpd_qdivint;
-use crate::mpdecimal::mpd_qrem;
-use crate::mpdecimal::mpd_qrem_near;
-use crate::mpdecimal::mpd_qdivmod;
+use crate::mpdecimal::mpd_qor;
+use crate::mpdecimal::mpd_qplus;
 use crate::mpdecimal::mpd_qpow;
 use crate::mpdecimal::mpd_qpowmod;
-use crate::mpdecimal::mpd_qexp;
-use crate::mpdecimal::mpd_qln;
-use crate::mpdecimal::mpd_qlog10;
+use crate::mpdecimal::mpd_qquantize;
+use crate::mpdecimal::mpd_qreduce;
+use crate::mpdecimal::mpd_qrem;
+use crate::mpdecimal::mpd_qrem_near;
+use crate::mpdecimal::mpd_qrescale;
+use crate::mpdecimal::mpd_qrotate;
+use crate::mpdecimal::mpd_qround_to_int;
+use crate::mpdecimal::mpd_qround_to_intx;
+use crate::mpdecimal::mpd_qscaleb;
+use crate::mpdecimal::mpd_qset_i32;
+use crate::mpdecimal::mpd_qset_i64;
+use crate::mpdecimal::mpd_qset_ssize;
+use crate::mpdecimal::mpd_qset_u32;
+use crate::mpdecimal::mpd_qset_u64;
+use crate::mpdecimal::mpd_qset_uint;
+use crate::mpdecimal::mpd_qshift;
+use crate::mpdecimal::mpd_qshiftl;
+use crate::mpdecimal::mpd_qshiftn;
+use crate::mpdecimal::mpd_qshiftr;
 use crate::mpdecimal::mpd_qsqrt;
-use crate::mpdecimal::mpd_qinvroot;
-use crate::mpdecimal::mpd_qadd_i64;
-use crate::mpdecimal::mpd_qadd_u64;
-use crate::mpdecimal::mpd_qsub_i64;
-use crate::mpdecimal::mpd_qsub_u64;
-use crate::mpdecimal::mpd_qmul_i64;
-use crate::mpdecimal::mpd_qmul_u64;
-use crate::mpdecimal::mpd_qdiv_i64;
-use crate::mpdecimal::mpd_qdiv_u64;
-use crate::mpdecimal::mpd_qimport_u16;
-use crate::mpdecimal::mpd_qimport_u32;
-use crate::mpdecimal::mpd_qexport_u16;
-use crate::mpdecimal::mpd_qexport_u32;
+use crate::mpdecimal::mpd_qsset_i32;
 #[cfg(target_pointer_width = "64")]
 use crate::mpdecimal::mpd_qsset_i64;
+use crate::mpdecimal::mpd_qsset_ssize;
+use crate::mpdecimal::mpd_qsset_u32;
 #[cfg(target_pointer_width = "64")]
 use crate::mpdecimal::mpd_qsset_u64;
+use crate::mpdecimal::mpd_qsset_uint;
+use crate::mpdecimal::mpd_qsub;
+use crate::mpdecimal::mpd_qsub_i32;
+use crate::mpdecimal::mpd_qsub_i64;
+use crate::mpdecimal::mpd_qsub_ssize;
+use crate::mpdecimal::mpd_qsub_u32;
+use crate::mpdecimal::mpd_qsub_u64;
+use crate::mpdecimal::mpd_qsub_uint;
+use crate::mpdecimal::mpd_qtrunc;
+use crate::mpdecimal::mpd_qxor;
 pub unsafe extern "C" fn mpd_format(
     dec: *const mpd_t,
     fmt: *const ::core::ffi::c_char,
@@ -218,49 +218,29 @@ pub unsafe extern "C" fn mpd_sset_ssize(
     mpd_qsset_ssize(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_sset_i32(
-    result: *mut mpd_t,
-    a: int32_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_sset_i32(result: *mut mpd_t, a: int32_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qsset_i32(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_sset_i64(
-    result: *mut mpd_t,
-    a: int64_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_sset_i64(result: *mut mpd_t, a: int64_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qsset_i64(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_sset_uint(
-    result: *mut mpd_t,
-    a: mpd_uint_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_sset_uint(result: *mut mpd_t, a: mpd_uint_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qsset_uint(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_sset_u32(
-    result: *mut mpd_t,
-    a: uint32_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_sset_u32(result: *mut mpd_t, a: uint32_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qsset_u32(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_sset_u64(
-    result: *mut mpd_t,
-    a: uint64_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_sset_u64(result: *mut mpd_t, a: uint64_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qsset_u64(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -274,55 +254,32 @@ pub unsafe extern "C" fn mpd_set_ssize(
     mpd_qset_ssize(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_set_i32(
-    result: *mut mpd_t,
-    a: int32_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_set_i32(result: *mut mpd_t, a: int32_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qset_i32(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_set_i64(
-    result: *mut mpd_t,
-    a: int64_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_set_i64(result: *mut mpd_t, a: int64_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qset_i64(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_set_uint(
-    result: *mut mpd_t,
-    a: mpd_uint_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_set_uint(result: *mut mpd_t, a: mpd_uint_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qset_uint(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_set_u32(
-    result: *mut mpd_t,
-    a: uint32_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_set_u32(result: *mut mpd_t, a: uint32_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qset_u32(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_set_u64(
-    result: *mut mpd_t,
-    a: uint64_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_set_u64(result: *mut mpd_t, a: uint64_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qset_u64(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_get_ssize(
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) -> mpd_ssize_t {
+pub unsafe extern "C" fn mpd_get_ssize(a: *const mpd_t, ctx: *mut mpd_context_t) -> mpd_ssize_t {
     let mut status: uint32_t = 0 as uint32_t;
     let ret: mpd_ssize_t = mpd_qget_ssize(a, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -340,19 +297,13 @@ pub unsafe extern "C" fn mpd_get_i64(a: *const mpd_t, ctx: *mut mpd_context_t) -
     mpd_addstatus_raise(ctx, status);
     ret
 }
-pub unsafe extern "C" fn mpd_get_uint(
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) -> mpd_uint_t {
+pub unsafe extern "C" fn mpd_get_uint(a: *const mpd_t, ctx: *mut mpd_context_t) -> mpd_uint_t {
     let mut status: uint32_t = 0 as uint32_t;
     let ret: mpd_uint_t = mpd_qget_uint(a, &raw mut status);
     mpd_addstatus_raise(ctx, status);
     ret
 }
-pub unsafe extern "C" fn mpd_abs_uint(
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) -> mpd_uint_t {
+pub unsafe extern "C" fn mpd_abs_uint(a: *const mpd_t, ctx: *mut mpd_context_t) -> mpd_uint_t {
     let mut status: uint32_t = 0 as uint32_t;
     let ret: mpd_uint_t = mpd_qabs_uint(a, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -380,11 +331,7 @@ pub unsafe extern "C" fn mpd_and(
     mpd_qand(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_copy(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_copy(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     if mpd_qcopy(result, a, &raw mut status) == 0 {
         mpd_addstatus_raise(ctx, status);
@@ -428,20 +375,12 @@ pub unsafe extern "C" fn mpd_copy_sign(
         mpd_addstatus_raise(ctx, status);
     }
 }
-pub unsafe extern "C" fn mpd_invert(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_invert(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qinvert(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_logb(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_logb(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qlogb(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -527,11 +466,7 @@ pub unsafe extern "C" fn mpd_xor(
     mpd_qxor(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_abs(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_abs(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qabs(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -799,11 +734,7 @@ pub unsafe extern "C" fn mpd_divint(
     mpd_qdivint(q, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_exp(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_exp(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qexp(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -819,20 +750,12 @@ pub unsafe extern "C" fn mpd_fma(
     mpd_qfma(result, a, b, c, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_ln(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_ln(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qln(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_log10(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_log10(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qlog10(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -877,11 +800,7 @@ pub unsafe extern "C" fn mpd_min_mag(
     mpd_qmin_mag(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_minus(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_minus(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qminus(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -984,11 +903,7 @@ pub unsafe extern "C" fn mpd_next_toward(
     mpd_qnext_toward(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_plus(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_plus(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qplus(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -1034,11 +949,7 @@ pub unsafe extern "C" fn mpd_rescale(
     mpd_qrescale(result, a, exp, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_reduce(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_reduce(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qreduce(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
@@ -1081,47 +992,27 @@ pub unsafe extern "C" fn mpd_round_to_int(
     mpd_qround_to_int(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_trunc(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_trunc(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qtrunc(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_floor(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_floor(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qfloor(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_ceil(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_ceil(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qceil(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_sqrt(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_sqrt(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qsqrt(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-pub unsafe extern "C" fn mpd_invroot(
-    result: *mut mpd_t,
-    a: *const mpd_t,
-    ctx: *mut mpd_context_t,
-) {
+pub unsafe extern "C" fn mpd_invroot(result: *mut mpd_t, a: *const mpd_t, ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qinvroot(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);

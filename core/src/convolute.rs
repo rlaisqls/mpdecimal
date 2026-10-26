@@ -4,8 +4,8 @@ use crate::fnt::std_fnt;
 use crate::fnt::std_inv_fnt;
 use crate::fourstep::four_step_fnt;
 use crate::fourstep::inv_four_step_fnt;
-use crate::sixstep::six_step_fnt;
 use crate::sixstep::inv_six_step_fnt;
+use crate::sixstep::six_step_fnt;
 pub const SIX_STEP_THRESHOLD: ::core::ffi::c_int = 4096 as ::core::ffi::c_int;
 unsafe extern "C" fn std_setmodulus(modnum: ::core::ffi::c_int, umod: *mut mpd_uint_t) {
     *umod = *(&raw const mpd_moduli as *const mpd_uint_t).offset(modnum as isize);

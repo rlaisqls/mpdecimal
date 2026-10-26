@@ -66,7 +66,8 @@ pub unsafe extern "C" fn _mpd_div_words(
     lo: mpd_uint_t,
     d: mpd_uint_t,
 ) {
-    let hl: __uint128_t = ((hi as __uint128_t) << 64 as ::core::ffi::c_int).wrapping_add(lo as __uint128_t);
+    let hl: __uint128_t =
+        ((hi as __uint128_t) << 64 as ::core::ffi::c_int).wrapping_add(lo as __uint128_t);
     *q = hl.wrapping_div(d as __uint128_t) as mpd_uint_t;
     *r = hl.wrapping_sub((*q as __uint128_t).wrapping_mul(d as __uint128_t)) as mpd_uint_t;
 }
@@ -78,7 +79,8 @@ pub unsafe extern "C" fn _mpd_div_words(
     lo: mpd_uint_t,
     d: mpd_uint_t,
 ) {
-    let hl: mpd_uuint_t = ((hi as mpd_uuint_t) << 32 as ::core::ffi::c_int).wrapping_add(lo as mpd_uuint_t);
+    let hl: mpd_uuint_t =
+        ((hi as mpd_uuint_t) << 32 as ::core::ffi::c_int).wrapping_add(lo as mpd_uuint_t);
     *q = hl.wrapping_div(d as mpd_uuint_t) as mpd_uint_t;
     *r = hl.wrapping_sub((*q as mpd_uuint_t).wrapping_mul(d as mpd_uuint_t)) as mpd_uint_t;
 }
@@ -172,11 +174,7 @@ pub unsafe extern "C" fn ispower2(n: mpd_size_t) -> ::core::ffi::c_int {
         as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn std_mulmod(
-    a: mpd_uint_t,
-    b: mpd_uint_t,
-    m: mpd_uint_t,
-) -> mpd_uint_t {
+pub unsafe extern "C" fn std_mulmod(a: mpd_uint_t, b: mpd_uint_t, m: mpd_uint_t) -> mpd_uint_t {
     (a as mpd_uuint_t)
         .wrapping_mul(b as mpd_uuint_t)
         .wrapping_rem(m as mpd_uuint_t) as mpd_uint_t
@@ -227,11 +225,7 @@ pub unsafe extern "C" fn std_powmod(
     r
 }
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn x64_mulmod(
-    a: mpd_uint_t,
-    b: mpd_uint_t,
-    m: mpd_uint_t,
-) -> mpd_uint_t {
+pub unsafe extern "C" fn x64_mulmod(a: mpd_uint_t, b: mpd_uint_t, m: mpd_uint_t) -> mpd_uint_t {
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
     let mut x: mpd_uint_t;

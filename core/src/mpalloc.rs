@@ -1,9 +1,9 @@
 use crate::common::*;
-use crate::shim::mpd_c2rust_assert_fail;
 use crate::context::mpd_addstatus_raise;
-use crate::mpdecimal::mpd_set_qnan;
-use crate::mpdecimal::mpd_set_positive;
 use crate::mpdecimal::mpd_set_dynamic_data;
+use crate::mpdecimal::mpd_set_positive;
+use crate::mpdecimal::mpd_set_qnan;
+use crate::shim::mpd_c2rust_assert_fail;
 extern "C" {
     fn malloc(size: size_t) -> *mut ::core::ffi::c_void;
     fn calloc(nmemb: size_t, size: size_t) -> *mut ::core::ffi::c_void;
@@ -52,8 +52,7 @@ pub static mut mpd_mallocfunc: Option<unsafe extern "C" fn(size_t) -> *mut ::cor
 pub static mut mpd_reallocfunc: Option<
     unsafe extern "C" fn(*mut ::core::ffi::c_void, size_t) -> *mut ::core::ffi::c_void,
 > = Some(
-    realloc
-        as unsafe extern "C" fn(*mut ::core::ffi::c_void, size_t) -> *mut ::core::ffi::c_void,
+    realloc as unsafe extern "C" fn(*mut ::core::ffi::c_void, size_t) -> *mut ::core::ffi::c_void,
 );
 #[cfg_attr(feature = "capi", no_mangle)]
 pub static mut mpd_callocfunc: Option<
@@ -112,7 +111,8 @@ pub unsafe extern "C" fn mpd_realloc(
         *err = 1 as uint8_t;
         return ptr;
     }
-    let new: *mut ::core::ffi::c_void = mpd_reallocfunc.expect("non-null function pointer")(ptr, req as size_t);
+    let new: *mut ::core::ffi::c_void =
+        mpd_reallocfunc.expect("non-null function pointer")(ptr, req as size_t);
     if new.is_null() {
         *err = 1 as uint8_t;
         return ptr;

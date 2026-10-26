@@ -1,9 +1,9 @@
 use crate::common::*;
+use crate::constants::mpd_bits;
+use crate::mpalloc::mpd_calloc;
+use crate::mpalloc::mpd_free;
 use crate::shim::mpd_c2rust_assert_fail;
 use crate::shim::mpd_c2rust_stderr;
-use crate::mpalloc::mpd_free;
-use crate::mpalloc::mpd_calloc;
-use crate::constants::mpd_bits;
 extern "C" {
     fn fprintf(stream: *mut FILE, format: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
     fn fputc(c: ::core::ffi::c_int, stream: *mut FILE) -> ::core::ffi::c_int;
@@ -40,11 +40,7 @@ unsafe extern "C" fn mul_size_t(a: mpd_size_t, b: mpd_size_t) -> mpd_size_t {
     }
     lo as mpd_size_t
 }
-unsafe extern "C" fn mulmod_size_t(
-    a: mpd_size_t,
-    b: mpd_size_t,
-    m: mpd_size_t,
-) -> mpd_size_t {
+unsafe extern "C" fn mulmod_size_t(a: mpd_size_t, b: mpd_size_t, m: mpd_size_t) -> mpd_size_t {
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
     let mut q: mpd_uint_t = 0;
@@ -111,7 +107,8 @@ unsafe extern "C" fn swap_halfrows_pow2(
     };
     let m: mpd_size_t = cols.wrapping_sub(1 as mpd_size_t);
     let hmax: mpd_size_t = rows;
-    let dbits: mpd_size_t = 8_usize.wrapping_mul(::core::mem::size_of::<mpd_size_t>() as usize) as mpd_size_t;
+    let dbits: mpd_size_t =
+        8_usize.wrapping_mul(::core::mem::size_of::<mpd_size_t>() as usize) as mpd_size_t;
     let done: *mut mpd_size_t = mpd_calloc(
         hmax.wrapping_div(::core::mem::size_of::<mpd_size_t>() as mpd_size_t)
             .wrapping_add(1 as mpd_size_t),
@@ -158,21 +155,18 @@ unsafe extern "C" fn swap_halfrows_pow2(
                             .wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                     );
                     pointerswap(&raw mut readbuf, &raw mut writebuf);
-                    *done.add(next.wrapping_div(dbits)) |= *(&raw const mpd_bits
-                        as *const mpd_size_t)
-                        .add(next.wrapping_rem(dbits));
+                    *done.add(next.wrapping_div(dbits)) |=
+                        *(&raw const mpd_bits as *const mpd_size_t).add(next.wrapping_rem(dbits));
                     next = mulmod_size_t(next, r, m);
-                    hp = matrix
-                        .add(next.wrapping_mul(cols).wrapping_div(2 as mpd_size_t));
+                    hp = matrix.add(next.wrapping_mul(cols).wrapping_div(2 as mpd_size_t));
                 }
                 memcpy(
                     hp.add(offset) as *mut ::core::ffi::c_void,
                     writebuf as *const ::core::ffi::c_void,
                     (stride as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                 );
-                *done.add(hn.wrapping_div(dbits)) |= *(&raw const mpd_bits
-                    as *const mpd_size_t)
-                    .add(hn.wrapping_rem(dbits));
+                *done.add(hn.wrapping_div(dbits)) |=
+                    *(&raw const mpd_bits as *const mpd_size_t).add(hn.wrapping_rem(dbits));
                 offset = offset.wrapping_add(b);
             }
         }
@@ -220,9 +214,7 @@ unsafe extern "C" fn squaretrans_pow2(matrix: *mut mpd_uint_t, size: mpd_size_t)
     while r < size {
         c = r;
         while c < size {
-            from = matrix
-                .add(r.wrapping_mul(size))
-                .add(c);
+            from = matrix.add(r.wrapping_mul(size)).add(c);
             to = &raw mut buf1 as *mut mpd_uint_t;
             i = 0 as mpd_size_t;
             while i < b {
@@ -237,9 +229,7 @@ unsafe extern "C" fn squaretrans_pow2(matrix: *mut mpd_uint_t, size: mpd_size_t)
             }
             squaretrans(&raw mut buf1 as *mut mpd_uint_t, b);
             if r == c {
-                to = matrix
-                    .add(r.wrapping_mul(size))
-                    .add(c);
+                to = matrix.add(r.wrapping_mul(size)).add(c);
                 from = &raw mut buf1 as *mut mpd_uint_t;
                 i = 0 as mpd_size_t;
                 while i < b {
@@ -253,9 +243,7 @@ unsafe extern "C" fn squaretrans_pow2(matrix: *mut mpd_uint_t, size: mpd_size_t)
                     i = i.wrapping_add(1);
                 }
             } else {
-                from = matrix
-                    .add(c.wrapping_mul(size))
-                    .add(r);
+                from = matrix.add(c.wrapping_mul(size)).add(r);
                 to = &raw mut buf2 as *mut mpd_uint_t;
                 i = 0 as mpd_size_t;
                 while i < b {
@@ -269,9 +257,7 @@ unsafe extern "C" fn squaretrans_pow2(matrix: *mut mpd_uint_t, size: mpd_size_t)
                     i = i.wrapping_add(1);
                 }
                 squaretrans(&raw mut buf2 as *mut mpd_uint_t, b);
-                to = matrix
-                    .add(c.wrapping_mul(size))
-                    .add(r);
+                to = matrix.add(c.wrapping_mul(size)).add(r);
                 from = &raw mut buf1 as *mut mpd_uint_t;
                 i = 0 as mpd_size_t;
                 while i < b {
@@ -284,9 +270,7 @@ unsafe extern "C" fn squaretrans_pow2(matrix: *mut mpd_uint_t, size: mpd_size_t)
                     to = to.add(size);
                     i = i.wrapping_add(1);
                 }
-                to = matrix
-                    .add(r.wrapping_mul(size))
-                    .add(c);
+                to = matrix.add(r.wrapping_mul(size)).add(c);
                 from = &raw mut buf2 as *mut mpd_uint_t;
                 i = 0 as mpd_size_t;
                 while i < b {
@@ -327,16 +311,10 @@ pub unsafe extern "C" fn transpose_pow2(
             return 0 as ::core::ffi::c_int;
         }
         squaretrans_pow2(matrix, rows);
-        squaretrans_pow2(
-            matrix.add(size.wrapping_div(2 as mpd_size_t)),
-            rows,
-        );
+        squaretrans_pow2(matrix.add(size.wrapping_div(2 as mpd_size_t)), rows);
     } else if rows == mul_size_t(2 as mpd_size_t, cols) {
         squaretrans_pow2(matrix, cols);
-        squaretrans_pow2(
-            matrix.add(size.wrapping_div(2 as mpd_size_t)),
-            cols,
-        );
+        squaretrans_pow2(matrix.add(size.wrapping_div(2 as mpd_size_t)), cols);
         if swap_halfrows_pow2(matrix, cols, rows, BACKWARD_CYCLE as ::core::ffi::c_int) == 0 {
             return 0 as ::core::ffi::c_int;
         }

@@ -6,9 +6,8 @@
 // The functions are those of libmpdec, documented in its manual.
 #![allow(clippy::missing_safety_doc)]
 
-pub mod common;
-pub mod shim;
 pub mod basearith;
+pub mod common;
 pub mod constants;
 pub mod context;
 pub mod convolute;
@@ -21,5 +20,6 @@ pub mod mpalloc;
 pub mod mpdecimal;
 pub mod mpsignal;
 pub mod numbertheory;
+pub mod shim;
 pub mod sixstep;
 pub mod transpose;

@@ -1,21 +1,17 @@
 use crate::common::*;
-use crate::shim::mpd_c2rust_assert_fail;
 use crate::constants::mpd_moduli;
-use crate::constants::INV_P1_MOD_P2;
 use crate::constants::INV_P1P2_MOD_P3;
+use crate::constants::INV_P1_MOD_P2;
 use crate::constants::LH_P1P2;
 use crate::constants::UH_P1P2;
+use crate::shim::mpd_c2rust_assert_fail;
 pub const P3: C2RustUnnamed = 2;
 pub const P2: C2RustUnnamed = 1;
 pub const P1: C2RustUnnamed = 0;
 unsafe extern "C" fn std_setmodulus(modnum: ::core::ffi::c_int, umod: *mut mpd_uint_t) {
     *umod = *(&raw const mpd_moduli as *const mpd_uint_t).offset(modnum as isize);
 }
-unsafe extern "C" fn ext_submod(
-    mut a: mpd_uint_t,
-    mut b: mpd_uint_t,
-    m: mpd_uint_t,
-) -> mpd_uint_t {
+unsafe extern "C" fn ext_submod(mut a: mpd_uint_t, mut b: mpd_uint_t, m: mpd_uint_t) -> mpd_uint_t {
     let mut d: mpd_uint_t;
     a = if a >= m { a.wrapping_sub(m) } else { a };
     b = if b >= m { b.wrapping_sub(m) } else { b };
@@ -23,11 +19,7 @@ unsafe extern "C" fn ext_submod(
     d = if a < b { d.wrapping_add(m) } else { d };
     d
 }
-unsafe extern "C" fn dw_reduce(
-    hi: mpd_uint_t,
-    lo: mpd_uint_t,
-    m: mpd_uint_t,
-) -> mpd_uint_t {
+unsafe extern "C" fn dw_reduce(hi: mpd_uint_t, lo: mpd_uint_t, m: mpd_uint_t) -> mpd_uint_t {
     let mut r1: mpd_uint_t = 0;
     let mut r2: mpd_uint_t = 0;
     let mut w: mpd_uint_t = 0;
@@ -63,7 +55,8 @@ unsafe extern "C" fn _crt_mulP1P2_3(w: *mut mpd_uint_t, v: mpd_uint_t) {
 }
 unsafe extern "C" fn _crt_add3(w: *mut mpd_uint_t, v: *mut mpd_uint_t) {
     *w.offset(0_isize) = (*w.offset(0_isize)).wrapping_add(*v.offset(0_isize));
-    let carry: mpd_uint_t = (*w.offset(0_isize) < *v.offset(0_isize)) as ::core::ffi::c_int as mpd_uint_t;
+    let carry: mpd_uint_t =
+        (*w.offset(0_isize) < *v.offset(0_isize)) as ::core::ffi::c_int as mpd_uint_t;
     *w.offset(1_isize) = (*w.offset(1_isize)).wrapping_add(*v.offset(1_isize));
     if *w.offset(1_isize) < *v.offset(1_isize) {
         *w.offset(2_isize) = (*w.offset(2_isize)).wrapping_add(1);

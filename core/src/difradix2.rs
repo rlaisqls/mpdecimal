@@ -1,6 +1,6 @@
 use crate::common::*;
-use crate::shim::mpd_c2rust_assert_fail;
 use crate::constants::mpd_moduli;
+use crate::shim::mpd_c2rust_assert_fail;
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn mpd_bsf(mut n: mpd_size_t) -> ::core::ffi::c_int {
     let mut pos: ::core::ffi::c_int;
@@ -92,11 +92,7 @@ unsafe extern "C" fn bitreverse_permute(a: *mut mpd_uint_t, n: mpd_size_t) {
 }
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
-pub unsafe extern "C" fn fnt_dif2(
-    a: *mut mpd_uint_t,
-    n: mpd_size_t,
-    tparams: *mut fnt_params,
-) {
+pub unsafe extern "C" fn fnt_dif2(a: *mut mpd_uint_t, n: mpd_size_t, tparams: *mut fnt_params) {
     let wtable: *mut mpd_uint_t = &raw mut (*tparams).wtable as *mut mpd_uint_t;
     let mut umod: mpd_uint_t = 0;
     let mut u0: mpd_uint_t;
@@ -183,11 +179,7 @@ pub unsafe extern "C" fn fnt_dif2(
 }
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
-pub unsafe extern "C" fn fnt_dif2(
-    a: *mut mpd_uint_t,
-    n: mpd_size_t,
-    tparams: *mut fnt_params,
-) {
+pub unsafe extern "C" fn fnt_dif2(a: *mut mpd_uint_t, n: mpd_size_t, tparams: *mut fnt_params) {
     let wtable: *mut mpd_uint_t = &raw mut (*tparams).wtable as *mut mpd_uint_t;
     let mut umod: mpd_uint_t = 0;
     let mut u0: mpd_uint_t;

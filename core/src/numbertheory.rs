@@ -1,8 +1,8 @@
 use crate::common::*;
-use crate::shim::mpd_c2rust_assert_fail;
-use crate::mpalloc::mpd_sh_alloc;
 use crate::constants::mpd_moduli;
 use crate::constants::mpd_roots;
+use crate::mpalloc::mpd_sh_alloc;
+use crate::shim::mpd_c2rust_assert_fail;
 pub const P3: C2RustUnnamed = 2;
 pub const P2: C2RustUnnamed = 1;
 pub const P1: C2RustUnnamed = 0;
