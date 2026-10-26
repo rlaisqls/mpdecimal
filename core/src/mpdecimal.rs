@@ -1082,11 +1082,10 @@ pub unsafe extern "C" fn mpd_qmaxcoeff(
     (*result).digits = (*ctx).prec;
     len -= 1;
     if r > 0 as mpd_ssize_t {
-        let fresh0 = len;
-        len -= 1;
-        *(*result).data.offset(fresh0 as isize) = (*(&raw const mpd_pow10 as *const mpd_uint_t)
+        *(*result).data.offset(len as isize) = (*(&raw const mpd_pow10 as *const mpd_uint_t)
             .offset(r as isize))
         .wrapping_sub(1 as mpd_uint_t);
+        len -= 1;
     }
     while len >= 0 as mpd_ssize_t {
         *(*result).data.offset(len as isize) = MPD_RADIX.wrapping_sub(1_u64) as mpd_uint_t;
@@ -1119,11 +1118,10 @@ pub unsafe extern "C" fn mpd_qmaxcoeff(
     (*result).digits = (*ctx).prec;
     len -= 1;
     if r > 0 as mpd_ssize_t {
-        let fresh0 = len;
-        len -= 1;
-        *(*result).data.offset(fresh0 as isize) = (*(&raw const mpd_pow10 as *const mpd_uint_t)
+        *(*result).data.offset(len as isize) = (*(&raw const mpd_pow10 as *const mpd_uint_t)
             .offset(r as isize))
         .wrapping_sub(1 as mpd_uint_t);
+        len -= 1;
     }
     while len >= 0 as mpd_ssize_t {
         *(*result).data.offset(len as isize) =
@@ -1148,8 +1146,8 @@ unsafe extern "C" fn _mpd_cap(result: *mut mpd_t, ctx: *const mpd_context_t) {
             len + 1 as mpd_ssize_t
         };
         if r != 0 as mpd_ssize_t {
-            let fresh0 = &mut *(*result).data.offset((len - 1 as mpd_ssize_t) as isize);
-            *fresh0 = (*fresh0)
+            let last = (*result).data.offset((len - 1 as mpd_ssize_t) as isize);
+            *last = (*last)
                 .wrapping_rem(*(&raw const mpd_pow10 as *const mpd_uint_t).offset(r as isize));
         }
         len = _mpd_real_size((*result).data, len);
@@ -1179,8 +1177,8 @@ unsafe extern "C" fn _mpd_fix_nan(result: *mut mpd_t, ctx: *const mpd_context_t)
                 len + 1 as mpd_ssize_t
             };
             if r != 0 as mpd_ssize_t {
-                let fresh0 = &mut *(*result).data.offset((len - 1 as mpd_ssize_t) as isize);
-                *fresh0 = (*fresh0)
+                let last = (*result).data.offset((len - 1 as mpd_ssize_t) as isize);
+                *last = (*last)
                     .wrapping_rem(*(&raw const mpd_pow10 as *const mpd_uint_t).offset(r as isize));
             }
             len = _mpd_real_size((*result).data, len);
@@ -2856,14 +2854,13 @@ unsafe extern "C" fn _mpd_basecmp(
         ph = *(&raw const mpd_pow10 as *const mpd_uint_t).offset(r as isize);
         m = m.wrapping_sub(1);
         n = n.wrapping_sub(1);
-        let fresh0 = m;
-        m = m.wrapping_sub(1);
         _mpd_divmod_pow10(
             &raw mut h,
             &raw mut lprev,
-            *small.add(fresh0),
+            *small.add(m),
             (MPD_RDIGITS as mpd_uint_t).wrapping_sub(r),
         );
+        m = m.wrapping_sub(1);
         if h != 0 as mpd_uint_t {
             if *big.add(n) != h {
                 if *big.add(n) < h {
@@ -2948,14 +2945,13 @@ unsafe extern "C" fn _mpd_basecmp(
         ph = *(&raw const mpd_pow10 as *const mpd_uint_t).offset(r as isize);
         m = m.wrapping_sub(1);
         n = n.wrapping_sub(1);
-        let fresh0 = m;
-        m = m.wrapping_sub(1);
         _mpd_divmod_pow10(
             &raw mut h,
             &raw mut lprev,
-            *small.add(fresh0),
+            *small.add(m),
             (MPD_RDIGITS as mpd_uint_t).wrapping_sub(r),
         );
+        m = m.wrapping_sub(1);
         if h != 0 as mpd_uint_t {
             if *big.add(n) != h {
                 if *big.add(n) < h {
@@ -3645,9 +3641,8 @@ pub unsafe extern "C" fn mpd_qand(
         match current_block {
             2 => {}
             _ => {
-                let fresh0 = i;
+                *(*result).data.offset(i as isize) = z;
                 i += 1;
-                *(*result).data.offset(fresh0 as isize) = z;
                 loop {
                     if !(k < MPD_RDIGITS) {
                         current_block = 4;
@@ -3937,9 +3932,8 @@ pub unsafe extern "C" fn mpd_qor(
                 match current_block {
                     2 => {}
                     _ => {
-                        let fresh0 = i;
+                        *(*result).data.offset(i as isize) = z;
                         i += 1;
-                        *(*result).data.offset(fresh0 as isize) = z;
                         's_184: loop {
                             if !(i < (*big).len) {
                                 current_block = 5;
@@ -4344,9 +4338,8 @@ pub unsafe extern "C" fn mpd_qxor(
                 match current_block {
                     2 => {}
                     _ => {
-                        let fresh0 = i;
+                        *(*result).data.offset(i as isize) = z;
                         i += 1;
-                        *(*result).data.offset(fresh0 as isize) = z;
                         's_184: loop {
                             if !(i < (*big).len) {
                                 current_block = 5;
@@ -5460,8 +5453,7 @@ unsafe extern "C" fn _mpd_qdiv(
                         if rem != 0 {
                             ld = mpd_lsd(*(*q).data.offset(0_isize));
                             if ld == 0 as mpd_uint_t || ld == 5 as mpd_uint_t {
-                                let fresh0 = &mut *(*q).data.offset(0_isize);
-                                *fresh0 = (*fresh0).wrapping_add(1 as mpd_uint_t);
+                                *(*q).data.offset(0_isize) = (*(*q).data.offset(0_isize)).wrapping_add(1 as mpd_uint_t);
                             }
                         } else if action == SET_IDEAL_EXP as ::core::ffi::c_int
                             && shift > 0 as mpd_ssize_t
@@ -5646,8 +5638,7 @@ unsafe extern "C" fn _mpd_qdiv(
                         if rem != 0 {
                             ld = mpd_lsd(*(*q).data.offset(0_isize));
                             if ld == 0 as mpd_uint_t || ld == 5 as mpd_uint_t {
-                                let fresh0 = &mut *(*q).data.offset(0_isize);
-                                *fresh0 = (*fresh0).wrapping_add(1 as mpd_uint_t);
+                                *(*q).data.offset(0_isize) = (*(*q).data.offset(0_isize)).wrapping_add(1 as mpd_uint_t);
                             }
                         } else if action == SET_IDEAL_EXP as ::core::ffi::c_int
                             && shift > 0 as mpd_ssize_t
@@ -7294,9 +7285,8 @@ unsafe extern "C" fn ln_schedule_prec(
     k = maxprec;
     loop {
         k = (k + 2 as mpd_ssize_t) / 2 as mpd_ssize_t;
-        let fresh0 = i;
+        *klist.offset(i as isize) = k;
         i += 1;
-        *klist.offset(fresh0 as isize) = k;
         if !(k > initprec) {
             break;
         }
@@ -13438,9 +13428,8 @@ unsafe extern "C" fn recpr_schedule_prec(
     k = maxprec;
     loop {
         k = (k + 1 as mpd_ssize_t) / 2 as mpd_ssize_t;
-        let fresh0 = i;
+        *klist.offset(i as isize) = k;
         i += 1;
-        *klist.offset(fresh0 as isize) = k;
         if !(k > initprec) {
             break;
         }
@@ -14225,9 +14214,8 @@ unsafe extern "C" fn invroot_schedule_prec(
     k = maxprec;
     loop {
         k = (k + 3 as mpd_ssize_t) / 2 as mpd_ssize_t;
-        let fresh0 = i;
+        *klist.offset(i as isize) = k;
         i += 1;
-        *klist.offset(fresh0 as isize) = k;
         if !(k > initprec) {
             break;
         }
@@ -15037,9 +15025,7 @@ unsafe extern "C" fn _mpd_qsqrt(
                                                 if lsd == 0 as ::core::ffi::c_int
                                                     || lsd == 5 as ::core::ffi::c_int
                                                 {
-                                                    let fresh0 = &mut *(*result).data.offset(0_isize);
-                                                    *fresh0 =
-                                                        (*fresh0).wrapping_add(1 as mpd_uint_t);
+                                                    *(*result).data = (*(*result).data).wrapping_add(1 as mpd_uint_t);
                                                 }
                                                 current_block = 8;
                                             }
@@ -15303,9 +15289,7 @@ unsafe extern "C" fn _mpd_qsqrt(
                                                 if lsd == 0 as ::core::ffi::c_int
                                                     || lsd == 5 as ::core::ffi::c_int
                                                 {
-                                                    let fresh0 = &mut *(*result).data.offset(0_isize);
-                                                    *fresh0 =
-                                                        (*fresh0).wrapping_add(1 as mpd_uint_t);
+                                                    *(*result).data = (*(*result).data).wrapping_add(1 as mpd_uint_t);
                                                 }
                                                 current_block = 8;
                                             }
@@ -15660,9 +15644,8 @@ unsafe extern "C" fn _baseconv_to_u16(
             }
             wlen = n.wrapping_add(1 as size_t);
         }
-        let fresh0 = n;
+        *(*w).add(n) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
         n = n.wrapping_add(1);
-        *(*w).add(fresh0) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
             break;
@@ -15696,9 +15679,8 @@ unsafe extern "C" fn _baseconv_to_u16(
             }
             wlen = n.wrapping_add(1 as size_t);
         }
-        let fresh0 = n;
+        *(*w).add(n) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
         n = n.wrapping_add(1);
-        *(*w).add(fresh0) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
             break;
@@ -15727,9 +15709,8 @@ unsafe extern "C" fn _coeff_from_u16(
         mpd_c2rust_assert_fail(b"ubase <= (1U<<16)\0" as *const u8 as *const ::core::ffi::c_char);
     };
     ulen = ulen.wrapping_sub(1);
-    let fresh0 = n;
+    *(*w).data.offset(n as isize) = *u.add(ulen);
     n += 1;
-    *(*w).data.offset(fresh0 as isize) = *u.add(ulen);
     loop {
         ulen = ulen.wrapping_sub(1);
         if !(ulen != SIZE_MAX as size_t) {
@@ -15743,9 +15724,8 @@ unsafe extern "C" fn _coeff_from_u16(
                 }
                 wlen = n + 1 as mpd_ssize_t;
             }
-            let fresh1 = n;
+            *(*w).data.offset(n as isize) = carry;
             n += 1;
-            *(*w).data.offset(fresh1 as isize) = carry;
         }
         carry = _mpd_shortadd((*w).data, n as mpd_size_t, *u.add(ulen));
         if carry != 0 {
@@ -15755,9 +15735,8 @@ unsafe extern "C" fn _coeff_from_u16(
                 }
                 wlen = n + 1 as mpd_ssize_t;
             }
-            let fresh2 = n;
+            *(*w).data.offset(n as isize) = carry;
             n += 1;
-            *(*w).data.offset(fresh2 as isize) = carry;
         }
     }
     n as size_t
@@ -15789,10 +15768,9 @@ unsafe extern "C" fn _baseconv_to_smaller(
             }
             wlen = n.wrapping_add(1 as size_t);
         }
-        let fresh0 = n;
-        n = n.wrapping_add(1);
-        *(*w).add(fresh0) =
+        *(*w).add(n) =
             _mpd_shortdiv_b(u, u, ulen as mpd_size_t, wbase as mpd_uint_t, ubase) as uint32_t;
+        n = n.wrapping_add(1);
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
             break;
@@ -15827,10 +15805,9 @@ unsafe extern "C" fn _baseconv_to_smaller(
             }
             wlen = n.wrapping_add(1 as size_t);
         }
-        let fresh0 = n;
-        n = n.wrapping_add(1);
-        *(*w).add(fresh0) =
+        *(*w).add(n) =
             _mpd_shortdiv_b(u, u, ulen as mpd_size_t, wbase as mpd_uint_t, ubase);
+        n = n.wrapping_add(1);
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
             break;
@@ -15878,9 +15855,8 @@ unsafe extern "C" fn _baseconv_to_larger(
         mpd_c2rust_assert_fail(b"ubase < wbase\0" as *const u8 as *const ::core::ffi::c_char);
     };
     ulen = ulen.wrapping_sub(1);
-    let fresh0 = n;
+    *(*w).add(n) = *u.add(ulen) as uint32_t;
     n = n.wrapping_add(1);
-    *(*w).add(fresh0) = *u.add(ulen) as uint32_t;
     loop {
         ulen = ulen.wrapping_sub(1);
         if !(ulen != SIZE_MAX as size_t) {
@@ -15894,9 +15870,8 @@ unsafe extern "C" fn _baseconv_to_larger(
                 }
                 wlen = n.wrapping_add(1 as size_t);
             }
-            let fresh1 = n;
+            *(*w).add(n) = carry as uint32_t;
             n = n.wrapping_add(1);
-            *(*w).add(fresh1) = carry as uint32_t;
         }
         carry = _mpd_shortadd_b(*w, n as mpd_size_t, *u.add(ulen), wbase);
         if carry != 0 {
@@ -15906,9 +15881,8 @@ unsafe extern "C" fn _baseconv_to_larger(
                 }
                 wlen = n.wrapping_add(1 as size_t);
             }
-            let fresh2 = n;
+            *(*w).add(n) = carry as uint32_t;
             n = n.wrapping_add(1);
-            *(*w).add(fresh2) = carry as uint32_t;
         }
     }
     n
@@ -15941,10 +15915,9 @@ unsafe extern "C" fn _coeff_from_larger_base(
             }
             wlen = n.wrapping_add(1 as size_t);
         }
-        let fresh0 = n;
-        n = n.wrapping_add(1);
-        *(*w).data.add(fresh0) =
+        *(*w).data.add(n) =
             _mpd_shortdiv_b(u, u, ulen as mpd_size_t, wbase, ubase) as mpd_uint_t;
+        n = n.wrapping_add(1);
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
             break;
@@ -15974,9 +15947,8 @@ unsafe extern "C" fn _coeff_from_smaller_base(
         mpd_c2rust_assert_fail(b"wbase > ubase\0" as *const u8 as *const ::core::ffi::c_char);
     };
     ulen = ulen.wrapping_sub(1);
-    let fresh0 = n;
+    *(*w).data.offset(n as isize) = *u.add(ulen) as mpd_uint_t;
     n += 1;
-    *(*w).data.offset(fresh0 as isize) = *u.add(ulen) as mpd_uint_t;
     loop {
         ulen = ulen.wrapping_sub(1);
         if !(ulen != SIZE_MAX as size_t) {
@@ -15990,9 +15962,8 @@ unsafe extern "C" fn _coeff_from_smaller_base(
                 }
                 wlen = n + 1 as mpd_ssize_t;
             }
-            let fresh1 = n;
+            *(*w).data.offset(n as isize) = carry;
             n += 1;
-            *(*w).data.offset(fresh1 as isize) = carry;
         }
         carry = _mpd_shortadd_b(
             (*w).data,
@@ -16007,9 +15978,8 @@ unsafe extern "C" fn _coeff_from_smaller_base(
                 }
                 wlen = n + 1 as mpd_ssize_t;
             }
-            let fresh2 = n;
+            *(*w).data.offset(n as isize) = carry;
             n += 1;
-            *(*w).data.offset(fresh2 as isize) = carry;
         }
     }
     n as size_t
@@ -16483,9 +16453,8 @@ unsafe extern "C" fn _uint_from_u16(
         );
     };
     ulen = ulen.wrapping_sub(1);
-    let fresh0 = n;
+    *w.offset(n as isize) = *u.add(ulen) as mpd_uint_t;
     n += 1;
-    *w.offset(fresh0 as isize) = *u.add(ulen) as mpd_uint_t;
     loop {
         ulen = ulen.wrapping_sub(1);
         if !(ulen != SIZE_MAX as size_t) {
@@ -16496,18 +16465,16 @@ unsafe extern "C" fn _uint_from_u16(
             if n >= wlen {
                 abort();
             }
-            let fresh1 = n;
+            *w.offset(n as isize) = carry;
             n += 1;
-            *w.offset(fresh1 as isize) = carry;
         }
         carry = _mpd_shortadd(w, n as mpd_size_t, *u.add(ulen) as mpd_uint_t);
         if carry != 0 {
             if n >= wlen {
                 abort();
             }
-            let fresh2 = n;
+            *w.offset(n as isize) = carry;
             n += 1;
-            *w.offset(fresh2 as isize) = carry;
         }
     }
     n as size_t
@@ -17018,9 +16985,8 @@ unsafe extern "C" fn _uint_to_u16(
         if n >= 8 as size_t {
             abort();
         }
-        let fresh0 = n;
+        *w.add(n) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
         n = n.wrapping_add(1);
-        *w.add(fresh0) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
             break;
@@ -17394,8 +17360,7 @@ unsafe extern "C" fn _mpd_qtest_newtondiv(
                     if rem != 0 {
                         ld = mpd_lsd(*(*q).data.offset(0_isize));
                         if ld == 0 as mpd_uint_t || ld == 5 as mpd_uint_t {
-                            let fresh0 = &mut *(*q).data.offset(0_isize);
-                            *fresh0 = (*fresh0).wrapping_add(1 as mpd_uint_t);
+                            *(*q).data.offset(0_isize) = (*(*q).data.offset(0_isize)).wrapping_add(1 as mpd_uint_t);
                         }
                     } else if action == SET_IDEAL_EXP as ::core::ffi::c_int
                         && shift > 0 as mpd_ssize_t

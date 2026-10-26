@@ -624,8 +624,7 @@ pub unsafe extern "C" fn _mpd_basedivmod(
         }
         *q.add(j) = qhat;
         if carry != 0 {
-            let fresh0 = &mut *q.add(j);
-            *fresh0 = (*fresh0).wrapping_sub(1 as mpd_uint_t);
+            *q.add(j) = (*q.add(j)).wrapping_sub(1 as mpd_uint_t);
             _mpd_baseadd(
                 u.add(j),
                 u.add(j),
@@ -679,18 +678,16 @@ pub unsafe extern "C" fn _mpd_baseshiftl(
         ph = *(&raw const mpd_pow10 as *const mpd_uint_t).offset(r as isize);
         m = m.wrapping_sub(1);
         n = n.wrapping_sub(1);
-        let fresh0 = m;
-        m = m.wrapping_sub(1);
         _mpd_divmod_pow10(
             &raw mut h,
             &raw mut lprev,
-            *src.add(fresh0),
+            *src.add(m),
             (MPD_RDIGITS as mpd_uint_t).wrapping_sub(r),
         );
+        m = m.wrapping_sub(1);
         if h != 0 as mpd_uint_t {
-            let fresh1 = n;
+            *dest.add(n) = h;
             n = n.wrapping_sub(1);
-            *dest.add(fresh1) = h;
         }
         while m != MPD_SIZE_MAX as mpd_size_t {
             _mpd_divmod_pow10(
@@ -745,18 +742,16 @@ pub unsafe extern "C" fn _mpd_baseshiftl(
         ph = *(&raw const mpd_pow10 as *const mpd_uint_t).offset(r as isize);
         m = m.wrapping_sub(1);
         n = n.wrapping_sub(1);
-        let fresh0 = m;
-        m = m.wrapping_sub(1);
         _mpd_divmod_pow10(
             &raw mut h,
             &raw mut lprev,
-            *src.add(fresh0),
+            *src.add(m),
             (MPD_RDIGITS as mpd_uint_t).wrapping_sub(r),
         );
+        m = m.wrapping_sub(1);
         if h != 0 as mpd_uint_t {
-            let fresh1 = n;
+            *dest.add(n) = h;
             n = n.wrapping_sub(1);
-            *dest.add(fresh1) = h;
         }
         while m != MPD_SIZE_MAX as mpd_size_t {
             _mpd_divmod_pow10(

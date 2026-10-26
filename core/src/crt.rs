@@ -66,16 +66,13 @@ unsafe extern "C" fn _crt_add3(w: *mut mpd_uint_t, v: *mut mpd_uint_t) {
     let carry: mpd_uint_t = (*w.offset(0_isize) < *v.offset(0_isize)) as ::core::ffi::c_int as mpd_uint_t;
     *w.offset(1_isize) = (*w.offset(1_isize)).wrapping_add(*v.offset(1_isize));
     if *w.offset(1_isize) < *v.offset(1_isize) {
-        let fresh0 = &mut *w.offset(2_isize);
-        *fresh0 = (*fresh0).wrapping_add(1);
+        *w.offset(2_isize) = (*w.offset(2_isize)).wrapping_add(1);
     }
     *w.offset(1_isize) = (*w.offset(1_isize)).wrapping_add(carry);
     if *w.offset(1_isize) < carry {
-        let fresh1 = &mut *w.offset(2_isize);
-        *fresh1 = (*fresh1).wrapping_add(1);
+        *w.offset(2_isize) = (*w.offset(2_isize)).wrapping_add(1);
     }
-    let fresh2 = &mut *w.offset(2_isize);
-    *fresh2 = (*fresh2).wrapping_add(*v.offset(2_isize));
+    *w.offset(2_isize) = (*w.offset(2_isize)).wrapping_add(*v.offset(2_isize));
 }
 unsafe extern "C" fn _crt_div3(
     w: *mut mpd_uint_t,

@@ -692,15 +692,13 @@ unsafe extern "C" fn word_to_string(
     match n {
         20 => {
             if s == dot {
-                let fresh0 = s;
-                s = s.offset(1);
-                *fresh0 = '.' as i32 as ::core::ffi::c_char;
+                *s = '.' as i32 as ::core::ffi::c_char;
+                s = s.add(1);
             }
-            let fresh1 = s;
-            s = s.offset(1);
-            *fresh1 = ('0' as i32
+            *s = ('0' as i32
                 + x.wrapping_div(10000000000000000000 as mpd_uint_t) as ::core::ffi::c_char
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
+            s = s.add(1);
             x = x.wrapping_rem(10000000000000000000_u64) as mpd_uint_t;
             current_block_78 = 1;
         }
@@ -764,263 +762,225 @@ unsafe extern "C" fn word_to_string(
     }
     if current_block_78 == 1 {
         if s == dot {
-            let fresh2 = s;
-            s = s.offset(1);
-            *fresh2 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh3 = s;
-        s = s.offset(1);
-        *fresh3 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(1000000000000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(1000000000000000000_u64) as mpd_uint_t;
         current_block_78 = 2;
     }
     if current_block_78 == 2 {
         if s == dot {
-            let fresh4 = s;
-            s = s.offset(1);
-            *fresh4 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh5 = s;
-        s = s.offset(1);
-        *fresh5 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(100000000000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(100000000000000000_u64) as mpd_uint_t;
         current_block_78 = 3;
     }
     if current_block_78 == 3 {
         if s == dot {
-            let fresh6 = s;
-            s = s.offset(1);
-            *fresh6 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh7 = s;
-        s = s.offset(1);
-        *fresh7 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(10000000000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(10000000000000000_u64) as mpd_uint_t;
         current_block_78 = 4;
     }
     if current_block_78 == 4 {
         if s == dot {
-            let fresh8 = s;
-            s = s.offset(1);
-            *fresh8 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh9 = s;
-        s = s.offset(1);
-        *fresh9 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(1000000000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(1000000000000000_u64) as mpd_uint_t;
         current_block_78 = 5;
     }
     if current_block_78 == 5 {
         if s == dot {
-            let fresh10 = s;
-            s = s.offset(1);
-            *fresh10 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh11 = s;
-        s = s.offset(1);
-        *fresh11 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(100000000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(100000000000000_u64) as mpd_uint_t;
         current_block_78 = 6;
     }
     if current_block_78 == 6 {
         if s == dot {
-            let fresh12 = s;
-            s = s.offset(1);
-            *fresh12 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh13 = s;
-        s = s.offset(1);
-        *fresh13 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(10000000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(10000000000000_u64) as mpd_uint_t;
         current_block_78 = 7;
     }
     if current_block_78 == 7 {
         if s == dot {
-            let fresh14 = s;
-            s = s.offset(1);
-            *fresh14 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh15 = s;
-        s = s.offset(1);
-        *fresh15 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(1000000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(1000000000000_u64) as mpd_uint_t;
         current_block_78 = 8;
     }
     if current_block_78 == 8 {
         if s == dot {
-            let fresh16 = s;
-            s = s.offset(1);
-            *fresh16 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh17 = s;
-        s = s.offset(1);
-        *fresh17 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(100000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(100000000000_u64) as mpd_uint_t;
         current_block_78 = 9;
     }
     if current_block_78 == 9 {
         if s == dot {
-            let fresh18 = s;
-            s = s.offset(1);
-            *fresh18 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh19 = s;
-        s = s.offset(1);
-        *fresh19 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(10000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(10000000000_u64) as mpd_uint_t as mpd_uint_t;
         current_block_78 = 10;
     }
     if current_block_78 == 10 {
         if s == dot {
-            let fresh20 = s;
-            s = s.offset(1);
-            *fresh20 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh21 = s;
-        s = s.offset(1);
-        *fresh21 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(1000000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(1000000000 as mpd_uint_t);
         current_block_78 = 11;
     }
     if current_block_78 == 11 {
         if s == dot {
-            let fresh22 = s;
-            s = s.offset(1);
-            *fresh22 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh23 = s;
-        s = s.offset(1);
-        *fresh23 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(100000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(100000000 as mpd_uint_t);
         current_block_78 = 12;
     }
     if current_block_78 == 12 {
         if s == dot {
-            let fresh24 = s;
-            s = s.offset(1);
-            *fresh24 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh25 = s;
-        s = s.offset(1);
-        *fresh25 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(10000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(10000000 as mpd_uint_t);
         current_block_78 = 13;
     }
     if current_block_78 == 13 {
         if s == dot {
-            let fresh26 = s;
-            s = s.offset(1);
-            *fresh26 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh27 = s;
-        s = s.offset(1);
-        *fresh27 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(1000000 as mpd_uint_t) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(1000000 as mpd_uint_t);
         current_block_78 = 14;
     }
     if current_block_78 == 14 {
         if s == dot {
-            let fresh28 = s;
-            s = s.offset(1);
-            *fresh28 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh29 = s;
-        s = s.offset(1);
-        *fresh29 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(100000 as mpd_uint_t) as ::core::ffi::c_char as ::core::ffi::c_int)
             as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(100000 as mpd_uint_t);
         current_block_78 = 15;
     }
     if current_block_78 == 15 {
         if s == dot {
-            let fresh30 = s;
-            s = s.offset(1);
-            *fresh30 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh31 = s;
-        s = s.offset(1);
-        *fresh31 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(10000 as mpd_uint_t) as ::core::ffi::c_char as ::core::ffi::c_int)
             as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(10000 as mpd_uint_t);
         current_block_78 = 16;
     }
     if current_block_78 == 16 {
         if s == dot {
-            let fresh32 = s;
-            s = s.offset(1);
-            *fresh32 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh33 = s;
-        s = s.offset(1);
-        *fresh33 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(1000 as mpd_uint_t) as ::core::ffi::c_char as ::core::ffi::c_int)
             as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(1000 as mpd_uint_t);
         current_block_78 = 17;
     }
     if current_block_78 == 17 {
         if s == dot {
-            let fresh34 = s;
-            s = s.offset(1);
-            *fresh34 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh35 = s;
-        s = s.offset(1);
-        *fresh35 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(100 as mpd_uint_t) as ::core::ffi::c_char as ::core::ffi::c_int)
             as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(100 as mpd_uint_t);
         current_block_78 = 18;
     }
     if current_block_78 == 18 {
         if s == dot {
-            let fresh36 = s;
-            s = s.offset(1);
-            *fresh36 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh37 = s;
-        s = s.offset(1);
-        *fresh37 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(10 as mpd_uint_t) as ::core::ffi::c_char as ::core::ffi::c_int)
             as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(10 as mpd_uint_t);
     }
     if s == dot {
-        let fresh38 = s;
-        s = s.offset(1);
-        *fresh38 = '.' as i32 as ::core::ffi::c_char;
+        *s = '.' as i32 as ::core::ffi::c_char;
+        s = s.add(1);
     }
-    let fresh39 = s;
-    s = s.offset(1);
-    *fresh39 = ('0' as i32 + x as ::core::ffi::c_char as ::core::ffi::c_int) as ::core::ffi::c_char;
+    *s = ('0' as i32 + x as ::core::ffi::c_char as ::core::ffi::c_int) as ::core::ffi::c_char;
+    s = s.add(1);
     *s = '\0' as i32 as ::core::ffi::c_char;
     s
 }
@@ -1035,15 +995,13 @@ unsafe extern "C" fn word_to_string(
     match n {
         10 => {
             if s == dot {
-                let fresh0 = s;
-                s = s.offset(1);
-                *fresh0 = '.' as i32 as ::core::ffi::c_char;
+                *s = '.' as i32 as ::core::ffi::c_char;
+                s = s.add(1);
             }
-            let fresh1 = s;
-            s = s.offset(1);
-            *fresh1 = ('0' as i32
+            *s = ('0' as i32
                 + x.wrapping_div(1000000000_u32) as ::core::ffi::c_char
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
+            s = s.add(1);
             x = x.wrapping_rem(1000000000_u32) as mpd_uint_t;
             current_block_38 = 1;
         }
@@ -1077,123 +1035,105 @@ unsafe extern "C" fn word_to_string(
     }
     if current_block_38 == 1 {
         if s == dot {
-            let fresh2 = s;
-            s = s.offset(1);
-            *fresh2 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh3 = s;
-        s = s.offset(1);
-        *fresh3 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(100000000_u32) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(100000000_u32) as mpd_uint_t;
         current_block_38 = 2;
     }
     if current_block_38 == 2 {
         if s == dot {
-            let fresh4 = s;
-            s = s.offset(1);
-            *fresh4 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh5 = s;
-        s = s.offset(1);
-        *fresh5 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(10000000_u32) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(10000000_u32) as mpd_uint_t;
         current_block_38 = 3;
     }
     if current_block_38 == 3 {
         if s == dot {
-            let fresh6 = s;
-            s = s.offset(1);
-            *fresh6 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh7 = s;
-        s = s.offset(1);
-        *fresh7 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(1000000_u32) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(1000000_u32) as mpd_uint_t;
         current_block_38 = 4;
     }
     if current_block_38 == 4 {
         if s == dot {
-            let fresh8 = s;
-            s = s.offset(1);
-            *fresh8 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh9 = s;
-        s = s.offset(1);
-        *fresh9 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(100000_u32) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(100000_u32) as mpd_uint_t;
         current_block_38 = 5;
     }
     if current_block_38 == 5 {
         if s == dot {
-            let fresh10 = s;
-            s = s.offset(1);
-            *fresh10 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh11 = s;
-        s = s.offset(1);
-        *fresh11 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(10000_u32) as ::core::ffi::c_char
                 as ::core::ffi::c_int) as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(10000_u32) as mpd_uint_t;
         current_block_38 = 6;
     }
     if current_block_38 == 6 {
         if s == dot {
-            let fresh12 = s;
-            s = s.offset(1);
-            *fresh12 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh13 = s;
-        s = s.offset(1);
-        *fresh13 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(1000_u32) as ::core::ffi::c_char as ::core::ffi::c_int)
             as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(1000_u32) as mpd_uint_t as mpd_uint_t;
         current_block_38 = 7;
     }
     if current_block_38 == 7 {
         if s == dot {
-            let fresh14 = s;
-            s = s.offset(1);
-            *fresh14 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh15 = s;
-        s = s.offset(1);
-        *fresh15 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(100_u32) as ::core::ffi::c_char as ::core::ffi::c_int)
             as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(100_u32) as mpd_uint_t as mpd_uint_t;
         current_block_38 = 8;
     }
     if current_block_38 == 8 {
         if s == dot {
-            let fresh16 = s;
-            s = s.offset(1);
-            *fresh16 = '.' as i32 as ::core::ffi::c_char;
+            *s = '.' as i32 as ::core::ffi::c_char;
+            s = s.add(1);
         }
-        let fresh17 = s;
-        s = s.offset(1);
-        *fresh17 = ('0' as i32
+        *s = ('0' as i32
             + x.wrapping_div(10_u32) as ::core::ffi::c_char as ::core::ffi::c_int)
             as ::core::ffi::c_char;
+        s = s.add(1);
         x = x.wrapping_rem(10_u32) as mpd_uint_t as mpd_uint_t;
     }
     if s == dot {
-        let fresh18 = s;
-        s = s.offset(1);
-        *fresh18 = '.' as i32 as ::core::ffi::c_char;
+        *s = '.' as i32 as ::core::ffi::c_char;
+        s = s.add(1);
     }
-    let fresh19 = s;
-    s = s.offset(1);
-    *fresh19 = ('0' as i32 + x as ::core::ffi::c_char as ::core::ffi::c_int) as ::core::ffi::c_char;
+    *s = ('0' as i32 + x as ::core::ffi::c_char as ::core::ffi::c_int) as ::core::ffi::c_char;
+    s = s.add(1);
     *s = '\0' as i32 as ::core::ffi::c_char;
     s
 }
@@ -1206,9 +1146,8 @@ unsafe extern "C" fn exp_to_string(
         sign = '-' as i32 as ::core::ffi::c_char;
         x = -x;
     }
-    let fresh0 = s;
-    s = s.offset(1);
-    *fresh0 = sign;
+    *s = sign;
+    s = s.add(1);
     word_to_string(
         s,
         x as mpd_uint_t,
@@ -1297,17 +1236,14 @@ unsafe extern "C" fn _mpd_to_string(
             return -(1 as ::core::ffi::c_int) as mpd_ssize_t;
         }
         if mpd_isnegative(dec) != 0 {
-            let fresh0 = cp;
-            cp = cp.offset(1);
-            *fresh0 = '-' as i32 as ::core::ffi::c_char;
+            *cp = '-' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         } else if flags & MPD_FMT_SIGN_SPACE != 0 {
-            let fresh1 = cp;
-            cp = cp.offset(1);
-            *fresh1 = ' ' as i32 as ::core::ffi::c_char;
+            *cp = ' ' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         } else if flags & MPD_FMT_SIGN_PLUS != 0 {
-            let fresh2 = cp;
-            cp = cp.offset(1);
-            *fresh2 = '+' as i32 as ::core::ffi::c_char;
+            *cp = '+' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         }
         if mpd_isnan(dec) != 0 {
             if mpd_isqnan(dec) != 0 {
@@ -1365,30 +1301,24 @@ unsafe extern "C" fn _mpd_to_string(
             return -(1 as ::core::ffi::c_int) as mpd_ssize_t;
         }
         if mpd_isnegative(dec) != 0 && !(flags & MPD_FMT_SIGN_COERCE != 0 && mpd_iszero(dec) != 0) {
-            let fresh3 = cp;
-            cp = cp.offset(1);
-            *fresh3 = '-' as i32 as ::core::ffi::c_char;
+            *cp = '-' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         } else if flags & MPD_FMT_SIGN_SPACE != 0 {
-            let fresh4 = cp;
-            cp = cp.offset(1);
-            *fresh4 = ' ' as i32 as ::core::ffi::c_char;
+            *cp = ' ' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         } else if flags & MPD_FMT_SIGN_PLUS != 0 {
-            let fresh5 = cp;
-            cp = cp.offset(1);
-            *fresh5 = '+' as i32 as ::core::ffi::c_char;
+            *cp = '+' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         }
         if dplace <= 0 as mpd_ssize_t {
-            let fresh6 = cp;
-            cp = cp.offset(1);
-            *fresh6 = '0' as i32 as ::core::ffi::c_char;
-            let fresh7 = cp;
-            cp = cp.offset(1);
-            *fresh7 = '.' as i32 as ::core::ffi::c_char;
+            *cp = '0' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
+            *cp = '.' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
             k = 0 as mpd_ssize_t;
             while k < -dplace {
-                let fresh8 = cp;
-                cp = cp.offset(1);
-                *fresh8 = '0' as i32 as ::core::ffi::c_char;
+                *cp = '0' as i32 as ::core::ffi::c_char;
+                cp = cp.add(1);
                 k += 1;
             }
             cp = coeff_to_string(cp, dec);
@@ -1396,29 +1326,26 @@ unsafe extern "C" fn _mpd_to_string(
             cp = coeff_to_string(cp, dec);
             k = 0 as mpd_ssize_t;
             while k < dplace - (*dec).digits {
-                let fresh9 = cp;
-                cp = cp.offset(1);
-                *fresh9 = '0' as i32 as ::core::ffi::c_char;
+                *cp = '0' as i32 as ::core::ffi::c_char;
+                cp = cp.add(1);
                 k += 1;
             }
         } else {
             cp = coeff_to_string_dot(cp, cp.offset(dplace as isize), dec);
         }
         if ldigits != dplace || flags & MPD_FMT_EXP != 0 {
-            let fresh10 = cp;
-            cp = cp.offset(1);
-            *fresh10 = (if flags & MPD_FMT_UPPER != 0 {
+            *cp = (if flags & MPD_FMT_UPPER != 0 {
                 'E' as i32
             } else {
                 'e' as i32
             }) as ::core::ffi::c_char;
+            cp = cp.add(1);
             cp = exp_to_string(cp, ldigits - dplace);
         }
     }
     if flags & MPD_FMT_PERCENT != 0 {
-        let fresh11 = cp;
-        cp = cp.offset(1);
-        *fresh11 = '%' as i32 as ::core::ffi::c_char;
+        *cp = '%' as i32 as ::core::ffi::c_char;
+        cp = cp.add(1);
     }
     if cp < decstring.offset(mem as isize) {
     } else {
@@ -1461,17 +1388,14 @@ unsafe extern "C" fn _mpd_to_string(
             return -(1 as mpd_ssize_t);
         }
         if mpd_isnegative(dec) != 0 {
-            let fresh0 = cp;
-            cp = cp.offset(1);
-            *fresh0 = '-' as i32 as ::core::ffi::c_char;
+            *cp = '-' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         } else if flags & MPD_FMT_SIGN_SPACE != 0 {
-            let fresh1 = cp;
-            cp = cp.offset(1);
-            *fresh1 = ' ' as i32 as ::core::ffi::c_char;
+            *cp = ' ' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         } else if flags & MPD_FMT_SIGN_PLUS != 0 {
-            let fresh2 = cp;
-            cp = cp.offset(1);
-            *fresh2 = '+' as i32 as ::core::ffi::c_char;
+            *cp = '+' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         }
         if mpd_isnan(dec) != 0 {
             if mpd_isqnan(dec) != 0 {
@@ -1530,30 +1454,24 @@ unsafe extern "C" fn _mpd_to_string(
             return -(1 as mpd_ssize_t);
         }
         if mpd_isnegative(dec) != 0 && !(flags & MPD_FMT_SIGN_COERCE != 0 && mpd_iszero(dec) != 0) {
-            let fresh3 = cp;
-            cp = cp.offset(1);
-            *fresh3 = '-' as i32 as ::core::ffi::c_char;
+            *cp = '-' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         } else if flags & MPD_FMT_SIGN_SPACE != 0 {
-            let fresh4 = cp;
-            cp = cp.offset(1);
-            *fresh4 = ' ' as i32 as ::core::ffi::c_char;
+            *cp = ' ' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         } else if flags & MPD_FMT_SIGN_PLUS != 0 {
-            let fresh5 = cp;
-            cp = cp.offset(1);
-            *fresh5 = '+' as i32 as ::core::ffi::c_char;
+            *cp = '+' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
         }
         if dplace <= 0 as mpd_ssize_t {
-            let fresh6 = cp;
-            cp = cp.offset(1);
-            *fresh6 = '0' as i32 as ::core::ffi::c_char;
-            let fresh7 = cp;
-            cp = cp.offset(1);
-            *fresh7 = '.' as i32 as ::core::ffi::c_char;
+            *cp = '0' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
+            *cp = '.' as i32 as ::core::ffi::c_char;
+            cp = cp.add(1);
             k = 0 as mpd_ssize_t;
             while k < -dplace {
-                let fresh8 = cp;
-                cp = cp.offset(1);
-                *fresh8 = '0' as i32 as ::core::ffi::c_char;
+                *cp = '0' as i32 as ::core::ffi::c_char;
+                cp = cp.add(1);
                 k += 1;
             }
             cp = coeff_to_string(cp, dec);
@@ -1561,29 +1479,26 @@ unsafe extern "C" fn _mpd_to_string(
             cp = coeff_to_string(cp, dec);
             k = 0 as mpd_ssize_t;
             while k < dplace - (*dec).digits {
-                let fresh9 = cp;
-                cp = cp.offset(1);
-                *fresh9 = '0' as i32 as ::core::ffi::c_char;
+                *cp = '0' as i32 as ::core::ffi::c_char;
+                cp = cp.add(1);
                 k += 1;
             }
         } else {
             cp = coeff_to_string_dot(cp, cp.offset(dplace as isize), dec);
         }
         if ldigits != dplace || flags & MPD_FMT_EXP != 0 {
-            let fresh10 = cp;
-            cp = cp.offset(1);
-            *fresh10 = (if flags & MPD_FMT_UPPER != 0 {
+            *cp = (if flags & MPD_FMT_UPPER != 0 {
                 'E' as i32
             } else {
                 'e' as i32
             }) as ::core::ffi::c_char;
+            cp = cp.add(1);
             cp = exp_to_string(cp, ldigits - dplace);
         }
     }
     if flags & MPD_FMT_PERCENT != 0 {
-        let fresh11 = cp;
-        cp = cp.offset(1);
-        *fresh11 = '%' as i32 as ::core::ffi::c_char;
+        *cp = '%' as i32 as ::core::ffi::c_char;
+        cp = cp.add(1);
     }
     if cp < decstring.offset(mem as isize) {
     } else {
@@ -1727,15 +1642,13 @@ unsafe extern "C" fn _mpd_copy_utf8(
             current_block = 2;
         }
         if current_block == 1 {
-            let fresh0 = cp;
-            cp = cp.offset(1);
-            *dest.offset(0_isize) = *fresh0 as ::core::ffi::c_char;
+            *dest.offset(0_isize) = *cp as ::core::ffi::c_char;
+            cp = cp.add(1);
             if !((*cp as ::core::ffi::c_int) < lb as ::core::ffi::c_int
                 || (ub as ::core::ffi::c_int) < *cp as ::core::ffi::c_int)
             {
-                let fresh1 = cp;
-                cp = cp.offset(1);
-                *dest.offset(1_isize) = *fresh1 as ::core::ffi::c_char;
+                *dest.offset(1_isize) = *cp as ::core::ffi::c_char;
+                cp = cp.add(1);
                 i = 2 as ::core::ffi::c_int;
                 loop {
                     if !(i < count) {
@@ -1748,9 +1661,8 @@ unsafe extern "C" fn _mpd_copy_utf8(
                         current_block = 2;
                         break;
                     }
-                    let fresh2 = cp;
-                    cp = cp.offset(1);
-                    *dest.offset(i as isize) = *fresh2 as ::core::ffi::c_char;
+                    *dest.offset(i as isize) = *cp as ::core::ffi::c_char;
+                    cp = cp.add(1);
                     i += 1;
                 }
                 match current_block {
@@ -1769,11 +1681,10 @@ unsafe extern "C" fn _mpd_copy_utf8(
 pub unsafe extern "C" fn mpd_validate_lconv(spec: *mut mpd_spec_t) -> ::core::ffi::c_int {
     let mut cp: *const ::core::ffi::c_char = (*spec).grouping;
     while *cp as ::core::ffi::c_int != '\0' as i32 {
-        let fresh0 = cp;
-        cp = cp.offset(1);
-        if (*fresh0 as ::core::ffi::c_int) < 0 as ::core::ffi::c_int {
+        if (*cp as ::core::ffi::c_int) < 0 as ::core::ffi::c_int {
             return -(1 as ::core::ffi::c_int);
         }
+        cp = cp.add(1);
     }
     let n: size_t = strlen((*spec).dot);
     if n == 0 as size_t || n > 4 as size_t {
@@ -1812,9 +1723,8 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
             || *cp.offset(n as isize) as ::core::ffi::c_int == '^' as i32)
     {
         cp = cp.offset(n as isize);
-        let fresh0 = cp;
-        cp = cp.offset(1);
-        (*spec).align = *fresh0;
+        (*spec).align = *cp;
+        cp = cp.add(1);
         have_align = 1 as ::core::ffi::c_int;
     } else {
         (*spec).fill[0_usize] = ' ' as i32 as ::core::ffi::c_char;
@@ -1824,9 +1734,8 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
             || *cp as ::core::ffi::c_int == '=' as i32
             || *cp as ::core::ffi::c_int == '^' as i32
         {
-            let fresh1 = cp;
-            cp = cp.offset(1);
-            (*spec).align = *fresh1;
+            (*spec).align = *cp;
+            cp = cp.add(1);
             have_align = 1 as ::core::ffi::c_int;
         }
     }
@@ -1834,9 +1743,8 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
         || *cp as ::core::ffi::c_int == '-' as i32
         || *cp as ::core::ffi::c_int == ' ' as i32
     {
-        let fresh2 = cp;
-        cp = cp.offset(1);
-        (*spec).sign = *fresh2;
+        (*spec).sign = *cp;
+        cp = cp.add(1);
     }
     if *cp as ::core::ffi::c_int == 'z' as i32 {
         (*spec).sign_coerce = 1 as ::core::ffi::c_char;
@@ -1847,9 +1755,8 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
             return 0 as ::core::ffi::c_int;
         }
         (*spec).align = 'z' as i32 as ::core::ffi::c_char;
-        let fresh3 = cp;
-        cp = cp.offset(1);
-        (*spec).fill[0_usize] = *fresh3;
+        (*spec).fill[0_usize] = *cp;
+        cp = cp.add(1);
         (*spec).fill[1_usize] = '\0' as i32 as ::core::ffi::c_char;
     }
     if isdigit(*cp as ::core::ffi::c_uchar as ::core::ffi::c_int) != 0 {
@@ -1888,16 +1795,14 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
         || *cp as ::core::ffi::c_int == 'g' as i32
         || *cp as ::core::ffi::c_int == '%' as i32
     {
-        let fresh4 = cp;
-        cp = cp.offset(1);
-        (*spec).type_0 = *fresh4;
+        (*spec).type_0 = *cp;
+        cp = cp.add(1);
     } else if *cp as ::core::ffi::c_int == 'N' as i32 || *cp as ::core::ffi::c_int == 'n' as i32 {
         if *(*spec).sep != 0 {
             return 0 as ::core::ffi::c_int;
         }
-        let fresh5 = cp;
-        cp = cp.offset(1);
-        (*spec).type_0 = *fresh5;
+        (*spec).type_0 = *cp;
+        cp = cp.add(1);
         (*spec).type_0 = (if (*spec).type_0 as ::core::ffi::c_int == 'N' as i32 {
             'G' as i32
         } else {
@@ -1944,9 +1849,8 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
             || *cp.offset(n as isize) as ::core::ffi::c_int == '^' as i32)
     {
         cp = cp.offset(n as isize);
-        let fresh0 = cp;
-        cp = cp.offset(1);
-        (*spec).align = *fresh0;
+        (*spec).align = *cp;
+        cp = cp.add(1);
         have_align = 1 as ::core::ffi::c_int;
     } else {
         (*spec).fill[0_usize] = ' ' as i32 as ::core::ffi::c_char;
@@ -1956,9 +1860,8 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
             || *cp as ::core::ffi::c_int == '=' as i32
             || *cp as ::core::ffi::c_int == '^' as i32
         {
-            let fresh1 = cp;
-            cp = cp.offset(1);
-            (*spec).align = *fresh1;
+            (*spec).align = *cp;
+            cp = cp.add(1);
             have_align = 1 as ::core::ffi::c_int;
         }
     }
@@ -1966,9 +1869,8 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
         || *cp as ::core::ffi::c_int == '-' as i32
         || *cp as ::core::ffi::c_int == ' ' as i32
     {
-        let fresh2 = cp;
-        cp = cp.offset(1);
-        (*spec).sign = *fresh2;
+        (*spec).sign = *cp;
+        cp = cp.add(1);
     }
     if *cp as ::core::ffi::c_int == 'z' as i32 {
         (*spec).sign_coerce = 1 as ::core::ffi::c_char;
@@ -1979,9 +1881,8 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
             return 0 as ::core::ffi::c_int;
         }
         (*spec).align = 'z' as i32 as ::core::ffi::c_char;
-        let fresh3 = cp;
-        cp = cp.offset(1);
-        (*spec).fill[0_usize] = *fresh3;
+        (*spec).fill[0_usize] = *cp;
+        cp = cp.add(1);
         (*spec).fill[1_usize] = '\0' as i32 as ::core::ffi::c_char;
     }
     if isdigit(*cp as ::core::ffi::c_uchar as ::core::ffi::c_int) != 0 {
@@ -2020,16 +1921,14 @@ pub unsafe extern "C" fn mpd_parse_fmt_str(
         || *cp as ::core::ffi::c_int == 'g' as i32
         || *cp as ::core::ffi::c_int == '%' as i32
     {
-        let fresh4 = cp;
-        cp = cp.offset(1);
-        (*spec).type_0 = *fresh4;
+        (*spec).type_0 = *cp;
+        cp = cp.add(1);
     } else if *cp as ::core::ffi::c_int == 'N' as i32 || *cp as ::core::ffi::c_int == 'n' as i32 {
         if *(*spec).sep != 0 {
             return 0 as ::core::ffi::c_int;
         }
-        let fresh5 = cp;
-        cp = cp.offset(1);
-        (*spec).type_0 = *fresh5;
+        (*spec).type_0 = *cp;
+        cp = cp.add(1);
         (*spec).type_0 = (if (*spec).type_0 as ::core::ffi::c_int == 'N' as i32 {
             'G' as i32
         } else {
@@ -2279,9 +2178,8 @@ unsafe extern "C" fn _mpd_apply_lconv(
         || *dp as ::core::ffi::c_int == '-' as i32
         || *dp as ::core::ffi::c_int == ' ' as i32
     {
-        let fresh0 = dp;
-        dp = dp.offset(1);
-        sign = fresh0;
+        sign = dp;
+        dp = dp.add(1);
     }
     if isdigit(*dp as ::core::ffi::c_uchar as ::core::ffi::c_int) != 0 {
     } else {
@@ -2289,9 +2187,8 @@ unsafe extern "C" fn _mpd_apply_lconv(
             b"isdigit((unsigned char)*dp)\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    let fresh1 = dp;
-    dp = dp.offset(1);
-    let intpart: *const ::core::ffi::c_char = fresh1;
+    let intpart: *const ::core::ffi::c_char = dp;
+    dp = dp.add(1);
     while isdigit(*dp as ::core::ffi::c_uchar as ::core::ffi::c_int) != 0 {
         dp = dp.offset(1);
     }
@@ -2338,9 +2235,8 @@ unsafe extern "C" fn _mpd_apply_lconv(
         || *dp as ::core::ffi::c_int == '-' as i32
         || *dp as ::core::ffi::c_int == ' ' as i32
     {
-        let fresh0 = dp;
-        dp = dp.offset(1);
-        sign = fresh0;
+        sign = dp;
+        dp = dp.add(1);
     }
     if isdigit(*dp as ::core::ffi::c_uchar as ::core::ffi::c_int) != 0 {
     } else {
@@ -2348,9 +2244,8 @@ unsafe extern "C" fn _mpd_apply_lconv(
             b"isdigit((unsigned char)*dp)\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    let fresh1 = dp;
-    dp = dp.offset(1);
-    let intpart: *const ::core::ffi::c_char = fresh1;
+    let intpart: *const ::core::ffi::c_char = dp;
+    dp = dp.add(1);
     while isdigit(*dp as ::core::ffi::c_uchar as ::core::ffi::c_int) != 0 {
         dp = dp.offset(1);
     }
@@ -3167,9 +3062,8 @@ pub unsafe extern "C" fn mpd_lsnprint_flags(
     if cp != dest.offset(1_isize) {
         cp = cp.offset(-2_isize);
     }
-    let fresh0 = cp;
-    cp = cp.offset(1);
-    *fresh0 = ']' as i32 as ::core::ffi::c_char;
+    *cp = ']' as i32 as ::core::ffi::c_char;
+    cp = cp.add(1);
     *cp = '\0' as i32 as ::core::ffi::c_char;
     cp.offset_from(dest) as i64 as ::core::ffi::c_int
 }
@@ -3216,9 +3110,8 @@ pub unsafe extern "C" fn mpd_lsnprint_flags(
     if cp != dest.offset(1_isize) {
         cp = cp.offset(-2_isize);
     }
-    let fresh0 = cp;
-    cp = cp.offset(1);
-    *fresh0 = ']' as i32 as ::core::ffi::c_char;
+    *cp = ']' as i32 as ::core::ffi::c_char;
+    cp = cp.add(1);
     *cp = '\0' as i32 as ::core::ffi::c_char;
     cp.offset_from(dest) as ::core::ffi::c_int
 }
@@ -3283,9 +3176,8 @@ pub unsafe extern "C" fn mpd_lsnprint_signals(
     if cp != dest.offset(1_isize) {
         cp = cp.offset(-2_isize);
     }
-    let fresh0 = cp;
-    cp = cp.offset(1);
-    *fresh0 = ']' as i32 as ::core::ffi::c_char;
+    *cp = ']' as i32 as ::core::ffi::c_char;
+    cp = cp.add(1);
     *cp = '\0' as i32 as ::core::ffi::c_char;
     cp.offset_from(dest) as i64 as ::core::ffi::c_int
 }
@@ -3350,9 +3242,8 @@ pub unsafe extern "C" fn mpd_lsnprint_signals(
     if cp != dest.offset(1_isize) {
         cp = cp.offset(-2_isize);
     }
-    let fresh0 = cp;
-    cp = cp.offset(1);
-    *fresh0 = ']' as i32 as ::core::ffi::c_char;
+    *cp = ']' as i32 as ::core::ffi::c_char;
+    cp = cp.add(1);
     *cp = '\0' as i32 as ::core::ffi::c_char;
     cp.offset_from(dest) as ::core::ffi::c_int
 }
