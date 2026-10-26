@@ -11,7 +11,7 @@
 #
 # Environment:
 #   CRATE           crate to test: LABEL (default, c2rust/out/LABEL/mpdec)
-#                   or root (the crate of the repository root)
+#                   or root (mpdecimal-sys, sys/, on mpdecimal-core)
 #   FEATURES        cargo features of the crate, e.g. test-hooks
 #   RUST_TOOLCHAIN  toolchain for the generated crate (default below)
 #   RUST_TARGET     cargo --target triple for cross builds
@@ -35,8 +35,8 @@ label=${1:?usage: c2rust/test-short.sh LABEL}
 : "${FEATURES:=}"
 work=$here/work/$label
 if [ "$CRATE" = root ]; then
-    crate=$root
-    staticlib=libmpdecimal.a
+    crate=$root/sys
+    staticlib=libmpdecimal_sys.a
 else
     crate=$here/out/$CRATE/mpdec
     staticlib=libmpdec.a

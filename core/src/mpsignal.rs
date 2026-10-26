@@ -107,7 +107,6 @@ use crate::mpdecimal::mpd_qexport_u32;
 use crate::mpdecimal::mpd_qsset_i64;
 #[cfg(target_pointer_width = "64")]
 use crate::mpdecimal::mpd_qsset_u64;
-#[no_mangle]
 pub unsafe extern "C" fn mpd_format(
     mut dec: *const mpd_t,
     mut fmt: *const ::core::ffi::c_char,
@@ -119,7 +118,6 @@ pub unsafe extern "C" fn mpd_format(
     mpd_addstatus_raise(ctx, status);
     return ret;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_import_u16(
     mut result: *mut mpd_t,
     mut srcdata: *const uint16_t,
@@ -132,7 +130,6 @@ pub unsafe extern "C" fn mpd_import_u16(
     mpd_qimport_u16(result, srcdata, srclen, srcsign, base, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_import_u32(
     mut result: *mut mpd_t,
     mut srcdata: *const uint32_t,
@@ -145,7 +142,6 @@ pub unsafe extern "C" fn mpd_import_u32(
     mpd_qimport_u32(result, srcdata, srclen, srcsign, base, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_export_u16(
     mut rdata: *mut *mut uint16_t,
     mut rlen: size_t,
@@ -159,7 +155,6 @@ pub unsafe extern "C" fn mpd_export_u16(
     mpd_addstatus_raise(ctx, status);
     return n;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_export_u32(
     mut rdata: *mut *mut uint32_t,
     mut rlen: size_t,
@@ -173,13 +168,11 @@ pub unsafe extern "C" fn mpd_export_u32(
     mpd_addstatus_raise(ctx, status);
     return n;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_finalize(mut result: *mut mpd_t, mut ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qfinalize(result, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_check_nan(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -192,7 +185,6 @@ pub unsafe extern "C" fn mpd_check_nan(
     }
     return 0 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_check_nans(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -206,7 +198,6 @@ pub unsafe extern "C" fn mpd_check_nans(
     }
     return 0 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_set_string(
     mut result: *mut mpd_t,
     mut s: *const ::core::ffi::c_char,
@@ -216,13 +207,11 @@ pub unsafe extern "C" fn mpd_set_string(
     mpd_qset_string(result, s, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_maxcoeff(mut result: *mut mpd_t, mut ctx: *mut mpd_context_t) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qmaxcoeff(result, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sset_ssize(
     mut result: *mut mpd_t,
     mut a: mpd_ssize_t,
@@ -232,7 +221,6 @@ pub unsafe extern "C" fn mpd_sset_ssize(
     mpd_qsset_ssize(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sset_i32(
     mut result: *mut mpd_t,
     mut a: int32_t,
@@ -243,7 +231,6 @@ pub unsafe extern "C" fn mpd_sset_i32(
     mpd_addstatus_raise(ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sset_i64(
     mut result: *mut mpd_t,
     mut a: int64_t,
@@ -253,7 +240,6 @@ pub unsafe extern "C" fn mpd_sset_i64(
     mpd_qsset_i64(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sset_uint(
     mut result: *mut mpd_t,
     mut a: mpd_uint_t,
@@ -263,7 +249,6 @@ pub unsafe extern "C" fn mpd_sset_uint(
     mpd_qsset_uint(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sset_u32(
     mut result: *mut mpd_t,
     mut a: uint32_t,
@@ -274,7 +259,6 @@ pub unsafe extern "C" fn mpd_sset_u32(
     mpd_addstatus_raise(ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sset_u64(
     mut result: *mut mpd_t,
     mut a: uint64_t,
@@ -284,7 +268,6 @@ pub unsafe extern "C" fn mpd_sset_u64(
     mpd_qsset_u64(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_set_ssize(
     mut result: *mut mpd_t,
     mut a: mpd_ssize_t,
@@ -294,7 +277,6 @@ pub unsafe extern "C" fn mpd_set_ssize(
     mpd_qset_ssize(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_set_i32(
     mut result: *mut mpd_t,
     mut a: int32_t,
@@ -304,7 +286,6 @@ pub unsafe extern "C" fn mpd_set_i32(
     mpd_qset_i32(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_set_i64(
     mut result: *mut mpd_t,
     mut a: int64_t,
@@ -314,7 +295,6 @@ pub unsafe extern "C" fn mpd_set_i64(
     mpd_qset_i64(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_set_uint(
     mut result: *mut mpd_t,
     mut a: mpd_uint_t,
@@ -324,7 +304,6 @@ pub unsafe extern "C" fn mpd_set_uint(
     mpd_qset_uint(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_set_u32(
     mut result: *mut mpd_t,
     mut a: uint32_t,
@@ -334,7 +313,6 @@ pub unsafe extern "C" fn mpd_set_u32(
     mpd_qset_u32(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_set_u64(
     mut result: *mut mpd_t,
     mut a: uint64_t,
@@ -344,7 +322,6 @@ pub unsafe extern "C" fn mpd_set_u64(
     mpd_qset_u64(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_get_ssize(
     mut a: *const mpd_t,
     mut ctx: *mut mpd_context_t,
@@ -355,7 +332,6 @@ pub unsafe extern "C" fn mpd_get_ssize(
     mpd_addstatus_raise(ctx, status);
     return ret;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_get_i32(mut a: *const mpd_t, mut ctx: *mut mpd_context_t) -> int32_t {
     let mut status: uint32_t = 0 as uint32_t;
     let mut ret: int32_t = 0;
@@ -363,7 +339,6 @@ pub unsafe extern "C" fn mpd_get_i32(mut a: *const mpd_t, mut ctx: *mut mpd_cont
     mpd_addstatus_raise(ctx, status);
     return ret;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_get_i64(mut a: *const mpd_t, mut ctx: *mut mpd_context_t) -> int64_t {
     let mut status: uint32_t = 0 as uint32_t;
     let mut ret: int64_t = 0;
@@ -371,7 +346,6 @@ pub unsafe extern "C" fn mpd_get_i64(mut a: *const mpd_t, mut ctx: *mut mpd_cont
     mpd_addstatus_raise(ctx, status);
     return ret;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_get_uint(
     mut a: *const mpd_t,
     mut ctx: *mut mpd_context_t,
@@ -382,7 +356,6 @@ pub unsafe extern "C" fn mpd_get_uint(
     mpd_addstatus_raise(ctx, status);
     return ret;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_abs_uint(
     mut a: *const mpd_t,
     mut ctx: *mut mpd_context_t,
@@ -393,7 +366,6 @@ pub unsafe extern "C" fn mpd_abs_uint(
     mpd_addstatus_raise(ctx, status);
     return ret;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_get_u32(mut a: *const mpd_t, mut ctx: *mut mpd_context_t) -> uint32_t {
     let mut status: uint32_t = 0 as uint32_t;
     let mut ret: uint32_t = 0;
@@ -401,7 +373,6 @@ pub unsafe extern "C" fn mpd_get_u32(mut a: *const mpd_t, mut ctx: *mut mpd_cont
     mpd_addstatus_raise(ctx, status);
     return ret;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_get_u64(mut a: *const mpd_t, mut ctx: *mut mpd_context_t) -> uint64_t {
     let mut status: uint32_t = 0 as uint32_t;
     let mut ret: uint64_t = 0;
@@ -409,7 +380,6 @@ pub unsafe extern "C" fn mpd_get_u64(mut a: *const mpd_t, mut ctx: *mut mpd_cont
     mpd_addstatus_raise(ctx, status);
     return ret;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_and(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -420,7 +390,6 @@ pub unsafe extern "C" fn mpd_and(
     mpd_qand(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_copy(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -431,7 +400,6 @@ pub unsafe extern "C" fn mpd_copy(
         mpd_addstatus_raise(ctx, status);
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_canonical(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -439,7 +407,6 @@ pub unsafe extern "C" fn mpd_canonical(
 ) {
     mpd_copy(result, a, ctx);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_copy_abs(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -450,7 +417,6 @@ pub unsafe extern "C" fn mpd_copy_abs(
         mpd_addstatus_raise(ctx, status);
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_copy_negate(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -461,7 +427,6 @@ pub unsafe extern "C" fn mpd_copy_negate(
         mpd_addstatus_raise(ctx, status);
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_copy_sign(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -473,7 +438,6 @@ pub unsafe extern "C" fn mpd_copy_sign(
         mpd_addstatus_raise(ctx, status);
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_invert(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -483,7 +447,6 @@ pub unsafe extern "C" fn mpd_invert(
     mpd_qinvert(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_logb(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -493,7 +456,6 @@ pub unsafe extern "C" fn mpd_logb(
     mpd_qlogb(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_or(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -504,7 +466,6 @@ pub unsafe extern "C" fn mpd_or(
     mpd_qor(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_rotate(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -515,7 +476,6 @@ pub unsafe extern "C" fn mpd_rotate(
     mpd_qrotate(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_scaleb(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -526,7 +486,6 @@ pub unsafe extern "C" fn mpd_scaleb(
     mpd_qscaleb(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_shiftl(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -537,7 +496,6 @@ pub unsafe extern "C" fn mpd_shiftl(
     mpd_qshiftl(result, a, n, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_shiftr(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -550,7 +508,6 @@ pub unsafe extern "C" fn mpd_shiftr(
     mpd_addstatus_raise(ctx, status);
     return rnd;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_shiftn(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -561,7 +518,6 @@ pub unsafe extern "C" fn mpd_shiftn(
     mpd_qshiftn(result, a, n, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_shift(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -572,7 +528,6 @@ pub unsafe extern "C" fn mpd_shift(
     mpd_qshift(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_xor(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -583,7 +538,6 @@ pub unsafe extern "C" fn mpd_xor(
     mpd_qxor(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_abs(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -593,7 +547,6 @@ pub unsafe extern "C" fn mpd_abs(
     mpd_qabs(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_cmp(
     mut a: *const mpd_t,
     mut b: *const mpd_t,
@@ -605,7 +558,6 @@ pub unsafe extern "C" fn mpd_cmp(
     mpd_addstatus_raise(ctx, status);
     return c;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_compare(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -618,7 +570,6 @@ pub unsafe extern "C" fn mpd_compare(
     mpd_addstatus_raise(ctx, status);
     return c;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_compare_signal(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -631,7 +582,6 @@ pub unsafe extern "C" fn mpd_compare_signal(
     mpd_addstatus_raise(ctx, status);
     return c;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_add(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -642,7 +592,6 @@ pub unsafe extern "C" fn mpd_add(
     mpd_qadd(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sub(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -653,7 +602,6 @@ pub unsafe extern "C" fn mpd_sub(
     mpd_qsub(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_add_ssize(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -664,7 +612,6 @@ pub unsafe extern "C" fn mpd_add_ssize(
     mpd_qadd_ssize(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_add_i32(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -675,7 +622,6 @@ pub unsafe extern "C" fn mpd_add_i32(
     mpd_qadd_i32(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_add_i64(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -686,7 +632,6 @@ pub unsafe extern "C" fn mpd_add_i64(
     mpd_qadd_i64(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_add_uint(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -697,7 +642,6 @@ pub unsafe extern "C" fn mpd_add_uint(
     mpd_qadd_uint(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_add_u32(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -708,7 +652,6 @@ pub unsafe extern "C" fn mpd_add_u32(
     mpd_qadd_u32(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_add_u64(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -719,7 +662,6 @@ pub unsafe extern "C" fn mpd_add_u64(
     mpd_qadd_u64(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sub_ssize(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -730,7 +672,6 @@ pub unsafe extern "C" fn mpd_sub_ssize(
     mpd_qsub_ssize(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sub_i32(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -741,7 +682,6 @@ pub unsafe extern "C" fn mpd_sub_i32(
     mpd_qsub_i32(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sub_i64(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -752,7 +692,6 @@ pub unsafe extern "C" fn mpd_sub_i64(
     mpd_qsub_i64(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sub_uint(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -763,7 +702,6 @@ pub unsafe extern "C" fn mpd_sub_uint(
     mpd_qsub_uint(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sub_u32(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -774,7 +712,6 @@ pub unsafe extern "C" fn mpd_sub_u32(
     mpd_qsub_u32(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sub_u64(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -785,7 +722,6 @@ pub unsafe extern "C" fn mpd_sub_u64(
     mpd_qsub_u64(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_div(
     mut q: *mut mpd_t,
     mut a: *const mpd_t,
@@ -796,7 +732,6 @@ pub unsafe extern "C" fn mpd_div(
     mpd_qdiv(q, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_div_ssize(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -807,7 +742,6 @@ pub unsafe extern "C" fn mpd_div_ssize(
     mpd_qdiv_ssize(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_div_i32(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -818,7 +752,6 @@ pub unsafe extern "C" fn mpd_div_i32(
     mpd_qdiv_i32(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_div_i64(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -829,7 +762,6 @@ pub unsafe extern "C" fn mpd_div_i64(
     mpd_qdiv_i64(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_div_uint(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -840,7 +772,6 @@ pub unsafe extern "C" fn mpd_div_uint(
     mpd_qdiv_uint(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_div_u32(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -851,7 +782,6 @@ pub unsafe extern "C" fn mpd_div_u32(
     mpd_qdiv_u32(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_div_u64(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -862,7 +792,6 @@ pub unsafe extern "C" fn mpd_div_u64(
     mpd_qdiv_u64(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_divmod(
     mut q: *mut mpd_t,
     mut r: *mut mpd_t,
@@ -874,7 +803,6 @@ pub unsafe extern "C" fn mpd_divmod(
     mpd_qdivmod(q, r, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_divint(
     mut q: *mut mpd_t,
     mut a: *const mpd_t,
@@ -885,7 +813,6 @@ pub unsafe extern "C" fn mpd_divint(
     mpd_qdivint(q, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_exp(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -895,7 +822,6 @@ pub unsafe extern "C" fn mpd_exp(
     mpd_qexp(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_fma(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -907,7 +833,6 @@ pub unsafe extern "C" fn mpd_fma(
     mpd_qfma(result, a, b, c, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_ln(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -917,7 +842,6 @@ pub unsafe extern "C" fn mpd_ln(
     mpd_qln(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_log10(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -927,7 +851,6 @@ pub unsafe extern "C" fn mpd_log10(
     mpd_qlog10(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_max(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -938,7 +861,6 @@ pub unsafe extern "C" fn mpd_max(
     mpd_qmax(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_max_mag(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -949,7 +871,6 @@ pub unsafe extern "C" fn mpd_max_mag(
     mpd_qmax_mag(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_min(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -960,7 +881,6 @@ pub unsafe extern "C" fn mpd_min(
     mpd_qmin(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_min_mag(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -971,7 +891,6 @@ pub unsafe extern "C" fn mpd_min_mag(
     mpd_qmin_mag(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_minus(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -981,7 +900,6 @@ pub unsafe extern "C" fn mpd_minus(
     mpd_qminus(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_mul(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -992,7 +910,6 @@ pub unsafe extern "C" fn mpd_mul(
     mpd_qmul(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_mul_ssize(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1003,7 +920,6 @@ pub unsafe extern "C" fn mpd_mul_ssize(
     mpd_qmul_ssize(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_mul_i32(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1014,7 +930,6 @@ pub unsafe extern "C" fn mpd_mul_i32(
     mpd_qmul_i32(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_mul_i64(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1025,7 +940,6 @@ pub unsafe extern "C" fn mpd_mul_i64(
     mpd_qmul_i64(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_mul_uint(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1036,7 +950,6 @@ pub unsafe extern "C" fn mpd_mul_uint(
     mpd_qmul_uint(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_mul_u32(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1047,7 +960,6 @@ pub unsafe extern "C" fn mpd_mul_u32(
     mpd_qmul_u32(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_mul_u64(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1058,7 +970,6 @@ pub unsafe extern "C" fn mpd_mul_u64(
     mpd_qmul_u64(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_next_minus(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1068,7 +979,6 @@ pub unsafe extern "C" fn mpd_next_minus(
     mpd_qnext_minus(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_next_plus(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1078,7 +988,6 @@ pub unsafe extern "C" fn mpd_next_plus(
     mpd_qnext_plus(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_next_toward(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1089,7 +998,6 @@ pub unsafe extern "C" fn mpd_next_toward(
     mpd_qnext_toward(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_plus(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1099,7 +1007,6 @@ pub unsafe extern "C" fn mpd_plus(
     mpd_qplus(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_pow(
     mut result: *mut mpd_t,
     mut base: *const mpd_t,
@@ -1110,7 +1017,6 @@ pub unsafe extern "C" fn mpd_pow(
     mpd_qpow(result, base, exp, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_powmod(
     mut result: *mut mpd_t,
     mut base: *const mpd_t,
@@ -1122,7 +1028,6 @@ pub unsafe extern "C" fn mpd_powmod(
     mpd_qpowmod(result, base, exp, mod_0, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_quantize(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1133,7 +1038,6 @@ pub unsafe extern "C" fn mpd_quantize(
     mpd_qquantize(result, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_rescale(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1144,7 +1048,6 @@ pub unsafe extern "C" fn mpd_rescale(
     mpd_qrescale(result, a, exp, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_reduce(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1154,7 +1057,6 @@ pub unsafe extern "C" fn mpd_reduce(
     mpd_qreduce(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_rem(
     mut r: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1165,7 +1067,6 @@ pub unsafe extern "C" fn mpd_rem(
     mpd_qrem(r, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_rem_near(
     mut r: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1176,7 +1077,6 @@ pub unsafe extern "C" fn mpd_rem_near(
     mpd_qrem_near(r, a, b, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_round_to_intx(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1186,7 +1086,6 @@ pub unsafe extern "C" fn mpd_round_to_intx(
     mpd_qround_to_intx(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_round_to_int(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1196,7 +1095,6 @@ pub unsafe extern "C" fn mpd_round_to_int(
     mpd_qround_to_int(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_trunc(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1206,7 +1104,6 @@ pub unsafe extern "C" fn mpd_trunc(
     mpd_qtrunc(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_floor(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1216,7 +1113,6 @@ pub unsafe extern "C" fn mpd_floor(
     mpd_qfloor(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_ceil(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1226,7 +1122,6 @@ pub unsafe extern "C" fn mpd_ceil(
     mpd_qceil(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_sqrt(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,
@@ -1236,7 +1131,6 @@ pub unsafe extern "C" fn mpd_sqrt(
     mpd_qsqrt(result, a, ctx, &raw mut status);
     mpd_addstatus_raise(ctx, status);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_invroot(
     mut result: *mut mpd_t,
     mut a: *const mpd_t,

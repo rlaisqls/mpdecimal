@@ -34,7 +34,7 @@
 # Without LABEL: translate all, then check-oracles.sh, merge.py (CONFIG_64 and
 # CONFIG_32, without and with the test hooks, then the two results with the
 # feature test-hooks) and dedupe.py -> c2rust/work/merged/mpdec, and
-# install.py -> the crate of the repository root.
+# install.py -> core/ (mpdecimal-core).
 
 # The shell reads the whole block before running it: editing this file does
 # not affect a running invocation.

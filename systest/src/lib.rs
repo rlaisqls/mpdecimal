@@ -1,11 +1,11 @@
-//! Compile-time checks of the C ABI of the crate against mpdecimal.h, see
-//! gen.py. `cargo check` is the test.
+//! Compile-time checks of the C ABI of mpdecimal-sys and mpdecimal-core
+//! against mpdecimal.h, see gen.py. `cargo check` is the test.
 
 #![allow(dead_code, non_camel_case_types, non_snake_case, non_upper_case_globals)]
 #![allow(clippy::all)]
 
 mod rs {
-    pub use mpdecimal::{common::*, constants::*, context::*, io::*, mpalloc::*, mpdecimal::*, mpsignal::*};
+    pub use mpdecimal_core::{common::*, constants::*, context::*, io::*, mpalloc::*, mpdecimal::*, mpsignal::*};
 }
 
 /// `a` and `b` agree in the low `bytes` bytes.

@@ -1,0 +1,15 @@
+[package]
+name = "mpdecimal-sys"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["staticlib", "rlib"]
+
+[dependencies]
+mpdecimal-core = { path = "../core", features = ["capi"] }
+
+[features]
+# See core/Cargo.toml. Also exports the internal symbols of the long tests.
+test-hooks = ["mpdecimal-core/test-hooks"]

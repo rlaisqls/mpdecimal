@@ -4,8 +4,9 @@ Phase 1 of the Rust port: translate `libmpdec/*.c` with c2rust and make the
 unmodified upstream C tests pass against the translated library through the
 C ABI. Every translation is produced by the scripts in this directory, and
 every run is appended to [RUNS.md](RUNS.md), so any output can be
-regenerated. The result is the crate of the repository root (`Cargo.toml`,
-`src/`), written by [install.py](install.py).
+regenerated. The result is mpdecimal-core (`core/`), written by
+[install.py](install.py); mpdecimal-sys (`sys/`) exports the C ABI on top of
+it.
 
 ## Configuration matrix
 
@@ -63,11 +64,11 @@ CONFIG_32 can only be translated for a 32-bit target: `mpdecimal.h` requires
 ```sh
 c2rust/transpile-all.sh [LABEL...]   # translate + normalize -> c2rust/out/LABEL/mpdec
                                      # (all labels: also oracles, merge,
-                                     # dedupe, install -> ./Cargo.toml, ./src)
+                                     # dedupe, install -> ./core)
 c2rust/test-all.sh [LABEL...]        # tests/runshort.sh + runshort_alloc.sh
-CRATE=root c2rust/test-all.sh        # the same for the crate of the root
+CRATE=root c2rust/test-all.sh        # the same for mpdecimal-sys (./sys)
 CRATE=root FEATURES=test-hooks c2rust/test-all.sh
-c2rust/test-long.sh LABEL [TEST...]  # testit long tests, root crate with
+c2rust/test-long.sh LABEL [TEST...]  # testit long tests, mpdecimal-sys with
                                      # the feature test-hooks
 c2rust/test-long-all.sh [LABEL...]   # long tests for the test matrix
 ```
@@ -106,10 +107,13 @@ absolute path.
    define are moved to `src/common.rs`, and extern declarations of functions
    and statics that the crate defines become `use` declarations, so that
    rustc checks the calls between modules.
-7. **Installation** ([install.py](install.py)) as the crate of the
-   repository root (package `mpdecimal`, feature `test-hooks`). It stops if
-   a file of the root crate was changed since the last installation.
-8. **Tests** of the root crate on every target of the matrix.
+7. **Installation** ([install.py](install.py)) as `core/` (package
+   `mpdecimal-core`, features `capi` and `test-hooks`). `#[no_mangle]` is
+   removed from the functions of `mpdecimal.h`, which mpdecimal-sys wraps;
+   the globals of `mpdecimal.h` are exported with `capi`, every other symbol
+   with `test-hooks` (the long tests use internal symbols). It stops if a
+   file of `core/` was changed since the last installation.
+8. **Tests** of mpdecimal-sys on every target of the matrix.
 
 ## Translation input
 
@@ -157,16 +161,18 @@ Options that were tried and are not used:
 
 ## Freeze
 
-The root crate is frozen on the short tests (`tests/runshort.sh`,
+The translation is frozen on the short tests (`tests/runshort.sh`,
 `tests/runshort_alloc.sh`): `CRATE=root c2rust/test-all.sh` and
 `CRATE=root FEATURES=test-hooks c2rust/test-all.sh` pass on all nine targets
-of the test matrix. The long tests below are not part of the freeze; they
-were run in part to check that the runner works.
+of the test matrix. This was established before the split into `core/` and
+`sys/`; since the split, the short tests were run on macOS aarch64 only. The
+long tests below are not part of the freeze; they were run in part to check
+that the runner works.
 
 ## Long tests
 
 [test-long.sh](test-long.sh) builds the programs of
-`testit-2.5.1/libmpdec/tests` against the 4.0.1 headers and the root crate
+`testit-2.5.1/libmpdec/tests` against the 4.0.1 headers and mpdecimal-sys
 with the feature `test-hooks` (optimized, with overflow checks and debug
 assertions) and runs them as `runalltests.sh` does. See
 [testit/README.md](testit/README.md) for the two adaptations it applies to a

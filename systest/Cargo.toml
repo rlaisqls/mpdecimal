@@ -4,12 +4,9 @@ version = "0.0.0"
 edition = "2021"
 publish = false
 
-# Not a member of a workspace of the root crate, whose Cargo.toml is written
-# by c2rust/install.py.
-[workspace]
-
 [dependencies]
-mpdecimal = { path = ".." }
+mpdecimal-core = { path = "../core" }
+mpdecimal-sys = { path = "../sys" }
 
 [features]
-test-hooks = ["mpdecimal/test-hooks"]
+test-hooks = ["mpdecimal-sys/test-hooks"]

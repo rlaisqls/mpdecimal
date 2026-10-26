@@ -23,7 +23,7 @@
 # results.txt.
 #
 # Environment:
-#   CRATE           root (default: the crate of the repository root, built
+#   CRATE           root (default: mpdecimal-sys, sys/, built
 #                   with --features test-hooks) or a label whose crate
 #                   c2rust/out/LABEL/mpdec was translated with --test-hooks
 #   RUST_TOOLCHAIN  toolchain for the crate (default below)
@@ -91,8 +91,8 @@ esac
 
 # the crate
 if [ "$CRATE" = root ]; then
-    crate=$root
-    staticlib=libmpdecimal.a
+    crate=$root/sys
+    staticlib=libmpdecimal_sys.a
     features="--features test-hooks"
 else
     crate=$here/out/$CRATE/mpdec

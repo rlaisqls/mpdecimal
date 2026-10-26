@@ -3,5 +3,20 @@
 version = 4
 
 [[package]]
-name = "mpdecimal"
+name = "mpdecimal-core"
 version = "0.0.0"
+
+[[package]]
+name = "mpdecimal-sys"
+version = "0.0.0"
+dependencies = [
+ "mpdecimal-core",
+]
+
+[[package]]
+name = "systest"
+version = "0.0.0"
+dependencies = [
+ "mpdecimal-core",
+ "mpdecimal-sys",
+]

@@ -14,14 +14,12 @@ pub const MPD_IEEE_CONTEXT_MAX_BITS: ::core::ffi::c_int = 512 as ::core::ffi::c_
 pub const MPD_IEEE_CONTEXT_MAX_BITS: ::core::ffi::c_int = 256 as ::core::ffi::c_int;
 pub const MPD_Max_status: ::core::ffi::c_uint =
     (0x8000 as ::core::ffi::c_uint).wrapping_sub(1 as ::core::ffi::c_uint);
-#[no_mangle]
 pub unsafe extern "C" fn mpd_dflt_traphandler(mut ctx: *mut mpd_context_t) {
     mpd_c2rust_raise(SIGFPE);
 }
-#[no_mangle]
+#[cfg_attr(feature = "capi", no_mangle)]
 pub static mut mpd_traphandler: Option<unsafe extern "C" fn(*mut mpd_context_t) -> ()> =
     unsafe { Some(mpd_dflt_traphandler as unsafe extern "C" fn(*mut mpd_context_t) -> ()) };
-#[no_mangle]
 pub unsafe extern "C" fn mpd_setminalloc(mut n: mpd_ssize_t) {
     static mut minalloc_is_set: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     if minalloc_is_set != 0 {
@@ -56,7 +54,6 @@ pub unsafe extern "C" fn mpd_setminalloc(mut n: mpd_ssize_t) {
     MPD_MINALLOC = n;
     minalloc_is_set = 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_init(mut ctx: *mut mpd_context_t, mut prec: mpd_ssize_t) {
     let mut ideal_minalloc: mpd_ssize_t = 0;
     mpd_defaultcontext(ctx);
@@ -74,7 +71,6 @@ pub unsafe extern "C" fn mpd_init(mut ctx: *mut mpd_context_t, mut prec: mpd_ssi
     }
     mpd_setminalloc(ideal_minalloc);
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_maxcontext(mut ctx: *mut mpd_context_t) {
     (*ctx).prec = MPD_MAX_PREC as mpd_ssize_t;
     (*ctx).emax = MPD_MAX_EMAX as mpd_ssize_t;
@@ -86,7 +82,6 @@ pub unsafe extern "C" fn mpd_maxcontext(mut ctx: *mut mpd_context_t) {
     (*ctx).clamp = 0 as ::core::ffi::c_int;
     (*ctx).allcr = 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_defaultcontext(mut ctx: *mut mpd_context_t) {
     (*ctx).prec = (2 as ::core::ffi::c_int * MPD_RDIGITS) as mpd_ssize_t;
     (*ctx).emax = MPD_MAX_EMAX as mpd_ssize_t;
@@ -98,7 +93,6 @@ pub unsafe extern "C" fn mpd_defaultcontext(mut ctx: *mut mpd_context_t) {
     (*ctx).clamp = 0 as ::core::ffi::c_int;
     (*ctx).allcr = 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_basiccontext(mut ctx: *mut mpd_context_t) {
     (*ctx).prec = 9 as mpd_ssize_t;
     (*ctx).emax = MPD_MAX_EMAX as mpd_ssize_t;
@@ -110,7 +104,6 @@ pub unsafe extern "C" fn mpd_basiccontext(mut ctx: *mut mpd_context_t) {
     (*ctx).clamp = 0 as ::core::ffi::c_int;
     (*ctx).allcr = 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_ieee_context(
     mut ctx: *mut mpd_context_t,
     mut bits: ::core::ffi::c_int,
@@ -134,39 +127,30 @@ pub unsafe extern "C" fn mpd_ieee_context(
     (*ctx).allcr = 1 as ::core::ffi::c_int;
     return 0 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_getprec(mut ctx: *const mpd_context_t) -> mpd_ssize_t {
     return (*ctx).prec;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_getemax(mut ctx: *const mpd_context_t) -> mpd_ssize_t {
     return (*ctx).emax;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_getemin(mut ctx: *const mpd_context_t) -> mpd_ssize_t {
     return (*ctx).emin;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_getround(mut ctx: *const mpd_context_t) -> ::core::ffi::c_int {
     return (*ctx).round;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_gettraps(mut ctx: *const mpd_context_t) -> uint32_t {
     return (*ctx).traps;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_getstatus(mut ctx: *const mpd_context_t) -> uint32_t {
     return (*ctx).status;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_getclamp(mut ctx: *const mpd_context_t) -> ::core::ffi::c_int {
     return (*ctx).clamp;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_getcr(mut ctx: *const mpd_context_t) -> ::core::ffi::c_int {
     return (*ctx).allcr;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_qsetprec(
     mut ctx: *mut mpd_context_t,
     mut prec: mpd_ssize_t,
@@ -177,7 +161,6 @@ pub unsafe extern "C" fn mpd_qsetprec(
     (*ctx).prec = prec;
     return 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_qsetemax(
     mut ctx: *mut mpd_context_t,
     mut emax: mpd_ssize_t,
@@ -188,7 +171,6 @@ pub unsafe extern "C" fn mpd_qsetemax(
     (*ctx).emax = emax;
     return 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_qsetemin(
     mut ctx: *mut mpd_context_t,
     mut emin: mpd_ssize_t,
@@ -199,7 +181,6 @@ pub unsafe extern "C" fn mpd_qsetemin(
     (*ctx).emin = emin;
     return 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_qsetround(
     mut ctx: *mut mpd_context_t,
     mut round: ::core::ffi::c_int,
@@ -210,7 +191,6 @@ pub unsafe extern "C" fn mpd_qsetround(
     (*ctx).round = round;
     return 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_qsettraps(
     mut ctx: *mut mpd_context_t,
     mut flags: uint32_t,
@@ -221,7 +201,6 @@ pub unsafe extern "C" fn mpd_qsettraps(
     (*ctx).traps = flags;
     return 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_qsetstatus(
     mut ctx: *mut mpd_context_t,
     mut flags: uint32_t,
@@ -232,7 +211,6 @@ pub unsafe extern "C" fn mpd_qsetstatus(
     (*ctx).status = flags;
     return 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_qsetclamp(
     mut ctx: *mut mpd_context_t,
     mut c: ::core::ffi::c_int,
@@ -243,7 +221,6 @@ pub unsafe extern "C" fn mpd_qsetclamp(
     (*ctx).clamp = c;
     return 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_qsetcr(
     mut ctx: *mut mpd_context_t,
     mut c: ::core::ffi::c_int,
@@ -254,7 +231,6 @@ pub unsafe extern "C" fn mpd_qsetcr(
     (*ctx).allcr = c;
     return 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn mpd_addstatus_raise(mut ctx: *mut mpd_context_t, mut flags: uint32_t) {
     (*ctx).status |= flags;
     if flags & (*ctx).traps != 0 {
