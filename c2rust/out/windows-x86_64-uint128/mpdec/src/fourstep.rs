@@ -251,7 +251,7 @@ pub unsafe extern "C" fn four_step_fnt(
 ) -> ::core::ffi::c_int {
     let mut R: mpd_size_t = 3 as mpd_size_t;
     let mut C: mpd_size_t = n.wrapping_div(3 as mpd_size_t);
-    let mut w3table: [mpd_uint_t; 3] = [0; 3];
+    let mut w3table = ::core::mem::MaybeUninit::<[mpd_uint_t; 3]>::uninit();
     let mut kernel: mpd_uint_t = 0;
     let mut w0: mpd_uint_t = 0;
     let mut w1: mpd_uint_t = 0;
@@ -331,7 +331,7 @@ pub unsafe extern "C" fn inv_four_step_fnt(
 ) -> ::core::ffi::c_int {
     let mut R: mpd_size_t = 3 as mpd_size_t;
     let mut C: mpd_size_t = n.wrapping_div(3 as mpd_size_t);
-    let mut w3table: [mpd_uint_t; 3] = [0; 3];
+    let mut w3table = ::core::mem::MaybeUninit::<[mpd_uint_t; 3]>::uninit();
     let mut kernel: mpd_uint_t = 0;
     let mut w0: mpd_uint_t = 0;
     let mut w1: mpd_uint_t = 0;

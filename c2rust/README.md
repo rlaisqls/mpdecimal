@@ -86,8 +86,9 @@ absolute path.
    relooper labels and `freshN` temporaries are renumbered per item,
    `c_long`/`c_ulong` become fixed-width types of the translation target
    (except in C ABI declarations such as `long mpd_radix(void)`), identity
-   casts that this leaves are removed, `CHAR_MAX` follows `c_char`, the
-   hand-written [shim](shim/shim.rs) is added and the modules are formatted
+   casts that this leaves are removed, `CHAR_MAX` follows `c_char`, local
+   arrays that the C code leaves uninitialized become `MaybeUninit` instead
+   of being zero-filled on every call, the hand-written [shim](shim/shim.rs) is added and the modules are formatted
    with rustfmt.
 4. **Oracles** ([check-oracles.sh](check-oracles.sh)): every translation of
    a configuration is identical to the one that is merged, except as

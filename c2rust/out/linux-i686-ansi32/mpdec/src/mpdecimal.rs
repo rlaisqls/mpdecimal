@@ -1575,14 +1575,15 @@ unsafe extern "C" fn _c32setu64(
     mut sign: uint8_t,
     mut status: *mut uint32_t,
 ) {
-    let mut w: [mpd_uint_t; 3] = [0; 3];
+    let mut w = ::core::mem::MaybeUninit::<[mpd_uint_t; 3]>::uninit();
     let mut q: uint64_t = 0;
     let mut i: ::core::ffi::c_int = 0;
     let mut len: ::core::ffi::c_int = 0;
     len = 0 as ::core::ffi::c_int;
     loop {
         q = u.wrapping_div(MPD_RADIX as uint64_t);
-        w[len as usize] = u.wrapping_sub(q.wrapping_mul(MPD_RADIX as uint64_t)) as mpd_uint_t;
+        (*w.as_mut_ptr())[len as usize] =
+            u.wrapping_sub(q.wrapping_mul(MPD_RADIX as uint64_t)) as mpd_uint_t;
         u = q;
         len += 1;
         if !(u != 0 as uint64_t) {
@@ -1594,7 +1595,7 @@ unsafe extern "C" fn _c32setu64(
     }
     i = 0 as ::core::ffi::c_int;
     while i < len {
-        *(*result).data.offset(i as isize) = w[i as usize];
+        *(*result).data.offset(i as isize) = (*w.as_mut_ptr())[i as usize];
         i += 1;
     }
     mpd_set_flags(result, sign);
@@ -1719,7 +1720,7 @@ unsafe extern "C" fn _mpd_qget_uint(
         alloc: 0,
         data: ::core::ptr::null_mut::<mpd_uint_t>(),
     };
-    let mut tmp_data: [mpd_uint_t; 2] = [0; 2];
+    let mut tmp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 2]>::uninit();
     let mut lo: mpd_uint_t = 0;
     let mut hi: mpd_uint_t = 0;
     if mpd_isspecial(a) != 0 {
@@ -1822,7 +1823,7 @@ unsafe extern "C" fn _c32_qget_u64(
     mut a: *const mpd_t,
     mut status: *mut uint32_t,
 ) -> uint64_t {
-    let mut tmp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tmp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tmp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -1845,9 +1846,9 @@ unsafe extern "C" fn _c32_qget_u64(
         allcr: 0,
     };
     let mut ret: uint64_t = 0;
-    tmp_data[0 as usize] = 709551615 as mpd_uint_t;
-    tmp_data[1 as usize] = 446744073 as mpd_uint_t;
-    tmp_data[2 as usize] = 18 as mpd_uint_t;
+    (*tmp_data.as_mut_ptr())[0 as usize] = 709551615 as mpd_uint_t;
+    (*tmp_data.as_mut_ptr())[1 as usize] = 446744073 as mpd_uint_t;
+    (*tmp_data.as_mut_ptr())[2 as usize] = 18 as mpd_uint_t;
     if mpd_isspecial(a) != 0 {
         *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
         return UINT64_MAX as uint64_t;
@@ -1887,8 +1888,8 @@ unsafe extern "C" fn _c32_qget_u64(
     match tmp.len {
         3 => {
             ret = (ret as u64).wrapping_add(
-                (tmp_data[2 as usize] as uint64_t).wrapping_mul(1000000000000000000 as uint64_t)
-                    as u64,
+                ((*tmp_data.as_mut_ptr())[2 as usize] as uint64_t)
+                    .wrapping_mul(1000000000000000000 as uint64_t) as u64,
             ) as uint64_t;
             current_block_33 = 1;
         }
@@ -1905,12 +1906,13 @@ unsafe extern "C" fn _c32_qget_u64(
     match current_block_33 {
         1 => {
             ret = (ret as u64).wrapping_add(
-                (tmp_data[1 as usize] as uint64_t).wrapping_mul(1000000000 as uint64_t) as u64,
+                ((*tmp_data.as_mut_ptr())[1 as usize] as uint64_t)
+                    .wrapping_mul(1000000000 as uint64_t) as u64,
             ) as uint64_t;
         }
         _ => {}
     }
-    ret = ret.wrapping_add(tmp_data[0 as usize] as uint64_t);
+    ret = ret.wrapping_add((*tmp_data.as_mut_ptr())[0 as usize] as uint64_t);
     return ret;
 }
 unsafe extern "C" fn _c32_qget_i64(mut a: *const mpd_t, mut status: *mut uint32_t) -> int64_t {
@@ -3467,7 +3469,7 @@ pub unsafe extern "C" fn mpd_qrotate(
 ) {
     let mut current_block: u64;
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut tmp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tmp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tmp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -3478,7 +3480,7 @@ pub unsafe extern "C" fn mpd_qrotate(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut tmp_data as *mut mpd_uint_t,
     };
-    let mut big_data: [mpd_uint_t; 64] = [0; 64];
+    let mut big_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut big: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -3489,7 +3491,7 @@ pub unsafe extern "C" fn mpd_qrotate(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut big_data as *mut mpd_uint_t,
     };
-    let mut small_data: [mpd_uint_t; 64] = [0; 64];
+    let mut small_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut small: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -3895,7 +3897,7 @@ unsafe extern "C" fn _mpd_qaddsub(
     let mut current_block: u64;
     let mut big: *const mpd_t = ::core::ptr::null::<mpd_t>();
     let mut small: *const mpd_t = ::core::ptr::null::<mpd_t>();
-    let mut big_aligned_data: [mpd_uint_t; 64] = [0; 64];
+    let mut big_aligned_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut big_aligned: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4179,7 +4181,7 @@ pub unsafe extern "C" fn mpd_qadd_ssize(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4214,7 +4216,7 @@ pub unsafe extern "C" fn mpd_qadd_uint(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4249,7 +4251,7 @@ pub unsafe extern "C" fn mpd_qsub_ssize(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4284,7 +4286,7 @@ pub unsafe extern "C" fn mpd_qsub_uint(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4339,7 +4341,7 @@ pub unsafe extern "C" fn mpd_qadd_i64(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4374,7 +4376,7 @@ pub unsafe extern "C" fn mpd_qadd_u64(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4429,7 +4431,7 @@ pub unsafe extern "C" fn mpd_qsub_i64(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4464,7 +4466,7 @@ pub unsafe extern "C" fn mpd_qsub_u64(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4520,7 +4522,7 @@ unsafe extern "C" fn _mpd_qdiv(
     mut status: *mut uint32_t,
 ) {
     let mut current_block: u64;
-    let mut aligned_data: [mpd_uint_t; 64] = [0; 64];
+    let mut aligned_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut aligned: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4637,7 +4639,7 @@ unsafe extern "C" fn _mpd_qdiv(
                             current_block = 4;
                         }
                     } else {
-                        let mut r_data: [mpd_uint_t; 64] = [0; 64];
+                        let mut r_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
                         let mut r: mpd_t = mpd_t {
                             flags: (0 as ::core::ffi::c_int
                                 | MPD_STATIC as ::core::ffi::c_int
@@ -4709,7 +4711,7 @@ pub unsafe extern "C" fn mpd_qdiv(
     mut status: *mut uint32_t,
 ) {
     let mut current_block: u64;
-    let mut aa_data: [mpd_uint_t; 64] = [0; 64];
+    let mut aa_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut aa: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4720,7 +4722,7 @@ pub unsafe extern "C" fn mpd_qdiv(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut aa_data as *mut mpd_uint_t,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -4823,7 +4825,7 @@ unsafe extern "C" fn _mpd_qdivmod(
     mut status: *mut uint32_t,
 ) {
     let mut current_block: u64;
-    let mut aligned_data: [mpd_uint_t; 64] = [0; 64];
+    let mut aligned_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut aligned: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -5090,7 +5092,7 @@ pub unsafe extern "C" fn mpd_qdivint(
     mut ctx: *const mpd_context_t,
     mut status: *mut uint32_t,
 ) {
-    let mut r_data: [mpd_uint_t; 64] = [0; 64];
+    let mut r_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut r: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -5153,7 +5155,7 @@ pub unsafe extern "C" fn mpd_qdiv_ssize(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -5188,7 +5190,7 @@ pub unsafe extern "C" fn mpd_qdiv_uint(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -5243,7 +5245,7 @@ pub unsafe extern "C" fn mpd_qdiv_i64(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -5278,7 +5280,7 @@ pub unsafe extern "C" fn mpd_qdiv_u64(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -5390,7 +5392,7 @@ unsafe extern "C" fn _mpd_qexp(
         clamp: 0,
         allcr: 0,
     };
-    let mut tmp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tmp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tmp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -5401,7 +5403,7 @@ unsafe extern "C" fn _mpd_qexp(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut tmp_data as *mut mpd_uint_t,
     };
-    let mut sum_data: [mpd_uint_t; 64] = [0; 64];
+    let mut sum_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut sum: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -5568,7 +5570,7 @@ pub unsafe extern "C" fn mpd_qexp(
     mpd_workcontext(&raw mut workctx, ctx);
     workctx.round = MPD_ROUND_HALF_EVEN as ::core::ffi::c_int;
     if (*ctx).allcr != 0 {
-        let mut hi_data: [mpd_uint_t; 64] = [0; 64];
+        let mut hi_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut hi: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -5579,7 +5581,7 @@ pub unsafe extern "C" fn mpd_qexp(
             alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
             data: &raw mut hi_data as *mut mpd_uint_t,
         };
-        let mut lo_data: [mpd_uint_t; 64] = [0; 64];
+        let mut lo_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut lo: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -5590,7 +5592,7 @@ pub unsafe extern "C" fn mpd_qexp(
             alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
             data: &raw mut lo_data as *mut mpd_uint_t,
         };
-        let mut ulp_data: [mpd_uint_t; 64] = [0; 64];
+        let mut ulp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut ulp: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -5601,7 +5603,7 @@ pub unsafe extern "C" fn mpd_qexp(
             alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
             data: &raw mut ulp_data as *mut mpd_uint_t,
         };
-        let mut aa_data: [mpd_uint_t; 64] = [0; 64];
+        let mut aa_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut aa: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -5874,7 +5876,7 @@ pub unsafe extern "C" fn mpd_qln10(
         clamp: 0,
         allcr: 0,
     };
-    let mut tmp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tmp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tmp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -5896,7 +5898,7 @@ pub unsafe extern "C" fn mpd_qln10(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut static10_data as *mut mpd_uint_t,
     };
-    let mut klist: [mpd_ssize_t; 32] = [0; 32];
+    let mut klist = ::core::mem::MaybeUninit::<[mpd_ssize_t; 32]>::uninit();
     let mut rnd: mpd_uint_t = 0;
     let mut shift: mpd_ssize_t = 0;
     let mut i: ::core::ffi::c_int = 0;
@@ -5931,7 +5933,7 @@ pub unsafe extern "C" fn mpd_qln10(
         -(*result).exp,
     );
     while i >= 0 as ::core::ffi::c_int {
-        varcontext.prec = 2 as mpd_ssize_t * klist[i as usize] + 3 as mpd_ssize_t;
+        varcontext.prec = 2 as mpd_ssize_t * (*klist.as_mut_ptr())[i as usize] + 3 as mpd_ssize_t;
         (*result).flags =
             ((*result).flags as ::core::ffi::c_int ^ MPD_NEG as ::core::ffi::c_int) as uint8_t;
         _mpd_qexp(&raw mut tmp, result, &raw mut varcontext, status);
@@ -6893,7 +6895,7 @@ unsafe extern "C" fn _mpd_qln(
         allcr: 0,
     };
     let mut z: *mut mpd_t = result;
-    let mut v_data: [mpd_uint_t; 64] = [0; 64];
+    let mut v_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut v: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -6904,7 +6906,7 @@ unsafe extern "C" fn _mpd_qln(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut v_data as *mut mpd_uint_t,
     };
-    let mut vtmp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut vtmp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut vtmp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -6915,7 +6917,7 @@ unsafe extern "C" fn _mpd_qln(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut vtmp_data as *mut mpd_uint_t,
     };
-    let mut tmp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tmp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tmp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -6926,7 +6928,7 @@ unsafe extern "C" fn _mpd_qln(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut tmp_data as *mut mpd_uint_t,
     };
-    let mut klist: [mpd_ssize_t; 32] = [0; 32];
+    let mut klist = ::core::mem::MaybeUninit::<[mpd_ssize_t; 32]>::uninit();
     let mut maxprec: mpd_ssize_t = 0;
     let mut shift: mpd_ssize_t = 0;
     let mut t: mpd_ssize_t = 0;
@@ -7025,7 +7027,8 @@ unsafe extern "C" fn _mpd_qln(
                     2 as mpd_ssize_t,
                 );
                 while i >= 0 as ::core::ffi::c_int {
-                    varcontext.prec = 2 as mpd_ssize_t * klist[i as usize] + 3 as mpd_ssize_t;
+                    varcontext.prec =
+                        2 as mpd_ssize_t * (*klist.as_mut_ptr())[i as usize] + 3 as mpd_ssize_t;
                     (*z).flags = ((*z).flags as ::core::ffi::c_int ^ MPD_NEG as ::core::ffi::c_int)
                         as uint8_t;
                     _mpd_qexp(&raw mut tmp, z, &raw mut varcontext, status);
@@ -7140,7 +7143,7 @@ pub unsafe extern "C" fn mpd_qln(
     mpd_workcontext(&raw mut workctx, ctx);
     workctx.round = MPD_ROUND_HALF_EVEN as ::core::ffi::c_int;
     if (*ctx).allcr != 0 {
-        let mut hi_data: [mpd_uint_t; 64] = [0; 64];
+        let mut hi_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut hi: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -7151,7 +7154,7 @@ pub unsafe extern "C" fn mpd_qln(
             alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
             data: &raw mut hi_data as *mut mpd_uint_t,
         };
-        let mut lo_data: [mpd_uint_t; 64] = [0; 64];
+        let mut lo_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut lo: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -7162,7 +7165,7 @@ pub unsafe extern "C" fn mpd_qln(
             alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
             data: &raw mut lo_data as *mut mpd_uint_t,
         };
-        let mut ulp_data: [mpd_uint_t; 64] = [0; 64];
+        let mut ulp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut ulp: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -7173,7 +7176,7 @@ pub unsafe extern "C" fn mpd_qln(
             alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
             data: &raw mut ulp_data as *mut mpd_uint_t,
         };
-        let mut aa_data: [mpd_uint_t; 64] = [0; 64];
+        let mut aa_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut aa: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -7300,7 +7303,7 @@ unsafe extern "C" fn _mpd_qlog10(
         clamp: 0,
         allcr: 0,
     };
-    let mut ln10_data: [mpd_uint_t; 64] = [0; 64];
+    let mut ln10_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut ln10: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -7400,7 +7403,7 @@ pub unsafe extern "C" fn mpd_qlog10(
         return;
     }
     if (*ctx).allcr != 0 {
-        let mut hi_data: [mpd_uint_t; 64] = [0; 64];
+        let mut hi_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut hi: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -7411,7 +7414,7 @@ pub unsafe extern "C" fn mpd_qlog10(
             alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
             data: &raw mut hi_data as *mut mpd_uint_t,
         };
-        let mut lo_data: [mpd_uint_t; 64] = [0; 64];
+        let mut lo_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut lo: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -7422,7 +7425,7 @@ pub unsafe extern "C" fn mpd_qlog10(
             alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
             data: &raw mut lo_data as *mut mpd_uint_t,
         };
-        let mut ulp_data: [mpd_uint_t; 64] = [0; 64];
+        let mut ulp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut ulp: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -7433,7 +7436,7 @@ pub unsafe extern "C" fn mpd_qlog10(
             alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
             data: &raw mut ulp_data as *mut mpd_uint_t,
         };
-        let mut aa_data: [mpd_uint_t; 64] = [0; 64];
+        let mut aa_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
         let mut aa: mpd_t = mpd_t {
             flags: (0 as ::core::ffi::c_int
                 | MPD_STATIC as ::core::ffi::c_int
@@ -8267,7 +8270,7 @@ unsafe extern "C" fn _mpd_qmul(
     let mut big: *const mpd_t = a;
     let mut small: *const mpd_t = b;
     let mut rdata: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut rbuf: [mpd_uint_t; 64] = [0; 64];
+    let mut rbuf = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut rsize: mpd_size_t = 0;
     let mut i: mpd_size_t = 0;
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
@@ -8319,7 +8322,7 @@ unsafe extern "C" fn _mpd_qmul(
         }
         i = 0 as mpd_size_t;
         while i < rsize {
-            *(*result).data.offset(i as isize) = rbuf[i as usize];
+            *(*result).data.offset(i as isize) = (*rbuf.as_mut_ptr())[i as usize];
             i = i.wrapping_add(1);
         }
     } else {
@@ -8437,7 +8440,7 @@ pub unsafe extern "C" fn mpd_qmul_ssize(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -8472,7 +8475,7 @@ pub unsafe extern "C" fn mpd_qmul_uint(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -8527,7 +8530,7 @@ pub unsafe extern "C" fn mpd_qmul_i64(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -8562,7 +8565,7 @@ pub unsafe extern "C" fn mpd_qmul_u64(
         clamp: 0,
         allcr: 0,
     };
-    let mut bb_data: [mpd_uint_t; 64] = [0; 64];
+    let mut bb_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut bb: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -8917,7 +8920,7 @@ unsafe extern "C" fn _mpd_qpow_int(
         clamp: 0,
         allcr: 0,
     };
-    let mut tbase_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tbase_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tbase: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -8928,7 +8931,7 @@ unsafe extern "C" fn _mpd_qpow_int(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut tbase_data as *mut mpd_uint_t,
     };
-    let mut texp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut texp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut texp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -9097,7 +9100,7 @@ unsafe extern "C" fn _lower_bound_zeta(
         clamp: 0,
         allcr: 0,
     };
-    let mut scratch_data: [mpd_uint_t; 64] = [0; 64];
+    let mut scratch_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut scratch: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -9207,7 +9210,7 @@ unsafe extern "C" fn _mpd_qpow_real(
         clamp: 0,
         allcr: 0,
     };
-    let mut texp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut texp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut texp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -9385,7 +9388,7 @@ pub unsafe extern "C" fn mpd_qpowmod(
         clamp: 0,
         allcr: 0,
     };
-    let mut tbase_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tbase_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tbase: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -9396,7 +9399,7 @@ pub unsafe extern "C" fn mpd_qpowmod(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut tbase_data as *mut mpd_uint_t,
     };
-    let mut texp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut texp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut texp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -9407,7 +9410,7 @@ pub unsafe extern "C" fn mpd_qpowmod(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut texp_data as *mut mpd_uint_t,
     };
-    let mut tmod_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tmod_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tmod: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -9418,7 +9421,7 @@ pub unsafe extern "C" fn mpd_qpowmod(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut tmod_data as *mut mpd_uint_t,
     };
-    let mut tmp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tmp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tmp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -9732,7 +9735,7 @@ pub unsafe extern "C" fn mpd_qrem(
     mut ctx: *const mpd_context_t,
     mut status: *mut uint32_t,
 ) {
-    let mut q_data: [mpd_uint_t; 64] = [0; 64];
+    let mut q_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut q: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -9789,7 +9792,7 @@ pub unsafe extern "C" fn mpd_qrem_near(
         clamp: 0,
         allcr: 0,
     };
-    let mut btmp_data: [mpd_uint_t; 64] = [0; 64];
+    let mut btmp_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut btmp: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -9800,7 +9803,7 @@ pub unsafe extern "C" fn mpd_qrem_near(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut btmp_data as *mut mpd_uint_t,
     };
-    let mut q_data: [mpd_uint_t; 64] = [0; 64];
+    let mut q_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut q: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -10220,7 +10223,7 @@ unsafe extern "C" fn _mpd_qreciprocal(
         alloc: (*a).alloc,
         data: (*a).data,
     };
-    let mut s_data: [mpd_uint_t; 64] = [0; 64];
+    let mut s_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut s: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -10231,7 +10234,7 @@ unsafe extern "C" fn _mpd_qreciprocal(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut s_data as *mut mpd_uint_t,
     };
-    let mut t_data: [mpd_uint_t; 64] = [0; 64];
+    let mut t_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut t: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -10253,7 +10256,7 @@ unsafe extern "C" fn _mpd_qreciprocal(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut two_data as *mut mpd_uint_t,
     };
-    let mut klist: [mpd_ssize_t; 32] = [0; 32];
+    let mut klist = ::core::mem::MaybeUninit::<[mpd_ssize_t; 32]>::uninit();
     let mut adj: mpd_ssize_t = 0;
     let mut maxprec: mpd_ssize_t = 0;
     let mut initprec: mpd_ssize_t = 0;
@@ -10283,7 +10286,7 @@ unsafe extern "C" fn _mpd_qreciprocal(
     i = recpr_schedule_prec(&raw mut klist as *mut mpd_ssize_t, maxprec, initprec);
     while i >= 0 as ::core::ffi::c_int {
         _mpd_qmul_exact(&raw mut s, z, z, &raw mut maxcontext, status);
-        varcontext.prec = 2 as mpd_ssize_t * klist[i as usize] + 5 as mpd_ssize_t;
+        varcontext.prec = 2 as mpd_ssize_t * (*klist.as_mut_ptr())[i as usize] + 5 as mpd_ssize_t;
         if (*v).digits > varcontext.prec {
             mpd_qshiftr(&raw mut t, v, (*v).digits - varcontext.prec, status);
             t.exp = -varcontext.prec;
@@ -10648,7 +10651,7 @@ unsafe extern "C" fn _mpd_qinvroot(
         alloc: (*a).alloc,
         data: (*a).data,
     };
-    let mut s_data: [mpd_uint_t; 64] = [0; 64];
+    let mut s_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut s: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -10659,7 +10662,7 @@ unsafe extern "C" fn _mpd_qinvroot(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut s_data as *mut mpd_uint_t,
     };
-    let mut t_data: [mpd_uint_t; 64] = [0; 64];
+    let mut t_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut t: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -10692,7 +10695,7 @@ unsafe extern "C" fn _mpd_qinvroot(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut three_data as *mut mpd_uint_t,
     };
-    let mut klist: [mpd_ssize_t; 32] = [0; 32];
+    let mut klist = ::core::mem::MaybeUninit::<[mpd_ssize_t; 32]>::uninit();
     let mut ideal_exp: mpd_ssize_t = 0;
     let mut shift: mpd_ssize_t = 0;
     let mut adj: mpd_ssize_t = 0;
@@ -10755,7 +10758,7 @@ unsafe extern "C" fn _mpd_qinvroot(
         3 as mpd_ssize_t,
     );
     while i >= 0 as ::core::ffi::c_int {
-        varcontext.prec = 2 as mpd_ssize_t * klist[i as usize] + 2 as mpd_ssize_t;
+        varcontext.prec = 2 as mpd_ssize_t * (*klist.as_mut_ptr())[i as usize] + 2 as mpd_ssize_t;
         mpd_qmul(&raw mut s, z, z, &raw mut maxcontext, &raw mut workstatus);
         if (*v).digits > varcontext.prec {
             shift = (*v).digits - varcontext.prec;
@@ -10874,7 +10877,7 @@ unsafe extern "C" fn _mpd_qsqrt(
         clamp: 0,
         allcr: 0,
     };
-    let mut c_data: [mpd_uint_t; 64] = [0; 64];
+    let mut c_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut c: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -10885,7 +10888,7 @@ unsafe extern "C" fn _mpd_qsqrt(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut c_data as *mut mpd_uint_t,
     };
-    let mut q_data: [mpd_uint_t; 64] = [0; 64];
+    let mut q_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut q: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -10896,7 +10899,7 @@ unsafe extern "C" fn _mpd_qsqrt(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut q_data as *mut mpd_uint_t,
     };
-    let mut r_data: [mpd_uint_t; 64] = [0; 64];
+    let mut r_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut r: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -11134,7 +11137,7 @@ pub unsafe extern "C" fn mpd_qsqrt(
     mut status: *mut uint32_t,
 ) {
     let mut current_block: u64;
-    let mut aa_data: [mpd_uint_t; 64] = [0; 64];
+    let mut aa_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut aa: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -11570,7 +11573,7 @@ pub unsafe extern "C" fn mpd_qexport_u16(
     mut status: *mut uint32_t,
 ) -> size_t {
     let mut current_block: u64;
-    let mut tsrc_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tsrc_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tsrc: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int
@@ -11666,7 +11669,7 @@ pub unsafe extern "C" fn mpd_qexport_u32(
     mut status: *mut uint32_t,
 ) -> size_t {
     let mut current_block: u64;
-    let mut tsrc_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tsrc_data = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tsrc: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
             | MPD_STATIC as ::core::ffi::c_int

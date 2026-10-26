@@ -1658,3 +1658,170 @@ python3 -I c2rust/merge.py --feature test-hooks c2rust/work/merged/plain c2rust/
 python3 -I c2rust/dedupe.py c2rust/work/merged/mpdec
 python3 -I c2rust/install.py c2rust/work/merged/mpdec
 ```
+
+## 2026-10-26T22:58:09Z macos-aarch64-uint128
+
+- host: Darwin arm64, C2Rust 0.22.1, LLVM 20.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine uint128 --workdir c2rust/work/macos-aarch64-uint128 -- 
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/macos-aarch64-uint128/mpdec c2rust/work/macos-aarch64-uint128/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/macos-aarch64-uint128/mpdec CONFIG_64
+```
+
+## 2026-10-26T23:01:35Z macos-aarch64-uint128
+
+- host: Darwin arm64, C2Rust 0.22.1, LLVM 20.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine uint128 --workdir c2rust/work/macos-aarch64-uint128 -- 
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/macos-aarch64-uint128/mpdec c2rust/work/macos-aarch64-uint128/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/macos-aarch64-uint128/mpdec CONFIG_64
+```
+
+## 2026-10-26T23:01:39Z macos-x86_64-uint128
+
+- host: Darwin arm64, C2Rust 0.22.1, LLVM 20.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine uint128 --workdir c2rust/work/macos-x86_64-uint128 -- --target=x86_64-apple-darwin
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/macos-x86_64-uint128/mpdec c2rust/work/macos-x86_64-uint128/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/macos-x86_64-uint128/mpdec CONFIG_64
+```
+
+## 2026-10-26T23:01:42Z macos-aarch64-uint128-hooks
+
+- host: Darwin arm64, C2Rust 0.22.1, LLVM 20.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine uint128 --test-hooks --workdir c2rust/work/macos-aarch64-uint128-hooks -- 
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/macos-aarch64-uint128-hooks/mpdec c2rust/work/macos-aarch64-uint128-hooks/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/macos-aarch64-uint128-hooks/mpdec CONFIG_64
+```
+
+## 2026-10-26T23:01:45Z linux-armv7-ansi32
+
+- host: Darwin arm64, C2Rust 0.22.1, LLVM 20.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine ansi32 --workdir c2rust/work/linux-armv7-ansi32 -- --target=armv7-linux-gnueabihf
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/linux-armv7-ansi32/mpdec c2rust/work/linux-armv7-ansi32/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/linux-armv7-ansi32/mpdec CONFIG_32
+```
+
+## 2026-10-26T23:01:47Z windows-x86_64-uint128
+
+- host: Darwin arm64, C2Rust 0.22.1, LLVM 20.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine uint128 --workdir c2rust/work/windows-x86_64-uint128 -- --target=x86_64-pc-windows-gnu
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/windows-x86_64-uint128/mpdec c2rust/work/windows-x86_64-uint128/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/windows-x86_64-uint128/mpdec CONFIG_64
+```
+
+## 2026-10-26T23:01:49Z windows-aarch64-uint128
+
+- host: Darwin arm64, C2Rust 0.22.1, LLVM 20.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine uint128 --workdir c2rust/work/windows-aarch64-uint128 -- --target=aarch64-w64-mingw32
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/windows-aarch64-uint128/mpdec c2rust/work/windows-aarch64-uint128/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/windows-aarch64-uint128/mpdec CONFIG_64
+```
+
+## 2026-10-26T23:01:52Z windows-i686-ansi32
+
+- host: Darwin arm64, C2Rust 0.22.1, LLVM 20.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine ansi32 --workdir c2rust/work/windows-i686-ansi32 -- --target=i686-pc-windows-gnu
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/windows-i686-ansi32/mpdec c2rust/work/windows-i686-ansi32/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/windows-i686-ansi32/mpdec CONFIG_32
+```
+
+## 2026-10-26T23:02:06Z linux-aarch64-uint128
+
+- host: Linux aarch64, C2Rust 0.22.1, LLVM 21.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine uint128 --workdir c2rust/work/linux-aarch64-uint128 -- 
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/linux-aarch64-uint128/mpdec c2rust/work/linux-aarch64-uint128/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/linux-aarch64-uint128/mpdec CONFIG_64
+```
+
+## 2026-10-26T23:02:08Z linux-x86_64-uint128
+
+- host: Linux aarch64, C2Rust 0.22.1, LLVM 21.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine uint128 --workdir c2rust/work/linux-x86_64-uint128 -- --target=x86_64-linux-gnu --sysroot=/usr/x86_64-linux-gnu
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/linux-x86_64-uint128/mpdec c2rust/work/linux-x86_64-uint128/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/linux-x86_64-uint128/mpdec CONFIG_64
+```
+
+## 2026-10-26T23:02:10Z linux-i686-ansi32
+
+- host: Linux aarch64, C2Rust 0.22.1, LLVM 21.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine ansi32 --workdir c2rust/work/linux-i686-ansi32 -- --target=i686-linux-gnu --sysroot=/usr/i686-linux-gnu
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/linux-i686-ansi32/mpdec c2rust/work/linux-i686-ansi32/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/linux-i686-ansi32/mpdec CONFIG_32
+```
+
+## 2026-10-26T23:02:12Z linux-x86_64-uint128-hooks
+
+- host: Linux aarch64, C2Rust 0.22.1, LLVM 21.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine uint128 --test-hooks --workdir c2rust/work/linux-x86_64-uint128-hooks -- --target=x86_64-linux-gnu --sysroot=/usr/x86_64-linux-gnu
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/linux-x86_64-uint128-hooks/mpdec c2rust/work/linux-x86_64-uint128-hooks/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/linux-x86_64-uint128-hooks/mpdec CONFIG_64
+```
+
+## 2026-10-26T23:02:14Z linux-i686-ansi32-hooks
+
+- host: Linux aarch64, C2Rust 0.22.1, LLVM 21.1.8
+- git: 6b001bc-dirty
+- exit: 0, lines with 'warning': 0, with 'error': 0
+
+```sh
+python3 -I c2rust/prepare.py --machine ansi32 --test-hooks --workdir c2rust/work/linux-i686-ansi32-hooks -- --target=i686-linux-gnu --sysroot=/usr/i686-linux-gnu
+c2rust transpile --emit-build-files --overwrite-existing -o c2rust/out/linux-i686-ansi32-hooks/mpdec c2rust/work/linux-i686-ansi32-hooks/compile_commands.json
+python3 -I c2rust/normalize.py c2rust/out/linux-i686-ansi32-hooks/mpdec CONFIG_32
+```
+
+## 2026-10-26T23:02:15Z merged
+
+```sh
+c2rust/check-oracles.sh
+python3 -I c2rust/merge.py c2rust/out/linux-x86_64-uint128/mpdec c2rust/out/linux-i686-ansi32/mpdec c2rust/work/merged/plain
+python3 -I c2rust/merge.py c2rust/out/linux-x86_64-uint128-hooks/mpdec c2rust/out/linux-i686-ansi32-hooks/mpdec c2rust/work/merged/hooks
+python3 -I c2rust/merge.py --feature test-hooks c2rust/work/merged/plain c2rust/work/merged/hooks c2rust/work/merged/mpdec
+python3 -I c2rust/dedupe.py c2rust/work/merged/mpdec
+python3 -I c2rust/install.py c2rust/work/merged/mpdec
+```

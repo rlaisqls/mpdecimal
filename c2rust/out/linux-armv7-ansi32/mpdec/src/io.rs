@@ -1637,7 +1637,7 @@ pub unsafe extern "C" fn mpd_qformat_spec(
     mut status: *mut uint32_t,
 ) -> *mut ::core::ffi::c_char {
     let mut current_block: u64;
-    let mut dt: [mpd_uint_t; 64] = [0; 64];
+    let mut dt = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut tmp: mpd_t = mpd_t {
         flags: (MPD_STATIC as ::core::ffi::c_int | MPD_STATIC_DATA as ::core::ffi::c_int)
             as uint8_t,

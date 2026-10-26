@@ -23,6 +23,13 @@ make the crate independent of the C type model of the translation target:
     removed, since they are the identity;
   - CHAR_MAX becomes c_char::MAX, which follows the signedness of char of the
     target the crate is compiled for;
+  - local arrays that the C code declares without an initializer, which
+    c2rust zero-fills ([0; N]), become MaybeUninit<[T; N]>, and their
+    indexing goes through a pointer to the array. Zeroing the 64-word
+    buffers of MPD_NEW_STATIC on every call (and the transpose buffers of up
+    to 128 KiB) is most of the difference to the C library for short
+    operands. An array qualifies only if no array of that name has an
+    initializer anywhere in the C sources;
   - the opaque FILE, an extern type per module, becomes the FILE of the
     shim, so that the declarations of fprintf() etc. in the modules agree;
   - the hand-written shim (shim/shim.rs) is added as src/shim.rs, the
@@ -67,6 +74,10 @@ IDENTITY_CAST = re.compile(r'\bas (\w+) as \1\b')
 LITERAL = re.compile(r'b?"(?:[^"\\]|\\.)*"|\'(?:[^\'\\]|\\.)\'')
 CHAR_MAX = re.compile(
     r'^pub const CHAR_MAX: ::core::ffi::c_int = (?:SCHAR_MAX|UCHAR_MAX);$', re.M)
+ZERO_ARRAY = re.compile(r'\blet mut (\w+): \[([^;\]]+); (\d+)\] = \[0; \3\];')
+C_DECL = re.compile(r'^[ \t]+(?!return\b)[A-Za-z_]\w*\s+([^;()]+);', re.M)
+C_ARRAY = re.compile(r'^\*?\s*([A-Za-z_]\w*)\s*\[[^\]]*\]\s*(=)?')
+NEW_STATIC = re.compile(r'\bMPD_NEW_STATIC\((\w+),')
 
 
 def split_items(text):
@@ -135,12 +146,44 @@ def c_long_api():
     return names
 
 
+def c_uninitialized_arrays():
+    """Names of the local arrays that the C sources (with the test hooks)
+    declare without an initializer, and never with one."""
+    text = "\n".join(p.read_text() for p in sorted((ROOT / "libmpdec").glob("*.c")))
+    hooks = (HERE / "test-hooks" / "testit-hooks.patch").read_text()
+    text += "\n" + "\n".join(line[1:] for line in hooks.splitlines() if line.startswith("+"))
+    names = {m.group(1) + "_data" for m in NEW_STATIC.finditer(text)}
+    initialized = set()
+    for m in C_DECL.finditer(text):
+        for decl in re.sub(r'\{[^}]*\}', '{}', m.group(1)).split(","):
+            a = C_ARRAY.match(decl.strip())
+            if a:
+                (initialized if a.group(2) else names).add(a.group(1))
+    return names - initialized
+
+
+def uninit_arrays(text, names):
+    found = []
+
+    def declare(m):
+        if m.group(1) not in names:
+            return m.group(0)
+        found.append(m.group(1))
+        return (f"let mut {m.group(1)} = "
+                f"::core::mem::MaybeUninit::<[{m.group(2)}; {m.group(3)}]>::uninit();")
+
+    text = ZERO_ARRAY.sub(declare, text)
+    for name in found:
+        text = re.sub(rf'\b{name}\[', f"(*{name}.as_mut_ptr())[", text)
+    return text, len(found)
+
+
 def map_types(text, config):
     types = {**LONG_TYPES[config], **LONGLONG_TYPES}
     return re.sub(r'::core::ffi::(c_u?long(?:long)?)\b', lambda m: types[m.group(1)], text)
 
 
-def normalize_module(path, config, api, stats):
+def normalize_module(path, config, api, uninit, stats):
     source = path.read_text()
     chunks = split_items(source)
     if "\n".join(c[2] for c in chunks) != source:
@@ -159,6 +202,8 @@ def normalize_module(path, config, api, stats):
                 stats["api"] += 1
             else:
                 text = map_types(text, config)
+            text, n = uninit_arrays(text, uninit)
+            stats["uninit"] += n
             text = INT_LITERAL_CAST.sub(r"\1 as \2", text)
             n = 1
             while n:
@@ -183,16 +228,19 @@ def main():
         raise SystemExit(f"{crate} is already normalized")
 
     api = c_long_api()
-    stats = {"api": 0, "char_max": 0, "file_extern": 0, "file_alias": 0}
+    uninit = c_uninitialized_arrays()
+    stats = {"api": 0, "char_max": 0, "file_extern": 0, "file_alias": 0, "uninit": 0}
     modules = sorted(src.glob("*.rs"))
     if not modules:
         raise SystemExit(f"no modules in {src}")
     for path in modules:
-        normalize_module(path, config, api, stats)
+        normalize_module(path, config, api, uninit, stats)
     if stats["api"] != len(api):
         raise SystemExit(f"C ABI functions with long: found {stats['api']} of {len(api)}")
     if stats["char_max"] == 0:
         raise SystemExit("CHAR_MAX not found")
+    if stats["uninit"] == 0:
+        raise SystemExit("no zero-filled uninitialized arrays found")
     if stats["file_extern"] == 0 or stats["file_extern"] != stats["file_alias"]:
         raise SystemExit(f"FILE: {stats['file_extern']} extern types, "
                          f"{stats['file_alias']} aliases")

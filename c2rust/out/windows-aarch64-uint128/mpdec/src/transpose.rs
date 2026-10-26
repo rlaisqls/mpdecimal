@@ -123,8 +123,8 @@ unsafe extern "C" fn swap_halfrows_pow2(
     mut cols: mpd_size_t,
     mut dir: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut buf1: [mpd_uint_t; 4096] = [0; 4096];
-    let mut buf2: [mpd_uint_t; 4096] = [0; 4096];
+    let mut buf1 = ::core::mem::MaybeUninit::<[mpd_uint_t; 4096]>::uninit();
+    let mut buf2 = ::core::mem::MaybeUninit::<[mpd_uint_t; 4096]>::uninit();
     let mut readbuf: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut writebuf: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut hp: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
@@ -247,8 +247,8 @@ unsafe extern "C" fn squaretrans(mut buf: *mut mpd_uint_t, mut cols: mpd_size_t)
     }
 }
 unsafe extern "C" fn squaretrans_pow2(mut matrix: *mut mpd_uint_t, mut size: mpd_size_t) {
-    let mut buf1: [mpd_uint_t; 16384] = [0; 16384];
-    let mut buf2: [mpd_uint_t; 16384] = [0; 16384];
+    let mut buf1 = ::core::mem::MaybeUninit::<[mpd_uint_t; 16384]>::uninit();
+    let mut buf2 = ::core::mem::MaybeUninit::<[mpd_uint_t; 16384]>::uninit();
     let mut to: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut from: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut b: mpd_size_t = size;

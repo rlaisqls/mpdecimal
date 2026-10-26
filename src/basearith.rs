@@ -523,14 +523,14 @@ pub unsafe extern "C" fn _mpd_basedivmod(
     mut nplusm: mpd_size_t,
     mut n: mpd_size_t,
 ) -> ::core::ffi::c_int {
-    let mut ustatic: [mpd_uint_t; 64] = [0; 64];
-    let mut vstatic: [mpd_uint_t; 64] = [0; 64];
+    let mut ustatic = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
+    let mut vstatic = ::core::mem::MaybeUninit::<[mpd_uint_t; 64]>::uninit();
     let mut u: *mut mpd_uint_t = &raw mut ustatic as *mut mpd_uint_t;
     let mut v: *mut mpd_uint_t = &raw mut vstatic as *mut mpd_uint_t;
     let mut d: mpd_uint_t = 0;
     let mut qhat: mpd_uint_t = 0;
     let mut rhat: mpd_uint_t = 0;
-    let mut w2: [mpd_uint_t; 2] = [0; 2];
+    let mut w2 = ::core::mem::MaybeUninit::<[mpd_uint_t; 2]>::uninit();
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
     let mut x: mpd_uint_t = 0;
@@ -580,9 +580,9 @@ pub unsafe extern "C" fn _mpd_basedivmod(
             2 as mpd_size_t,
             *v.offset(n.wrapping_sub(1 as mpd_size_t) as isize),
         );
-        qhat = w2[1 as usize]
+        qhat = (*w2.as_mut_ptr())[1 as usize]
             .wrapping_mul(MPD_RADIX as mpd_uint_t)
-            .wrapping_add(w2[0 as usize]);
+            .wrapping_add((*w2.as_mut_ptr())[0 as usize]);
         loop {
             if qhat < MPD_RADIX as mpd_uint_t {
                 _mpd_singlemul(
@@ -590,9 +590,9 @@ pub unsafe extern "C" fn _mpd_basedivmod(
                     qhat,
                     *v.offset(n.wrapping_sub(2 as mpd_size_t) as isize),
                 );
-                if w2[1 as usize] <= rhat {
-                    if w2[1 as usize] != rhat
-                        || w2[0 as usize]
+                if (*w2.as_mut_ptr())[1 as usize] <= rhat {
+                    if (*w2.as_mut_ptr())[1 as usize] != rhat
+                        || (*w2.as_mut_ptr())[0 as usize]
                             <= *u.offset(j.wrapping_add(n).wrapping_sub(2 as mpd_size_t) as isize)
                     {
                         break;

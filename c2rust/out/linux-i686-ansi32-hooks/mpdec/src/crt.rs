@@ -176,8 +176,8 @@ pub unsafe extern "C" fn crt3(
     let mut a2: mpd_uint_t = 0;
     let mut a3: mpd_uint_t = 0;
     let mut s: mpd_uint_t = 0;
-    let mut z: [mpd_uint_t; 3] = [0; 3];
-    let mut t: [mpd_uint_t; 3] = [0; 3];
+    let mut z = ::core::mem::MaybeUninit::<[mpd_uint_t; 3]>::uninit();
+    let mut t = ::core::mem::MaybeUninit::<[mpd_uint_t; 3]>::uninit();
     let mut carry: [mpd_uint_t; 3] = [0 as mpd_uint_t, 0 as mpd_uint_t, 0 as mpd_uint_t];
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
@@ -198,9 +198,9 @@ pub unsafe extern "C" fn crt3(
         std_setmodulus(P3 as ::core::ffi::c_int, &raw mut umod);
         s = dw_submod(a3, hi, lo, umod);
         s = std_mulmod(s, INV_P1P2_MOD_P3, umod);
-        z[0 as usize] = lo;
-        z[1 as usize] = hi;
-        z[2 as usize] = 0 as mpd_uint_t;
+        (*z.as_mut_ptr())[0 as usize] = lo;
+        (*z.as_mut_ptr())[1 as usize] = hi;
+        (*z.as_mut_ptr())[2 as usize] = 0 as mpd_uint_t;
         _crt_mulP1P2_3(&raw mut t as *mut mpd_uint_t, s);
         _crt_add3(&raw mut z as *mut mpd_uint_t, &raw mut t as *mut mpd_uint_t);
         _crt_add3(
