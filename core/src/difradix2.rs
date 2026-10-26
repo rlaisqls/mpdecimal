@@ -3,80 +3,80 @@ use crate::shim::mpd_c2rust_assert_fail;
 use crate::constants::mpd_moduli;
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn mpd_bsf(mut n: mpd_size_t) -> ::core::ffi::c_int {
-    let mut pos: ::core::ffi::c_int = 0;
+    let mut pos: ::core::ffi::c_int;
     pos = 63 as ::core::ffi::c_int;
-    if n as u64 & 0xffffffff as u64 != 0 {
+    if n as u64 & 0xffffffff_u64 != 0 {
         pos -= 32 as ::core::ffi::c_int;
     } else {
         n >>= 32 as ::core::ffi::c_int;
     }
-    if n as u64 & 0xffff as u64 != 0 {
+    if n as u64 & 0xffff_u64 != 0 {
         pos -= 16 as ::core::ffi::c_int;
     } else {
         n >>= 16 as ::core::ffi::c_int;
     }
-    if n as u64 & 0xff as u64 != 0 {
+    if n as u64 & 0xff_u64 != 0 {
         pos -= 8 as ::core::ffi::c_int;
     } else {
         n >>= 8 as ::core::ffi::c_int;
     }
-    if n as u64 & 0xf as u64 != 0 {
+    if n as u64 & 0xf_u64 != 0 {
         pos -= 4 as ::core::ffi::c_int;
     } else {
         n >>= 4 as ::core::ffi::c_int;
     }
-    if n as u64 & 0x3 as u64 != 0 {
+    if n as u64 & 0x3_u64 != 0 {
         pos -= 2 as ::core::ffi::c_int;
     } else {
         n >>= 2 as ::core::ffi::c_int;
     }
-    if n as u64 & 0x1 as u64 != 0 {
+    if n as u64 & 0x1_u64 != 0 {
         pos -= 1 as ::core::ffi::c_int;
     }
-    return pos;
+    pos
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn mpd_bsf(mut n: mpd_size_t) -> ::core::ffi::c_int {
-    let mut pos: ::core::ffi::c_int = 0;
+    let mut pos: ::core::ffi::c_int;
     pos = 31 as ::core::ffi::c_int;
-    if n as u32 & 0xffff as u32 != 0 {
+    if n as u32 & 0xffff_u32 != 0 {
         pos -= 16 as ::core::ffi::c_int;
     } else {
         n >>= 16 as ::core::ffi::c_int;
     }
-    if n as u32 & 0xff as u32 != 0 {
+    if n as u32 & 0xff_u32 != 0 {
         pos -= 8 as ::core::ffi::c_int;
     } else {
         n >>= 8 as ::core::ffi::c_int;
     }
-    if n as u32 & 0xf as u32 != 0 {
+    if n as u32 & 0xf_u32 != 0 {
         pos -= 4 as ::core::ffi::c_int;
     } else {
         n >>= 4 as ::core::ffi::c_int;
     }
-    if n as u32 & 0x3 as u32 != 0 {
+    if n as u32 & 0x3_u32 != 0 {
         pos -= 2 as ::core::ffi::c_int;
     } else {
         n >>= 2 as ::core::ffi::c_int;
     }
-    if n as u32 & 0x1 as u32 != 0 {
+    if n as u32 & 0x1_u32 != 0 {
         pos -= 1 as ::core::ffi::c_int;
     }
-    return pos;
+    pos
 }
-unsafe extern "C" fn std_setmodulus(mut modnum: ::core::ffi::c_int, mut umod: *mut mpd_uint_t) {
+unsafe extern "C" fn std_setmodulus(modnum: ::core::ffi::c_int, umod: *mut mpd_uint_t) {
     *umod = *(&raw const mpd_moduli as *const mpd_uint_t).offset(modnum as isize);
 }
-unsafe extern "C" fn submod(mut a: mpd_uint_t, mut b: mpd_uint_t, mut m: mpd_uint_t) -> mpd_uint_t {
-    let mut d: mpd_uint_t = 0;
+unsafe extern "C" fn submod(a: mpd_uint_t, b: mpd_uint_t, m: mpd_uint_t) -> mpd_uint_t {
+    let mut d: mpd_uint_t;
     d = a.wrapping_sub(b);
     d = if a < b { d.wrapping_add(m) } else { d };
-    return d;
+    d
 }
-unsafe extern "C" fn bitreverse_permute(mut a: *mut mpd_uint_t, mut n: mpd_size_t) {
+unsafe extern "C" fn bitreverse_permute(a: *mut mpd_uint_t, n: mpd_size_t) {
     let mut x: mpd_size_t = 0 as mpd_size_t;
     let mut r: mpd_size_t = 0 as mpd_size_t;
-    let mut t: mpd_uint_t = 0;
+    let mut t: mpd_uint_t;
     loop {
         if r > x {
             t = *a.add(x);
@@ -84,7 +84,7 @@ unsafe extern "C" fn bitreverse_permute(mut a: *mut mpd_uint_t, mut n: mpd_size_
             *a.add(r) = t;
         }
         x = x.wrapping_add(1 as mpd_size_t);
-        r ^= n.wrapping_sub(n >> mpd_bsf(x) + 1 as ::core::ffi::c_int);
+        r ^= n.wrapping_sub(n >> (mpd_bsf(x) + 1 as ::core::ffi::c_int));
         if !(x < n) {
             break;
         }
@@ -93,24 +93,24 @@ unsafe extern "C" fn bitreverse_permute(mut a: *mut mpd_uint_t, mut n: mpd_size_
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn fnt_dif2(
-    mut a: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut tparams: *mut fnt_params,
+    a: *mut mpd_uint_t,
+    n: mpd_size_t,
+    tparams: *mut fnt_params,
 ) {
-    let mut wtable: *mut mpd_uint_t = &raw mut (*tparams).wtable as *mut mpd_uint_t;
+    let wtable: *mut mpd_uint_t = &raw mut (*tparams).wtable as *mut mpd_uint_t;
     let mut umod: mpd_uint_t = 0;
-    let mut u0: mpd_uint_t = 0;
-    let mut u1: mpd_uint_t = 0;
-    let mut v0: mpd_uint_t = 0;
-    let mut v1: mpd_uint_t = 0;
-    let mut w: mpd_uint_t = 0;
-    let mut w0: mpd_uint_t = 0;
-    let mut w1: mpd_uint_t = 0;
-    let mut wstep: mpd_uint_t = 0;
-    let mut m: mpd_size_t = 0;
-    let mut mhalf: mpd_size_t = 0;
-    let mut j: mpd_size_t = 0;
-    let mut r: mpd_size_t = 0;
+    let mut u0: mpd_uint_t;
+    let mut u1: mpd_uint_t;
+    let mut v0: mpd_uint_t;
+    let mut v1: mpd_uint_t;
+    let mut w: mpd_uint_t;
+    let mut w0: mpd_uint_t;
+    let mut w1: mpd_uint_t;
+    let mut wstep: mpd_uint_t;
+    let mut m: mpd_size_t;
+    let mut mhalf: mpd_size_t;
+    let mut j: mpd_size_t;
+    let mut r: mpd_size_t;
     if ispower2(n) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"ispower2(n)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -184,24 +184,24 @@ pub unsafe extern "C" fn fnt_dif2(
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn fnt_dif2(
-    mut a: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut tparams: *mut fnt_params,
+    a: *mut mpd_uint_t,
+    n: mpd_size_t,
+    tparams: *mut fnt_params,
 ) {
-    let mut wtable: *mut mpd_uint_t = &raw mut (*tparams).wtable as *mut mpd_uint_t;
+    let wtable: *mut mpd_uint_t = &raw mut (*tparams).wtable as *mut mpd_uint_t;
     let mut umod: mpd_uint_t = 0;
-    let mut u0: mpd_uint_t = 0;
-    let mut u1: mpd_uint_t = 0;
-    let mut v0: mpd_uint_t = 0;
-    let mut v1: mpd_uint_t = 0;
-    let mut w: mpd_uint_t = 0;
-    let mut w0: mpd_uint_t = 0;
-    let mut w1: mpd_uint_t = 0;
-    let mut wstep: mpd_uint_t = 0;
-    let mut m: mpd_size_t = 0;
-    let mut mhalf: mpd_size_t = 0;
-    let mut j: mpd_size_t = 0;
-    let mut r: mpd_size_t = 0;
+    let mut u0: mpd_uint_t;
+    let mut u1: mpd_uint_t;
+    let mut v0: mpd_uint_t;
+    let mut v1: mpd_uint_t;
+    let mut w: mpd_uint_t;
+    let mut w0: mpd_uint_t;
+    let mut w1: mpd_uint_t;
+    let mut wstep: mpd_uint_t;
+    let mut m: mpd_size_t;
+    let mut mhalf: mpd_size_t;
+    let mut j: mpd_size_t;
+    let mut r: mpd_size_t;
     if ispower2(n) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"ispower2(n)\0" as *const u8 as *const ::core::ffi::c_char);

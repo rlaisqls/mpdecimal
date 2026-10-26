@@ -16,13 +16,10 @@ extern "C" {
 }
 pub const BACKWARD_CYCLE: C2RustUnnamed = 1;
 pub const FORWARD_CYCLE: C2RustUnnamed = 0;
-unsafe extern "C" fn pointerswap(mut a: *mut *mut mpd_uint_t, mut b: *mut *mut mpd_uint_t) {
-    let mut tmp: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    tmp = *b;
-    *b = *a;
-    *a = tmp;
+unsafe extern "C" fn pointerswap(a: *mut *mut mpd_uint_t, b: *mut *mut mpd_uint_t) {
+    ::core::ptr::swap(a, b);
 }
-unsafe extern "C" fn mul_size_t(mut a: mpd_size_t, mut b: mpd_size_t) -> mpd_size_t {
+unsafe extern "C" fn mul_size_t(a: mpd_size_t, b: mpd_size_t) -> mpd_size_t {
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
     _mpd_mul_words(&raw mut hi, &raw mut lo, a as mpd_uint_t, b as mpd_uint_t);
@@ -41,12 +38,12 @@ unsafe extern "C" fn mul_size_t(mut a: mpd_size_t, mut b: mpd_size_t) -> mpd_siz
         fputc('\n' as i32, mpd_c2rust_stderr());
         abort();
     }
-    return lo as mpd_size_t;
+    lo as mpd_size_t
 }
 unsafe extern "C" fn mulmod_size_t(
-    mut a: mpd_size_t,
-    mut b: mpd_size_t,
-    mut m: mpd_size_t,
+    a: mpd_size_t,
+    b: mpd_size_t,
+    m: mpd_size_t,
 ) -> mpd_size_t {
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
@@ -54,21 +51,21 @@ unsafe extern "C" fn mulmod_size_t(
     let mut r: mpd_uint_t = 0;
     _mpd_mul_words(&raw mut hi, &raw mut lo, a as mpd_uint_t, b as mpd_uint_t);
     _mpd_div_words(&raw mut q, &raw mut r, hi, lo, m as mpd_uint_t);
-    return r as mpd_size_t;
+    r as mpd_size_t
 }
 pub const BUFSIZE: ::core::ffi::c_int = 4096 as ::core::ffi::c_int;
 pub const SIDE: ::core::ffi::c_int = 128 as ::core::ffi::c_int;
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn std_trans(
-    mut dest: *mut mpd_uint_t,
-    mut src: *mut mpd_uint_t,
-    mut rows: mpd_size_t,
-    mut cols: mpd_size_t,
+    dest: *mut mpd_uint_t,
+    src: *mut mpd_uint_t,
+    rows: mpd_size_t,
+    cols: mpd_size_t,
 ) {
-    let mut idest: mpd_size_t = 0;
-    let mut isrc: mpd_size_t = 0;
-    let mut r: mpd_size_t = 0;
-    let mut c: mpd_size_t = 0;
+    let mut idest: mpd_size_t;
+    let mut isrc: mpd_size_t;
+    let mut r: mpd_size_t;
+    let mut c: mpd_size_t;
     r = 0 as mpd_size_t;
     while r < rows {
         isrc = r.wrapping_mul(cols);
@@ -84,43 +81,38 @@ pub unsafe extern "C" fn std_trans(
     }
 }
 unsafe extern "C" fn swap_halfrows_pow2(
-    mut matrix: *mut mpd_uint_t,
-    mut rows: mpd_size_t,
-    mut cols: mpd_size_t,
-    mut dir: ::core::ffi::c_int,
+    matrix: *mut mpd_uint_t,
+    rows: mpd_size_t,
+    cols: mpd_size_t,
+    dir: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut buf1: [mpd_uint_t; 4096] = [0; 4096];
     let mut buf2: [mpd_uint_t; 4096] = [0; 4096];
-    let mut readbuf: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut writebuf: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut hp: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut done: *mut mpd_size_t = ::core::ptr::null_mut::<mpd_size_t>();
-    let mut dbits: mpd_size_t = 0;
-    let mut b: mpd_size_t = BUFSIZE as mpd_size_t;
-    let mut stride: mpd_size_t = 0;
-    let mut hn: mpd_size_t = 0;
-    let mut hmax: mpd_size_t = 0;
-    let mut m: mpd_size_t = 0;
-    let mut r: mpd_size_t = 0 as mpd_size_t;
-    let mut offset: mpd_size_t = 0;
-    let mut next: mpd_size_t = 0;
+    let mut readbuf: *mut mpd_uint_t;
+    let mut writebuf: *mut mpd_uint_t;
+    let mut hp: *mut mpd_uint_t;
+    let b: mpd_size_t = BUFSIZE as mpd_size_t;
+    let mut stride: mpd_size_t;
+    let mut hn: mpd_size_t;
+    let mut offset: mpd_size_t;
+    let mut next: mpd_size_t;
     if cols == mul_size_t(2 as mpd_size_t, rows) {
     } else {
         mpd_c2rust_assert_fail(
             b"cols == mul_size_t(2, rows)\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    if dir == FORWARD_CYCLE as ::core::ffi::c_int {
-        r = rows;
+    let r: mpd_size_t = if dir == FORWARD_CYCLE as ::core::ffi::c_int {
+        rows
     } else if dir == BACKWARD_CYCLE as ::core::ffi::c_int {
-        r = 2 as mpd_size_t;
+        2 as mpd_size_t
     } else {
         abort();
-    }
-    m = cols.wrapping_sub(1 as mpd_size_t);
-    hmax = rows;
-    dbits = (8 as usize).wrapping_mul(::core::mem::size_of::<mpd_size_t>() as usize) as mpd_size_t;
-    done = mpd_calloc(
+    };
+    let m: mpd_size_t = cols.wrapping_sub(1 as mpd_size_t);
+    let hmax: mpd_size_t = rows;
+    let dbits: mpd_size_t = 8_usize.wrapping_mul(::core::mem::size_of::<mpd_size_t>() as usize) as mpd_size_t;
+    let done: *mut mpd_size_t = mpd_calloc(
         hmax.wrapping_div(::core::mem::size_of::<mpd_size_t>() as mpd_size_t)
             .wrapping_add(1 as mpd_size_t),
         ::core::mem::size_of::<mpd_size_t>() as mpd_size_t,
@@ -187,14 +179,14 @@ unsafe extern "C" fn swap_halfrows_pow2(
         hn = hn.wrapping_add(2 as mpd_size_t);
     }
     mpd_free.expect("non-null function pointer")(done as *mut ::core::ffi::c_void);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
-unsafe extern "C" fn squaretrans(mut buf: *mut mpd_uint_t, mut cols: mpd_size_t) {
-    let mut tmp: mpd_uint_t = 0;
-    let mut idest: mpd_size_t = 0;
-    let mut isrc: mpd_size_t = 0;
-    let mut r: mpd_size_t = 0;
-    let mut c: mpd_size_t = 0;
+unsafe extern "C" fn squaretrans(buf: *mut mpd_uint_t, cols: mpd_size_t) {
+    let mut tmp: mpd_uint_t;
+    let mut idest: mpd_size_t;
+    let mut isrc: mpd_size_t;
+    let mut r: mpd_size_t;
+    let mut c: mpd_size_t;
     r = 0 as mpd_size_t;
     while r < cols {
         c = r.wrapping_add(1 as mpd_size_t);
@@ -212,15 +204,15 @@ unsafe extern "C" fn squaretrans(mut buf: *mut mpd_uint_t, mut cols: mpd_size_t)
         r = r.wrapping_add(1);
     }
 }
-unsafe extern "C" fn squaretrans_pow2(mut matrix: *mut mpd_uint_t, mut size: mpd_size_t) {
+unsafe extern "C" fn squaretrans_pow2(matrix: *mut mpd_uint_t, size: mpd_size_t) {
     let mut buf1: [mpd_uint_t; 16384] = [0; 16384];
     let mut buf2: [mpd_uint_t; 16384] = [0; 16384];
-    let mut to: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut from: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
+    let mut to: *mut mpd_uint_t;
+    let mut from: *mut mpd_uint_t;
     let mut b: mpd_size_t = size;
-    let mut r: mpd_size_t = 0;
-    let mut c: mpd_size_t = 0;
-    let mut i: mpd_size_t = 0;
+    let mut r: mpd_size_t;
+    let mut c: mpd_size_t;
+    let mut i: mpd_size_t;
     while b > SIDE as mpd_size_t {
         b >>= 1 as ::core::ffi::c_int;
     }
@@ -315,11 +307,11 @@ unsafe extern "C" fn squaretrans_pow2(mut matrix: *mut mpd_uint_t, mut size: mpd
 }
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn transpose_pow2(
-    mut matrix: *mut mpd_uint_t,
-    mut rows: mpd_size_t,
-    mut cols: mpd_size_t,
+    matrix: *mut mpd_uint_t,
+    rows: mpd_size_t,
+    cols: mpd_size_t,
 ) -> ::core::ffi::c_int {
-    let mut size: mpd_size_t = mul_size_t(rows, cols);
+    let size: mpd_size_t = mul_size_t(rows, cols);
     if ispower2(rows) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"ispower2(rows)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -351,5 +343,5 @@ pub unsafe extern "C" fn transpose_pow2(
     } else {
         abort();
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }

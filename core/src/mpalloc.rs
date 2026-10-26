@@ -21,118 +21,110 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" fn add_size_t_overflow(
-    mut a: mpd_size_t,
-    mut b: mpd_size_t,
-    mut overflow: *mut mpd_size_t,
+    a: mpd_size_t,
+    b: mpd_size_t,
+    overflow: *mut mpd_size_t,
 ) -> mpd_size_t {
-    let mut ret: mpd_size_t = 0;
     *overflow = 0 as mpd_size_t;
-    ret = a.wrapping_add(b);
+    let ret: mpd_size_t = a.wrapping_add(b);
     if ret < a {
         *overflow = 1 as mpd_size_t;
     }
-    return ret;
+    ret
 }
 unsafe extern "C" fn mul_size_t_overflow(
-    mut a: mpd_size_t,
-    mut b: mpd_size_t,
-    mut overflow: *mut mpd_size_t,
+    a: mpd_size_t,
+    b: mpd_size_t,
+    overflow: *mut mpd_size_t,
 ) -> mpd_size_t {
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
     _mpd_mul_words(&raw mut hi, &raw mut lo, a as mpd_uint_t, b as mpd_uint_t);
     *overflow = hi as mpd_size_t;
-    return lo as mpd_size_t;
+    lo as mpd_size_t
 }
 #[cfg_attr(feature = "capi", no_mangle)]
 pub static mut MPD_MINALLOC: mpd_ssize_t = MPD_MINALLOC_MIN as mpd_ssize_t;
 #[cfg_attr(feature = "capi", no_mangle)]
 pub static mut mpd_mallocfunc: Option<unsafe extern "C" fn(size_t) -> *mut ::core::ffi::c_void> =
-    unsafe { Some(malloc as unsafe extern "C" fn(size_t) -> *mut ::core::ffi::c_void) };
+    Some(malloc as unsafe extern "C" fn(size_t) -> *mut ::core::ffi::c_void);
 #[cfg_attr(feature = "capi", no_mangle)]
 pub static mut mpd_reallocfunc: Option<
     unsafe extern "C" fn(*mut ::core::ffi::c_void, size_t) -> *mut ::core::ffi::c_void,
-> = unsafe {
-    Some(
-        realloc
-            as unsafe extern "C" fn(*mut ::core::ffi::c_void, size_t) -> *mut ::core::ffi::c_void,
-    )
-};
+> = Some(
+    realloc
+        as unsafe extern "C" fn(*mut ::core::ffi::c_void, size_t) -> *mut ::core::ffi::c_void,
+);
 #[cfg_attr(feature = "capi", no_mangle)]
 pub static mut mpd_callocfunc: Option<
     unsafe extern "C" fn(size_t, size_t) -> *mut ::core::ffi::c_void,
-> = unsafe { Some(calloc as unsafe extern "C" fn(size_t, size_t) -> *mut ::core::ffi::c_void) };
+> = Some(calloc as unsafe extern "C" fn(size_t, size_t) -> *mut ::core::ffi::c_void);
 #[cfg_attr(feature = "capi", no_mangle)]
 pub static mut mpd_free: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()> =
-    unsafe { Some(free as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()) };
+    Some(free as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ());
 pub unsafe extern "C" fn mpd_callocfunc_em(
-    mut nmemb: size_t,
-    mut size: size_t,
+    nmemb: size_t,
+    size: size_t,
 ) -> *mut ::core::ffi::c_void {
-    let mut ptr: *mut ::core::ffi::c_void = ::core::ptr::null_mut::<::core::ffi::c_void>();
-    let mut req: size_t = 0;
     let mut overflow: mpd_size_t = 0;
-    req = mul_size_t_overflow(nmemb, size, &raw mut overflow) as size_t;
+    let req: size_t = mul_size_t_overflow(nmemb, size, &raw mut overflow) as size_t;
     if overflow != 0 {
         return NULL;
     }
-    ptr = mpd_mallocfunc.expect("non-null function pointer")(req);
+    let ptr: *mut ::core::ffi::c_void = mpd_mallocfunc.expect("non-null function pointer")(req);
     if ptr.is_null() {
         return NULL;
     }
     memset(ptr, 0 as ::core::ffi::c_int, req);
-    return ptr;
+    ptr
 }
 pub unsafe extern "C" fn mpd_alloc(
-    mut nmemb: mpd_size_t,
-    mut size: mpd_size_t,
+    nmemb: mpd_size_t,
+    size: mpd_size_t,
 ) -> *mut ::core::ffi::c_void {
-    let mut req: mpd_size_t = 0;
     let mut overflow: mpd_size_t = 0;
-    req = mul_size_t_overflow(nmemb, size, &raw mut overflow);
+    let req: mpd_size_t = mul_size_t_overflow(nmemb, size, &raw mut overflow);
     if overflow != 0 {
         return NULL;
     }
-    return mpd_mallocfunc.expect("non-null function pointer")(req as size_t);
+    mpd_mallocfunc.expect("non-null function pointer")(req as size_t)
 }
 pub unsafe extern "C" fn mpd_calloc(
-    mut nmemb: mpd_size_t,
-    mut size: mpd_size_t,
+    nmemb: mpd_size_t,
+    size: mpd_size_t,
 ) -> *mut ::core::ffi::c_void {
     let mut overflow: mpd_size_t = 0;
     mul_size_t_overflow(nmemb, size, &raw mut overflow);
     if overflow != 0 {
         return NULL;
     }
-    return mpd_callocfunc.expect("non-null function pointer")(nmemb as size_t, size as size_t);
+    mpd_callocfunc.expect("non-null function pointer")(nmemb as size_t, size as size_t)
 }
 pub unsafe extern "C" fn mpd_realloc(
-    mut ptr: *mut ::core::ffi::c_void,
-    mut nmemb: mpd_size_t,
-    mut size: mpd_size_t,
-    mut err: *mut uint8_t,
+    ptr: *mut ::core::ffi::c_void,
+    nmemb: mpd_size_t,
+    size: mpd_size_t,
+    err: *mut uint8_t,
 ) -> *mut ::core::ffi::c_void {
-    let mut new: *mut ::core::ffi::c_void = ::core::ptr::null_mut::<::core::ffi::c_void>();
-    let mut req: mpd_size_t = 0;
     let mut overflow: mpd_size_t = 0;
-    req = mul_size_t_overflow(nmemb, size, &raw mut overflow);
+    let req: mpd_size_t = mul_size_t_overflow(nmemb, size, &raw mut overflow);
     if overflow != 0 {
         *err = 1 as uint8_t;
         return ptr;
     }
-    new = mpd_reallocfunc.expect("non-null function pointer")(ptr, req as size_t);
+    let new: *mut ::core::ffi::c_void = mpd_reallocfunc.expect("non-null function pointer")(ptr, req as size_t);
     if new.is_null() {
         *err = 1 as uint8_t;
         return ptr;
     }
-    return new;
+    new
 }
 pub unsafe extern "C" fn mpd_sh_alloc(
-    mut struct_size: mpd_size_t,
-    mut nmemb: mpd_size_t,
-    mut size: mpd_size_t,
+    struct_size: mpd_size_t,
+    nmemb: mpd_size_t,
+    size: mpd_size_t,
 ) -> *mut ::core::ffi::c_void {
-    let mut req: mpd_size_t = 0;
+    let mut req: mpd_size_t;
     let mut overflow: mpd_size_t = 0;
     req = mul_size_t_overflow(nmemb, size, &raw mut overflow);
     if overflow != 0 {
@@ -142,16 +134,15 @@ pub unsafe extern "C" fn mpd_sh_alloc(
     if overflow != 0 {
         return NULL;
     }
-    return mpd_mallocfunc.expect("non-null function pointer")(req as size_t);
+    mpd_mallocfunc.expect("non-null function pointer")(req as size_t)
 }
 pub unsafe extern "C" fn mpd_qnew_size(mut nwords: mpd_ssize_t) -> *mut mpd_t {
-    let mut result: *mut mpd_t = ::core::ptr::null_mut::<mpd_t>();
     nwords = if nwords < MPD_MINALLOC {
         MPD_MINALLOC
     } else {
         nwords
     };
-    result = mpd_alloc(
+    let result: *mut mpd_t = mpd_alloc(
         1 as mpd_size_t,
         ::core::mem::size_of::<mpd_t>() as mpd_size_t,
     ) as *mut mpd_t;
@@ -171,27 +162,26 @@ pub unsafe extern "C" fn mpd_qnew_size(mut nwords: mpd_ssize_t) -> *mut mpd_t {
     (*result).digits = 0 as mpd_ssize_t;
     (*result).len = 0 as mpd_ssize_t;
     (*result).alloc = nwords;
-    return result;
+    result
 }
 pub unsafe extern "C" fn mpd_qnew() -> *mut mpd_t {
-    return mpd_qnew_size(MPD_MINALLOC);
+    mpd_qnew_size(MPD_MINALLOC)
 }
-pub unsafe extern "C" fn mpd_new(mut ctx: *mut mpd_context_t) -> *mut mpd_t {
-    let mut result: *mut mpd_t = ::core::ptr::null_mut::<mpd_t>();
-    result = mpd_qnew();
+pub unsafe extern "C" fn mpd_new(ctx: *mut mpd_context_t) -> *mut mpd_t {
+    let result: *mut mpd_t = mpd_qnew();
     if result.is_null() {
         mpd_addstatus_raise(ctx, MPD_Malloc_error as uint32_t);
     }
-    return result;
+    result
 }
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_switch_to_dyn(
-    mut result: *mut mpd_t,
-    mut nwords: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    nwords: mpd_ssize_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut p: *mut mpd_uint_t = (*result).data;
+    let p: *mut mpd_uint_t = (*result).data;
     if nwords >= (*result).alloc {
     } else {
         mpd_c2rust_assert_fail(
@@ -220,16 +210,16 @@ pub unsafe extern "C" fn mpd_switch_to_dyn(
     );
     (*result).alloc = nwords;
     mpd_set_dynamic_data(result);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_switch_to_dyn(
-    mut result: *mut mpd_t,
-    mut nwords: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    nwords: mpd_ssize_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut p: *mut mpd_uint_t = (*result).data;
+    let p: *mut mpd_uint_t = (*result).data;
     if nwords >= (*result).alloc {
     } else {
         mpd_c2rust_assert_fail(
@@ -257,15 +247,15 @@ pub unsafe extern "C" fn mpd_switch_to_dyn(
     );
     (*result).alloc = nwords;
     mpd_set_dynamic_data(result);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_switch_to_dyn_zero(
-    mut result: *mut mpd_t,
-    mut nwords: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    nwords: mpd_ssize_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut p: *mut mpd_uint_t = (*result).data;
+    let p: *mut mpd_uint_t = (*result).data;
     (*result).data = mpd_calloc(
         nwords as mpd_size_t,
         ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t,
@@ -282,13 +272,13 @@ pub unsafe extern "C" fn mpd_switch_to_dyn_zero(
     }
     (*result).alloc = nwords;
     mpd_set_dynamic_data(result);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_realloc_dyn(
-    mut result: *mut mpd_t,
-    mut nwords: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    nwords: mpd_ssize_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     let mut err: uint8_t = 0 as uint8_t;
     (*result).data = mpd_realloc(
@@ -308,13 +298,13 @@ pub unsafe extern "C" fn mpd_realloc_dyn(
         *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
         return 0 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_switch_to_dyn_cxx(
-    mut result: *mut mpd_t,
-    mut nwords: mpd_ssize_t,
+    result: *mut mpd_t,
+    nwords: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
     if nwords >= (*result).alloc {
     } else {
@@ -322,7 +312,7 @@ pub unsafe extern "C" fn mpd_switch_to_dyn_cxx(
             b"nwords >= result->alloc\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    let mut data: *mut mpd_uint_t = mpd_alloc(
+    let data: *mut mpd_uint_t = mpd_alloc(
         nwords as mpd_size_t,
         ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t,
     ) as *mut mpd_uint_t;
@@ -338,13 +328,13 @@ pub unsafe extern "C" fn mpd_switch_to_dyn_cxx(
     (*result).data = data;
     (*result).alloc = nwords;
     mpd_set_dynamic_data(result);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_switch_to_dyn_cxx(
-    mut result: *mut mpd_t,
-    mut nwords: mpd_ssize_t,
+    result: *mut mpd_t,
+    nwords: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
     if nwords >= (*result).alloc {
     } else {
@@ -352,7 +342,7 @@ pub unsafe extern "C" fn mpd_switch_to_dyn_cxx(
             b"nwords >= result->alloc\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    let mut data: *mut mpd_uint_t = mpd_alloc(
+    let data: *mut mpd_uint_t = mpd_alloc(
         nwords as mpd_size_t,
         ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t,
     ) as *mut mpd_uint_t;
@@ -367,15 +357,15 @@ pub unsafe extern "C" fn mpd_switch_to_dyn_cxx(
     (*result).data = data;
     (*result).alloc = nwords;
     mpd_set_dynamic_data(result);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_realloc_dyn_cxx(
-    mut result: *mut mpd_t,
-    mut nwords: mpd_ssize_t,
+    result: *mut mpd_t,
+    nwords: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
     let mut err: uint8_t = 0 as uint8_t;
-    let mut p: *mut mpd_uint_t = mpd_realloc(
+    let p: *mut mpd_uint_t = mpd_realloc(
         (*result).data as *mut ::core::ffi::c_void,
         nwords as mpd_size_t,
         ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t,
@@ -387,5 +377,5 @@ pub unsafe extern "C" fn mpd_realloc_dyn_cxx(
     } else if nwords > (*result).alloc {
         return 0 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }

@@ -6,28 +6,24 @@ use crate::numbertheory::_mpd_getkernel;
 use crate::numbertheory::_mpd_init_fnt_params;
 use crate::difradix2::fnt_dif2;
 use crate::transpose::transpose_pow2;
-unsafe extern "C" fn std_setmodulus(mut modnum: ::core::ffi::c_int, mut umod: *mut mpd_uint_t) {
+unsafe extern "C" fn std_setmodulus(modnum: ::core::ffi::c_int, umod: *mut mpd_uint_t) {
     *umod = *(&raw const mpd_moduli as *const mpd_uint_t).offset(modnum as isize);
 }
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn six_step_fnt(
-    mut a: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut modnum: ::core::ffi::c_int,
+    a: *mut mpd_uint_t,
+    n: mpd_size_t,
+    modnum: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut tparams: *mut fnt_params = ::core::ptr::null_mut::<fnt_params>();
-    let mut log2n: mpd_size_t = 0;
-    let mut C: mpd_size_t = 0;
-    let mut R: mpd_size_t = 0;
-    let mut kernel: mpd_uint_t = 0;
+    let mut tparams: *mut fnt_params;
     let mut umod: mpd_uint_t = 0;
-    let mut x: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut w0: mpd_uint_t = 0;
-    let mut w1: mpd_uint_t = 0;
-    let mut wstep: mpd_uint_t = 0;
-    let mut i: mpd_size_t = 0;
-    let mut k: mpd_size_t = 0;
+    let mut x: *mut mpd_uint_t;
+    let mut w0: mpd_uint_t;
+    let mut w1: mpd_uint_t;
+    let mut wstep: mpd_uint_t;
+    let mut i: mpd_size_t;
+    let mut k: mpd_size_t;
     if ispower2(n) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"ispower2(n)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -36,15 +32,15 @@ pub unsafe extern "C" fn six_step_fnt(
     } else {
         mpd_c2rust_assert_fail(b"n >= 16\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    if n as u64 <= 4294967296 as u64 {
+    if n as u64 <= 4294967296_u64 {
     } else {
         mpd_c2rust_assert_fail(
             b"n <= MPD_MAXTRANSFORM_2N\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    log2n = mpd_bsr(n) as mpd_size_t;
-    C = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
-    R = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
+    let log2n: mpd_size_t = mpd_bsr(n) as mpd_size_t;
+    let C: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
+    let R: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
     if transpose_pow2(a, R, C) == 0 {
         return 0 as ::core::ffi::c_int;
     }
@@ -62,7 +58,7 @@ pub unsafe extern "C" fn six_step_fnt(
         return 0 as ::core::ffi::c_int;
     }
     std_setmodulus(modnum, &raw mut umod);
-    kernel = _mpd_getkernel(n as mpd_uint_t, -(1 as ::core::ffi::c_int), modnum);
+    let kernel: mpd_uint_t = _mpd_getkernel(n as mpd_uint_t, -(1 as ::core::ffi::c_int), modnum);
     i = 1 as mpd_size_t;
     while i < R {
         w0 = 1 as mpd_uint_t;
@@ -101,27 +97,23 @@ pub unsafe extern "C" fn six_step_fnt(
         x = x.add(C);
     }
     mpd_free.expect("non-null function pointer")(tparams as *mut ::core::ffi::c_void);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn six_step_fnt(
-    mut a: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut modnum: ::core::ffi::c_int,
+    a: *mut mpd_uint_t,
+    n: mpd_size_t,
+    modnum: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut tparams: *mut fnt_params = ::core::ptr::null_mut::<fnt_params>();
-    let mut log2n: mpd_size_t = 0;
-    let mut C: mpd_size_t = 0;
-    let mut R: mpd_size_t = 0;
-    let mut kernel: mpd_uint_t = 0;
+    let mut tparams: *mut fnt_params;
     let mut umod: mpd_uint_t = 0;
-    let mut x: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut w0: mpd_uint_t = 0;
-    let mut w1: mpd_uint_t = 0;
-    let mut wstep: mpd_uint_t = 0;
-    let mut i: mpd_size_t = 0;
-    let mut k: mpd_size_t = 0;
+    let mut x: *mut mpd_uint_t;
+    let mut w0: mpd_uint_t;
+    let mut w1: mpd_uint_t;
+    let mut wstep: mpd_uint_t;
+    let mut i: mpd_size_t;
+    let mut k: mpd_size_t;
     if ispower2(n) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"ispower2(n)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -136,9 +128,9 @@ pub unsafe extern "C" fn six_step_fnt(
             b"n <= MPD_MAXTRANSFORM_2N\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    log2n = mpd_bsr(n) as mpd_size_t;
-    C = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
-    R = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
+    let log2n: mpd_size_t = mpd_bsr(n) as mpd_size_t;
+    let C: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
+    let R: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
     if transpose_pow2(a, R, C) == 0 {
         return 0 as ::core::ffi::c_int;
     }
@@ -156,7 +148,7 @@ pub unsafe extern "C" fn six_step_fnt(
         return 0 as ::core::ffi::c_int;
     }
     std_setmodulus(modnum, &raw mut umod);
-    kernel = _mpd_getkernel(n as mpd_uint_t, -(1 as ::core::ffi::c_int), modnum);
+    let kernel: mpd_uint_t = _mpd_getkernel(n as mpd_uint_t, -(1 as ::core::ffi::c_int), modnum);
     i = 1 as mpd_size_t;
     while i < R {
         w0 = 1 as mpd_uint_t;
@@ -195,27 +187,23 @@ pub unsafe extern "C" fn six_step_fnt(
         x = x.add(C);
     }
     mpd_free.expect("non-null function pointer")(tparams as *mut ::core::ffi::c_void);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn inv_six_step_fnt(
-    mut a: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut modnum: ::core::ffi::c_int,
+    a: *mut mpd_uint_t,
+    n: mpd_size_t,
+    modnum: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut tparams: *mut fnt_params = ::core::ptr::null_mut::<fnt_params>();
-    let mut log2n: mpd_size_t = 0;
-    let mut C: mpd_size_t = 0;
-    let mut R: mpd_size_t = 0;
-    let mut kernel: mpd_uint_t = 0;
+    let mut tparams: *mut fnt_params;
     let mut umod: mpd_uint_t = 0;
-    let mut x: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut w0: mpd_uint_t = 0;
-    let mut w1: mpd_uint_t = 0;
-    let mut wstep: mpd_uint_t = 0;
-    let mut i: mpd_size_t = 0;
-    let mut k: mpd_size_t = 0;
+    let mut x: *mut mpd_uint_t;
+    let mut w0: mpd_uint_t;
+    let mut w1: mpd_uint_t;
+    let mut wstep: mpd_uint_t;
+    let mut i: mpd_size_t;
+    let mut k: mpd_size_t;
     if ispower2(n) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"ispower2(n)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -224,15 +212,15 @@ pub unsafe extern "C" fn inv_six_step_fnt(
     } else {
         mpd_c2rust_assert_fail(b"n >= 16\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    if n as u64 <= 4294967296 as u64 {
+    if n as u64 <= 4294967296_u64 {
     } else {
         mpd_c2rust_assert_fail(
             b"n <= MPD_MAXTRANSFORM_2N\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    log2n = mpd_bsr(n) as mpd_size_t;
-    C = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
-    R = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
+    let log2n: mpd_size_t = mpd_bsr(n) as mpd_size_t;
+    let C: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
+    let R: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
     tparams = _mpd_init_fnt_params(C, 1 as ::core::ffi::c_int, modnum);
     if tparams.is_null() {
         return 0 as ::core::ffi::c_int;
@@ -243,7 +231,7 @@ pub unsafe extern "C" fn inv_six_step_fnt(
         x = x.add(C);
     }
     std_setmodulus(modnum, &raw mut umod);
-    kernel = _mpd_getkernel(n as mpd_uint_t, 1 as ::core::ffi::c_int, modnum);
+    let kernel: mpd_uint_t = _mpd_getkernel(n as mpd_uint_t, 1 as ::core::ffi::c_int, modnum);
     i = 1 as mpd_size_t;
     while i < R {
         w0 = 1 as mpd_uint_t;
@@ -289,27 +277,23 @@ pub unsafe extern "C" fn inv_six_step_fnt(
     if transpose_pow2(a, C, R) == 0 {
         return 0 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn inv_six_step_fnt(
-    mut a: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut modnum: ::core::ffi::c_int,
+    a: *mut mpd_uint_t,
+    n: mpd_size_t,
+    modnum: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut tparams: *mut fnt_params = ::core::ptr::null_mut::<fnt_params>();
-    let mut log2n: mpd_size_t = 0;
-    let mut C: mpd_size_t = 0;
-    let mut R: mpd_size_t = 0;
-    let mut kernel: mpd_uint_t = 0;
+    let mut tparams: *mut fnt_params;
     let mut umod: mpd_uint_t = 0;
-    let mut x: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut w0: mpd_uint_t = 0;
-    let mut w1: mpd_uint_t = 0;
-    let mut wstep: mpd_uint_t = 0;
-    let mut i: mpd_size_t = 0;
-    let mut k: mpd_size_t = 0;
+    let mut x: *mut mpd_uint_t;
+    let mut w0: mpd_uint_t;
+    let mut w1: mpd_uint_t;
+    let mut wstep: mpd_uint_t;
+    let mut i: mpd_size_t;
+    let mut k: mpd_size_t;
     if ispower2(n) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"ispower2(n)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -324,9 +308,9 @@ pub unsafe extern "C" fn inv_six_step_fnt(
             b"n <= MPD_MAXTRANSFORM_2N\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    log2n = mpd_bsr(n) as mpd_size_t;
-    C = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
-    R = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
+    let log2n: mpd_size_t = mpd_bsr(n) as mpd_size_t;
+    let C: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_div(2 as mpd_size_t);
+    let R: mpd_size_t = (1 as mpd_size_t) << log2n.wrapping_sub(log2n.wrapping_div(2 as mpd_size_t));
     tparams = _mpd_init_fnt_params(C, 1 as ::core::ffi::c_int, modnum);
     if tparams.is_null() {
         return 0 as ::core::ffi::c_int;
@@ -337,7 +321,7 @@ pub unsafe extern "C" fn inv_six_step_fnt(
         x = x.add(C);
     }
     std_setmodulus(modnum, &raw mut umod);
-    kernel = _mpd_getkernel(n as mpd_uint_t, 1 as ::core::ffi::c_int, modnum);
+    let kernel: mpd_uint_t = _mpd_getkernel(n as mpd_uint_t, 1 as ::core::ffi::c_int, modnum);
     i = 1 as mpd_size_t;
     while i < R {
         w0 = 1 as mpd_uint_t;
@@ -383,5 +367,5 @@ pub unsafe extern "C" fn inv_six_step_fnt(
     if transpose_pow2(a, C, R) == 0 {
         return 0 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }

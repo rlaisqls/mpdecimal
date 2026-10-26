@@ -2,9 +2,9 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
-#![allow(unused_assignments)]
-#![allow(unused_mut)]
 #![deny(clippy::ptr_offset_with_cast, clippy::not_unsafe_ptr_arg_deref)]
+// The functions are those of libmpdec, documented in its manual.
+#![allow(clippy::missing_safety_doc)]
 
 pub mod common;
 pub mod shim;

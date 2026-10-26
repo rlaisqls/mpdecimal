@@ -2,26 +2,26 @@ use crate::common::*;
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub static mut mpd_moduli: [mpd_uint_t; 3] = [
-    18446744069414584321 as u64,
-    18446744056529682433 as u64,
-    18446742974197923841 as u64,
+    18446744069414584321_u64,
+    18446744056529682433_u64,
+    18446742974197923841_u64,
 ];
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub static mut mpd_moduli: [mpd_uint_t; 3] = [
-    2113929217 as u32 as mpd_uint_t,
-    2013265921 as u32 as mpd_uint_t,
-    1811939329 as u32 as mpd_uint_t,
+    2113929217_u32 as mpd_uint_t,
+    2013265921_u32 as mpd_uint_t,
+    1811939329_u32 as mpd_uint_t,
 ];
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
-pub static mut mpd_roots: [mpd_uint_t; 3] = [7 as u64, 10 as u64, 19 as u64];
+pub static mut mpd_roots: [mpd_uint_t; 3] = [7_u64, 10_u64, 19_u64];
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub static mut mpd_roots: [mpd_uint_t; 3] = [
-    5 as u32 as mpd_uint_t,
-    31 as u32 as mpd_uint_t,
-    13 as u32 as mpd_uint_t,
+    5_u32 as mpd_uint_t,
+    31_u32 as mpd_uint_t,
+    13_u32 as mpd_uint_t,
 ];
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
@@ -103,39 +103,39 @@ pub static mut mpd_bits: [mpd_size_t; 64] = [
     268435456 as mpd_size_t,
     536870912 as mpd_size_t,
     1073741824 as mpd_size_t,
-    2147483648 as u64 as mpd_size_t,
-    4294967296 as u64 as mpd_size_t,
-    8589934592 as u64 as mpd_size_t,
-    17179869184 as u64 as mpd_size_t,
-    34359738368 as u64 as mpd_size_t,
-    68719476736 as u64 as mpd_size_t,
-    137438953472 as u64 as mpd_size_t,
-    274877906944 as u64 as mpd_size_t,
-    549755813888 as u64 as mpd_size_t,
-    1099511627776 as u64 as mpd_size_t,
-    2199023255552 as u64 as mpd_size_t,
-    4398046511104 as i64 as mpd_size_t,
-    8796093022208 as u64 as mpd_size_t,
-    17592186044416 as u64 as mpd_size_t,
-    35184372088832 as u64 as mpd_size_t,
-    70368744177664 as u64 as mpd_size_t,
-    140737488355328 as u64 as mpd_size_t,
-    281474976710656 as u64 as mpd_size_t,
-    562949953421312 as u64 as mpd_size_t,
-    1125899906842624 as u64 as mpd_size_t,
-    2251799813685248 as u64 as mpd_size_t,
-    4503599627370496 as u64 as mpd_size_t,
-    9007199254740992 as u64 as mpd_size_t,
-    18014398509481984 as u64 as mpd_size_t,
-    36028797018963968 as u64 as mpd_size_t,
-    72057594037927936 as u64 as mpd_size_t,
-    144115188075855872 as u64 as mpd_size_t,
-    288230376151711744 as u64 as mpd_size_t,
-    576460752303423488 as u64 as mpd_size_t,
-    1152921504606846976 as u64 as mpd_size_t,
-    2305843009213693952 as u64 as mpd_size_t,
-    4611686018427387904 as u64 as mpd_size_t,
-    9223372036854775808 as u64 as mpd_size_t,
+    2147483648_u64 as mpd_size_t,
+    4294967296_u64 as mpd_size_t,
+    8589934592_u64 as mpd_size_t,
+    17179869184_u64 as mpd_size_t,
+    34359738368_u64 as mpd_size_t,
+    68719476736_u64 as mpd_size_t,
+    137438953472_u64 as mpd_size_t,
+    274877906944_u64 as mpd_size_t,
+    549755813888_u64 as mpd_size_t,
+    1099511627776_u64 as mpd_size_t,
+    2199023255552_u64 as mpd_size_t,
+    4398046511104_i64 as mpd_size_t,
+    8796093022208_u64 as mpd_size_t,
+    17592186044416_u64 as mpd_size_t,
+    35184372088832_u64 as mpd_size_t,
+    70368744177664_u64 as mpd_size_t,
+    140737488355328_u64 as mpd_size_t,
+    281474976710656_u64 as mpd_size_t,
+    562949953421312_u64 as mpd_size_t,
+    1125899906842624_u64 as mpd_size_t,
+    2251799813685248_u64 as mpd_size_t,
+    4503599627370496_u64 as mpd_size_t,
+    9007199254740992_u64 as mpd_size_t,
+    18014398509481984_u64 as mpd_size_t,
+    36028797018963968_u64 as mpd_size_t,
+    72057594037927936_u64 as mpd_size_t,
+    144115188075855872_u64 as mpd_size_t,
+    288230376151711744_u64 as mpd_size_t,
+    576460752303423488_u64 as mpd_size_t,
+    1152921504606846976_u64 as mpd_size_t,
+    2305843009213693952_u64 as mpd_size_t,
+    4611686018427387904_u64 as mpd_size_t,
+    9223372036854775808_u64 as mpd_size_t,
 ];
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
@@ -171,7 +171,7 @@ pub static mut mpd_bits: [mpd_size_t; 32] = [
     268435456 as mpd_size_t,
     536870912 as mpd_size_t,
     1073741824 as mpd_size_t,
-    2147483648 as u32 as mpd_size_t,
+    2147483648_u32 as mpd_size_t,
 ];
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
@@ -186,16 +186,16 @@ pub static mut mpd_pow10: [mpd_uint_t; 20] = [
     10000000 as mpd_uint_t,
     100000000 as mpd_uint_t,
     1000000000 as mpd_uint_t,
-    10000000000 as u64,
-    100000000000 as u64,
-    1000000000000 as u64,
-    10000000000000 as u64,
-    100000000000000 as u64,
-    1000000000000000 as u64,
-    10000000000000000 as u64,
-    100000000000000000 as u64,
-    1000000000000000000 as u64,
-    10000000000000000000 as u64,
+    10000000000_u64,
+    100000000000_u64,
+    1000000000000_u64,
+    10000000000000_u64,
+    100000000000000_u64,
+    1000000000000000_u64,
+    10000000000000000_u64,
+    100000000000000000_u64,
+    1000000000000000000_u64,
+    10000000000000000000_u64,
 ];
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]

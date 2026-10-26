@@ -89,16 +89,16 @@ pub const MPD_UINT_MAX: ::core::ffi::c_uint = UINT32_MAX;
 #[cfg(target_pointer_width = "32")]
 pub const MPD_MAX_POW10: ::core::ffi::c_int = 9 as ::core::ffi::c_int;
 #[cfg(target_pointer_width = "64")]
-pub const MPD_MAXTRANSFORM_2N: u64 = 4294967296 as u64;
+pub const MPD_MAXTRANSFORM_2N: u64 = 4294967296_u64;
 #[cfg(target_pointer_width = "32")]
 pub const MPD_MAXTRANSFORM_2N: ::core::ffi::c_uint = 33554432 as ::core::ffi::c_uint;
 #[cfg(target_pointer_width = "64")]
-pub const MPD_MIN_ETINY: i64 = MPD_MIN_EMIN - (MPD_MAX_PREC - 1 as i64);
+pub const MPD_MIN_ETINY: i64 = MPD_MIN_EMIN - (MPD_MAX_PREC - 1_i64);
 #[cfg(target_pointer_width = "32")]
 pub const MPD_MIN_ETINY: ::core::ffi::c_int =
     MPD_MIN_EMIN - (MPD_MAX_PREC - 1 as ::core::ffi::c_int);
 #[cfg(target_pointer_width = "64")]
-pub const MPD_EXP_CLAMP: i64 = -(4000000000000000001 as i64);
+pub const MPD_EXP_CLAMP: i64 = -4000000000000000001_i64;
 #[cfg(target_pointer_width = "32")]
 pub const MPD_EXP_CLAMP: ::core::ffi::c_int = -(2000000001 as ::core::ffi::c_int);
 #[cfg(target_pointer_width = "32")]
@@ -113,10 +113,10 @@ pub const MPD_DATAFLAGS: ::core::ffi::c_int = MPD_STATIC_DATA as ::core::ffi::c_
     | MPD_CONST_DATA as ::core::ffi::c_int;
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_divmod_pow10(
-    mut q: *mut mpd_uint_t,
-    mut r: *mut mpd_uint_t,
-    mut v: mpd_uint_t,
-    mut exp: mpd_uint_t,
+    q: *mut mpd_uint_t,
+    r: *mut mpd_uint_t,
+    v: mpd_uint_t,
+    exp: mpd_uint_t,
 ) {
     if exp <= 19 as mpd_uint_t {
     } else {
@@ -224,10 +224,10 @@ unsafe extern "C" fn _mpd_divmod_pow10(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_divmod_pow10(
-    mut q: *mut mpd_uint_t,
-    mut r: *mut mpd_uint_t,
-    mut v: mpd_uint_t,
-    mut exp: mpd_uint_t,
+    q: *mut mpd_uint_t,
+    r: *mut mpd_uint_t,
+    v: mpd_uint_t,
+    exp: mpd_uint_t,
 ) {
     if exp <= 9 as mpd_uint_t {
     } else {
@@ -240,54 +240,54 @@ unsafe extern "C" fn _mpd_divmod_pow10(
                 *r = 0 as mpd_uint_t;
             }
             1 => {
-                *q = (v as u32).wrapping_div(10 as u32) as mpd_uint_t;
-                *r = (v as u32).wrapping_sub((*q as u32).wrapping_mul(10 as u32)) as mpd_uint_t;
+                *q = v.wrapping_div(10_u32) as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(10_u32)) as mpd_uint_t;
             }
             2 => {
-                *q = (v as u32).wrapping_div(100 as u32) as mpd_uint_t;
-                *r = (v as u32).wrapping_sub((*q as u32).wrapping_mul(100 as u32)) as mpd_uint_t;
+                *q = v.wrapping_div(100_u32) as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(100_u32)) as mpd_uint_t;
             }
             3 => {
-                *q = (v as u32).wrapping_div(1000 as u32) as mpd_uint_t;
-                *r = (v as u32).wrapping_sub((*q as u32).wrapping_mul(1000 as u32)) as mpd_uint_t;
+                *q = v.wrapping_div(1000_u32) as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(1000_u32)) as mpd_uint_t;
             }
             4 => {
-                *q = (v as u32).wrapping_div(10000 as u32) as mpd_uint_t;
-                *r = (v as u32).wrapping_sub((*q as u32).wrapping_mul(10000 as u32)) as mpd_uint_t;
+                *q = v.wrapping_div(10000_u32) as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(10000_u32)) as mpd_uint_t;
             }
             _ => {}
         }
     } else {
         match exp {
             5 => {
-                *q = (v as u32).wrapping_div(100000 as u32) as mpd_uint_t;
-                *r = (v as u32).wrapping_sub((*q as u32).wrapping_mul(100000 as u32)) as mpd_uint_t;
+                *q = v.wrapping_div(100000_u32) as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(100000_u32)) as mpd_uint_t;
             }
             6 => {
-                *q = (v as u32).wrapping_div(1000000 as u32) as mpd_uint_t;
+                *q = v.wrapping_div(1000000_u32) as mpd_uint_t;
                 *r =
-                    (v as u32).wrapping_sub((*q as u32).wrapping_mul(1000000 as u32)) as mpd_uint_t;
+                    v.wrapping_sub((*q).wrapping_mul(1000000_u32)) as mpd_uint_t;
             }
             7 => {
-                *q = (v as u32).wrapping_div(10000000 as u32) as mpd_uint_t;
-                *r = (v as u32).wrapping_sub((*q as u32).wrapping_mul(10000000 as u32))
+                *q = v.wrapping_div(10000000_u32) as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(10000000_u32))
                     as mpd_uint_t;
             }
             8 => {
-                *q = (v as u32).wrapping_div(100000000 as u32) as mpd_uint_t;
-                *r = (v as u32).wrapping_sub((*q as u32).wrapping_mul(100000000 as u32))
+                *q = v.wrapping_div(100000000_u32) as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(100000000_u32))
                     as mpd_uint_t;
             }
             9 => {
-                *q = (v as u32).wrapping_div(1000000000 as u32) as mpd_uint_t;
-                *r = (v as u32).wrapping_sub((*q as u32).wrapping_mul(1000000000 as u32))
+                *q = v.wrapping_div(1000000000_u32) as mpd_uint_t;
+                *r = v.wrapping_sub((*q).wrapping_mul(1000000000_u32))
                     as mpd_uint_t;
             }
             _ => {}
         }
     };
 }
-unsafe extern "C" fn add_size_t(mut a: mpd_size_t, mut b: mpd_size_t) -> mpd_size_t {
+unsafe extern "C" fn add_size_t(a: mpd_size_t, b: mpd_size_t) -> mpd_size_t {
     if a > (MPD_SIZE_MAX as mpd_size_t).wrapping_sub(b) {
         fprintf(
             mpd_c2rust_stderr(),
@@ -303,9 +303,9 @@ unsafe extern "C" fn add_size_t(mut a: mpd_size_t, mut b: mpd_size_t) -> mpd_siz
         fputc('\n' as i32, mpd_c2rust_stderr());
         abort();
     }
-    return a.wrapping_add(b);
+    a.wrapping_add(b)
 }
-unsafe extern "C" fn mul_size_t(mut a: mpd_size_t, mut b: mpd_size_t) -> mpd_size_t {
+unsafe extern "C" fn mul_size_t(a: mpd_size_t, b: mpd_size_t) -> mpd_size_t {
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
     _mpd_mul_words(&raw mut hi, &raw mut lo, a as mpd_uint_t, b as mpd_uint_t);
@@ -324,26 +324,24 @@ unsafe extern "C" fn mul_size_t(mut a: mpd_size_t, mut b: mpd_size_t) -> mpd_siz
         fputc('\n' as i32, mpd_c2rust_stderr());
         abort();
     }
-    return lo as mpd_size_t;
+    lo as mpd_size_t
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_div_words_r(
-    mut q: *mut mpd_uint_t,
-    mut r: *mut mpd_uint_t,
-    mut hi: mpd_uint_t,
-    mut lo: mpd_uint_t,
+    q: *mut mpd_uint_t,
+    r: *mut mpd_uint_t,
+    hi: mpd_uint_t,
+    lo: mpd_uint_t,
 ) {
-    let mut n_adj: mpd_uint_t = 0;
     let mut h: mpd_uint_t = 0;
     let mut l: mpd_uint_t = 0;
-    let mut t: mpd_uint_t = 0;
-    let mut n1_neg: mpd_uint_t = 0;
-    n1_neg = (if lo & (1 as mpd_uint_t) << 63 as ::core::ffi::c_int != 0 {
+    let mut t: mpd_uint_t;
+    let n1_neg: mpd_uint_t = (if lo & (1 as mpd_uint_t) << 63 as ::core::ffi::c_int != 0 {
         MPD_UINT_MAX
     } else {
-        0 as u64
+        0_u64
     }) as mpd_uint_t;
-    n_adj = lo.wrapping_add(n1_neg & MPD_RADIX as mpd_uint_t);
+    let n_adj: mpd_uint_t = lo.wrapping_add(n1_neg & MPD_RADIX as mpd_uint_t);
     _mpd_mul_words(&raw mut h, &raw mut l, mprime_rdx, hi.wrapping_sub(n1_neg));
     l = l.wrapping_add(n_adj);
     if l < n_adj {
@@ -363,57 +361,57 @@ unsafe extern "C" fn _mpd_div_words_r(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_div_words_r(
-    mut q: *mut mpd_uint_t,
-    mut r: *mut mpd_uint_t,
-    mut hi: mpd_uint_t,
-    mut lo: mpd_uint_t,
+    q: *mut mpd_uint_t,
+    r: *mut mpd_uint_t,
+    hi: mpd_uint_t,
+    lo: mpd_uint_t,
 ) {
     _mpd_div_words(q, r, hi, lo, MPD_RADIX as mpd_uint_t);
 }
-unsafe extern "C" fn _mpd_singlemul(mut w: *mut mpd_uint_t, mut u: mpd_uint_t, mut v: mpd_uint_t) {
+unsafe extern "C" fn _mpd_singlemul(w: *mut mpd_uint_t, u: mpd_uint_t, v: mpd_uint_t) {
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
     _mpd_mul_words(&raw mut hi, &raw mut lo, u, v);
     _mpd_div_words_r(
-        w.offset(1 as isize) as *mut mpd_uint_t,
-        w.offset(0 as isize) as *mut mpd_uint_t,
+        w.offset(1_isize) as *mut mpd_uint_t,
+        w.offset(0_isize) as *mut mpd_uint_t,
         hi,
         lo,
     );
 }
 unsafe extern "C" fn _mpd_mul_2_le2(
-    mut w: *mut mpd_uint_t,
-    mut u: *mut mpd_uint_t,
-    mut v: *mut mpd_uint_t,
-    mut m: mpd_ssize_t,
+    w: *mut mpd_uint_t,
+    u: *mut mpd_uint_t,
+    v: *mut mpd_uint_t,
+    m: mpd_ssize_t,
 ) {
     let mut hi: mpd_uint_t = 0;
     let mut lo: mpd_uint_t = 0;
     _mpd_mul_words(
         &raw mut hi,
         &raw mut lo,
-        *u.offset(0 as isize),
-        *v.offset(0 as isize),
+        *u.offset(0_isize),
+        *v.offset(0_isize),
     );
     _mpd_div_words_r(
-        w.offset(1 as isize) as *mut mpd_uint_t,
-        w.offset(0 as isize) as *mut mpd_uint_t,
+        w.offset(1_isize) as *mut mpd_uint_t,
+        w.offset(0_isize) as *mut mpd_uint_t,
         hi,
         lo,
     );
     _mpd_mul_words(
         &raw mut hi,
         &raw mut lo,
-        *u.offset(1 as isize),
-        *v.offset(0 as isize),
+        *u.offset(1_isize),
+        *v.offset(0_isize),
     );
-    lo = (*w.offset(1 as isize)).wrapping_add(lo);
-    if lo < *w.offset(1 as isize) {
+    lo = (*w.offset(1_isize)).wrapping_add(lo);
+    if lo < *w.offset(1_isize) {
         hi = hi.wrapping_add(1);
     }
     _mpd_div_words_r(
-        w.offset(2 as isize) as *mut mpd_uint_t,
-        w.offset(1 as isize) as *mut mpd_uint_t,
+        w.offset(2_isize) as *mut mpd_uint_t,
+        w.offset(1_isize) as *mut mpd_uint_t,
         hi,
         lo,
     );
@@ -423,42 +421,42 @@ unsafe extern "C" fn _mpd_mul_2_le2(
     _mpd_mul_words(
         &raw mut hi,
         &raw mut lo,
-        *u.offset(0 as isize),
-        *v.offset(1 as isize),
+        *u.offset(0_isize),
+        *v.offset(1_isize),
     );
-    lo = (*w.offset(1 as isize)).wrapping_add(lo);
-    if lo < *w.offset(1 as isize) {
+    lo = (*w.offset(1_isize)).wrapping_add(lo);
+    if lo < *w.offset(1_isize) {
         hi = hi.wrapping_add(1);
     }
     _mpd_div_words_r(
-        w.offset(3 as isize) as *mut mpd_uint_t,
-        w.offset(1 as isize) as *mut mpd_uint_t,
+        w.offset(3_isize) as *mut mpd_uint_t,
+        w.offset(1_isize) as *mut mpd_uint_t,
         hi,
         lo,
     );
     _mpd_mul_words(
         &raw mut hi,
         &raw mut lo,
-        *u.offset(1 as isize),
-        *v.offset(1 as isize),
+        *u.offset(1_isize),
+        *v.offset(1_isize),
     );
-    lo = (*w.offset(2 as isize)).wrapping_add(lo);
-    if lo < *w.offset(2 as isize) {
+    lo = (*w.offset(2_isize)).wrapping_add(lo);
+    if lo < *w.offset(2_isize) {
         hi = hi.wrapping_add(1);
     }
-    lo = (*w.offset(3 as isize)).wrapping_add(lo);
-    if lo < *w.offset(3 as isize) {
+    lo = (*w.offset(3_isize)).wrapping_add(lo);
+    if lo < *w.offset(3_isize) {
         hi = hi.wrapping_add(1);
     }
     _mpd_div_words_r(
-        w.offset(3 as isize) as *mut mpd_uint_t,
-        w.offset(2 as isize) as *mut mpd_uint_t,
+        w.offset(3_isize) as *mut mpd_uint_t,
+        w.offset(2_isize) as *mut mpd_uint_t,
         hi,
         lo,
     );
 }
 unsafe extern "C" fn _mpd_isallnine(
-    mut data: *const mpd_uint_t,
+    data: *const mpd_uint_t,
     mut len: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
     loop {
@@ -470,46 +468,40 @@ unsafe extern "C" fn _mpd_isallnine(
             return 0 as ::core::ffi::c_int;
         }
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 pub const INT_MAX: ::core::ffi::c_int = 2147483647 as ::core::ffi::c_int;
 #[cfg(target_pointer_width = "64")]
-pub const MPD_NEWTONDIV_CUTOFF: i64 = 1024 as i64;
+pub const MPD_NEWTONDIV_CUTOFF: i64 = 1024_i64;
 #[cfg(target_pointer_width = "32")]
-pub const MPD_NEWTONDIV_CUTOFF: i32 = 1024 as i32;
+pub const MPD_NEWTONDIV_CUTOFF: i32 = 1024_i32;
 static mut data_one: [mpd_uint_t; 1] = [1 as mpd_uint_t];
 static mut data_zero: [mpd_uint_t; 1] = [0 as mpd_uint_t];
-static mut one: mpd_t = unsafe {
-    mpd_t {
-        flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
-        exp: 0 as mpd_ssize_t,
-        digits: 1 as mpd_ssize_t,
-        len: 1 as mpd_ssize_t,
-        alloc: 1 as mpd_ssize_t,
-        data: &raw const data_one as *mut mpd_uint_t,
-    }
+static mut one: mpd_t = mpd_t {
+    flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
+    exp: 0 as mpd_ssize_t,
+    digits: 1 as mpd_ssize_t,
+    len: 1 as mpd_ssize_t,
+    alloc: 1 as mpd_ssize_t,
+    data: &raw const data_one as *mut mpd_uint_t,
 };
-static mut minus_one: mpd_t = unsafe {
-    mpd_t {
-        flags: (MPD_NEG as ::core::ffi::c_int
-            | MPD_STATIC as ::core::ffi::c_int
-            | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
-        exp: 0 as mpd_ssize_t,
-        digits: 1 as mpd_ssize_t,
-        len: 1 as mpd_ssize_t,
-        alloc: 1 as mpd_ssize_t,
-        data: &raw const data_one as *mut mpd_uint_t,
-    }
+static mut minus_one: mpd_t = mpd_t {
+    flags: (MPD_NEG as ::core::ffi::c_int
+        | MPD_STATIC as ::core::ffi::c_int
+        | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
+    exp: 0 as mpd_ssize_t,
+    digits: 1 as mpd_ssize_t,
+    len: 1 as mpd_ssize_t,
+    alloc: 1 as mpd_ssize_t,
+    data: &raw const data_one as *mut mpd_uint_t,
 };
-static mut zero: mpd_t = unsafe {
-    mpd_t {
-        flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
-        exp: 0 as mpd_ssize_t,
-        digits: 1 as mpd_ssize_t,
-        len: 1 as mpd_ssize_t,
-        alloc: 1 as mpd_ssize_t,
-        data: &raw const data_zero as *mut mpd_uint_t,
-    }
+static mut zero: mpd_t = mpd_t {
+    flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
+    exp: 0 as mpd_ssize_t,
+    digits: 1 as mpd_ssize_t,
+    len: 1 as mpd_ssize_t,
+    alloc: 1 as mpd_ssize_t,
+    data: &raw const data_zero as *mut mpd_uint_t,
 };
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
@@ -524,40 +516,40 @@ pub static mut func_count: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub static mut func_fail: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
 pub unsafe extern "C" fn mpd_version() -> *const ::core::ffi::c_char {
-    return MPD_VERSION.as_ptr();
+    MPD_VERSION.as_ptr()
 }
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
-pub unsafe extern "C" fn mpd_set_func_fail(mut n: ::core::ffi::c_int) {
+pub unsafe extern "C" fn mpd_set_func_fail(n: ::core::ffi::c_int) {
     func_count = 0 as ::core::ffi::c_int;
     func_fail = n;
 }
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_word_digits(mut word: mpd_uint_t) -> ::core::ffi::c_int {
-    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(9 as isize) {
-        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(4 as isize) {
-            if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(2 as isize) {
-                return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(1 as isize) {
+pub unsafe extern "C" fn mpd_word_digits(word: mpd_uint_t) -> ::core::ffi::c_int {
+    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(9_isize) {
+        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(4_isize) {
+            if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(2_isize) {
+                return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(1_isize) {
                     1 as ::core::ffi::c_int
                 } else {
                     2 as ::core::ffi::c_int
                 };
             }
-            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(3 as isize) {
+            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(3_isize) {
                 3 as ::core::ffi::c_int
             } else {
                 4 as ::core::ffi::c_int
             };
         }
-        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(6 as isize) {
-            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(5 as isize) {
+        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(6_isize) {
+            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(5_isize) {
                 5 as ::core::ffi::c_int
             } else {
                 6 as ::core::ffi::c_int
             };
         }
-        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(8 as isize) {
-            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(7 as isize) {
+        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(8_isize) {
+            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(7_isize) {
                 7 as ::core::ffi::c_int
             } else {
                 8 as ::core::ffi::c_int
@@ -565,16 +557,16 @@ pub unsafe extern "C" fn mpd_word_digits(mut word: mpd_uint_t) -> ::core::ffi::c
         }
         return 9 as ::core::ffi::c_int;
     }
-    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(14 as isize) {
-        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(11 as isize) {
-            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(10 as isize) {
+    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(14_isize) {
+        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(11_isize) {
+            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(10_isize) {
                 10 as ::core::ffi::c_int
             } else {
                 11 as ::core::ffi::c_int
             };
         }
-        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(13 as isize) {
-            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(12 as isize) {
+        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(13_isize) {
+            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(12_isize) {
                 12 as ::core::ffi::c_int
             } else {
                 13 as ::core::ffi::c_int
@@ -582,143 +574,142 @@ pub unsafe extern "C" fn mpd_word_digits(mut word: mpd_uint_t) -> ::core::ffi::c
         }
         return 14 as ::core::ffi::c_int;
     }
-    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(18 as isize) {
-        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(16 as isize) {
-            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(15 as isize) {
+    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(18_isize) {
+        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(16_isize) {
+            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(15_isize) {
                 15 as ::core::ffi::c_int
             } else {
                 16 as ::core::ffi::c_int
             };
         }
-        return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(17 as isize) {
+        return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(17_isize) {
             17 as ::core::ffi::c_int
         } else {
             18 as ::core::ffi::c_int
         };
     }
-    return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(19 as isize) {
+    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(19_isize) {
         19 as ::core::ffi::c_int
     } else {
         20 as ::core::ffi::c_int
-    };
+    }
 }
 #[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn mpd_word_digits(mut word: mpd_uint_t) -> ::core::ffi::c_int {
-    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(4 as isize) {
-        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(2 as isize) {
-            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(1 as isize) {
+pub unsafe extern "C" fn mpd_word_digits(word: mpd_uint_t) -> ::core::ffi::c_int {
+    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(4_isize) {
+        if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(2_isize) {
+            return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(1_isize) {
                 1 as ::core::ffi::c_int
             } else {
                 2 as ::core::ffi::c_int
             };
         }
-        return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(3 as isize) {
+        return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(3_isize) {
             3 as ::core::ffi::c_int
         } else {
             4 as ::core::ffi::c_int
         };
     }
-    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(6 as isize) {
-        return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(5 as isize) {
+    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(6_isize) {
+        return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(5_isize) {
             5 as ::core::ffi::c_int
         } else {
             6 as ::core::ffi::c_int
         };
     }
-    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(8 as isize) {
-        return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(7 as isize) {
+    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(8_isize) {
+        return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(7_isize) {
             7 as ::core::ffi::c_int
         } else {
             8 as ::core::ffi::c_int
         };
     }
-    return if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(9 as isize) {
+    if word < *(&raw const mpd_pow10 as *const mpd_uint_t).offset(9_isize) {
         9 as ::core::ffi::c_int
     } else {
         10 as ::core::ffi::c_int
-    };
+    }
 }
-pub unsafe extern "C" fn mpd_adjexp(mut dec: *const mpd_t) -> mpd_ssize_t {
-    return (*dec).exp + (*dec).digits - 1 as mpd_ssize_t;
+pub unsafe extern "C" fn mpd_adjexp(dec: *const mpd_t) -> mpd_ssize_t {
+    (*dec).exp + (*dec).digits - 1 as mpd_ssize_t
 }
-pub unsafe extern "C" fn mpd_etiny(mut ctx: *const mpd_context_t) -> mpd_ssize_t {
-    return (*ctx).emin - ((*ctx).prec - 1 as mpd_ssize_t);
+pub unsafe extern "C" fn mpd_etiny(ctx: *const mpd_context_t) -> mpd_ssize_t {
+    (*ctx).emin - ((*ctx).prec - 1 as mpd_ssize_t)
 }
-pub unsafe extern "C" fn mpd_etop(mut ctx: *const mpd_context_t) -> mpd_ssize_t {
-    return (*ctx).emax - ((*ctx).prec - 1 as mpd_ssize_t);
+pub unsafe extern "C" fn mpd_etop(ctx: *const mpd_context_t) -> mpd_ssize_t {
+    (*ctx).emax - ((*ctx).prec - 1 as mpd_ssize_t)
 }
-pub unsafe extern "C" fn mpd_msword(mut dec: *const mpd_t) -> mpd_uint_t {
+pub unsafe extern "C" fn mpd_msword(dec: *const mpd_t) -> mpd_uint_t {
     if (*dec).len > 0 as mpd_ssize_t {
     } else {
         mpd_c2rust_assert_fail(b"dec->len > 0\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    return *(*dec).data.offset(((*dec).len - 1 as mpd_ssize_t) as isize);
+    *(*dec).data.offset(((*dec).len - 1 as mpd_ssize_t) as isize)
 }
-pub unsafe extern "C" fn mpd_msd(mut word: mpd_uint_t) -> mpd_uint_t {
-    let mut n: ::core::ffi::c_int = 0;
-    n = mpd_word_digits(word);
-    return word.wrapping_div(
+pub unsafe extern "C" fn mpd_msd(word: mpd_uint_t) -> mpd_uint_t {
+    let n: ::core::ffi::c_int = mpd_word_digits(word);
+    word.wrapping_div(
         *(&raw const mpd_pow10 as *const mpd_uint_t).offset((n - 1 as ::core::ffi::c_int) as isize),
-    );
+    )
 }
-pub unsafe extern "C" fn mpd_lsd(mut word: mpd_uint_t) -> mpd_uint_t {
-    return word.wrapping_rem(10 as mpd_uint_t);
+pub unsafe extern "C" fn mpd_lsd(word: mpd_uint_t) -> mpd_uint_t {
+    word.wrapping_rem(10 as mpd_uint_t)
 }
-pub unsafe extern "C" fn mpd_digits_to_size(mut digits: mpd_ssize_t) -> mpd_ssize_t {
+pub unsafe extern "C" fn mpd_digits_to_size(digits: mpd_ssize_t) -> mpd_ssize_t {
     let mut q: mpd_ssize_t = 0;
     let mut r: mpd_ssize_t = 0;
     _mpd_idiv_word(&raw mut q, &raw mut r, digits, MPD_RDIGITS as mpd_ssize_t);
-    return if r == 0 as mpd_ssize_t {
+    if r == 0 as mpd_ssize_t {
         q
     } else {
         q + 1 as mpd_ssize_t
-    };
+    }
 }
 pub unsafe extern "C" fn mpd_exp_digits(mut exp: mpd_ssize_t) -> ::core::ffi::c_int {
     exp = if exp < 0 as mpd_ssize_t { -exp } else { exp };
-    return mpd_word_digits(exp as mpd_uint_t);
+    mpd_word_digits(exp as mpd_uint_t)
 }
-pub unsafe extern "C" fn mpd_iscanonical(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return 1 as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_iscanonical(_dec: *const mpd_t) -> ::core::ffi::c_int {
+    1 as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isfinite(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return ((*dec).flags as ::core::ffi::c_int & MPD_SPECIAL == 0) as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isfinite(dec: *const mpd_t) -> ::core::ffi::c_int {
+    ((*dec).flags as ::core::ffi::c_int & MPD_SPECIAL == 0) as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isinfinite(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_INF as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isinfinite(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_INF as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isnan(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int
-        & (MPD_NAN as ::core::ffi::c_int | MPD_SNAN as ::core::ffi::c_int);
+pub unsafe extern "C" fn mpd_isnan(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int
+        & (MPD_NAN as ::core::ffi::c_int | MPD_SNAN as ::core::ffi::c_int)
 }
-pub unsafe extern "C" fn mpd_isnegative(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_NEG as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isnegative(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_NEG as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_ispositive(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return ((*dec).flags as ::core::ffi::c_int & MPD_NEG as ::core::ffi::c_int == 0)
-        as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_ispositive(dec: *const mpd_t) -> ::core::ffi::c_int {
+    ((*dec).flags as ::core::ffi::c_int & MPD_NEG as ::core::ffi::c_int == 0)
+        as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isqnan(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_NAN as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isqnan(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_NAN as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_issigned(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_NEG as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_issigned(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_NEG as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_issnan(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_SNAN as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_issnan(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_SNAN as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isspecial(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_SPECIAL;
+pub unsafe extern "C" fn mpd_isspecial(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_SPECIAL
 }
-pub unsafe extern "C" fn mpd_iszero(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (mpd_isspecial(dec) == 0 && mpd_msword(dec) == 0 as mpd_uint_t) as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_iszero(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (mpd_isspecial(dec) == 0 && mpd_msword(dec) == 0 as mpd_uint_t) as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_iszerocoeff(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (mpd_msword(dec) == 0 as mpd_uint_t) as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_iszerocoeff(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (mpd_msword(dec) == 0 as mpd_uint_t) as ::core::ffi::c_int
 }
 pub unsafe extern "C" fn mpd_isnormal(
-    mut dec: *const mpd_t,
-    mut ctx: *const mpd_context_t,
+    dec: *const mpd_t,
+    ctx: *const mpd_context_t,
 ) -> ::core::ffi::c_int {
     if mpd_isspecial(dec) != 0 {
         return 0 as ::core::ffi::c_int;
@@ -726,11 +717,11 @@ pub unsafe extern "C" fn mpd_isnormal(
     if mpd_iszerocoeff(dec) != 0 {
         return 0 as ::core::ffi::c_int;
     }
-    return (mpd_adjexp(dec) >= (*ctx).emin) as ::core::ffi::c_int;
+    (mpd_adjexp(dec) >= (*ctx).emin) as ::core::ffi::c_int
 }
 pub unsafe extern "C" fn mpd_issubnormal(
-    mut dec: *const mpd_t,
-    mut ctx: *const mpd_context_t,
+    dec: *const mpd_t,
+    ctx: *const mpd_context_t,
 ) -> ::core::ffi::c_int {
     if mpd_isspecial(dec) != 0 {
         return 0 as ::core::ffi::c_int;
@@ -738,51 +729,51 @@ pub unsafe extern "C" fn mpd_issubnormal(
     if mpd_iszerocoeff(dec) != 0 {
         return 0 as ::core::ffi::c_int;
     }
-    return (mpd_adjexp(dec) < (*ctx).emin) as ::core::ffi::c_int;
+    (mpd_adjexp(dec) < (*ctx).emin) as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isoddword(mut word: mpd_uint_t) -> ::core::ffi::c_int {
-    return (word & 1 as mpd_uint_t) as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isoddword(word: mpd_uint_t) -> ::core::ffi::c_int {
+    (word & 1 as mpd_uint_t) as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isoddcoeff(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return mpd_isoddword(*(*dec).data.offset(0 as isize));
+pub unsafe extern "C" fn mpd_isoddcoeff(dec: *const mpd_t) -> ::core::ffi::c_int {
+    mpd_isoddword(*(*dec).data.offset(0_isize))
 }
-pub unsafe extern "C" fn mpd_sign(mut dec: *const mpd_t) -> uint8_t {
-    return ((*dec).flags as ::core::ffi::c_int & MPD_NEG as ::core::ffi::c_int) as uint8_t;
+pub unsafe extern "C" fn mpd_sign(dec: *const mpd_t) -> uint8_t {
+    ((*dec).flags as ::core::ffi::c_int & MPD_NEG as ::core::ffi::c_int) as uint8_t
 }
-pub unsafe extern "C" fn mpd_arith_sign(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return 1 as ::core::ffi::c_int - 2 as ::core::ffi::c_int * mpd_isnegative(dec);
+pub unsafe extern "C" fn mpd_arith_sign(dec: *const mpd_t) -> ::core::ffi::c_int {
+    1 as ::core::ffi::c_int - 2 as ::core::ffi::c_int * mpd_isnegative(dec)
 }
 pub unsafe extern "C" fn mpd_radix() -> ::core::ffi::c_long {
-    return 10 as ::core::ffi::c_long;
+    10 as ::core::ffi::c_long
 }
-pub unsafe extern "C" fn mpd_isdynamic(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return ((*dec).flags as ::core::ffi::c_int & MPD_STATIC as ::core::ffi::c_int == 0)
-        as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isdynamic(dec: *const mpd_t) -> ::core::ffi::c_int {
+    ((*dec).flags as ::core::ffi::c_int & MPD_STATIC as ::core::ffi::c_int == 0)
+        as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isstatic(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_STATIC as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isstatic(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_STATIC as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isdynamic_data(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return ((*dec).flags as ::core::ffi::c_int & MPD_DATAFLAGS == 0) as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isdynamic_data(dec: *const mpd_t) -> ::core::ffi::c_int {
+    ((*dec).flags as ::core::ffi::c_int & MPD_DATAFLAGS == 0) as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isstatic_data(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_STATIC_DATA as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isstatic_data(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_STATIC_DATA as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isshared_data(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_SHARED_DATA as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isshared_data(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_SHARED_DATA as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isconst_data(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (*dec).flags as ::core::ffi::c_int & MPD_CONST_DATA as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_isconst_data(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (*dec).flags as ::core::ffi::c_int & MPD_CONST_DATA as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_uint_zero(mut dest: *mut mpd_uint_t, mut len: mpd_size_t) {
-    let mut i: mpd_size_t = 0;
+pub unsafe extern "C" fn mpd_uint_zero(dest: *mut mpd_uint_t, len: mpd_size_t) {
+    let mut i: mpd_size_t;
     i = 0 as mpd_size_t;
     while i < len {
         *dest.add(i) = 0 as mpd_uint_t;
         i = i.wrapping_add(1);
     }
 }
-pub unsafe extern "C" fn mpd_del(mut dec: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_del(dec: *mut mpd_t) {
     if mpd_isdynamic_data(dec) != 0 {
         mpd_free.expect("non-null function pointer")((*dec).data as *mut ::core::ffi::c_void);
     }
@@ -791,9 +782,9 @@ pub unsafe extern "C" fn mpd_del(mut dec: *mut mpd_t) {
     }
 }
 pub unsafe extern "C" fn mpd_qresize(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut nwords: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     if mpd_isconst_data(result) == 0 {
     } else {
@@ -827,10 +818,10 @@ pub unsafe extern "C" fn mpd_qresize(
         }
         return 1 as ::core::ffi::c_int;
     }
-    return mpd_realloc_dyn(result, nwords, status);
+    mpd_realloc_dyn(result, nwords, status)
 }
 unsafe extern "C" fn mpd_qresize_cxx(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut nwords: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
     if mpd_isconst_data(result) == 0 {
@@ -865,12 +856,12 @@ unsafe extern "C" fn mpd_qresize_cxx(
         }
         return 1 as ::core::ffi::c_int;
     }
-    return mpd_realloc_dyn_cxx(result, nwords);
+    mpd_realloc_dyn_cxx(result, nwords)
 }
 pub unsafe extern "C" fn mpd_qresize_zero(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut nwords: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     if mpd_isconst_data(result) == 0 {
     } else {
@@ -905,9 +896,9 @@ pub unsafe extern "C" fn mpd_qresize_zero(
         }
     }
     mpd_uint_zero((*result).data, nwords as mpd_size_t);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_minalloc(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_minalloc(result: *mut mpd_t) {
     if mpd_isconst_data(result) == 0 {
     } else {
         mpd_c2rust_assert_fail(
@@ -934,108 +925,108 @@ pub unsafe extern "C" fn mpd_minalloc(mut result: *mut mpd_t) {
     }
 }
 pub unsafe extern "C" fn mpd_resize(
-    mut result: *mut mpd_t,
-    mut nwords: mpd_ssize_t,
-    mut ctx: *mut mpd_context_t,
+    result: *mut mpd_t,
+    nwords: mpd_ssize_t,
+    ctx: *mut mpd_context_t,
 ) -> ::core::ffi::c_int {
     let mut status: uint32_t = 0 as uint32_t;
     if mpd_qresize(result, nwords, &raw mut status) == 0 {
         mpd_addstatus_raise(ctx, status);
         return 0 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 pub unsafe extern "C" fn mpd_resize_zero(
-    mut result: *mut mpd_t,
-    mut nwords: mpd_ssize_t,
-    mut ctx: *mut mpd_context_t,
+    result: *mut mpd_t,
+    nwords: mpd_ssize_t,
+    ctx: *mut mpd_context_t,
 ) -> ::core::ffi::c_int {
     let mut status: uint32_t = 0 as uint32_t;
     if mpd_qresize_zero(result, nwords, &raw mut status) == 0 {
         mpd_addstatus_raise(ctx, status);
         return 0 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_setdigits(mut result: *mut mpd_t) {
-    let mut wdigits: mpd_ssize_t = mpd_word_digits(mpd_msword(result)) as mpd_ssize_t;
+pub unsafe extern "C" fn mpd_setdigits(result: *mut mpd_t) {
+    let wdigits: mpd_ssize_t = mpd_word_digits(mpd_msword(result)) as mpd_ssize_t;
     (*result).digits = wdigits + ((*result).len - 1 as mpd_ssize_t) * MPD_RDIGITS as mpd_ssize_t;
 }
-pub unsafe extern "C" fn mpd_set_sign(mut result: *mut mpd_t, mut sign: uint8_t) {
+pub unsafe extern "C" fn mpd_set_sign(result: *mut mpd_t, sign: uint8_t) {
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int & !(MPD_NEG as ::core::ffi::c_int)) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | sign as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_signcpy(mut result: *mut mpd_t, mut a: *const mpd_t) {
-    let mut sign: uint8_t =
+pub unsafe extern "C" fn mpd_signcpy(result: *mut mpd_t, a: *const mpd_t) {
+    let sign: uint8_t =
         ((*a).flags as ::core::ffi::c_int & MPD_NEG as ::core::ffi::c_int) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int & !(MPD_NEG as ::core::ffi::c_int)) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | sign as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_infinity(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_infinity(result: *mut mpd_t) {
     (*result).flags = ((*result).flags as ::core::ffi::c_int & !MPD_SPECIAL) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | MPD_INF as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_qnan(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_qnan(result: *mut mpd_t) {
     (*result).flags = ((*result).flags as ::core::ffi::c_int & !MPD_SPECIAL) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | MPD_NAN as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_snan(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_snan(result: *mut mpd_t) {
     (*result).flags = ((*result).flags as ::core::ffi::c_int & !MPD_SPECIAL) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | MPD_SNAN as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_negative(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_negative(result: *mut mpd_t) {
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | MPD_NEG as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_positive(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_positive(result: *mut mpd_t) {
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int & !(MPD_NEG as ::core::ffi::c_int)) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_dynamic(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_dynamic(result: *mut mpd_t) {
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int & !(MPD_STATIC as ::core::ffi::c_int)) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_static(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_static(result: *mut mpd_t) {
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | MPD_STATIC as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_dynamic_data(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_dynamic_data(result: *mut mpd_t) {
     (*result).flags = ((*result).flags as ::core::ffi::c_int & !MPD_DATAFLAGS) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_static_data(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_static_data(result: *mut mpd_t) {
     (*result).flags = ((*result).flags as ::core::ffi::c_int & !MPD_DATAFLAGS) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | MPD_STATIC_DATA as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_shared_data(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_shared_data(result: *mut mpd_t) {
     (*result).flags = ((*result).flags as ::core::ffi::c_int & !MPD_DATAFLAGS) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | MPD_SHARED_DATA as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_const_data(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_set_const_data(result: *mut mpd_t) {
     (*result).flags = ((*result).flags as ::core::ffi::c_int & !MPD_DATAFLAGS) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_clear_flags(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_clear_flags(result: *mut mpd_t) {
     (*result).flags = ((*result).flags as ::core::ffi::c_int
         & (MPD_STATIC as ::core::ffi::c_int | MPD_DATAFLAGS)) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_set_flags(mut result: *mut mpd_t, mut flags: uint8_t) {
+pub unsafe extern "C" fn mpd_set_flags(result: *mut mpd_t, flags: uint8_t) {
     (*result).flags = ((*result).flags as ::core::ffi::c_int
         & (MPD_STATIC as ::core::ffi::c_int | MPD_DATAFLAGS)) as uint8_t;
     (*result).flags =
         ((*result).flags as ::core::ffi::c_int | flags as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_copy_flags(mut result: *mut mpd_t, mut a: *const mpd_t) {
-    let mut aflags: uint8_t = (*a).flags;
+pub unsafe extern "C" fn mpd_copy_flags(result: *mut mpd_t, a: *const mpd_t) {
+    let aflags: uint8_t = (*a).flags;
     (*result).flags = ((*result).flags as ::core::ffi::c_int
         & (MPD_STATIC as ::core::ffi::c_int | MPD_DATAFLAGS)) as uint8_t;
     (*result).flags = ((*result).flags as ::core::ffi::c_int
@@ -1043,8 +1034,8 @@ pub unsafe extern "C" fn mpd_copy_flags(mut result: *mut mpd_t, mut a: *const mp
         as uint8_t;
 }
 unsafe extern "C" fn mpd_workcontext(
-    mut workctx: *mut mpd_context_t,
-    mut ctx: *const mpd_context_t,
+    workctx: *mut mpd_context_t,
+    ctx: *const mpd_context_t,
 ) {
     (*workctx).prec = (*ctx).prec;
     (*workctx).emax = (*ctx).emax;
@@ -1056,20 +1047,20 @@ unsafe extern "C" fn mpd_workcontext(
     (*workctx).clamp = (*ctx).clamp;
     (*workctx).allcr = (*ctx).allcr;
 }
-unsafe extern "C" fn _mpd_negate(mut dec: *mut mpd_t) {
+unsafe extern "C" fn _mpd_negate(dec: *mut mpd_t) {
     (*dec).flags = ((*dec).flags as ::core::ffi::c_int ^ MPD_NEG as ::core::ffi::c_int) as uint8_t;
 }
-pub unsafe extern "C" fn mpd_zerocoeff(mut result: *mut mpd_t) {
+pub unsafe extern "C" fn mpd_zerocoeff(result: *mut mpd_t) {
     mpd_minalloc(result);
     (*result).digits = 1 as mpd_ssize_t;
     (*result).len = 1 as mpd_ssize_t;
-    *(*result).data.offset(0 as isize) = 0 as mpd_uint_t;
+    *(*result).data.offset(0_isize) = 0 as mpd_uint_t;
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qmaxcoeff(
-    mut result: *mut mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut len: mpd_ssize_t = 0;
     let mut r: mpd_ssize_t = 0;
@@ -1092,21 +1083,21 @@ pub unsafe extern "C" fn mpd_qmaxcoeff(
     len -= 1;
     if r > 0 as mpd_ssize_t {
         let fresh0 = len;
-        len = len - 1;
+        len -= 1;
         *(*result).data.offset(fresh0 as isize) = (*(&raw const mpd_pow10 as *const mpd_uint_t)
             .offset(r as isize))
         .wrapping_sub(1 as mpd_uint_t);
     }
     while len >= 0 as mpd_ssize_t {
-        *(*result).data.offset(len as isize) = MPD_RADIX.wrapping_sub(1 as u64) as mpd_uint_t;
+        *(*result).data.offset(len as isize) = MPD_RADIX.wrapping_sub(1_u64) as mpd_uint_t;
         len -= 1;
     }
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qmaxcoeff(
-    mut result: *mut mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut len: mpd_ssize_t = 0;
     let mut r: mpd_ssize_t = 0;
@@ -1129,7 +1120,7 @@ pub unsafe extern "C" fn mpd_qmaxcoeff(
     len -= 1;
     if r > 0 as mpd_ssize_t {
         let fresh0 = len;
-        len = len - 1;
+        len -= 1;
         *(*result).data.offset(fresh0 as isize) = (*(&raw const mpd_pow10 as *const mpd_uint_t)
             .offset(r as isize))
         .wrapping_sub(1 as mpd_uint_t);
@@ -1140,7 +1131,7 @@ pub unsafe extern "C" fn mpd_qmaxcoeff(
         len -= 1;
     }
 }
-unsafe extern "C" fn _mpd_cap(mut result: *mut mpd_t, mut ctx: *const mpd_context_t) {
+unsafe extern "C" fn _mpd_cap(result: *mut mpd_t, ctx: *const mpd_context_t) {
     let mut dummy: uint32_t = 0;
     let mut len: mpd_ssize_t = 0;
     let mut r: mpd_ssize_t = 0;
@@ -1157,7 +1148,7 @@ unsafe extern "C" fn _mpd_cap(mut result: *mut mpd_t, mut ctx: *const mpd_contex
             len + 1 as mpd_ssize_t
         };
         if r != 0 as mpd_ssize_t {
-            let ref mut fresh0 = *(*result).data.offset((len - 1 as mpd_ssize_t) as isize);
+            let fresh0 = &mut *(*result).data.offset((len - 1 as mpd_ssize_t) as isize);
             *fresh0 = (*fresh0)
                 .wrapping_rem(*(&raw const mpd_pow10 as *const mpd_uint_t).offset(r as isize));
         }
@@ -1170,12 +1161,11 @@ unsafe extern "C" fn _mpd_cap(mut result: *mut mpd_t, mut ctx: *const mpd_contex
         _settriple(result, mpd_sign(result), 0 as mpd_uint_t, (*result).exp);
     }
 }
-unsafe extern "C" fn _mpd_fix_nan(mut result: *mut mpd_t, mut ctx: *const mpd_context_t) {
+unsafe extern "C" fn _mpd_fix_nan(result: *mut mpd_t, ctx: *const mpd_context_t) {
     let mut dummy: uint32_t = 0;
-    let mut prec: mpd_ssize_t = 0;
     let mut len: mpd_ssize_t = 0;
     let mut r: mpd_ssize_t = 0;
-    prec = (*ctx).prec - (*ctx).clamp as mpd_ssize_t;
+    let prec: mpd_ssize_t = (*ctx).prec - (*ctx).clamp as mpd_ssize_t;
     if (*result).len > 0 as mpd_ssize_t && (*result).digits > prec {
         if prec == 0 as mpd_ssize_t {
             mpd_minalloc(result);
@@ -1189,7 +1179,7 @@ unsafe extern "C" fn _mpd_fix_nan(mut result: *mut mpd_t, mut ctx: *const mpd_co
                 len + 1 as mpd_ssize_t
             };
             if r != 0 as mpd_ssize_t {
-                let ref mut fresh0 = *(*result).data.offset((len - 1 as mpd_ssize_t) as isize);
+                let fresh0 = &mut *(*result).data.offset((len - 1 as mpd_ssize_t) as isize);
                 *fresh0 = (*fresh0)
                     .wrapping_rem(*(&raw const mpd_pow10 as *const mpd_uint_t).offset(r as isize));
             }
@@ -1206,10 +1196,10 @@ unsafe extern "C" fn _mpd_fix_nan(mut result: *mut mpd_t, mut ctx: *const mpd_co
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_get_msdigits(
-    mut hi: *mut mpd_uint_t,
-    mut lo: *mut mpd_uint_t,
-    mut dec: *const mpd_t,
-    mut n: ::core::ffi::c_uint,
+    hi: *mut mpd_uint_t,
+    lo: *mut mpd_uint_t,
+    dec: *const mpd_t,
+    n: ::core::ffi::c_uint,
 ) {
     let mut r: mpd_uint_t = 0;
     let mut tmp: mpd_uint_t = 0;
@@ -1261,10 +1251,10 @@ unsafe extern "C" fn _mpd_get_msdigits(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_get_msdigits(
-    mut hi: *mut mpd_uint_t,
-    mut lo: *mut mpd_uint_t,
-    mut dec: *const mpd_t,
-    mut n: ::core::ffi::c_uint,
+    hi: *mut mpd_uint_t,
+    lo: *mut mpd_uint_t,
+    dec: *const mpd_t,
+    n: ::core::ffi::c_uint,
 ) {
     let mut r: mpd_uint_t = 0;
     let mut tmp: mpd_uint_t = 0;
@@ -1315,7 +1305,7 @@ unsafe extern "C" fn _mpd_get_msdigits(
     }
 }
 unsafe extern "C" fn _mpd_real_size(
-    mut data: *mut mpd_uint_t,
+    data: *mut mpd_uint_t,
     mut size: mpd_ssize_t,
 ) -> mpd_ssize_t {
     while size > 1 as mpd_ssize_t
@@ -1323,11 +1313,11 @@ unsafe extern "C" fn _mpd_real_size(
     {
         size -= 1;
     }
-    return size;
+    size
 }
-pub unsafe extern "C" fn mpd_trail_zeros(mut dec: *const mpd_t) -> mpd_ssize_t {
-    let mut word: mpd_uint_t = 0;
-    let mut i: mpd_ssize_t = 0;
+pub unsafe extern "C" fn mpd_trail_zeros(dec: *const mpd_t) -> mpd_ssize_t {
+    let mut word: mpd_uint_t;
+    let mut i: mpd_ssize_t;
     let mut tz: mpd_ssize_t = 0 as mpd_ssize_t;
     i = 0 as mpd_ssize_t;
     while i < (*dec).len {
@@ -1343,61 +1333,56 @@ pub unsafe extern "C" fn mpd_trail_zeros(mut dec: *const mpd_t) -> mpd_ssize_t {
             i += 1;
         }
     }
-    return tz;
+    tz
 }
-unsafe extern "C" fn _mpd_isint(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    let mut tz: mpd_ssize_t = 0;
+unsafe extern "C" fn _mpd_isint(dec: *const mpd_t) -> ::core::ffi::c_int {
     if mpd_iszerocoeff(dec) != 0 {
         return 1 as ::core::ffi::c_int;
     }
-    tz = mpd_trail_zeros(dec);
-    return ((*dec).exp + tz >= 0 as mpd_ssize_t) as ::core::ffi::c_int;
+    let tz: mpd_ssize_t = mpd_trail_zeros(dec);
+    ((*dec).exp + tz >= 0 as mpd_ssize_t) as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isinteger(mut dec: *const mpd_t) -> ::core::ffi::c_int {
+pub unsafe extern "C" fn mpd_isinteger(dec: *const mpd_t) -> ::core::ffi::c_int {
     if mpd_isspecial(dec) != 0 {
         return 0 as ::core::ffi::c_int;
     }
-    return _mpd_isint(dec);
+    _mpd_isint(dec)
 }
-unsafe extern "C" fn mpd_word_ispow10(mut word: mpd_uint_t) -> ::core::ffi::c_int {
-    let mut n: ::core::ffi::c_int = 0;
-    n = mpd_word_digits(word);
+unsafe extern "C" fn mpd_word_ispow10(word: mpd_uint_t) -> ::core::ffi::c_int {
+    let n: ::core::ffi::c_int = mpd_word_digits(word);
     if word
         == *(&raw const mpd_pow10 as *const mpd_uint_t)
             .offset((n - 1 as ::core::ffi::c_int) as isize)
     {
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
-unsafe extern "C" fn mpd_coeff_ispow10(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    if mpd_word_ispow10(mpd_msword(dec)) != 0 {
-        if _mpd_isallzero((*dec).data, (*dec).len - 1 as mpd_ssize_t) != 0 {
+unsafe extern "C" fn mpd_coeff_ispow10(dec: *const mpd_t) -> ::core::ffi::c_int {
+    if mpd_word_ispow10(mpd_msword(dec)) != 0
+        && _mpd_isallzero((*dec).data, (*dec).len - 1 as mpd_ssize_t) != 0 {
             return 1 as ::core::ffi::c_int;
         }
-    }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
-unsafe extern "C" fn mpd_word_isallnine(mut word: mpd_uint_t) -> ::core::ffi::c_int {
-    let mut n: ::core::ffi::c_int = 0;
-    n = mpd_word_digits(word);
+unsafe extern "C" fn mpd_word_isallnine(word: mpd_uint_t) -> ::core::ffi::c_int {
+    let n: ::core::ffi::c_int = mpd_word_digits(word);
     if word
         == (*(&raw const mpd_pow10 as *const mpd_uint_t).offset(n as isize))
             .wrapping_sub(1 as mpd_uint_t)
     {
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
-unsafe extern "C" fn mpd_coeff_isallnine(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    if mpd_word_isallnine(mpd_msword(dec)) != 0 {
-        if _mpd_isallnine((*dec).data, (*dec).len - 1 as mpd_ssize_t) != 0 {
+unsafe extern "C" fn mpd_coeff_isallnine(dec: *const mpd_t) -> ::core::ffi::c_int {
+    if mpd_word_isallnine(mpd_msword(dec)) != 0
+        && _mpd_isallnine((*dec).data, (*dec).len - 1 as mpd_ssize_t) != 0 {
             return 1 as ::core::ffi::c_int;
         }
-    }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_isodd(mut dec: *const mpd_t) -> ::core::ffi::c_int {
+pub unsafe extern "C" fn mpd_isodd(dec: *const mpd_t) -> ::core::ffi::c_int {
     let mut q: mpd_uint_t = 0;
     let mut r: mpd_uint_t = 0;
     if mpd_isinteger(dec) != 0 {
@@ -1418,27 +1403,27 @@ pub unsafe extern "C" fn mpd_isodd(mut dec: *const mpd_t) -> ::core::ffi::c_int 
             .wrapping_div(*(&raw const mpd_pow10 as *const mpd_uint_t).offset(r as isize));
         return mpd_isoddword(q);
     }
-    return ((*dec).exp == 0 as mpd_ssize_t && mpd_isoddword(*(*dec).data.offset(0 as isize)) != 0)
-        as ::core::ffi::c_int;
+    ((*dec).exp == 0 as mpd_ssize_t && mpd_isoddword(*(*dec).data.offset(0_isize)) != 0)
+        as ::core::ffi::c_int
 }
-pub unsafe extern "C" fn mpd_iseven(mut dec: *const mpd_t) -> ::core::ffi::c_int {
-    return (mpd_isodd(dec) == 0) as ::core::ffi::c_int;
+pub unsafe extern "C" fn mpd_iseven(dec: *const mpd_t) -> ::core::ffi::c_int {
+    (mpd_isodd(dec) == 0) as ::core::ffi::c_int
 }
 unsafe extern "C" fn _ssettriple(
-    mut result: *mut mpd_t,
-    mut sign: uint8_t,
-    mut a: mpd_uint_t,
-    mut exp: mpd_ssize_t,
+    result: *mut mpd_t,
+    sign: uint8_t,
+    a: mpd_uint_t,
+    exp: mpd_ssize_t,
 ) {
     mpd_set_flags(result, sign);
     (*result).exp = exp;
     _mpd_div_word(
-        (*result).data.offset(1 as isize) as *mut mpd_uint_t,
-        (*result).data.offset(0 as isize) as *mut mpd_uint_t,
+        (*result).data.offset(1_isize) as *mut mpd_uint_t,
+        (*result).data.offset(0_isize) as *mut mpd_uint_t,
         a,
         MPD_RADIX as mpd_uint_t,
     );
-    (*result).len = (if *(*result).data.offset(1 as isize) == 0 as mpd_uint_t {
+    (*result).len = (if *(*result).data.offset(1_isize) == 0 as mpd_uint_t {
         1 as ::core::ffi::c_int
     } else {
         2 as ::core::ffi::c_int
@@ -1446,21 +1431,21 @@ unsafe extern "C" fn _ssettriple(
     mpd_setdigits(result);
 }
 unsafe extern "C" fn _settriple(
-    mut result: *mut mpd_t,
-    mut sign: uint8_t,
-    mut a: mpd_uint_t,
-    mut exp: mpd_ssize_t,
+    result: *mut mpd_t,
+    sign: uint8_t,
+    a: mpd_uint_t,
+    exp: mpd_ssize_t,
 ) {
     mpd_minalloc(result);
     mpd_set_flags(result, sign);
     (*result).exp = exp;
     _mpd_div_word(
-        (*result).data.offset(1 as isize) as *mut mpd_uint_t,
-        (*result).data.offset(0 as isize) as *mut mpd_uint_t,
+        (*result).data.offset(1_isize) as *mut mpd_uint_t,
+        (*result).data.offset(0_isize) as *mut mpd_uint_t,
         a,
         MPD_RADIX as mpd_uint_t,
     );
-    (*result).len = (if *(*result).data.offset(1 as isize) == 0 as mpd_uint_t {
+    (*result).len = (if *(*result).data.offset(1_isize) == 0 as mpd_uint_t {
         1 as ::core::ffi::c_int
     } else {
         2 as ::core::ffi::c_int
@@ -1468,9 +1453,9 @@ unsafe extern "C" fn _settriple(
     mpd_setdigits(result);
 }
 pub unsafe extern "C" fn mpd_setspecial(
-    mut result: *mut mpd_t,
-    mut sign: uint8_t,
-    mut type_0: uint8_t,
+    result: *mut mpd_t,
+    sign: uint8_t,
+    type_0: uint8_t,
 ) {
     mpd_minalloc(result);
     (*result).flags = ((*result).flags as ::core::ffi::c_int
@@ -1483,9 +1468,9 @@ pub unsafe extern "C" fn mpd_setspecial(
     (*result).exp = (*result).digits;
 }
 pub unsafe extern "C" fn mpd_seterror(
-    mut result: *mut mpd_t,
-    mut flags: uint32_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    flags: uint32_t,
+    status: *mut uint32_t,
 ) {
     mpd_minalloc(result);
     mpd_set_qnan(result);
@@ -1496,12 +1481,12 @@ pub unsafe extern "C" fn mpd_seterror(
     *status |= flags;
 }
 pub unsafe extern "C" fn mpd_qsset_ssize(
-    mut result: *mut mpd_t,
-    mut a: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut u: mpd_uint_t = 0;
+    let u: mpd_uint_t;
     let mut sign: uint8_t = MPD_POS;
     if a < 0 as mpd_ssize_t {
         if a == MPD_SSIZE_MIN as mpd_ssize_t {
@@ -1518,93 +1503,93 @@ pub unsafe extern "C" fn mpd_qsset_ssize(
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qsset_uint(
-    mut result: *mut mpd_t,
-    mut a: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _ssettriple(result, MPD_POS, a, 0 as mpd_ssize_t);
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qsset_i32(
-    mut result: *mut mpd_t,
-    mut a: int32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: int32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qsset_ssize(result, a as mpd_ssize_t, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qsset_u32(
-    mut result: *mut mpd_t,
-    mut a: uint32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qsset_uint(result, a as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qsset_i64(
-    mut result: *mut mpd_t,
-    mut a: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qsset_ssize(result, a as mpd_ssize_t, ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qsset_u64(
-    mut result: *mut mpd_t,
-    mut a: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qsset_uint(result, a as mpd_uint_t, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qset_ssize(
-    mut result: *mut mpd_t,
-    mut a: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_minalloc(result);
     mpd_qsset_ssize(result, a, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qset_uint(
-    mut result: *mut mpd_t,
-    mut a: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _settriple(result, MPD_POS, a, 0 as mpd_ssize_t);
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qset_i32(
-    mut result: *mut mpd_t,
-    mut a: int32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: int32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qset_ssize(result, a as mpd_ssize_t, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qset_u32(
-    mut result: *mut mpd_t,
-    mut a: uint32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qset_uint(result, a as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _c32setu64(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut u: uint64_t,
-    mut sign: uint8_t,
-    mut status: *mut uint32_t,
+    sign: uint8_t,
+    status: *mut uint32_t,
 ) {
     let mut w: [mpd_uint_t; 3] = [0; 3];
-    let mut q: uint64_t = 0;
-    let mut i: ::core::ffi::c_int = 0;
-    let mut len: ::core::ffi::c_int = 0;
+    let mut q: uint64_t;
+    let mut i: ::core::ffi::c_int;
+    let mut len: ::core::ffi::c_int;
     len = 0 as ::core::ffi::c_int;
     loop {
         q = u.wrapping_div(MPD_RADIX as uint64_t);
@@ -1630,22 +1615,22 @@ unsafe extern "C" fn _c32setu64(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _c32_qset_u64(
-    mut result: *mut mpd_t,
-    mut a: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _c32setu64(result, a, MPD_POS, status);
     mpd_qfinalize(result, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _c32_qset_i64(
-    mut result: *mut mpd_t,
-    mut a: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut u: uint64_t = 0;
+    let u: uint64_t;
     let mut sign: uint8_t = MPD_POS;
     if a < 0 as int64_t {
         if a == INT64_MIN as int64_t {
@@ -1662,27 +1647,27 @@ unsafe extern "C" fn _c32_qset_i64(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qset_i64(
-    mut result: *mut mpd_t,
-    mut a: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qset_ssize(result, a as mpd_ssize_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qset_i64(
-    mut result: *mut mpd_t,
-    mut a: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _c32_qset_i64(result, a, ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qset_i64_exact(
-    mut result: *mut mpd_t,
-    mut a: int64_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: int64_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -1713,9 +1698,9 @@ pub unsafe extern "C" fn mpd_qset_i64_exact(
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qset_i64_exact(
-    mut result: *mut mpd_t,
-    mut a: int64_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: int64_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -1741,27 +1726,27 @@ pub unsafe extern "C" fn mpd_qset_i64_exact(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qset_u64(
-    mut result: *mut mpd_t,
-    mut a: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qset_uint(result, a as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qset_u64(
-    mut result: *mut mpd_t,
-    mut a: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _c32_qset_u64(result, a, ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qset_u64_exact(
-    mut result: *mut mpd_t,
-    mut a: uint64_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: uint64_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -1792,9 +1777,9 @@ pub unsafe extern "C" fn mpd_qset_u64_exact(
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qset_u64_exact(
-    mut result: *mut mpd_t,
-    mut a: uint64_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: uint64_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -1820,9 +1805,9 @@ pub unsafe extern "C" fn mpd_qset_u64_exact(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qget_uint(
-    mut use_sign: ::core::ffi::c_int,
+    use_sign: ::core::ffi::c_int,
     mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    status: *mut uint32_t,
 ) -> mpd_uint_t {
     let mut tmp: mpd_t = mpd_t {
         flags: 0,
@@ -1885,13 +1870,13 @@ unsafe extern "C" fn _mpd_qget_uint(
             return MPD_UINT_MAX as mpd_uint_t;
         }
     }
-    return lo;
+    lo
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qget_uint(
-    mut use_sign: ::core::ffi::c_int,
+    use_sign: ::core::ffi::c_int,
     mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    status: *mut uint32_t,
 ) -> mpd_uint_t {
     let mut tmp: mpd_t = mpd_t {
         flags: 0,
@@ -1954,33 +1939,31 @@ unsafe extern "C" fn _mpd_qget_uint(
             return MPD_UINT_MAX as mpd_uint_t;
         }
     }
-    return lo;
+    lo
 }
 pub unsafe extern "C" fn mpd_qget_uint(
-    mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    a: *const mpd_t,
+    status: *mut uint32_t,
 ) -> mpd_uint_t {
-    return _mpd_qget_uint(1 as ::core::ffi::c_int, a, status);
+    _mpd_qget_uint(1 as ::core::ffi::c_int, a, status)
 }
 pub unsafe extern "C" fn mpd_qabs_uint(
-    mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    a: *const mpd_t,
+    status: *mut uint32_t,
 ) -> mpd_uint_t {
-    return _mpd_qget_uint(0 as ::core::ffi::c_int, a, status);
+    _mpd_qget_uint(0 as ::core::ffi::c_int, a, status)
 }
 pub unsafe extern "C" fn mpd_qget_ssize(
-    mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    a: *const mpd_t,
+    status: *mut uint32_t,
 ) -> mpd_ssize_t {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut u: mpd_uint_t = 0;
-    let mut isneg: ::core::ffi::c_int = 0;
-    u = mpd_qabs_uint(a, &raw mut workstatus);
+    let u: mpd_uint_t = mpd_qabs_uint(a, &raw mut workstatus);
     if workstatus & MPD_Invalid_operation as uint32_t != 0 {
         *status |= workstatus;
         return MPD_SSIZE_MAX as mpd_ssize_t;
     }
-    isneg = mpd_isnegative(a);
+    let isneg: ::core::ffi::c_int = mpd_isnegative(a);
     if u <= MPD_SSIZE_MAX as mpd_uint_t {
         return if isneg != 0 {
             -(u as mpd_ssize_t)
@@ -1994,13 +1977,13 @@ pub unsafe extern "C" fn mpd_qget_ssize(
         return MPD_SSIZE_MIN as mpd_ssize_t;
     }
     *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
-    return MPD_SSIZE_MAX as mpd_ssize_t;
+    MPD_SSIZE_MAX as mpd_ssize_t
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _c32_qget_u64(
-    mut use_sign: ::core::ffi::c_int,
-    mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    use_sign: ::core::ffi::c_int,
+    a: *const mpd_t,
+    status: *mut uint32_t,
 ) -> uint64_t {
     let mut tmp_data: [mpd_uint_t; 64] = [0; 64];
     let mut tmp: mpd_t = mpd_t {
@@ -2024,10 +2007,10 @@ unsafe extern "C" fn _c32_qget_u64(
         clamp: 0,
         allcr: 0,
     };
-    let mut ret: uint64_t = 0;
-    tmp_data[0 as usize] = 709551615 as mpd_uint_t;
-    tmp_data[1 as usize] = 446744073 as mpd_uint_t;
-    tmp_data[2 as usize] = 18 as mpd_uint_t;
+    let mut ret: uint64_t;
+    tmp_data[0_usize] = 709551615 as mpd_uint_t;
+    tmp_data[1_usize] = 446744073 as mpd_uint_t;
+    tmp_data[2_usize] = 18 as mpd_uint_t;
     if mpd_isspecial(a) != 0 {
         *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
         return UINT64_MAX as uint64_t;
@@ -2063,12 +2046,11 @@ unsafe extern "C" fn _c32_qget_u64(
         return UINT64_MAX as uint64_t;
     }
     ret = 0 as uint64_t;
-    let mut current_block_33: u64;
+    let current_block_33: u64;
     match tmp.len {
         3 => {
             ret = (ret as u64).wrapping_add(
-                (tmp_data[2 as usize] as uint64_t).wrapping_mul(1000000000000000000 as uint64_t)
-                    as u64,
+                (tmp_data[2_usize] as uint64_t).wrapping_mul(1000000000000000000 as uint64_t),
             ) as uint64_t;
             current_block_33 = 1;
         }
@@ -2082,26 +2064,21 @@ unsafe extern "C" fn _c32_qget_u64(
             abort();
         }
     }
-    match current_block_33 {
-        1 => {
-            ret = (ret as u64).wrapping_add(
-                (tmp_data[1 as usize] as uint64_t).wrapping_mul(1000000000 as uint64_t) as u64,
-            ) as uint64_t;
-        }
-        _ => {}
+    if current_block_33 == 1 {
+        ret = (ret as u64).wrapping_add(
+            (tmp_data[1_usize] as uint64_t).wrapping_mul(1000000000 as uint64_t),
+        ) as uint64_t;
     }
-    ret = ret.wrapping_add(tmp_data[0 as usize] as uint64_t);
-    return ret;
+    ret = ret.wrapping_add(tmp_data[0_usize] as uint64_t);
+    ret
 }
 #[cfg(target_pointer_width = "32")]
-unsafe extern "C" fn _c32_qget_i64(mut a: *const mpd_t, mut status: *mut uint32_t) -> int64_t {
-    let mut u: uint64_t = 0;
-    let mut isneg: ::core::ffi::c_int = 0;
-    u = _c32_qget_u64(0 as ::core::ffi::c_int, a, status);
+unsafe extern "C" fn _c32_qget_i64(a: *const mpd_t, status: *mut uint32_t) -> int64_t {
+    let u: uint64_t = _c32_qget_u64(0 as ::core::ffi::c_int, a, status);
     if *status & MPD_Invalid_operation as uint32_t != 0 {
         return INT64_MAX as int64_t;
     }
-    isneg = mpd_isnegative(a);
+    let isneg: ::core::ffi::c_int = mpd_isnegative(a);
     if u <= INT64_MAX as uint64_t {
         return if isneg != 0 {
             -(u as int64_t)
@@ -2114,34 +2091,34 @@ unsafe extern "C" fn _c32_qget_i64(mut a: *const mpd_t, mut status: *mut uint32_
         return INT64_MIN as int64_t;
     }
     *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
-    return INT64_MAX as int64_t;
+    INT64_MAX as int64_t
 }
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_qget_u64(mut a: *const mpd_t, mut status: *mut uint32_t) -> uint64_t {
-    return mpd_qget_uint(a, status) as uint64_t;
+pub unsafe extern "C" fn mpd_qget_u64(a: *const mpd_t, status: *mut uint32_t) -> uint64_t {
+    mpd_qget_uint(a, status) as uint64_t
 }
 #[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn mpd_qget_u64(mut a: *const mpd_t, mut status: *mut uint32_t) -> uint64_t {
+pub unsafe extern "C" fn mpd_qget_u64(a: *const mpd_t, status: *mut uint32_t) -> uint64_t {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut x: uint64_t = _c32_qget_u64(1 as ::core::ffi::c_int, a, &raw mut workstatus);
+    let x: uint64_t = _c32_qget_u64(1 as ::core::ffi::c_int, a, &raw mut workstatus);
     *status |= workstatus;
-    return x;
+    x
 }
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_qget_i64(mut a: *const mpd_t, mut status: *mut uint32_t) -> int64_t {
-    return mpd_qget_ssize(a, status) as int64_t;
+pub unsafe extern "C" fn mpd_qget_i64(a: *const mpd_t, status: *mut uint32_t) -> int64_t {
+    mpd_qget_ssize(a, status) as int64_t
 }
 #[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn mpd_qget_i64(mut a: *const mpd_t, mut status: *mut uint32_t) -> int64_t {
+pub unsafe extern "C" fn mpd_qget_i64(a: *const mpd_t, status: *mut uint32_t) -> int64_t {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut x: int64_t = _c32_qget_i64(a, &raw mut workstatus);
+    let x: int64_t = _c32_qget_i64(a, &raw mut workstatus);
     *status |= workstatus;
-    return x;
+    x
 }
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_qget_u32(mut a: *const mpd_t, mut status: *mut uint32_t) -> uint32_t {
+pub unsafe extern "C" fn mpd_qget_u32(a: *const mpd_t, status: *mut uint32_t) -> uint32_t {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut x: uint64_t = mpd_qget_uint(a, &raw mut workstatus) as uint64_t;
+    let x: uint64_t = mpd_qget_uint(a, &raw mut workstatus) as uint64_t;
     if workstatus & MPD_Invalid_operation as uint32_t != 0 {
         *status |= workstatus;
         return UINT32_MAX as uint32_t;
@@ -2150,16 +2127,16 @@ pub unsafe extern "C" fn mpd_qget_u32(mut a: *const mpd_t, mut status: *mut uint
         *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
         return UINT32_MAX as uint32_t;
     }
-    return x as uint32_t;
+    x as uint32_t
 }
 #[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn mpd_qget_u32(mut a: *const mpd_t, mut status: *mut uint32_t) -> uint32_t {
-    return mpd_qget_uint(a, status) as uint32_t;
+pub unsafe extern "C" fn mpd_qget_u32(a: *const mpd_t, status: *mut uint32_t) -> uint32_t {
+    mpd_qget_uint(a, status) as uint32_t
 }
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_qget_i32(mut a: *const mpd_t, mut status: *mut uint32_t) -> int32_t {
+pub unsafe extern "C" fn mpd_qget_i32(a: *const mpd_t, status: *mut uint32_t) -> int32_t {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut x: int64_t = mpd_qget_ssize(a, &raw mut workstatus) as int64_t;
+    let x: int64_t = mpd_qget_ssize(a, &raw mut workstatus) as int64_t;
     if workstatus & MPD_Invalid_operation as uint32_t != 0 {
         *status |= workstatus;
         return INT32_MAX as int32_t;
@@ -2168,17 +2145,17 @@ pub unsafe extern "C" fn mpd_qget_i32(mut a: *const mpd_t, mut status: *mut uint
         *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
         return INT32_MAX as int32_t;
     }
-    return x as int32_t;
+    x as int32_t
 }
 #[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn mpd_qget_i32(mut a: *const mpd_t, mut status: *mut uint32_t) -> int32_t {
-    return mpd_qget_ssize(a, status) as int32_t;
+pub unsafe extern "C" fn mpd_qget_i32(a: *const mpd_t, status: *mut uint32_t) -> int32_t {
+    mpd_qget_ssize(a, status) as int32_t
 }
 pub unsafe extern "C" fn mpd_qcheck_nan(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     if mpd_isnan(a) != 0 {
         *status = (*status as ::core::ffi::c_uint
@@ -2192,14 +2169,14 @@ pub unsafe extern "C" fn mpd_qcheck_nan(
         _mpd_fix_nan(result, ctx);
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 pub unsafe extern "C" fn mpd_qcheck_nans(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     if ((*a).flags as ::core::ffi::c_int | (*b).flags as ::core::ffi::c_int)
         & (MPD_NAN as ::core::ffi::c_int | MPD_SNAN as ::core::ffi::c_int)
@@ -2219,15 +2196,15 @@ pub unsafe extern "C" fn mpd_qcheck_nans(
         _mpd_fix_nan(result, ctx);
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 unsafe extern "C" fn mpd_qcheck_3nans(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut c: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    c: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     if ((*a).flags as ::core::ffi::c_int
         | (*b).flags as ::core::ffi::c_int
@@ -2254,47 +2231,47 @@ unsafe extern "C" fn mpd_qcheck_3nans(
         _mpd_fix_nan(result, ctx);
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 unsafe extern "C" fn _mpd_rnd_incr(
-    mut dec: *const mpd_t,
-    mut rnd: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
+    dec: *const mpd_t,
+    rnd: mpd_uint_t,
+    ctx: *const mpd_context_t,
 ) -> ::core::ffi::c_int {
-    let mut ld: ::core::ffi::c_int = 0;
+    let ld: ::core::ffi::c_int;
     match (*ctx).round {
-        1 | 8 => return 0 as ::core::ffi::c_int,
-        4 => return (rnd >= 5 as mpd_uint_t) as ::core::ffi::c_int,
+        1 | 8 => 0 as ::core::ffi::c_int,
+        4 => (rnd >= 5 as mpd_uint_t) as ::core::ffi::c_int,
         6 => {
-            return (rnd > 5 as mpd_uint_t || rnd == 5 as mpd_uint_t && mpd_isoddcoeff(dec) != 0)
-                as ::core::ffi::c_int;
+            (rnd > 5 as mpd_uint_t || rnd == 5 as mpd_uint_t && mpd_isoddcoeff(dec) != 0)
+                as ::core::ffi::c_int
         }
         2 => {
-            return !(rnd == 0 as mpd_uint_t || mpd_isnegative(dec) != 0) as ::core::ffi::c_int;
+            !(rnd == 0 as mpd_uint_t || mpd_isnegative(dec) != 0) as ::core::ffi::c_int
         }
         3 => {
-            return !(rnd == 0 as mpd_uint_t || mpd_ispositive(dec) != 0) as ::core::ffi::c_int;
+            !(rnd == 0 as mpd_uint_t || mpd_ispositive(dec) != 0) as ::core::ffi::c_int
         }
-        5 => return (rnd > 5 as mpd_uint_t) as ::core::ffi::c_int,
-        0 => return !(rnd == 0 as mpd_uint_t) as ::core::ffi::c_int,
+        5 => (rnd > 5 as mpd_uint_t) as ::core::ffi::c_int,
+        0 => !(rnd == 0 as mpd_uint_t) as ::core::ffi::c_int,
         7 => {
-            ld = mpd_lsd(*(*dec).data.offset(0 as isize)) as ::core::ffi::c_int;
-            return (!(rnd == 0 as mpd_uint_t)
+            ld = mpd_lsd(*(*dec).data.offset(0_isize)) as ::core::ffi::c_int;
+            (!(rnd == 0 as mpd_uint_t)
                 && (ld == 0 as ::core::ffi::c_int || ld == 5 as ::core::ffi::c_int))
-                as ::core::ffi::c_int;
+                as ::core::ffi::c_int
         }
-        _ => return 0 as ::core::ffi::c_int,
-    };
+        _ => 0 as ::core::ffi::c_int,
+    }
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_apply_round(
-    mut dec: *mut mpd_t,
-    mut rnd: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    rnd: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if _mpd_rnd_incr(dec, rnd, ctx) != 0 {
-        let mut carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
+        let carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
         if carry != 0 {
             *(*dec).data.offset(((*dec).len - 1 as mpd_ssize_t) as isize) = *(&raw const mpd_pow10
                 as *const mpd_uint_t)
@@ -2314,13 +2291,13 @@ unsafe extern "C" fn _mpd_apply_round(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_apply_round(
-    mut dec: *mut mpd_t,
-    mut rnd: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    rnd: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if _mpd_rnd_incr(dec, rnd, ctx) != 0 {
-        let mut carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
+        let carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
         if carry != 0 {
             *(*dec).data.offset(((*dec).len - 1 as mpd_ssize_t) as isize) = *(&raw const mpd_pow10
                 as *const mpd_uint_t)
@@ -2342,13 +2319,13 @@ unsafe extern "C" fn _mpd_apply_round(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_apply_round_excess(
-    mut dec: *mut mpd_t,
-    mut rnd: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    rnd: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if _mpd_rnd_incr(dec, rnd, ctx) != 0 {
-        let mut carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
+        let carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
         if carry != 0 {
             if mpd_qresize(dec, (*dec).len + 1 as mpd_ssize_t, status) == 0 {
                 return;
@@ -2361,13 +2338,13 @@ unsafe extern "C" fn _mpd_apply_round_excess(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_apply_round_excess(
-    mut dec: *mut mpd_t,
-    mut rnd: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    rnd: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if _mpd_rnd_incr(dec, rnd, ctx) != 0 {
-        let mut carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
+        let carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
         if carry != 0 {
             if mpd_qresize(dec, (*dec).len + 1 as mpd_ssize_t, status) == 0 {
                 return;
@@ -2381,13 +2358,13 @@ unsafe extern "C" fn _mpd_apply_round_excess(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_apply_round_fit(
-    mut dec: *mut mpd_t,
-    mut rnd: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    rnd: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     if _mpd_rnd_incr(dec, rnd, ctx) != 0 {
-        let mut carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
+        let carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
         if carry != 0 {
             if mpd_qresize(dec, (*dec).len + 1 as mpd_ssize_t, status) == 0 {
                 return 0 as ::core::ffi::c_int;
@@ -2401,17 +2378,17 @@ unsafe extern "C" fn _mpd_apply_round_fit(
             return 0 as ::core::ffi::c_int;
         }
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_apply_round_fit(
-    mut dec: *mut mpd_t,
-    mut rnd: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    rnd: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     if _mpd_rnd_incr(dec, rnd, ctx) != 0 {
-        let mut carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
+        let carry: mpd_uint_t = _mpd_baseincr((*dec).data, (*dec).len as mpd_size_t);
         if carry != 0 {
             if mpd_qresize(dec, (*dec).len + 1 as mpd_ssize_t, status) == 0 {
                 return 0 as ::core::ffi::c_int;
@@ -2426,19 +2403,18 @@ unsafe extern "C" fn _mpd_apply_round_fit(
             return 0 as ::core::ffi::c_int;
         }
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_check_exp(
-    mut dec: *mut mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut adjexp: mpd_ssize_t = 0;
-    let mut etiny: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut rnd: ::core::ffi::c_int = 0;
-    adjexp = mpd_adjexp(dec);
+    let etiny: mpd_ssize_t;
+    let shift: mpd_ssize_t;
+    let rnd: ::core::ffi::c_int;
+    let adjexp: mpd_ssize_t = mpd_adjexp(dec);
     if adjexp > (*ctx).emax {
         if mpd_iszerocoeff(dec) != 0 {
             (*dec).exp = (*ctx).emax;
@@ -2519,15 +2495,14 @@ unsafe extern "C" fn _mpd_check_exp(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_check_exp(
-    mut dec: *mut mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut adjexp: mpd_ssize_t = 0;
-    let mut etiny: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut rnd: ::core::ffi::c_int = 0;
-    adjexp = mpd_adjexp(dec);
+    let etiny: mpd_ssize_t;
+    let shift: mpd_ssize_t;
+    let rnd: ::core::ffi::c_int;
+    let adjexp: mpd_ssize_t = mpd_adjexp(dec);
     if adjexp > (*ctx).emax {
         if mpd_iszerocoeff(dec) != 0 {
             (*dec).exp = (*ctx).emax;
@@ -2609,21 +2584,21 @@ unsafe extern "C" fn _mpd_check_exp(
     }
 }
 unsafe extern "C" fn mpd_check_underflow(
-    mut dec: *mut mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if mpd_adjexp(dec) < (*ctx).emin && mpd_iszero(dec) == 0 && (*dec).exp < mpd_etiny(ctx) {
         *status = (*status as ::core::ffi::c_uint | MPD_Underflow) as uint32_t;
     }
 }
 unsafe extern "C" fn _mpd_check_round(
-    mut dec: *mut mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    dec: *mut mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut rnd: mpd_uint_t = 0;
-    let mut shift: mpd_ssize_t = 0;
+    let rnd: mpd_uint_t;
+    let shift: mpd_ssize_t;
     if mpd_isspecial(dec) != 0 {
         return;
     }
@@ -2639,9 +2614,9 @@ unsafe extern "C" fn _mpd_check_round(
     }
 }
 pub unsafe extern "C" fn mpd_qfinalize(
-    mut result: *mut mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isspecial(result) != 0 {
         if mpd_isnan(result) != 0 {
@@ -2652,7 +2627,7 @@ pub unsafe extern "C" fn mpd_qfinalize(
     _mpd_check_exp(result, ctx, status);
     _mpd_check_round(result, ctx, status);
 }
-unsafe extern "C" fn _mpd_copy_shared(mut dest: *mut mpd_t, mut src: *const mpd_t) {
+unsafe extern "C" fn _mpd_copy_shared(dest: *mut mpd_t, src: *const mpd_t) {
     (*dest).flags = (*src).flags;
     (*dest).exp = (*src).exp;
     (*dest).digits = (*src).digits;
@@ -2663,11 +2638,11 @@ unsafe extern "C" fn _mpd_copy_shared(mut dest: *mut mpd_t, mut src: *const mpd_
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qcopy(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    if result == a as *mut mpd_t {
+    if ::core::ptr::eq(result, a) {
         return 1 as ::core::ffi::c_int;
     }
     if mpd_qresize(result, (*a).len, status) == 0 {
@@ -2682,15 +2657,15 @@ pub unsafe extern "C" fn mpd_qcopy(
         (*a).data as *const ::core::ffi::c_void,
         ((*a).len as u64).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as u64) as size_t,
     );
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qcopy(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    if result == a as *mut mpd_t {
+    if ::core::ptr::eq(result, a) {
         return 1 as ::core::ffi::c_int;
     }
     if mpd_qresize(result, (*a).len, status) == 0 {
@@ -2705,14 +2680,14 @@ pub unsafe extern "C" fn mpd_qcopy(
         (*a).data as *const ::core::ffi::c_void,
         ((*a).len as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
     );
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qcopy_cxx(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
 ) -> ::core::ffi::c_int {
-    if result == a as *mut mpd_t {
+    if ::core::ptr::eq(result, a) {
         return 1 as ::core::ffi::c_int;
     }
     if mpd_qresize_cxx(result, (*a).len) == 0 {
@@ -2727,14 +2702,14 @@ pub unsafe extern "C" fn mpd_qcopy_cxx(
         (*a).data as *const ::core::ffi::c_void,
         ((*a).len as u64).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as u64) as size_t,
     );
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qcopy_cxx(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
 ) -> ::core::ffi::c_int {
-    if result == a as *mut mpd_t {
+    if ::core::ptr::eq(result, a) {
         return 1 as ::core::ffi::c_int;
     }
     if mpd_qresize_cxx(result, (*a).len) == 0 {
@@ -2749,11 +2724,11 @@ pub unsafe extern "C" fn mpd_qcopy_cxx(
         (*a).data as *const ::core::ffi::c_void,
         ((*a).len as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
     );
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
-unsafe extern "C" fn mpd_qcopy_static(mut result: *mut mpd_t, mut a: *const mpd_t) {
-    if result == a as *mut mpd_t {
+unsafe extern "C" fn mpd_qcopy_static(result: *mut mpd_t, a: *const mpd_t) {
+    if ::core::ptr::eq(result, a) {
         return;
     }
     memcpy(
@@ -2767,8 +2742,8 @@ unsafe extern "C" fn mpd_qcopy_static(mut result: *mut mpd_t, mut a: *const mpd_
     (*result).len = (*a).len;
 }
 #[cfg(target_pointer_width = "32")]
-unsafe extern "C" fn mpd_qcopy_static(mut result: *mut mpd_t, mut a: *const mpd_t) {
-    if result == a as *mut mpd_t {
+unsafe extern "C" fn mpd_qcopy_static(result: *mut mpd_t, a: *const mpd_t) {
+    if ::core::ptr::eq(result, a) {
         return;
     }
     memcpy(
@@ -2782,9 +2757,8 @@ unsafe extern "C" fn mpd_qcopy_static(mut result: *mut mpd_t, mut a: *const mpd_
     (*result).len = (*a).len;
 }
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_qncopy(mut a: *const mpd_t) -> *mut mpd_t {
-    let mut result: *mut mpd_t = ::core::ptr::null_mut::<mpd_t>();
-    result = mpd_qnew_size((*a).len);
+pub unsafe extern "C" fn mpd_qncopy(a: *const mpd_t) -> *mut mpd_t {
+    let result: *mut mpd_t = mpd_qnew_size((*a).len);
     if result.is_null() {
         return ::core::ptr::null_mut::<mpd_t>();
     }
@@ -2797,12 +2771,11 @@ pub unsafe extern "C" fn mpd_qncopy(mut a: *const mpd_t) -> *mut mpd_t {
     (*result).exp = (*a).exp;
     (*result).digits = (*a).digits;
     (*result).len = (*a).len;
-    return result;
+    result
 }
 #[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn mpd_qncopy(mut a: *const mpd_t) -> *mut mpd_t {
-    let mut result: *mut mpd_t = ::core::ptr::null_mut::<mpd_t>();
-    result = mpd_qnew_size((*a).len);
+pub unsafe extern "C" fn mpd_qncopy(a: *const mpd_t) -> *mut mpd_t {
+    let result: *mut mpd_t = mpd_qnew_size((*a).len);
     if result.is_null() {
         return ::core::ptr::null_mut::<mpd_t>();
     }
@@ -2815,58 +2788,58 @@ pub unsafe extern "C" fn mpd_qncopy(mut a: *const mpd_t) -> *mut mpd_t {
     (*result).exp = (*a).exp;
     (*result).digits = (*a).digits;
     (*result).len = (*a).len;
-    return result;
+    result
 }
 pub unsafe extern "C" fn mpd_qcopy_abs(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     if mpd_qcopy(result, a, status) == 0 {
         return 0 as ::core::ffi::c_int;
     }
     mpd_set_positive(result);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 pub unsafe extern "C" fn mpd_qcopy_negate(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     if mpd_qcopy(result, a, status) == 0 {
         return 0 as ::core::ffi::c_int;
     }
     _mpd_negate(result);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 pub unsafe extern "C" fn mpd_qcopy_sign(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut sign_b: uint8_t = mpd_sign(b);
+    let sign_b: uint8_t = mpd_sign(b);
     if mpd_qcopy(result, a, status) == 0 {
         return 0 as ::core::ffi::c_int;
     }
     mpd_set_sign(result, sign_b);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_basecmp(
-    mut big: *mut mpd_uint_t,
-    mut small: *mut mpd_uint_t,
+    big: *mut mpd_uint_t,
+    small: *mut mpd_uint_t,
     mut n: mpd_size_t,
     mut m: mpd_size_t,
-    mut shift: mpd_size_t,
+    shift: mpd_size_t,
 ) -> ::core::ffi::c_int {
     let mut l: mpd_uint_t = 0;
     let mut lprev: mpd_uint_t = 0;
     let mut h: mpd_uint_t = 0;
     let mut q: mpd_uint_t = 0;
     let mut r: mpd_uint_t = 0;
-    let mut ph: mpd_uint_t = 0;
-    let mut x: mpd_uint_t = 0;
+    let ph: mpd_uint_t;
+    let mut x: mpd_uint_t;
     if m > 0 as mpd_size_t && n >= m && shift > 0 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(
@@ -2942,23 +2915,23 @@ unsafe extern "C" fn _mpd_basecmp(
             }
         }
     }
-    return (_mpd_isallzero(big, q as mpd_ssize_t) == 0) as ::core::ffi::c_int;
+    (_mpd_isallzero(big, q as mpd_ssize_t) == 0) as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_basecmp(
-    mut big: *mut mpd_uint_t,
-    mut small: *mut mpd_uint_t,
+    big: *mut mpd_uint_t,
+    small: *mut mpd_uint_t,
     mut n: mpd_size_t,
     mut m: mpd_size_t,
-    mut shift: mpd_size_t,
+    shift: mpd_size_t,
 ) -> ::core::ffi::c_int {
     let mut l: mpd_uint_t = 0;
     let mut lprev: mpd_uint_t = 0;
     let mut h: mpd_uint_t = 0;
     let mut q: mpd_uint_t = 0;
     let mut r: mpd_uint_t = 0;
-    let mut ph: mpd_uint_t = 0;
-    let mut x: mpd_uint_t = 0;
+    let ph: mpd_uint_t;
+    let mut x: mpd_uint_t;
     if m > 0 as mpd_size_t && n >= m && shift > 0 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(
@@ -3032,14 +3005,14 @@ unsafe extern "C" fn _mpd_basecmp(
             }
         }
     }
-    return (_mpd_isallzero(big, q as mpd_ssize_t) == 0) as ::core::ffi::c_int;
+    (_mpd_isallzero(big, q as mpd_ssize_t) == 0) as ::core::ffi::c_int
 }
 unsafe extern "C" fn _mpd_cmp_same_adjexp(
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
 ) -> ::core::ffi::c_int {
-    let mut shift: mpd_ssize_t = 0;
-    let mut i: mpd_ssize_t = 0;
+    let shift: mpd_ssize_t;
+    let mut i: mpd_ssize_t;
     if (*a).exp != (*b).exp {
         shift = (*a).exp - (*b).exp;
         if shift > 0 as mpd_ssize_t {
@@ -3071,11 +3044,9 @@ unsafe extern "C" fn _mpd_cmp_same_adjexp(
         }
         i -= 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
-unsafe extern "C" fn _mpd_cmp(mut a: *const mpd_t, mut b: *const mpd_t) -> ::core::ffi::c_int {
-    let mut adjexp_a: mpd_ssize_t = 0;
-    let mut adjexp_b: mpd_ssize_t = 0;
+unsafe extern "C" fn _mpd_cmp(a: *const mpd_t, b: *const mpd_t) -> ::core::ffi::c_int {
     if a == b {
         return 0 as ::core::ffi::c_int;
     }
@@ -3100,19 +3071,17 @@ unsafe extern "C" fn _mpd_cmp(mut a: *const mpd_t, mut b: *const mpd_t) -> ::cor
     if mpd_sign(a) as ::core::ffi::c_int != mpd_sign(b) as ::core::ffi::c_int {
         return mpd_sign(b) as ::core::ffi::c_int - mpd_sign(a) as ::core::ffi::c_int;
     }
-    adjexp_a = mpd_adjexp(a);
-    adjexp_b = mpd_adjexp(b);
+    let adjexp_a: mpd_ssize_t = mpd_adjexp(a);
+    let adjexp_b: mpd_ssize_t = mpd_adjexp(b);
     if adjexp_a != adjexp_b {
         if adjexp_a < adjexp_b {
             return -(1 as ::core::ffi::c_int) * mpd_arith_sign(a);
         }
         return mpd_arith_sign(a);
     }
-    return _mpd_cmp_same_adjexp(a, b) * mpd_arith_sign(a);
+    _mpd_cmp_same_adjexp(a, b) * mpd_arith_sign(a)
 }
-unsafe extern "C" fn _mpd_cmp_abs(mut a: *const mpd_t, mut b: *const mpd_t) -> ::core::ffi::c_int {
-    let mut adjexp_a: mpd_ssize_t = 0;
-    let mut adjexp_b: mpd_ssize_t = 0;
+unsafe extern "C" fn _mpd_cmp_abs(a: *const mpd_t, b: *const mpd_t) -> ::core::ffi::c_int {
     if a == b {
         return 0 as ::core::ffi::c_int;
     }
@@ -3134,77 +3103,72 @@ unsafe extern "C" fn _mpd_cmp_abs(mut a: *const mpd_t, mut b: *const mpd_t) -> :
     if mpd_iszerocoeff(b) != 0 {
         return 1 as ::core::ffi::c_int;
     }
-    adjexp_a = mpd_adjexp(a);
-    adjexp_b = mpd_adjexp(b);
+    let adjexp_a: mpd_ssize_t = mpd_adjexp(a);
+    let adjexp_b: mpd_ssize_t = mpd_adjexp(b);
     if adjexp_a != adjexp_b {
         if adjexp_a < adjexp_b {
             return -(1 as ::core::ffi::c_int);
         }
         return 1 as ::core::ffi::c_int;
     }
-    return _mpd_cmp_same_adjexp(a, b);
+    _mpd_cmp_same_adjexp(a, b)
 }
 pub unsafe extern "C" fn mpd_qcmp(
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut status: *mut uint32_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
-        if mpd_isnan(a) != 0 || mpd_isnan(b) != 0 {
+    if (mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0)
+        && (mpd_isnan(a) != 0 || mpd_isnan(b) != 0) {
             *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
             return INT_MAX;
         }
-    }
-    return _mpd_cmp(a, b);
+    _mpd_cmp(a, b)
 }
 pub unsafe extern "C" fn mpd_qcompare(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut c: ::core::ffi::c_int = 0;
-    if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
-        if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
+    if (mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0)
+        && mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
             return INT_MAX;
         }
-    }
-    c = _mpd_cmp(a, b);
+    let c: ::core::ffi::c_int = _mpd_cmp(a, b);
     _settriple(
         result,
         (c < 0 as ::core::ffi::c_int) as ::core::ffi::c_int as uint8_t,
         (c != 0 as ::core::ffi::c_int) as ::core::ffi::c_int as mpd_uint_t,
         0 as mpd_ssize_t,
     );
-    return c;
+    c
 }
 pub unsafe extern "C" fn mpd_qcompare_signal(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut c: ::core::ffi::c_int = 0;
-    if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
-        if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
+    if (mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0)
+        && mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
             *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
             return INT_MAX;
         }
-    }
-    c = _mpd_cmp(a, b);
+    let c: ::core::ffi::c_int = _mpd_cmp(a, b);
     _settriple(
         result,
         (c < 0 as ::core::ffi::c_int) as ::core::ffi::c_int as uint8_t,
         (c != 0 as ::core::ffi::c_int) as ::core::ffi::c_int as mpd_uint_t,
         0 as mpd_ssize_t,
     );
-    return c;
+    c
 }
 pub unsafe extern "C" fn mpd_cmp_total(
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
 ) -> ::core::ffi::c_int {
     let mut aa: mpd_t = mpd_t {
         flags: 0,
@@ -3222,9 +3186,9 @@ pub unsafe extern "C" fn mpd_cmp_total(
         alloc: 0,
         data: ::core::ptr::null_mut::<mpd_uint_t>(),
     };
-    let mut nan_a: ::core::ffi::c_int = 0;
-    let mut nan_b: ::core::ffi::c_int = 0;
-    let mut c: ::core::ffi::c_int = 0;
+    let nan_a: ::core::ffi::c_int;
+    let nan_b: ::core::ffi::c_int;
+    let mut c: ::core::ffi::c_int;
     if mpd_sign(a) as ::core::ffi::c_int != mpd_sign(b) as ::core::ffi::c_int {
         return mpd_sign(b) as ::core::ffi::c_int - mpd_sign(a) as ::core::ffi::c_int;
     }
@@ -3268,26 +3232,25 @@ pub unsafe extern "C" fn mpd_cmp_total(
             };
         }
     }
-    return c * mpd_arith_sign(a);
+    c * mpd_arith_sign(a)
 }
 pub unsafe extern "C" fn mpd_compare_total(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
 ) -> ::core::ffi::c_int {
-    let mut c: ::core::ffi::c_int = 0;
-    c = mpd_cmp_total(a, b);
+    let c: ::core::ffi::c_int = mpd_cmp_total(a, b);
     _settriple(
         result,
         (c < 0 as ::core::ffi::c_int) as ::core::ffi::c_int as uint8_t,
         (c != 0 as ::core::ffi::c_int) as ::core::ffi::c_int as mpd_uint_t,
         0 as mpd_ssize_t,
     );
-    return c;
+    c
 }
 pub unsafe extern "C" fn mpd_cmp_total_mag(
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
 ) -> ::core::ffi::c_int {
     let mut aa: mpd_t = mpd_t {
         flags: 0,
@@ -3309,32 +3272,29 @@ pub unsafe extern "C" fn mpd_cmp_total_mag(
     _mpd_copy_shared(&raw mut bb, b);
     mpd_set_positive(&raw mut aa);
     mpd_set_positive(&raw mut bb);
-    return mpd_cmp_total(&raw mut aa, &raw mut bb);
+    mpd_cmp_total(&raw mut aa, &raw mut bb)
 }
 pub unsafe extern "C" fn mpd_compare_total_mag(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
 ) -> ::core::ffi::c_int {
-    let mut c: ::core::ffi::c_int = 0;
-    c = mpd_cmp_total_mag(a, b);
+    let c: ::core::ffi::c_int = mpd_cmp_total_mag(a, b);
     _settriple(
         result,
         (c < 0 as ::core::ffi::c_int) as ::core::ffi::c_int as uint8_t,
         (c != 0 as ::core::ffi::c_int) as ::core::ffi::c_int as mpd_uint_t,
         0 as mpd_ssize_t,
     );
-    return c;
+    c
 }
 unsafe extern "C" fn _mpd_cmp_numequal(
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
 ) -> ::core::ffi::c_int {
-    let mut sign_a: ::core::ffi::c_int = 0;
-    let mut sign_b: ::core::ffi::c_int = 0;
-    let mut c: ::core::ffi::c_int = 0;
-    sign_a = mpd_sign(a) as ::core::ffi::c_int;
-    sign_b = mpd_sign(b) as ::core::ffi::c_int;
+    let mut c: ::core::ffi::c_int;
+    let sign_a: ::core::ffi::c_int = mpd_sign(a) as ::core::ffi::c_int;
+    let sign_b: ::core::ffi::c_int = mpd_sign(b) as ::core::ffi::c_int;
     if sign_a != sign_b {
         c = sign_b - sign_a;
     } else {
@@ -3345,15 +3305,14 @@ unsafe extern "C" fn _mpd_cmp_numequal(
         };
         c *= mpd_arith_sign(a);
     }
-    return c;
+    c
 }
 pub unsafe extern "C" fn mpd_qshiftl(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut n: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    n: mpd_ssize_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut size: mpd_ssize_t = 0;
     if mpd_isspecial(a) == 0 {
     } else {
         mpd_c2rust_assert_fail(b"!mpd_isspecial(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -3365,7 +3324,7 @@ pub unsafe extern "C" fn mpd_qshiftl(
     if mpd_iszerocoeff(a) != 0 || n == 0 as mpd_ssize_t {
         return mpd_qcopy(result, a, status);
     }
-    size = mpd_digits_to_size((*a).digits + n);
+    let size: mpd_ssize_t = mpd_digits_to_size((*a).digits + n);
     if mpd_qresize(result, size, status) == 0 {
         return 0 as ::core::ffi::c_int;
     }
@@ -3380,17 +3339,16 @@ pub unsafe extern "C" fn mpd_qshiftl(
     (*result).exp = (*a).exp;
     (*result).digits = (*a).digits + n;
     (*result).len = size;
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 unsafe extern "C" fn _mpd_get_rnd(
-    mut data: *const mpd_uint_t,
-    mut len: mpd_ssize_t,
-    mut use_msd: ::core::ffi::c_int,
+    data: *const mpd_uint_t,
+    len: mpd_ssize_t,
+    use_msd: ::core::ffi::c_int,
 ) -> mpd_uint_t {
     let mut rnd: mpd_uint_t = 0 as mpd_uint_t;
     let mut rest: mpd_uint_t = 0 as mpd_uint_t;
-    let mut word: mpd_uint_t = 0;
-    word = *data.offset((len - 1 as mpd_ssize_t) as isize);
+    let word: mpd_uint_t = *data.offset((len - 1 as mpd_ssize_t) as isize);
     if use_msd != 0 {
         _mpd_divmod_pow10(
             &raw mut rnd,
@@ -3405,20 +3363,20 @@ unsafe extern "C" fn _mpd_get_rnd(
     } else {
         rest = (_mpd_isallzero(data, len) == 0) as ::core::ffi::c_int as mpd_uint_t;
     }
-    return if rnd == 0 as mpd_uint_t || rnd == 5 as mpd_uint_t {
+    if rnd == 0 as mpd_uint_t || rnd == 5 as mpd_uint_t {
         rnd.wrapping_add((rest != 0) as ::core::ffi::c_int as mpd_uint_t)
     } else {
         rnd
-    };
+    }
 }
 #[cfg(not(feature = "test-hooks"))]
 unsafe extern "C" fn mpd_qsshiftr(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut n: mpd_ssize_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    n: mpd_ssize_t,
 ) -> mpd_uint_t {
-    let mut rnd: mpd_uint_t = 0;
-    let mut size: mpd_ssize_t = 0;
+    let rnd: mpd_uint_t;
+    let size: mpd_ssize_t;
     if mpd_isspecial(a) == 0 {
     } else {
         mpd_c2rust_assert_fail(b"!mpd_isspecial(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -3451,17 +3409,17 @@ unsafe extern "C" fn mpd_qsshiftr(
     }
     mpd_copy_flags(result, a);
     (*result).exp = (*a).exp;
-    return rnd;
+    rnd
 }
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_qsshiftr(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut n: mpd_ssize_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    n: mpd_ssize_t,
 ) -> mpd_uint_t {
-    let mut rnd: mpd_uint_t = 0;
-    let mut size: mpd_ssize_t = 0;
+    let rnd: mpd_uint_t;
+    let size: mpd_ssize_t;
     if mpd_isspecial(a) == 0 {
     } else {
         mpd_c2rust_assert_fail(b"!mpd_isspecial(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -3494,15 +3452,15 @@ pub unsafe extern "C" fn mpd_qsshiftr(
     }
     mpd_copy_flags(result, a);
     (*result).exp = (*a).exp;
-    return rnd;
+    rnd
 }
 pub unsafe extern "C" fn mpd_qshiftr_inplace(
-    mut result: *mut mpd_t,
-    mut n: mpd_ssize_t,
+    result: *mut mpd_t,
+    n: mpd_ssize_t,
 ) -> mpd_uint_t {
     let mut dummy: uint32_t = 0;
-    let mut rnd: mpd_uint_t = 0;
-    let mut size: mpd_ssize_t = 0;
+    let rnd: mpd_uint_t;
+    let size: mpd_ssize_t;
     if mpd_isspecial(result) == 0 {
     } else {
         mpd_c2rust_assert_fail(
@@ -3535,16 +3493,16 @@ pub unsafe extern "C" fn mpd_qshiftr_inplace(
         mpd_qresize(result, size, &raw mut dummy);
         (*result).len = size;
     }
-    return rnd;
+    rnd
 }
 pub unsafe extern "C" fn mpd_qshiftr(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut n: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    n: mpd_ssize_t,
+    status: *mut uint32_t,
 ) -> mpd_uint_t {
-    let mut rnd: mpd_uint_t = 0;
-    let mut size: mpd_ssize_t = 0;
+    let rnd: mpd_uint_t;
+    let size: mpd_ssize_t;
     if mpd_isspecial(a) == 0 {
     } else {
         mpd_c2rust_assert_fail(b"!mpd_isspecial(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -3569,7 +3527,7 @@ pub unsafe extern "C" fn mpd_qshiftr(
     } else {
         (*result).digits = (*a).digits - n;
         size = mpd_digits_to_size((*result).digits);
-        if result == a as *mut mpd_t {
+        if ::core::ptr::eq(result, a) {
             rnd = _mpd_baseshiftr(
                 (*result).data,
                 (*a).data,
@@ -3592,26 +3550,26 @@ pub unsafe extern "C" fn mpd_qshiftr(
     }
     mpd_copy_flags(result, a);
     (*result).exp = (*a).exp;
-    return rnd;
+    rnd
 }
 pub unsafe extern "C" fn mpd_qand(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut big: *const mpd_t = a;
     let mut small: *const mpd_t = b;
-    let mut x: mpd_uint_t = 0;
-    let mut y: mpd_uint_t = 0;
-    let mut z: mpd_uint_t = 0;
-    let mut xbit: mpd_uint_t = 0;
-    let mut ybit: mpd_uint_t = 0;
-    let mut k: ::core::ffi::c_int = 0;
-    let mut mswdigits: ::core::ffi::c_int = 0;
-    let mut i: mpd_ssize_t = 0;
+    let mut x: mpd_uint_t;
+    let mut y: mpd_uint_t;
+    let mut z: mpd_uint_t;
+    let mut xbit: mpd_uint_t;
+    let mut ybit: mpd_uint_t;
+    let mut k: ::core::ffi::c_int;
+    let mswdigits: ::core::ffi::c_int;
+    let mut i: mpd_ssize_t;
     if mpd_isspecial(a) != 0
         || mpd_isspecial(b) != 0
         || mpd_isnegative(a) != 0
@@ -3658,151 +3616,146 @@ pub unsafe extern "C" fn mpd_qand(
         *(*result).data.offset(i as isize) = z;
         i += 1;
     }
-    match current_block {
-        1 => {
-            x = *(*small).data.offset(i as isize);
-            y = *(*big).data.offset(i as isize);
-            z = 0 as mpd_uint_t;
-            mswdigits = mpd_word_digits(x);
-            k = 0 as ::core::ffi::c_int;
-            loop {
-                if !(k < mswdigits) {
-                    current_block = 3;
-                    break;
-                }
-                xbit = x.wrapping_rem(10 as mpd_uint_t);
-                x = x.wrapping_div(10 as mpd_uint_t);
-                ybit = y.wrapping_rem(10 as mpd_uint_t);
-                y = y.wrapping_div(10 as mpd_uint_t);
-                if xbit > 1 as mpd_uint_t || ybit > 1 as mpd_uint_t {
-                    current_block = 2;
-                    break;
-                }
-                z = z.wrapping_add(if xbit & ybit != 0 {
-                    *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize)
-                } else {
-                    0 as mpd_uint_t
-                });
-                k += 1;
+    if current_block == 1 {
+        x = *(*small).data.offset(i as isize);
+        y = *(*big).data.offset(i as isize);
+        z = 0 as mpd_uint_t;
+        mswdigits = mpd_word_digits(x);
+        k = 0 as ::core::ffi::c_int;
+        loop {
+            if !(k < mswdigits) {
+                current_block = 3;
+                break;
             }
-            match current_block {
-                2 => {}
-                _ => {
-                    let fresh0 = i;
-                    i = i + 1;
-                    *(*result).data.offset(fresh0 as isize) = z;
-                    loop {
-                        if !(k < MPD_RDIGITS) {
-                            current_block = 4;
-                            break;
-                        }
-                        ybit = y.wrapping_rem(10 as mpd_uint_t);
-                        y = y.wrapping_div(10 as mpd_uint_t);
-                        if ybit > 1 as mpd_uint_t {
-                            current_block = 2;
-                            break;
-                        }
-                        k += 1;
+            xbit = x.wrapping_rem(10 as mpd_uint_t);
+            x = x.wrapping_div(10 as mpd_uint_t);
+            ybit = y.wrapping_rem(10 as mpd_uint_t);
+            y = y.wrapping_div(10 as mpd_uint_t);
+            if xbit > 1 as mpd_uint_t || ybit > 1 as mpd_uint_t {
+                current_block = 2;
+                break;
+            }
+            z = z.wrapping_add(if xbit & ybit != 0 {
+                *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize)
+            } else {
+                0 as mpd_uint_t
+            });
+            k += 1;
+        }
+        match current_block {
+            2 => {}
+            _ => {
+                let fresh0 = i;
+                i += 1;
+                *(*result).data.offset(fresh0 as isize) = z;
+                loop {
+                    if !(k < MPD_RDIGITS) {
+                        current_block = 4;
+                        break;
                     }
-                    match current_block {
-                        2 => {}
-                        _ => {
-                            's_181: loop {
-                                if !(i < (*big).len) {
-                                    current_block = 5;
-                                    break;
-                                }
-                                y = *(*big).data.offset(i as isize);
-                                k = 0 as ::core::ffi::c_int;
-                                while k < MPD_RDIGITS {
-                                    ybit = y.wrapping_rem(10 as mpd_uint_t);
-                                    y = y.wrapping_div(10 as mpd_uint_t);
-                                    if ybit > 1 as mpd_uint_t {
-                                        current_block = 2;
-                                        break 's_181;
-                                    }
-                                    k += 1;
-                                }
-                                i += 1;
+                    ybit = y.wrapping_rem(10 as mpd_uint_t);
+                    y = y.wrapping_div(10 as mpd_uint_t);
+                    if ybit > 1 as mpd_uint_t {
+                        current_block = 2;
+                        break;
+                    }
+                    k += 1;
+                }
+                match current_block {
+                    2 => {}
+                    _ => {
+                        's_181: loop {
+                            if !(i < (*big).len) {
+                                current_block = 5;
+                                break;
                             }
-                            match current_block {
-                                2 => {}
-                                _ => {
-                                    mpd_clear_flags(result);
-                                    (*result).exp = 0 as mpd_ssize_t;
-                                    (*result).len = _mpd_real_size((*result).data, (*small).len);
-                                    mpd_qresize(result, (*result).len, status);
-                                    mpd_setdigits(result);
-                                    _mpd_cap(result, ctx);
-                                    return;
+                            y = *(*big).data.offset(i as isize);
+                            k = 0 as ::core::ffi::c_int;
+                            while k < MPD_RDIGITS {
+                                ybit = y.wrapping_rem(10 as mpd_uint_t);
+                                y = y.wrapping_div(10 as mpd_uint_t);
+                                if ybit > 1 as mpd_uint_t {
+                                    current_block = 2;
+                                    break 's_181;
                                 }
+                                k += 1;
+                            }
+                            i += 1;
+                        }
+                        match current_block {
+                            2 => {}
+                            _ => {
+                                mpd_clear_flags(result);
+                                (*result).exp = 0 as mpd_ssize_t;
+                                (*result).len = _mpd_real_size((*result).data, (*small).len);
+                                mpd_qresize(result, (*result).len, status);
+                                mpd_setdigits(result);
+                                _mpd_cap(result, ctx);
+                                return;
                             }
                         }
                     }
                 }
             }
         }
-        _ => {}
     }
     mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
 }
 pub unsafe extern "C" fn mpd_class(
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
 ) -> *const ::core::ffi::c_char {
     if mpd_isnan(a) != 0 {
         if mpd_isqnan(a) != 0 {
-            return b"NaN\0" as *const u8 as *const ::core::ffi::c_char;
+            b"NaN\0" as *const u8 as *const ::core::ffi::c_char
         } else {
-            return b"sNaN\0" as *const u8 as *const ::core::ffi::c_char;
+            b"sNaN\0" as *const u8 as *const ::core::ffi::c_char
         }
     } else if mpd_ispositive(a) != 0 {
         if mpd_isinfinite(a) != 0 {
-            return b"+Infinity\0" as *const u8 as *const ::core::ffi::c_char;
+            b"+Infinity\0" as *const u8 as *const ::core::ffi::c_char
         } else if mpd_iszero(a) != 0 {
-            return b"+Zero\0" as *const u8 as *const ::core::ffi::c_char;
+            b"+Zero\0" as *const u8 as *const ::core::ffi::c_char
         } else if mpd_isnormal(a, ctx) != 0 {
-            return b"+Normal\0" as *const u8 as *const ::core::ffi::c_char;
+            b"+Normal\0" as *const u8 as *const ::core::ffi::c_char
         } else {
-            return b"+Subnormal\0" as *const u8 as *const ::core::ffi::c_char;
+            b"+Subnormal\0" as *const u8 as *const ::core::ffi::c_char
         }
     } else if mpd_isinfinite(a) != 0 {
-        return b"-Infinity\0" as *const u8 as *const ::core::ffi::c_char;
+        b"-Infinity\0" as *const u8 as *const ::core::ffi::c_char
     } else if mpd_iszero(a) != 0 {
-        return b"-Zero\0" as *const u8 as *const ::core::ffi::c_char;
+        b"-Zero\0" as *const u8 as *const ::core::ffi::c_char
     } else if mpd_isnormal(a, ctx) != 0 {
-        return b"-Normal\0" as *const u8 as *const ::core::ffi::c_char;
+        b"-Normal\0" as *const u8 as *const ::core::ffi::c_char
     } else {
-        return b"-Subnormal\0" as *const u8 as *const ::core::ffi::c_char;
-    };
+        b"-Subnormal\0" as *const u8 as *const ::core::ffi::c_char
+    }
 }
 pub unsafe extern "C" fn mpd_qinvert(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut current_block: u64;
-    let mut x: mpd_uint_t = 0;
-    let mut z: mpd_uint_t = 0;
-    let mut xbit: mpd_uint_t = 0;
-    let mut i: mpd_ssize_t = 0;
-    let mut digits: mpd_ssize_t = 0;
-    let mut len: mpd_ssize_t = 0;
+    let current_block: u64;
+    let mut x: mpd_uint_t;
+    let mut z: mpd_uint_t;
+    let mut xbit: mpd_uint_t;
+    let mut i: mpd_ssize_t;
     let mut q: mpd_ssize_t = 0;
     let mut r: mpd_ssize_t = 0;
-    let mut k: ::core::ffi::c_int = 0;
+    let mut k: ::core::ffi::c_int;
     if mpd_isspecial(a) != 0 || mpd_isnegative(a) != 0 || (*a).exp != 0 as mpd_ssize_t {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
     }
-    digits = if (*a).digits < (*ctx).prec {
+    let digits: mpd_ssize_t = if (*a).digits < (*ctx).prec {
         (*ctx).prec
     } else {
         (*a).digits
     };
     _mpd_idiv_word(&raw mut q, &raw mut r, digits, MPD_RDIGITS as mpd_ssize_t);
-    len = if r == 0 as mpd_ssize_t {
+    let len: mpd_ssize_t = if r == 0 as mpd_ssize_t {
         q
     } else {
         q + 1 as mpd_ssize_t
@@ -3843,7 +3796,6 @@ pub unsafe extern "C" fn mpd_qinvert(
     match current_block {
         2 => {
             mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
-            return;
         }
         _ => {
             mpd_clear_flags(result);
@@ -3852,15 +3804,14 @@ pub unsafe extern "C" fn mpd_qinvert(
             mpd_qresize(result, (*result).len, status);
             mpd_setdigits(result);
             _mpd_cap(result, ctx);
-            return;
         }
-    };
+    }
 }
 pub unsafe extern "C" fn mpd_qlogb(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isspecial(a) != 0 {
         if mpd_qcheck_nan(result, a, ctx, status) != 0 {
@@ -3875,23 +3826,23 @@ pub unsafe extern "C" fn mpd_qlogb(
     };
 }
 pub unsafe extern "C" fn mpd_qor(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut big: *const mpd_t = a;
     let mut small: *const mpd_t = b;
-    let mut x: mpd_uint_t = 0;
-    let mut y: mpd_uint_t = 0;
-    let mut z: mpd_uint_t = 0;
-    let mut xbit: mpd_uint_t = 0;
-    let mut ybit: mpd_uint_t = 0;
-    let mut k: ::core::ffi::c_int = 0;
-    let mut mswdigits: ::core::ffi::c_int = 0;
-    let mut i: mpd_ssize_t = 0;
+    let mut x: mpd_uint_t;
+    let mut y: mpd_uint_t;
+    let mut z: mpd_uint_t;
+    let mut xbit: mpd_uint_t;
+    let mut ybit: mpd_uint_t;
+    let mut k: ::core::ffi::c_int;
+    let mswdigits: ::core::ffi::c_int;
+    let mut i: mpd_ssize_t;
     if mpd_isspecial(a) != 0
         || mpd_isspecial(b) != 0
         || mpd_isnegative(a) != 0
@@ -3938,107 +3889,104 @@ pub unsafe extern "C" fn mpd_qor(
         *(*result).data.offset(i as isize) = z;
         i += 1;
     }
-    match current_block {
-        1 => {
-            x = *(*small).data.offset(i as isize);
-            y = *(*big).data.offset(i as isize);
-            z = 0 as mpd_uint_t;
-            mswdigits = mpd_word_digits(x);
-            k = 0 as ::core::ffi::c_int;
-            loop {
-                if !(k < mswdigits) {
-                    current_block = 3;
-                    break;
-                }
-                xbit = x.wrapping_rem(10 as mpd_uint_t);
-                x = x.wrapping_div(10 as mpd_uint_t);
-                ybit = y.wrapping_rem(10 as mpd_uint_t);
-                y = y.wrapping_div(10 as mpd_uint_t);
-                if xbit > 1 as mpd_uint_t || ybit > 1 as mpd_uint_t {
-                    current_block = 2;
-                    break;
-                }
-                z = z.wrapping_add(if xbit | ybit != 0 {
-                    *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize)
-                } else {
-                    0 as mpd_uint_t
-                });
-                k += 1;
+    if current_block == 1 {
+        x = *(*small).data.offset(i as isize);
+        y = *(*big).data.offset(i as isize);
+        z = 0 as mpd_uint_t;
+        mswdigits = mpd_word_digits(x);
+        k = 0 as ::core::ffi::c_int;
+        loop {
+            if !(k < mswdigits) {
+                current_block = 3;
+                break;
             }
-            match current_block {
-                2 => {}
-                _ => {
-                    loop {
-                        if !(k < MPD_RDIGITS) {
-                            current_block = 4;
-                            break;
-                        }
-                        ybit = y.wrapping_rem(10 as mpd_uint_t);
-                        y = y.wrapping_div(10 as mpd_uint_t);
-                        if ybit > 1 as mpd_uint_t {
-                            current_block = 2;
-                            break;
-                        }
-                        z = z.wrapping_add(ybit.wrapping_mul(
-                            *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize),
-                        ));
-                        k += 1;
+            xbit = x.wrapping_rem(10 as mpd_uint_t);
+            x = x.wrapping_div(10 as mpd_uint_t);
+            ybit = y.wrapping_rem(10 as mpd_uint_t);
+            y = y.wrapping_div(10 as mpd_uint_t);
+            if xbit > 1 as mpd_uint_t || ybit > 1 as mpd_uint_t {
+                current_block = 2;
+                break;
+            }
+            z = z.wrapping_add(if xbit | ybit != 0 {
+                *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize)
+            } else {
+                0 as mpd_uint_t
+            });
+            k += 1;
+        }
+        match current_block {
+            2 => {}
+            _ => {
+                loop {
+                    if !(k < MPD_RDIGITS) {
+                        current_block = 4;
+                        break;
                     }
-                    match current_block {
-                        2 => {}
-                        _ => {
-                            let fresh0 = i;
-                            i = i + 1;
-                            *(*result).data.offset(fresh0 as isize) = z;
-                            's_184: loop {
-                                if !(i < (*big).len) {
-                                    current_block = 5;
-                                    break;
-                                }
-                                y = *(*big).data.offset(i as isize);
-                                k = 0 as ::core::ffi::c_int;
-                                while k < MPD_RDIGITS {
-                                    ybit = y.wrapping_rem(10 as mpd_uint_t);
-                                    y = y.wrapping_div(10 as mpd_uint_t);
-                                    if ybit > 1 as mpd_uint_t {
-                                        current_block = 2;
-                                        break 's_184;
-                                    }
-                                    k += 1;
-                                }
-                                *(*result).data.offset(i as isize) =
-                                    *(*big).data.offset(i as isize);
-                                i += 1;
+                    ybit = y.wrapping_rem(10 as mpd_uint_t);
+                    y = y.wrapping_div(10 as mpd_uint_t);
+                    if ybit > 1 as mpd_uint_t {
+                        current_block = 2;
+                        break;
+                    }
+                    z = z.wrapping_add(ybit.wrapping_mul(
+                        *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize),
+                    ));
+                    k += 1;
+                }
+                match current_block {
+                    2 => {}
+                    _ => {
+                        let fresh0 = i;
+                        i += 1;
+                        *(*result).data.offset(fresh0 as isize) = z;
+                        's_184: loop {
+                            if !(i < (*big).len) {
+                                current_block = 5;
+                                break;
                             }
-                            match current_block {
-                                2 => {}
-                                _ => {
-                                    mpd_clear_flags(result);
-                                    (*result).exp = 0 as mpd_ssize_t;
-                                    (*result).len = _mpd_real_size((*result).data, (*big).len);
-                                    mpd_qresize(result, (*result).len, status);
-                                    mpd_setdigits(result);
-                                    _mpd_cap(result, ctx);
-                                    return;
+                            y = *(*big).data.offset(i as isize);
+                            k = 0 as ::core::ffi::c_int;
+                            while k < MPD_RDIGITS {
+                                ybit = y.wrapping_rem(10 as mpd_uint_t);
+                                y = y.wrapping_div(10 as mpd_uint_t);
+                                if ybit > 1 as mpd_uint_t {
+                                    current_block = 2;
+                                    break 's_184;
                                 }
+                                k += 1;
+                            }
+                            *(*result).data.offset(i as isize) =
+                                *(*big).data.offset(i as isize);
+                            i += 1;
+                        }
+                        match current_block {
+                            2 => {}
+                            _ => {
+                                mpd_clear_flags(result);
+                                (*result).exp = 0 as mpd_ssize_t;
+                                (*result).len = _mpd_real_size((*result).data, (*big).len);
+                                mpd_qresize(result, (*result).len, status);
+                                mpd_setdigits(result);
+                                _mpd_cap(result, ctx);
+                                return;
                             }
                         }
                     }
                 }
             }
         }
-        _ => {}
     }
     mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
 }
 pub unsafe extern "C" fn mpd_qrotate(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut current_block: u64;
+    let current_block: u64;
     let mut workstatus: uint32_t = 0 as uint32_t;
     let mut tmp_data: [mpd_uint_t; 64] = [0; 64];
     let mut tmp: mpd_t = mpd_t {
@@ -4073,19 +4021,17 @@ pub unsafe extern "C" fn mpd_qrotate(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut small_data as *mut mpd_uint_t,
     };
-    let mut n: mpd_ssize_t = 0;
-    let mut lshift: mpd_ssize_t = 0;
-    let mut rshift: mpd_ssize_t = 0;
-    if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
-        if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
+    let lshift: mpd_ssize_t;
+    let rshift: mpd_ssize_t;
+    if (mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0)
+        && mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
             return;
         }
-    }
     if (*b).exp != 0 as mpd_ssize_t || mpd_isinfinite(b) != 0 {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
     }
-    n = mpd_qget_ssize(b, &raw mut workstatus);
+    let n: mpd_ssize_t = mpd_qget_ssize(b, &raw mut workstatus);
     if workstatus & MPD_Invalid_operation as uint32_t != 0 {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
@@ -4117,20 +4063,17 @@ pub unsafe extern "C" fn mpd_qrotate(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            if mpd_qshiftl(&raw mut big, a, lshift, status) == 0 {
+    if current_block == 2 {
+        if mpd_qshiftl(&raw mut big, a, lshift, status) == 0 {
+            mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
+        } else {
+            _mpd_cap(&raw mut big, ctx);
+            if mpd_qshiftr(&raw mut small, a, rshift, status) == MPD_UINT_MAX as mpd_uint_t {
                 mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
             } else {
-                _mpd_cap(&raw mut big, ctx);
-                if mpd_qshiftr(&raw mut small, a, rshift, status) == MPD_UINT_MAX as mpd_uint_t {
-                    mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
-                } else {
-                    _mpd_qadd(result, &raw mut big, &raw mut small, ctx, status);
-                }
+                _mpd_qadd(result, &raw mut big, &raw mut small, ctx, status);
             }
         }
-        _ => {}
     }
     mpd_del(&raw mut tmp);
     mpd_del(&raw mut big);
@@ -4138,27 +4081,24 @@ pub unsafe extern "C" fn mpd_qrotate(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qscaleb(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut n: mpd_uint_t = 0;
-    let mut maxjump: mpd_uint_t = 0;
-    let mut exp: int64_t = 0;
-    if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
-        if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
+    let mut exp: int64_t;
+    if (mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0)
+        && mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
             return;
         }
-    }
     if (*b).exp != 0 as mpd_ssize_t || mpd_isinfinite(b) != 0 {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
     }
-    n = mpd_qabs_uint(b, &raw mut workstatus);
-    maxjump = (2 as mpd_uint_t).wrapping_mul(((*ctx).emax + (*ctx).prec) as mpd_uint_t);
+    let n: mpd_uint_t = mpd_qabs_uint(b, &raw mut workstatus);
+    let maxjump: mpd_uint_t = (2 as mpd_uint_t).wrapping_mul(((*ctx).emax + (*ctx).prec) as mpd_uint_t);
     if n > maxjump || workstatus & MPD_Invalid_operation as uint32_t != 0 {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
@@ -4184,27 +4124,24 @@ pub unsafe extern "C" fn mpd_qscaleb(
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qscaleb(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut n: mpd_uint_t = 0;
-    let mut maxjump: mpd_uint_t = 0;
-    let mut exp: int64_t = 0;
-    if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
-        if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
+    let mut exp: int64_t;
+    if (mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0)
+        && mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
             return;
         }
-    }
     if (*b).exp != 0 as mpd_ssize_t || mpd_isinfinite(b) != 0 {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
     }
-    n = mpd_qabs_uint(b, &raw mut workstatus);
-    maxjump = (2 as mpd_uint_t).wrapping_mul(((*ctx).emax + (*ctx).prec) as mpd_uint_t);
+    let n: mpd_uint_t = mpd_qabs_uint(b, &raw mut workstatus);
+    let maxjump: mpd_uint_t = (2 as mpd_uint_t).wrapping_mul(((*ctx).emax + (*ctx).prec) as mpd_uint_t);
     if n > maxjump || workstatus & MPD_Invalid_operation as uint32_t != 0 {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
@@ -4229,11 +4166,11 @@ pub unsafe extern "C" fn mpd_qscaleb(
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qshiftn(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut n: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    n: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isspecial(a) != 0 {
         if mpd_qcheck_nan(result, a, ctx, status) != 0 {
@@ -4256,24 +4193,22 @@ pub unsafe extern "C" fn mpd_qshiftn(
     };
 }
 pub unsafe extern "C" fn mpd_qshift(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut n: mpd_ssize_t = 0;
-    if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
-        if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
+    if (mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0)
+        && mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
             return;
         }
-    }
     if (*b).exp != 0 as mpd_ssize_t || mpd_isinfinite(b) != 0 {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
     }
-    n = mpd_qget_ssize(b, &raw mut workstatus);
+    let n: mpd_ssize_t = mpd_qget_ssize(b, &raw mut workstatus);
     if workstatus & MPD_Invalid_operation as uint32_t != 0 {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
@@ -4298,23 +4233,23 @@ pub unsafe extern "C" fn mpd_qshift(
     };
 }
 pub unsafe extern "C" fn mpd_qxor(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut big: *const mpd_t = a;
     let mut small: *const mpd_t = b;
-    let mut x: mpd_uint_t = 0;
-    let mut y: mpd_uint_t = 0;
-    let mut z: mpd_uint_t = 0;
-    let mut xbit: mpd_uint_t = 0;
-    let mut ybit: mpd_uint_t = 0;
-    let mut k: ::core::ffi::c_int = 0;
-    let mut mswdigits: ::core::ffi::c_int = 0;
-    let mut i: mpd_ssize_t = 0;
+    let mut x: mpd_uint_t;
+    let mut y: mpd_uint_t;
+    let mut z: mpd_uint_t;
+    let mut xbit: mpd_uint_t;
+    let mut ybit: mpd_uint_t;
+    let mut k: ::core::ffi::c_int;
+    let mswdigits: ::core::ffi::c_int;
+    let mut i: mpd_ssize_t;
     if mpd_isspecial(a) != 0
         || mpd_isspecial(b) != 0
         || mpd_isnegative(a) != 0
@@ -4361,127 +4296,121 @@ pub unsafe extern "C" fn mpd_qxor(
         *(*result).data.offset(i as isize) = z;
         i += 1;
     }
-    match current_block {
-        1 => {
-            x = *(*small).data.offset(i as isize);
-            y = *(*big).data.offset(i as isize);
-            z = 0 as mpd_uint_t;
-            mswdigits = mpd_word_digits(x);
-            k = 0 as ::core::ffi::c_int;
-            loop {
-                if !(k < mswdigits) {
-                    current_block = 3;
-                    break;
-                }
-                xbit = x.wrapping_rem(10 as mpd_uint_t);
-                x = x.wrapping_div(10 as mpd_uint_t);
-                ybit = y.wrapping_rem(10 as mpd_uint_t);
-                y = y.wrapping_div(10 as mpd_uint_t);
-                if xbit > 1 as mpd_uint_t || ybit > 1 as mpd_uint_t {
-                    current_block = 2;
-                    break;
-                }
-                z = z.wrapping_add(if xbit ^ ybit != 0 {
-                    *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize)
-                } else {
-                    0 as mpd_uint_t
-                });
-                k += 1;
+    if current_block == 1 {
+        x = *(*small).data.offset(i as isize);
+        y = *(*big).data.offset(i as isize);
+        z = 0 as mpd_uint_t;
+        mswdigits = mpd_word_digits(x);
+        k = 0 as ::core::ffi::c_int;
+        loop {
+            if !(k < mswdigits) {
+                current_block = 3;
+                break;
             }
-            match current_block {
-                2 => {}
-                _ => {
-                    loop {
-                        if !(k < MPD_RDIGITS) {
-                            current_block = 4;
-                            break;
-                        }
-                        ybit = y.wrapping_rem(10 as mpd_uint_t);
-                        y = y.wrapping_div(10 as mpd_uint_t);
-                        if ybit > 1 as mpd_uint_t {
-                            current_block = 2;
-                            break;
-                        }
-                        z = z.wrapping_add(ybit.wrapping_mul(
-                            *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize),
-                        ));
-                        k += 1;
+            xbit = x.wrapping_rem(10 as mpd_uint_t);
+            x = x.wrapping_div(10 as mpd_uint_t);
+            ybit = y.wrapping_rem(10 as mpd_uint_t);
+            y = y.wrapping_div(10 as mpd_uint_t);
+            if xbit > 1 as mpd_uint_t || ybit > 1 as mpd_uint_t {
+                current_block = 2;
+                break;
+            }
+            z = z.wrapping_add(if xbit ^ ybit != 0 {
+                *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize)
+            } else {
+                0 as mpd_uint_t
+            });
+            k += 1;
+        }
+        match current_block {
+            2 => {}
+            _ => {
+                loop {
+                    if !(k < MPD_RDIGITS) {
+                        current_block = 4;
+                        break;
                     }
-                    match current_block {
-                        2 => {}
-                        _ => {
-                            let fresh0 = i;
-                            i = i + 1;
-                            *(*result).data.offset(fresh0 as isize) = z;
-                            's_184: loop {
-                                if !(i < (*big).len) {
-                                    current_block = 5;
-                                    break;
-                                }
-                                y = *(*big).data.offset(i as isize);
-                                k = 0 as ::core::ffi::c_int;
-                                while k < MPD_RDIGITS {
-                                    ybit = y.wrapping_rem(10 as mpd_uint_t);
-                                    y = y.wrapping_div(10 as mpd_uint_t);
-                                    if ybit > 1 as mpd_uint_t {
-                                        current_block = 2;
-                                        break 's_184;
-                                    }
-                                    k += 1;
-                                }
-                                *(*result).data.offset(i as isize) =
-                                    *(*big).data.offset(i as isize);
-                                i += 1;
+                    ybit = y.wrapping_rem(10 as mpd_uint_t);
+                    y = y.wrapping_div(10 as mpd_uint_t);
+                    if ybit > 1 as mpd_uint_t {
+                        current_block = 2;
+                        break;
+                    }
+                    z = z.wrapping_add(ybit.wrapping_mul(
+                        *(&raw const mpd_pow10 as *const mpd_uint_t).offset(k as isize),
+                    ));
+                    k += 1;
+                }
+                match current_block {
+                    2 => {}
+                    _ => {
+                        let fresh0 = i;
+                        i += 1;
+                        *(*result).data.offset(fresh0 as isize) = z;
+                        's_184: loop {
+                            if !(i < (*big).len) {
+                                current_block = 5;
+                                break;
                             }
-                            match current_block {
-                                2 => {}
-                                _ => {
-                                    mpd_clear_flags(result);
-                                    (*result).exp = 0 as mpd_ssize_t;
-                                    (*result).len = _mpd_real_size((*result).data, (*big).len);
-                                    mpd_qresize(result, (*result).len, status);
-                                    mpd_setdigits(result);
-                                    _mpd_cap(result, ctx);
-                                    return;
+                            y = *(*big).data.offset(i as isize);
+                            k = 0 as ::core::ffi::c_int;
+                            while k < MPD_RDIGITS {
+                                ybit = y.wrapping_rem(10 as mpd_uint_t);
+                                y = y.wrapping_div(10 as mpd_uint_t);
+                                if ybit > 1 as mpd_uint_t {
+                                    current_block = 2;
+                                    break 's_184;
                                 }
+                                k += 1;
+                            }
+                            *(*result).data.offset(i as isize) =
+                                *(*big).data.offset(i as isize);
+                            i += 1;
+                        }
+                        match current_block {
+                            2 => {}
+                            _ => {
+                                mpd_clear_flags(result);
+                                (*result).exp = 0 as mpd_ssize_t;
+                                (*result).len = _mpd_real_size((*result).data, (*big).len);
+                                mpd_qresize(result, (*result).len, status);
+                                mpd_setdigits(result);
+                                _mpd_cap(result, ctx);
+                                return;
                             }
                         }
                     }
                 }
             }
         }
-        _ => {}
     }
     mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
 }
 pub unsafe extern "C" fn mpd_qabs(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    if mpd_isspecial(a) != 0 {
-        if mpd_qcheck_nan(result, a, ctx, status) != 0 {
+    if mpd_isspecial(a) != 0
+        && mpd_qcheck_nan(result, a, ctx, status) != 0 {
             return;
         }
-    }
     if mpd_isnegative(a) != 0 {
         mpd_qminus(result, a, ctx, status);
     } else {
         mpd_qplus(result, a, ctx, status);
     };
 }
-unsafe extern "C" fn _mpd_ptrswap(mut a: *mut *const mpd_t, mut b: *mut *const mpd_t) {
-    let mut t: *const mpd_t = *a;
-    *a = *b;
-    *b = t;
+unsafe extern "C" fn _mpd_ptrswap(a: *mut *const mpd_t, b: *mut *const mpd_t) {
+    core::ptr::swap(a, b);
 }
 unsafe extern "C" fn _mpd_qaddsub_inf(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut sign_b: uint8_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    sign_b: uint8_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isinfinite(a) != 0 {
         if mpd_sign(a) as ::core::ffi::c_int != sign_b as ::core::ffi::c_int
@@ -4501,16 +4430,16 @@ unsafe extern "C" fn _mpd_qaddsub_inf(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qaddsub(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
     mut sign_b: uint8_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
-    let mut big: *const mpd_t = ::core::ptr::null::<mpd_t>();
-    let mut small: *const mpd_t = ::core::ptr::null::<mpd_t>();
+    let mut big: *const mpd_t;
+    let mut small: *const mpd_t;
     let mut big_aligned_data: [mpd_uint_t; 64] = [0; 64];
     let mut big_aligned: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
@@ -4533,11 +4462,11 @@ unsafe extern "C" fn _mpd_qaddsub(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut tiny_data as *mut mpd_uint_t,
     };
-    let mut carry: mpd_uint_t = 0;
-    let mut newsize: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut exp: mpd_ssize_t = 0;
-    let mut i: mpd_ssize_t = 0;
+    let carry: mpd_uint_t;
+    let mut newsize: mpd_ssize_t;
+    let shift: mpd_ssize_t;
+    let mut exp: mpd_ssize_t;
+    let mut i: mpd_ssize_t;
     let mut swap: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     big = a;
     small = b;
@@ -4558,7 +4487,7 @@ unsafe extern "C" fn _mpd_qaddsub(
                 tiny.exp = exp;
                 tiny.digits = 1 as mpd_ssize_t;
                 tiny.len = 1 as mpd_ssize_t;
-                *tiny.data.offset(0 as isize) = (if mpd_iszerocoeff(small) != 0 {
+                *tiny.data.offset(0_isize) = (if mpd_iszerocoeff(small) != 0 {
                     0 as ::core::ffi::c_int
                 } else {
                     1 as ::core::ffi::c_int
@@ -4579,108 +4508,105 @@ unsafe extern "C" fn _mpd_qaddsub(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            (*result).exp = (*small).exp;
-            if (*big).len < (*small).len {
-                _mpd_ptrswap(&raw mut big, &raw mut small);
-                swap += 1;
-            }
-            newsize = (*big).len;
-            if !(mpd_qresize(result, newsize, status) == 0) {
-                if mpd_sign(a) as ::core::ffi::c_int == sign_b as ::core::ffi::c_int {
-                    carry = _mpd_baseadd(
-                        (*result).data,
-                        (*big).data,
-                        (*small).data,
-                        (*big).len as mpd_size_t,
-                        (*small).len as mpd_size_t,
-                    );
-                    if carry != 0 {
-                        newsize = (*big).len + 1 as mpd_ssize_t;
-                        if mpd_qresize(result, newsize, status) == 0 {
-                            current_block = 1;
-                        } else {
-                            *(*result).data.offset((newsize - 1 as mpd_ssize_t) as isize) = carry;
-                            current_block = 3;
-                        }
+    if current_block == 2 {
+        (*result).exp = (*small).exp;
+        if (*big).len < (*small).len {
+            _mpd_ptrswap(&raw mut big, &raw mut small);
+            swap += 1;
+        }
+        newsize = (*big).len;
+        if !(mpd_qresize(result, newsize, status) == 0) {
+            if mpd_sign(a) as ::core::ffi::c_int == sign_b as ::core::ffi::c_int {
+                carry = _mpd_baseadd(
+                    (*result).data,
+                    (*big).data,
+                    (*small).data,
+                    (*big).len as mpd_size_t,
+                    (*small).len as mpd_size_t,
+                );
+                if carry != 0 {
+                    newsize = (*big).len + 1 as mpd_ssize_t;
+                    if mpd_qresize(result, newsize, status) == 0 {
+                        current_block = 1;
                     } else {
+                        *(*result).data.offset((newsize - 1 as mpd_ssize_t) as isize) = carry;
                         current_block = 3;
                     }
-                    match current_block {
-                        1 => {}
-                        _ => {
-                            (*result).len = newsize;
-                            mpd_set_flags(result, sign_b);
-                            current_block = 4;
-                        }
-                    }
                 } else {
-                    if (*big).len == (*small).len {
-                        i = (*big).len - 1 as mpd_ssize_t;
-                        while i >= 0 as mpd_ssize_t {
-                            if *(*big).data.offset(i as isize) != *(*small).data.offset(i as isize)
-                            {
-                                if *(*big).data.offset(i as isize)
-                                    < *(*small).data.offset(i as isize)
-                                {
-                                    _mpd_ptrswap(&raw mut big, &raw mut small);
-                                    swap += 1;
-                                }
-                                break;
-                            } else {
-                                i -= 1;
-                            }
-                        }
-                    }
-                    _mpd_basesub(
-                        (*result).data,
-                        (*big).data,
-                        (*small).data,
-                        (*big).len as mpd_size_t,
-                        (*small).len as mpd_size_t,
-                    );
-                    newsize = _mpd_real_size((*result).data, (*big).len);
-                    mpd_qresize(result, newsize, status);
-                    (*result).len = newsize;
-                    sign_b = (if swap & 1 as ::core::ffi::c_int != 0 {
-                        sign_b as ::core::ffi::c_int
-                    } else {
-                        mpd_sign(a) as ::core::ffi::c_int
-                    }) as uint8_t;
-                    mpd_set_flags(result, sign_b);
-                    if mpd_iszerocoeff(result) != 0 {
-                        mpd_set_positive(result);
-                        if (*ctx).round == MPD_ROUND_FLOOR as ::core::ffi::c_int {
-                            mpd_set_negative(result);
-                        }
-                    }
-                    current_block = 4;
+                    current_block = 3;
                 }
                 match current_block {
                     1 => {}
                     _ => {
-                        mpd_setdigits(result);
+                        (*result).len = newsize;
+                        mpd_set_flags(result, sign_b);
+                        current_block = 4;
                     }
+                }
+            } else {
+                if (*big).len == (*small).len {
+                    i = (*big).len - 1 as mpd_ssize_t;
+                    while i >= 0 as mpd_ssize_t {
+                        if *(*big).data.offset(i as isize) != *(*small).data.offset(i as isize)
+                        {
+                            if *(*big).data.offset(i as isize)
+                                < *(*small).data.offset(i as isize)
+                            {
+                                _mpd_ptrswap(&raw mut big, &raw mut small);
+                                swap += 1;
+                            }
+                            break;
+                        } else {
+                            i -= 1;
+                        }
+                    }
+                }
+                _mpd_basesub(
+                    (*result).data,
+                    (*big).data,
+                    (*small).data,
+                    (*big).len as mpd_size_t,
+                    (*small).len as mpd_size_t,
+                );
+                newsize = _mpd_real_size((*result).data, (*big).len);
+                mpd_qresize(result, newsize, status);
+                (*result).len = newsize;
+                sign_b = (if swap & 1 as ::core::ffi::c_int != 0 {
+                    sign_b as ::core::ffi::c_int
+                } else {
+                    mpd_sign(a) as ::core::ffi::c_int
+                }) as uint8_t;
+                mpd_set_flags(result, sign_b);
+                if mpd_iszerocoeff(result) != 0 {
+                    mpd_set_positive(result);
+                    if (*ctx).round == MPD_ROUND_FLOOR as ::core::ffi::c_int {
+                        mpd_set_negative(result);
+                    }
+                }
+                current_block = 4;
+            }
+            match current_block {
+                1 => {}
+                _ => {
+                    mpd_setdigits(result);
                 }
             }
         }
-        _ => {}
     }
     mpd_del(&raw mut big_aligned);
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qaddsub(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
     mut sign_b: uint8_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
-    let mut big: *const mpd_t = ::core::ptr::null::<mpd_t>();
-    let mut small: *const mpd_t = ::core::ptr::null::<mpd_t>();
+    let mut big: *const mpd_t;
+    let mut small: *const mpd_t;
     let mut big_aligned_data: [mpd_uint_t; 64] = [0; 64];
     let mut big_aligned: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
@@ -4703,11 +4629,11 @@ unsafe extern "C" fn _mpd_qaddsub(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut tiny_data as *mut mpd_uint_t,
     };
-    let mut carry: mpd_uint_t = 0;
-    let mut newsize: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut exp: mpd_ssize_t = 0;
-    let mut i: mpd_ssize_t = 0;
+    let carry: mpd_uint_t;
+    let mut newsize: mpd_ssize_t;
+    let shift: mpd_ssize_t;
+    let mut exp: mpd_ssize_t;
+    let mut i: mpd_ssize_t;
     let mut swap: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     big = a;
     small = b;
@@ -4729,7 +4655,7 @@ unsafe extern "C" fn _mpd_qaddsub(
                 tiny.exp = exp;
                 tiny.digits = 1 as mpd_ssize_t;
                 tiny.len = 1 as mpd_ssize_t;
-                *tiny.data.offset(0 as isize) = (if mpd_iszerocoeff(small) != 0 {
+                *tiny.data.offset(0_isize) = (if mpd_iszerocoeff(small) != 0 {
                     0 as ::core::ffi::c_int
                 } else {
                     1 as ::core::ffi::c_int
@@ -4750,111 +4676,108 @@ unsafe extern "C" fn _mpd_qaddsub(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            (*result).exp = (*small).exp;
-            if (*big).len < (*small).len {
-                _mpd_ptrswap(&raw mut big, &raw mut small);
-                swap += 1;
-            }
-            newsize = (*big).len;
-            if !(mpd_qresize(result, newsize, status) == 0) {
-                if mpd_sign(a) as ::core::ffi::c_int == sign_b as ::core::ffi::c_int {
-                    carry = _mpd_baseadd(
-                        (*result).data,
-                        (*big).data,
-                        (*small).data,
-                        (*big).len as mpd_size_t,
-                        (*small).len as mpd_size_t,
-                    );
-                    if carry != 0 {
-                        newsize = (*big).len + 1 as mpd_ssize_t;
-                        if mpd_qresize(result, newsize, status) == 0 {
-                            current_block = 1;
-                        } else {
-                            *(*result).data.offset((newsize - 1 as mpd_ssize_t) as isize) = carry;
-                            current_block = 3;
-                        }
+    if current_block == 2 {
+        (*result).exp = (*small).exp;
+        if (*big).len < (*small).len {
+            _mpd_ptrswap(&raw mut big, &raw mut small);
+            swap += 1;
+        }
+        newsize = (*big).len;
+        if !(mpd_qresize(result, newsize, status) == 0) {
+            if mpd_sign(a) as ::core::ffi::c_int == sign_b as ::core::ffi::c_int {
+                carry = _mpd_baseadd(
+                    (*result).data,
+                    (*big).data,
+                    (*small).data,
+                    (*big).len as mpd_size_t,
+                    (*small).len as mpd_size_t,
+                );
+                if carry != 0 {
+                    newsize = (*big).len + 1 as mpd_ssize_t;
+                    if mpd_qresize(result, newsize, status) == 0 {
+                        current_block = 1;
                     } else {
+                        *(*result).data.offset((newsize - 1 as mpd_ssize_t) as isize) = carry;
                         current_block = 3;
                     }
-                    match current_block {
-                        1 => {}
-                        _ => {
-                            (*result).len = newsize;
-                            mpd_set_flags(result, sign_b);
-                            current_block = 4;
-                        }
-                    }
                 } else {
-                    if (*big).len == (*small).len {
-                        i = (*big).len - 1 as mpd_ssize_t;
-                        while i >= 0 as mpd_ssize_t {
-                            if *(*big).data.offset(i as isize) != *(*small).data.offset(i as isize)
-                            {
-                                if *(*big).data.offset(i as isize)
-                                    < *(*small).data.offset(i as isize)
-                                {
-                                    _mpd_ptrswap(&raw mut big, &raw mut small);
-                                    swap += 1;
-                                }
-                                break;
-                            } else {
-                                i -= 1;
-                            }
-                        }
-                    }
-                    _mpd_basesub(
-                        (*result).data,
-                        (*big).data,
-                        (*small).data,
-                        (*big).len as mpd_size_t,
-                        (*small).len as mpd_size_t,
-                    );
-                    newsize = _mpd_real_size((*result).data, (*big).len);
-                    mpd_qresize(result, newsize, status);
-                    (*result).len = newsize;
-                    sign_b = (if swap & 1 as ::core::ffi::c_int != 0 {
-                        sign_b as ::core::ffi::c_int
-                    } else {
-                        mpd_sign(a) as ::core::ffi::c_int
-                    }) as uint8_t;
-                    mpd_set_flags(result, sign_b);
-                    if mpd_iszerocoeff(result) != 0 {
-                        mpd_set_positive(result);
-                        if (*ctx).round == MPD_ROUND_FLOOR as ::core::ffi::c_int {
-                            mpd_set_negative(result);
-                        }
-                    }
-                    current_block = 4;
+                    current_block = 3;
                 }
                 match current_block {
                     1 => {}
                     _ => {
-                        mpd_setdigits(result);
+                        (*result).len = newsize;
+                        mpd_set_flags(result, sign_b);
+                        current_block = 4;
                     }
+                }
+            } else {
+                if (*big).len == (*small).len {
+                    i = (*big).len - 1 as mpd_ssize_t;
+                    while i >= 0 as mpd_ssize_t {
+                        if *(*big).data.offset(i as isize) != *(*small).data.offset(i as isize)
+                        {
+                            if *(*big).data.offset(i as isize)
+                                < *(*small).data.offset(i as isize)
+                            {
+                                _mpd_ptrswap(&raw mut big, &raw mut small);
+                                swap += 1;
+                            }
+                            break;
+                        } else {
+                            i -= 1;
+                        }
+                    }
+                }
+                _mpd_basesub(
+                    (*result).data,
+                    (*big).data,
+                    (*small).data,
+                    (*big).len as mpd_size_t,
+                    (*small).len as mpd_size_t,
+                );
+                newsize = _mpd_real_size((*result).data, (*big).len);
+                mpd_qresize(result, newsize, status);
+                (*result).len = newsize;
+                sign_b = (if swap & 1 as ::core::ffi::c_int != 0 {
+                    sign_b as ::core::ffi::c_int
+                } else {
+                    mpd_sign(a) as ::core::ffi::c_int
+                }) as uint8_t;
+                mpd_set_flags(result, sign_b);
+                if mpd_iszerocoeff(result) != 0 {
+                    mpd_set_positive(result);
+                    if (*ctx).round == MPD_ROUND_FLOOR as ::core::ffi::c_int {
+                        mpd_set_negative(result);
+                    }
+                }
+                current_block = 4;
+            }
+            match current_block {
+                1 => {}
+                _ => {
+                    mpd_setdigits(result);
                 }
             }
         }
-        _ => {}
     }
     mpd_del(&raw mut big_aligned);
 }
 unsafe extern "C" fn _mpd_qadd(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _mpd_qaddsub(result, a, b, mpd_sign(b), ctx, status);
 }
 unsafe extern "C" fn _mpd_qsub(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _mpd_qaddsub(
         result,
@@ -4866,11 +4789,11 @@ unsafe extern "C" fn _mpd_qsub(
     );
 }
 pub unsafe extern "C" fn mpd_qadd(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
@@ -4884,11 +4807,11 @@ pub unsafe extern "C" fn mpd_qadd(
 }
 #[cfg(not(feature = "test-hooks"))]
 unsafe extern "C" fn _mpd_qadd_exact(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     mpd_qadd(result, a, b, ctx, &raw mut workstatus);
@@ -4901,11 +4824,11 @@ unsafe extern "C" fn _mpd_qadd_exact(
 }
 #[cfg(feature = "test-hooks")]
 unsafe extern "C" fn _mpd_qadd_exact(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     mpd_qadd(result, a, b, ctx, &raw mut workstatus);
@@ -4921,11 +4844,11 @@ unsafe extern "C" fn _mpd_qadd_exact(
     }
 }
 pub unsafe extern "C" fn mpd_qsub(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
@@ -4952,11 +4875,11 @@ pub unsafe extern "C" fn mpd_qsub(
 }
 #[cfg(not(feature = "test-hooks"))]
 unsafe extern "C" fn _mpd_qsub_exact(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     mpd_qsub(result, a, b, ctx, &raw mut workstatus);
@@ -4969,11 +4892,11 @@ unsafe extern "C" fn _mpd_qsub_exact(
 }
 #[cfg(feature = "test-hooks")]
 unsafe extern "C" fn _mpd_qsub_exact(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     mpd_qsub(result, a, b, ctx, &raw mut workstatus);
@@ -4989,11 +4912,11 @@ unsafe extern "C" fn _mpd_qsub_exact(
     }
 }
 pub unsafe extern "C" fn mpd_qadd_ssize(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -5023,11 +4946,11 @@ pub unsafe extern "C" fn mpd_qadd_ssize(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qadd_uint(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -5057,11 +4980,11 @@ pub unsafe extern "C" fn mpd_qadd_uint(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qsub_ssize(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -5091,11 +5014,11 @@ pub unsafe extern "C" fn mpd_qsub_ssize(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qsub_uint(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -5125,40 +5048,40 @@ pub unsafe extern "C" fn mpd_qsub_uint(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qadd_i32(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qadd_ssize(result, a, b as mpd_ssize_t, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qadd_u32(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qadd_uint(result, a, b as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qadd_i64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qadd_ssize(result, a, b as mpd_ssize_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qadd_i64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -5189,21 +5112,21 @@ pub unsafe extern "C" fn mpd_qadd_i64(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qadd_u64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qadd_uint(result, a, b as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qadd_u64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -5233,40 +5156,40 @@ pub unsafe extern "C" fn mpd_qadd_u64(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qsub_i32(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qsub_ssize(result, a, b as mpd_ssize_t, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qsub_u32(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qsub_uint(result, a, b as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qsub_i64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qsub_ssize(result, a, b as mpd_ssize_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qsub_i64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -5297,21 +5220,21 @@ pub unsafe extern "C" fn mpd_qsub_i64(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qsub_u64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qsub_uint(result, a, b as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qsub_u64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -5341,11 +5264,11 @@ pub unsafe extern "C" fn mpd_qsub_u64(
     mpd_del(&raw mut bb);
 }
 unsafe extern "C" fn _mpd_qdiv_inf(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isinfinite(a) != 0 {
         if mpd_isinfinite(b) != 0 {
@@ -5373,12 +5296,12 @@ unsafe extern "C" fn _mpd_qdiv_inf(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qdiv(
-    mut action: ::core::ffi::c_int,
-    mut q: *mut mpd_t,
+    action: ::core::ffi::c_int,
+    q: *mut mpd_t,
     mut a: *const mpd_t,
     mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut aligned_data: [mpd_uint_t; 64] = [0; 64];
@@ -5392,15 +5315,14 @@ unsafe extern "C" fn _mpd_qdiv(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut aligned_data as *mut mpd_uint_t,
     };
-    let mut ld: mpd_uint_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut exp: mpd_ssize_t = 0;
-    let mut tz: mpd_ssize_t = 0;
-    let mut newsize: mpd_ssize_t = 0;
-    let mut ideal_exp: mpd_ssize_t = 0;
+    let ld: mpd_uint_t;
+    let mut shift: mpd_ssize_t;
+    let mut exp: mpd_ssize_t;
+    let tz: mpd_ssize_t;
+    let mut newsize: mpd_ssize_t;
     let mut rem: mpd_uint_t = 0;
-    let mut sign_a: uint8_t = mpd_sign(a);
-    let mut sign_b: uint8_t = mpd_sign(b);
+    let sign_a: uint8_t = mpd_sign(a);
+    let sign_b: uint8_t = mpd_sign(b);
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(q, a, b, ctx, status) != 0 {
             return;
@@ -5433,7 +5355,7 @@ unsafe extern "C" fn _mpd_qdiv(
         return;
     }
     shift = (*b).digits - (*a).digits + (*ctx).prec + 1 as mpd_ssize_t;
-    ideal_exp = (*a).exp - (*b).exp;
+    let ideal_exp: mpd_ssize_t = (*a).exp - (*b).exp;
     exp = ideal_exp - shift;
     if shift > 0 as mpd_ssize_t {
         if mpd_qshiftl(&raw mut aligned, a, shift, status) == 0 {
@@ -5455,120 +5377,117 @@ unsafe extern "C" fn _mpd_qdiv(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            newsize = (*a).len - (*b).len + 1 as mpd_ssize_t;
-            if q != b as *mut mpd_t && q != a as *mut mpd_t
-                || q == b as *mut mpd_t && newsize > (*b).len
-            {
-                if mpd_qresize(q, newsize, status) == 0 {
-                    mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
-                    current_block = 1;
-                } else {
-                    current_block = 3;
-                }
+    if current_block == 2 {
+        newsize = (*a).len - (*b).len + 1 as mpd_ssize_t;
+        if !::core::ptr::eq(q, b) && !::core::ptr::eq(q, a)
+            || ::core::ptr::eq(q, b) && newsize > (*b).len
+        {
+            if mpd_qresize(q, newsize, status) == 0 {
+                mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
+                current_block = 1;
             } else {
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
-                    if (*b).len == 1 as mpd_ssize_t {
-                        rem = _mpd_shortdiv(
-                            (*q).data,
-                            (*a).data,
-                            (*a).len as mpd_size_t,
-                            *(*b).data.offset(0 as isize),
-                        );
-                        current_block = 4;
-                    } else if (*b).len <= MPD_NEWTONDIV_CUTOFF as mpd_ssize_t {
-                        let mut ret: ::core::ffi::c_int = _mpd_basedivmod(
-                            (*q).data,
-                            ::core::ptr::null_mut::<mpd_uint_t>(),
-                            (*a).data,
-                            (*b).data,
-                            (*a).len as mpd_size_t,
-                            (*b).len as mpd_size_t,
-                        );
-                        if ret < 0 as ::core::ffi::c_int {
-                            mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
-                            current_block = 1;
-                        } else {
-                            rem = ret as mpd_uint_t;
-                            current_block = 4;
-                        }
+        } else {
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                if (*b).len == 1 as mpd_ssize_t {
+                    rem = _mpd_shortdiv(
+                        (*q).data,
+                        (*a).data,
+                        (*a).len as mpd_size_t,
+                        *(*b).data.offset(0_isize),
+                    );
+                    current_block = 4;
+                } else if (*b).len <= MPD_NEWTONDIV_CUTOFF as mpd_ssize_t {
+                    let ret: ::core::ffi::c_int = _mpd_basedivmod(
+                        (*q).data,
+                        ::core::ptr::null_mut::<mpd_uint_t>(),
+                        (*a).data,
+                        (*b).data,
+                        (*a).len as mpd_size_t,
+                        (*b).len as mpd_size_t,
+                    );
+                    if ret < 0 as ::core::ffi::c_int {
+                        mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
+                        current_block = 1;
                     } else {
-                        let mut r_data: [mpd_uint_t; 64] = [0; 64];
-                        let mut r: mpd_t = mpd_t {
-                            flags: (0 as ::core::ffi::c_int
-                                | MPD_STATIC as ::core::ffi::c_int
-                                | MPD_STATIC_DATA as ::core::ffi::c_int)
-                                as uint8_t,
-                            exp: 0 as mpd_ssize_t,
-                            digits: 0 as mpd_ssize_t,
-                            len: 0 as mpd_ssize_t,
-                            alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
-                            data: &raw mut r_data as *mut mpd_uint_t,
-                        };
-                        _mpd_base_ndivmod(q, &raw mut r, a, b, status);
-                        if mpd_isspecial(q) != 0 || mpd_isspecial(&raw mut r) != 0 {
-                            mpd_setspecial(q, MPD_POS, MPD_NAN);
-                            mpd_del(&raw mut r);
-                            current_block = 1;
-                        } else {
-                            rem = (mpd_iszerocoeff(&raw mut r) == 0) as ::core::ffi::c_int
-                                as mpd_uint_t;
-                            mpd_del(&raw mut r);
-                            newsize = (*q).len;
-                            current_block = 4;
-                        }
+                        rem = ret as mpd_uint_t;
+                        current_block = 4;
                     }
-                    match current_block {
-                        1 => {}
-                        _ => {
-                            newsize = _mpd_real_size((*q).data, newsize);
-                            mpd_qresize(q, newsize, status);
-                            mpd_set_flags(
-                                q,
-                                (sign_a as ::core::ffi::c_int ^ sign_b as ::core::ffi::c_int)
-                                    as uint8_t,
-                            );
-                            (*q).len = newsize;
-                            mpd_setdigits(q);
-                            shift = ideal_exp - exp;
-                            if rem != 0 {
-                                ld = mpd_lsd(*(*q).data.offset(0 as isize));
-                                if ld == 0 as mpd_uint_t || ld == 5 as mpd_uint_t {
-                                    let ref mut fresh0 = *(*q).data.offset(0 as isize);
-                                    *fresh0 = (*fresh0).wrapping_add(1 as mpd_uint_t);
-                                }
-                            } else if action == SET_IDEAL_EXP as ::core::ffi::c_int
-                                && shift > 0 as mpd_ssize_t
-                            {
-                                tz = mpd_trail_zeros(q);
-                                shift = if tz > shift { shift } else { tz };
-                                mpd_qshiftr_inplace(q, shift);
-                                exp += shift;
+                } else {
+                    let mut r_data: [mpd_uint_t; 64] = [0; 64];
+                    let mut r: mpd_t = mpd_t {
+                        flags: (0 as ::core::ffi::c_int
+                            | MPD_STATIC as ::core::ffi::c_int
+                            | MPD_STATIC_DATA as ::core::ffi::c_int)
+                            as uint8_t,
+                        exp: 0 as mpd_ssize_t,
+                        digits: 0 as mpd_ssize_t,
+                        len: 0 as mpd_ssize_t,
+                        alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
+                        data: &raw mut r_data as *mut mpd_uint_t,
+                    };
+                    _mpd_base_ndivmod(q, &raw mut r, a, b, status);
+                    if mpd_isspecial(q) != 0 || mpd_isspecial(&raw mut r) != 0 {
+                        mpd_setspecial(q, MPD_POS, MPD_NAN);
+                        mpd_del(&raw mut r);
+                        current_block = 1;
+                    } else {
+                        rem = (mpd_iszerocoeff(&raw mut r) == 0) as ::core::ffi::c_int
+                            as mpd_uint_t;
+                        mpd_del(&raw mut r);
+                        newsize = (*q).len;
+                        current_block = 4;
+                    }
+                }
+                match current_block {
+                    1 => {}
+                    _ => {
+                        newsize = _mpd_real_size((*q).data, newsize);
+                        mpd_qresize(q, newsize, status);
+                        mpd_set_flags(
+                            q,
+                            (sign_a as ::core::ffi::c_int ^ sign_b as ::core::ffi::c_int)
+                                as uint8_t,
+                        );
+                        (*q).len = newsize;
+                        mpd_setdigits(q);
+                        shift = ideal_exp - exp;
+                        if rem != 0 {
+                            ld = mpd_lsd(*(*q).data.offset(0_isize));
+                            if ld == 0 as mpd_uint_t || ld == 5 as mpd_uint_t {
+                                let fresh0 = &mut *(*q).data.offset(0_isize);
+                                *fresh0 = (*fresh0).wrapping_add(1 as mpd_uint_t);
                             }
-                            (*q).exp = exp;
+                        } else if action == SET_IDEAL_EXP as ::core::ffi::c_int
+                            && shift > 0 as mpd_ssize_t
+                        {
+                            tz = mpd_trail_zeros(q);
+                            shift = if tz > shift { shift } else { tz };
+                            mpd_qshiftr_inplace(q, shift);
+                            exp += shift;
                         }
+                        (*q).exp = exp;
                     }
                 }
             }
         }
-        _ => {}
     }
     mpd_del(&raw mut aligned);
     mpd_qfinalize(q, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qdiv(
-    mut action: ::core::ffi::c_int,
-    mut q: *mut mpd_t,
+    action: ::core::ffi::c_int,
+    q: *mut mpd_t,
     mut a: *const mpd_t,
     mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut aligned_data: [mpd_uint_t; 64] = [0; 64];
@@ -5582,15 +5501,14 @@ unsafe extern "C" fn _mpd_qdiv(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut aligned_data as *mut mpd_uint_t,
     };
-    let mut ld: mpd_uint_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut exp: mpd_ssize_t = 0;
-    let mut tz: mpd_ssize_t = 0;
-    let mut newsize: mpd_ssize_t = 0;
-    let mut ideal_exp: mpd_ssize_t = 0;
+    let ld: mpd_uint_t;
+    let mut shift: mpd_ssize_t;
+    let mut exp: mpd_ssize_t;
+    let tz: mpd_ssize_t;
+    let mut newsize: mpd_ssize_t;
     let mut rem: mpd_uint_t = 0;
-    let mut sign_a: uint8_t = mpd_sign(a);
-    let mut sign_b: uint8_t = mpd_sign(b);
+    let sign_a: uint8_t = mpd_sign(a);
+    let sign_b: uint8_t = mpd_sign(b);
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(q, a, b, ctx, status) != 0 {
             return;
@@ -5623,7 +5541,7 @@ unsafe extern "C" fn _mpd_qdiv(
         return;
     }
     shift = (*b).digits - (*a).digits + (*ctx).prec + 1 as mpd_ssize_t;
-    ideal_exp = (*a).exp - (*b).exp;
+    let ideal_exp: mpd_ssize_t = (*a).exp - (*b).exp;
     exp = ideal_exp - shift;
     if shift > 0 as mpd_ssize_t {
         if mpd_qshiftl(&raw mut aligned, a, shift, status) == 0 {
@@ -5645,118 +5563,115 @@ unsafe extern "C" fn _mpd_qdiv(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            newsize = (*a).len - (*b).len + 1 as mpd_ssize_t;
-            if q != b as *mut mpd_t && q != a as *mut mpd_t
-                || q == b as *mut mpd_t && newsize > (*b).len
-            {
-                if mpd_qresize(q, newsize, status) == 0 {
-                    mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
-                    current_block = 1;
-                } else {
-                    current_block = 3;
-                }
+    if current_block == 2 {
+        newsize = (*a).len - (*b).len + 1 as mpd_ssize_t;
+        if !::core::ptr::eq(q, b) && !::core::ptr::eq(q, a)
+            || ::core::ptr::eq(q, b) && newsize > (*b).len
+        {
+            if mpd_qresize(q, newsize, status) == 0 {
+                mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
+                current_block = 1;
             } else {
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
-                    if (*b).len == 1 as mpd_ssize_t {
-                        rem = _mpd_shortdiv(
-                            (*q).data,
-                            (*a).data,
-                            (*a).len as mpd_size_t,
-                            *(*b).data.offset(0 as isize),
-                        );
-                        current_block = 4;
-                    } else if (*b).len as i32 <= MPD_NEWTONDIV_CUTOFF {
-                        let mut ret: ::core::ffi::c_int = _mpd_basedivmod(
-                            (*q).data,
-                            ::core::ptr::null_mut::<mpd_uint_t>(),
-                            (*a).data,
-                            (*b).data,
-                            (*a).len as mpd_size_t,
-                            (*b).len as mpd_size_t,
-                        );
-                        if ret < 0 as ::core::ffi::c_int {
-                            mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
-                            current_block = 1;
-                        } else {
-                            rem = ret as mpd_uint_t;
-                            current_block = 4;
-                        }
+        } else {
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                if (*b).len == 1 as mpd_ssize_t {
+                    rem = _mpd_shortdiv(
+                        (*q).data,
+                        (*a).data,
+                        (*a).len as mpd_size_t,
+                        *(*b).data.offset(0_isize),
+                    );
+                    current_block = 4;
+                } else if (*b).len <= MPD_NEWTONDIV_CUTOFF {
+                    let ret: ::core::ffi::c_int = _mpd_basedivmod(
+                        (*q).data,
+                        ::core::ptr::null_mut::<mpd_uint_t>(),
+                        (*a).data,
+                        (*b).data,
+                        (*a).len as mpd_size_t,
+                        (*b).len as mpd_size_t,
+                    );
+                    if ret < 0 as ::core::ffi::c_int {
+                        mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
+                        current_block = 1;
                     } else {
-                        let mut r_data: [mpd_uint_t; 64] = [0; 64];
-                        let mut r: mpd_t = mpd_t {
-                            flags: (0 as ::core::ffi::c_int
-                                | MPD_STATIC as ::core::ffi::c_int
-                                | MPD_STATIC_DATA as ::core::ffi::c_int)
-                                as uint8_t,
-                            exp: 0 as mpd_ssize_t,
-                            digits: 0 as mpd_ssize_t,
-                            len: 0 as mpd_ssize_t,
-                            alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
-                            data: &raw mut r_data as *mut mpd_uint_t,
-                        };
-                        _mpd_base_ndivmod(q, &raw mut r, a, b, status);
-                        if mpd_isspecial(q) != 0 || mpd_isspecial(&raw mut r) != 0 {
-                            mpd_setspecial(q, MPD_POS, MPD_NAN);
-                            mpd_del(&raw mut r);
-                            current_block = 1;
-                        } else {
-                            rem = (mpd_iszerocoeff(&raw mut r) == 0) as ::core::ffi::c_int
-                                as mpd_uint_t;
-                            mpd_del(&raw mut r);
-                            newsize = (*q).len;
-                            current_block = 4;
-                        }
+                        rem = ret as mpd_uint_t;
+                        current_block = 4;
                     }
-                    match current_block {
-                        1 => {}
-                        _ => {
-                            newsize = _mpd_real_size((*q).data, newsize);
-                            mpd_qresize(q, newsize, status);
-                            mpd_set_flags(
-                                q,
-                                (sign_a as ::core::ffi::c_int ^ sign_b as ::core::ffi::c_int)
-                                    as uint8_t,
-                            );
-                            (*q).len = newsize;
-                            mpd_setdigits(q);
-                            shift = ideal_exp - exp;
-                            if rem != 0 {
-                                ld = mpd_lsd(*(*q).data.offset(0 as isize));
-                                if ld == 0 as mpd_uint_t || ld == 5 as mpd_uint_t {
-                                    let ref mut fresh0 = *(*q).data.offset(0 as isize);
-                                    *fresh0 = (*fresh0).wrapping_add(1 as mpd_uint_t);
-                                }
-                            } else if action == SET_IDEAL_EXP as ::core::ffi::c_int
-                                && shift > 0 as mpd_ssize_t
-                            {
-                                tz = mpd_trail_zeros(q);
-                                shift = if tz > shift { shift } else { tz };
-                                mpd_qshiftr_inplace(q, shift);
-                                exp += shift;
+                } else {
+                    let mut r_data: [mpd_uint_t; 64] = [0; 64];
+                    let mut r: mpd_t = mpd_t {
+                        flags: (0 as ::core::ffi::c_int
+                            | MPD_STATIC as ::core::ffi::c_int
+                            | MPD_STATIC_DATA as ::core::ffi::c_int)
+                            as uint8_t,
+                        exp: 0 as mpd_ssize_t,
+                        digits: 0 as mpd_ssize_t,
+                        len: 0 as mpd_ssize_t,
+                        alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
+                        data: &raw mut r_data as *mut mpd_uint_t,
+                    };
+                    _mpd_base_ndivmod(q, &raw mut r, a, b, status);
+                    if mpd_isspecial(q) != 0 || mpd_isspecial(&raw mut r) != 0 {
+                        mpd_setspecial(q, MPD_POS, MPD_NAN);
+                        mpd_del(&raw mut r);
+                        current_block = 1;
+                    } else {
+                        rem = (mpd_iszerocoeff(&raw mut r) == 0) as ::core::ffi::c_int
+                            as mpd_uint_t;
+                        mpd_del(&raw mut r);
+                        newsize = (*q).len;
+                        current_block = 4;
+                    }
+                }
+                match current_block {
+                    1 => {}
+                    _ => {
+                        newsize = _mpd_real_size((*q).data, newsize);
+                        mpd_qresize(q, newsize, status);
+                        mpd_set_flags(
+                            q,
+                            (sign_a as ::core::ffi::c_int ^ sign_b as ::core::ffi::c_int)
+                                as uint8_t,
+                        );
+                        (*q).len = newsize;
+                        mpd_setdigits(q);
+                        shift = ideal_exp - exp;
+                        if rem != 0 {
+                            ld = mpd_lsd(*(*q).data.offset(0_isize));
+                            if ld == 0 as mpd_uint_t || ld == 5 as mpd_uint_t {
+                                let fresh0 = &mut *(*q).data.offset(0_isize);
+                                *fresh0 = (*fresh0).wrapping_add(1 as mpd_uint_t);
                             }
-                            (*q).exp = exp;
+                        } else if action == SET_IDEAL_EXP as ::core::ffi::c_int
+                            && shift > 0 as mpd_ssize_t
+                        {
+                            tz = mpd_trail_zeros(q);
+                            shift = if tz > shift { shift } else { tz };
+                            mpd_qshiftr_inplace(q, shift);
+                            exp += shift;
                         }
+                        (*q).exp = exp;
                     }
                 }
             }
         }
-        _ => {}
     }
     mpd_del(&raw mut aligned);
     mpd_qfinalize(q, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qdiv(
-    mut q: *mut mpd_t,
+    q: *mut mpd_t,
     mut a: *const mpd_t,
     mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut aa_data: [mpd_uint_t; 64] = [0; 64];
@@ -5782,7 +5697,7 @@ pub unsafe extern "C" fn mpd_qdiv(
         data: &raw mut bb_data as *mut mpd_uint_t,
     };
     let mut xstatus: uint32_t = 0 as uint32_t;
-    if q == a as *mut mpd_t {
+    if ::core::ptr::eq(q, a) {
         if mpd_qcopy(&raw mut aa, a, status) == 0 {
             mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
             current_block = 1;
@@ -5793,85 +5708,82 @@ pub unsafe extern "C" fn mpd_qdiv(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            if q == b as *mut mpd_t {
-                if mpd_qcopy(&raw mut bb, b, status) == 0 {
-                    mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
-                    current_block = 1;
-                } else {
-                    b = &raw mut bb;
-                    current_block = 3;
-                }
+    if current_block == 2 {
+        if ::core::ptr::eq(q, b) {
+            if mpd_qcopy(&raw mut bb, b, status) == 0 {
+                mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
+                current_block = 1;
             } else {
+                b = &raw mut bb;
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
-                    _mpd_qdiv(
-                        SET_IDEAL_EXP as ::core::ffi::c_int,
-                        q,
-                        a,
-                        b,
-                        ctx,
-                        &raw mut xstatus,
-                    );
-                    if xstatus
-                        & (MPD_Malloc_error as uint32_t | MPD_Division_impossible as uint32_t)
-                        != 0
-                    {
-                        let mut ystatus: uint32_t = 0 as uint32_t;
-                        let mut workctx: mpd_context_t = mpd_context_t {
-                            prec: 0,
-                            emax: 0,
-                            emin: 0,
-                            traps: 0,
-                            status: 0,
-                            newtrap: 0,
-                            round: 0,
-                            clamp: 0,
-                            allcr: 0,
-                        };
-                        mpd_workcontext(&raw mut workctx, ctx);
-                        workctx.prec = (*a).digits + (*b).digits * 4 as mpd_ssize_t;
-                        if workctx.prec >= (*ctx).prec {
-                            *status = (*status as ::core::ffi::c_uint
-                                | (xstatus & MPD_Errors as uint32_t) as ::core::ffi::c_uint)
-                                as uint32_t;
-                        } else {
-                            _mpd_qdiv(
-                                SET_IDEAL_EXP as ::core::ffi::c_int,
-                                q,
-                                a,
-                                b,
-                                &raw mut workctx,
-                                &raw mut ystatus,
-                            );
-                            if ystatus != 0 as uint32_t {
-                                ystatus = *status | (ystatus | xstatus) & MPD_Errors as uint32_t;
-                                mpd_seterror(q, ystatus, status);
-                            }
-                        }
+        } else {
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                _mpd_qdiv(
+                    SET_IDEAL_EXP as ::core::ffi::c_int,
+                    q,
+                    a,
+                    b,
+                    ctx,
+                    &raw mut xstatus,
+                );
+                if xstatus
+                    & (MPD_Malloc_error as uint32_t | MPD_Division_impossible as uint32_t)
+                    != 0
+                {
+                    let mut ystatus: uint32_t = 0 as uint32_t;
+                    let mut workctx: mpd_context_t = mpd_context_t {
+                        prec: 0,
+                        emax: 0,
+                        emin: 0,
+                        traps: 0,
+                        status: 0,
+                        newtrap: 0,
+                        round: 0,
+                        clamp: 0,
+                        allcr: 0,
+                    };
+                    mpd_workcontext(&raw mut workctx, ctx);
+                    workctx.prec = (*a).digits + (*b).digits * 4 as mpd_ssize_t;
+                    if workctx.prec >= (*ctx).prec {
+                        *status = (*status as ::core::ffi::c_uint
+                            | (xstatus & MPD_Errors as uint32_t) as ::core::ffi::c_uint)
+                            as uint32_t;
                     } else {
-                        *status |= xstatus;
+                        _mpd_qdiv(
+                            SET_IDEAL_EXP as ::core::ffi::c_int,
+                            q,
+                            a,
+                            b,
+                            &raw mut workctx,
+                            &raw mut ystatus,
+                        );
+                        if ystatus != 0 as uint32_t {
+                            ystatus = *status | (ystatus | xstatus) & MPD_Errors as uint32_t;
+                            mpd_seterror(q, ystatus, status);
+                        }
                     }
+                } else {
+                    *status |= xstatus;
                 }
             }
         }
-        _ => {}
     }
     mpd_del(&raw mut aa);
     mpd_del(&raw mut bb);
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qdivmod(
-    mut q: *mut mpd_t,
-    mut r: *mut mpd_t,
+    q: *mut mpd_t,
+    r: *mut mpd_t,
     mut a: *const mpd_t,
     mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut aligned_data: [mpd_uint_t; 64] = [0; 64];
@@ -5885,15 +5797,14 @@ unsafe extern "C" fn _mpd_qdivmod(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut aligned_data as *mut mpd_uint_t,
     };
-    let mut qsize: mpd_ssize_t = 0;
-    let mut rsize: mpd_ssize_t = 0;
-    let mut ideal_exp: mpd_ssize_t = 0;
-    let mut expdiff: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut sign_a: uint8_t = mpd_sign(a);
-    let mut sign_ab: uint8_t =
+    let mut qsize: mpd_ssize_t;
+    let mut rsize: mpd_ssize_t;
+    let expdiff: mpd_ssize_t;
+    let mut shift: mpd_ssize_t;
+    let sign_a: uint8_t = mpd_sign(a);
+    let sign_ab: uint8_t =
         (mpd_sign(a) as ::core::ffi::c_int ^ mpd_sign(b) as ::core::ffi::c_int) as uint8_t;
-    ideal_exp = if (*a).exp > (*b).exp {
+    let ideal_exp: mpd_ssize_t = if (*a).exp > (*b).exp {
         (*b).exp
     } else {
         (*a).exp
@@ -5958,8 +5869,8 @@ unsafe extern "C" fn _mpd_qdivmod(
                 1 => {}
                 _ => {
                     qsize = (*a).len - (*b).len + 1 as mpd_ssize_t;
-                    if !(q == a as *mut mpd_t && qsize < (*a).len)
-                        && !(q == b as *mut mpd_t && qsize < (*b).len)
+                    if !(::core::ptr::eq(q, a) && qsize < (*a).len)
+                        && !(::core::ptr::eq(q, b) && qsize < (*b).len)
                     {
                         if mpd_qresize(q, qsize, status) == 0 {
                             current_block = 1;
@@ -5973,7 +5884,7 @@ unsafe extern "C" fn _mpd_qdivmod(
                         1 => {}
                         _ => {
                             rsize = (*b).len;
-                            if !(r == a as *mut mpd_t && rsize < (*a).len) {
+                            if !(::core::ptr::eq(r, a) && rsize < (*a).len) {
                                 if mpd_qresize(r, rsize, status) == 0 {
                                     current_block = 1;
                                 } else {
@@ -5986,7 +5897,7 @@ unsafe extern "C" fn _mpd_qdivmod(
                                 1 => {}
                                 _ => {
                                     if (*b).len == 1 as mpd_ssize_t {
-                                        if *(*b).data.offset(0 as isize) != 0 as mpd_uint_t {
+                                        if *(*b).data.offset(0_isize) != 0 as mpd_uint_t {
                                         } else {
                                             mpd_c2rust_assert_fail(
                                                 b"b->data[0] != 0\0" as *const u8
@@ -5995,23 +5906,22 @@ unsafe extern "C" fn _mpd_qdivmod(
                                         };
                                         if (*a).len == 1 as mpd_ssize_t {
                                             _mpd_div_word(
-                                                (*q).data.offset(0 as isize) as *mut mpd_uint_t,
-                                                (*r).data.offset(0 as isize) as *mut mpd_uint_t,
-                                                *(*a).data.offset(0 as isize),
-                                                *(*b).data.offset(0 as isize),
+                                                (*q).data.offset(0_isize) as *mut mpd_uint_t,
+                                                (*r).data.offset(0_isize) as *mut mpd_uint_t,
+                                                *(*a).data.offset(0_isize),
+                                                *(*b).data.offset(0_isize),
                                             );
                                         } else {
-                                            *(*r).data.offset(0 as isize) = _mpd_shortdiv(
+                                            *(*r).data.offset(0_isize) = _mpd_shortdiv(
                                                 (*q).data,
                                                 (*a).data,
                                                 (*a).len as mpd_size_t,
-                                                *(*b).data.offset(0 as isize),
+                                                *(*b).data.offset(0_isize),
                                             );
                                         }
                                         current_block = 6;
                                     } else if (*b).len <= MPD_NEWTONDIV_CUTOFF as mpd_ssize_t {
-                                        let mut ret: ::core::ffi::c_int = 0;
-                                        ret = _mpd_basedivmod(
+                                        let ret: ::core::ffi::c_int = _mpd_basedivmod(
                                             (*q).data,
                                             (*r).data,
                                             (*a).data,
@@ -6070,23 +5980,20 @@ unsafe extern "C" fn _mpd_qdivmod(
             }
         }
     }
-    match current_block {
-        1 => {
-            mpd_setspecial(q, MPD_POS, MPD_NAN);
-            mpd_setspecial(r, MPD_POS, MPD_NAN);
-        }
-        _ => {}
+    if current_block == 1 {
+        mpd_setspecial(q, MPD_POS, MPD_NAN);
+        mpd_setspecial(r, MPD_POS, MPD_NAN);
     }
     mpd_del(&raw mut aligned);
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qdivmod(
-    mut q: *mut mpd_t,
-    mut r: *mut mpd_t,
+    q: *mut mpd_t,
+    r: *mut mpd_t,
     mut a: *const mpd_t,
     mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut aligned_data: [mpd_uint_t; 64] = [0; 64];
@@ -6100,15 +6007,14 @@ unsafe extern "C" fn _mpd_qdivmod(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut aligned_data as *mut mpd_uint_t,
     };
-    let mut qsize: mpd_ssize_t = 0;
-    let mut rsize: mpd_ssize_t = 0;
-    let mut ideal_exp: mpd_ssize_t = 0;
-    let mut expdiff: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut sign_a: uint8_t = mpd_sign(a);
-    let mut sign_ab: uint8_t =
+    let mut qsize: mpd_ssize_t;
+    let mut rsize: mpd_ssize_t;
+    let expdiff: mpd_ssize_t;
+    let mut shift: mpd_ssize_t;
+    let sign_a: uint8_t = mpd_sign(a);
+    let sign_ab: uint8_t =
         (mpd_sign(a) as ::core::ffi::c_int ^ mpd_sign(b) as ::core::ffi::c_int) as uint8_t;
-    ideal_exp = if (*a).exp > (*b).exp {
+    let ideal_exp: mpd_ssize_t = if (*a).exp > (*b).exp {
         (*b).exp
     } else {
         (*a).exp
@@ -6173,8 +6079,8 @@ unsafe extern "C" fn _mpd_qdivmod(
                 1 => {}
                 _ => {
                     qsize = (*a).len - (*b).len + 1 as mpd_ssize_t;
-                    if !(q == a as *mut mpd_t && qsize < (*a).len)
-                        && !(q == b as *mut mpd_t && qsize < (*b).len)
+                    if !(::core::ptr::eq(q, a) && qsize < (*a).len)
+                        && !(::core::ptr::eq(q, b) && qsize < (*b).len)
                     {
                         if mpd_qresize(q, qsize, status) == 0 {
                             current_block = 1;
@@ -6188,7 +6094,7 @@ unsafe extern "C" fn _mpd_qdivmod(
                         1 => {}
                         _ => {
                             rsize = (*b).len;
-                            if !(r == a as *mut mpd_t && rsize < (*a).len) {
+                            if !(::core::ptr::eq(r, a) && rsize < (*a).len) {
                                 if mpd_qresize(r, rsize, status) == 0 {
                                     current_block = 1;
                                 } else {
@@ -6201,7 +6107,7 @@ unsafe extern "C" fn _mpd_qdivmod(
                                 1 => {}
                                 _ => {
                                     if (*b).len == 1 as mpd_ssize_t {
-                                        if *(*b).data.offset(0 as isize) != 0 as mpd_uint_t {
+                                        if *(*b).data.offset(0_isize) != 0 as mpd_uint_t {
                                         } else {
                                             mpd_c2rust_assert_fail(
                                                 b"b->data[0] != 0\0" as *const u8
@@ -6210,23 +6116,22 @@ unsafe extern "C" fn _mpd_qdivmod(
                                         };
                                         if (*a).len == 1 as mpd_ssize_t {
                                             _mpd_div_word(
-                                                (*q).data.offset(0 as isize) as *mut mpd_uint_t,
-                                                (*r).data.offset(0 as isize) as *mut mpd_uint_t,
-                                                *(*a).data.offset(0 as isize),
-                                                *(*b).data.offset(0 as isize),
+                                                (*q).data.offset(0_isize) as *mut mpd_uint_t,
+                                                (*r).data.offset(0_isize) as *mut mpd_uint_t,
+                                                *(*a).data.offset(0_isize),
+                                                *(*b).data.offset(0_isize),
                                             );
                                         } else {
-                                            *(*r).data.offset(0 as isize) = _mpd_shortdiv(
+                                            *(*r).data.offset(0_isize) = _mpd_shortdiv(
                                                 (*q).data,
                                                 (*a).data,
                                                 (*a).len as mpd_size_t,
-                                                *(*b).data.offset(0 as isize),
+                                                *(*b).data.offset(0_isize),
                                             );
                                         }
                                         current_block = 6;
-                                    } else if (*b).len as i32 <= MPD_NEWTONDIV_CUTOFF {
-                                        let mut ret: ::core::ffi::c_int = 0;
-                                        ret = _mpd_basedivmod(
+                                    } else if (*b).len <= MPD_NEWTONDIV_CUTOFF {
+                                        let ret: ::core::ffi::c_int = _mpd_basedivmod(
                                             (*q).data,
                                             (*r).data,
                                             (*a).data,
@@ -6285,24 +6190,21 @@ unsafe extern "C" fn _mpd_qdivmod(
             }
         }
     }
-    match current_block {
-        1 => {
-            mpd_setspecial(q, MPD_POS, MPD_NAN);
-            mpd_setspecial(r, MPD_POS, MPD_NAN);
-        }
-        _ => {}
+    if current_block == 1 {
+        mpd_setspecial(q, MPD_POS, MPD_NAN);
+        mpd_setspecial(r, MPD_POS, MPD_NAN);
     }
     mpd_del(&raw mut aligned);
 }
 pub unsafe extern "C" fn mpd_qdivmod(
-    mut q: *mut mpd_t,
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    q: *mut mpd_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut sign: uint8_t =
+    let sign: uint8_t =
         (mpd_sign(a) as ::core::ffi::c_int ^ mpd_sign(b) as ::core::ffi::c_int) as uint8_t;
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(q, a, b, ctx, status) != 0 {
@@ -6348,11 +6250,11 @@ pub unsafe extern "C" fn mpd_qdivmod(
     mpd_qfinalize(r, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qdivint(
-    mut q: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    q: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut r_data: [mpd_uint_t; 64] = [0; 64];
     let mut r: mpd_t = mpd_t {
@@ -6365,7 +6267,7 @@ pub unsafe extern "C" fn mpd_qdivint(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut r_data as *mut mpd_uint_t,
     };
-    let mut sign: uint8_t =
+    let sign: uint8_t =
         (mpd_sign(a) as ::core::ffi::c_int ^ mpd_sign(b) as ::core::ffi::c_int) as uint8_t;
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(q, a, b, ctx, status) != 0 {
@@ -6399,11 +6301,11 @@ pub unsafe extern "C" fn mpd_qdivint(
     mpd_qfinalize(q, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qdiv_ssize(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -6433,11 +6335,11 @@ pub unsafe extern "C" fn mpd_qdiv_ssize(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qdiv_uint(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -6467,40 +6369,40 @@ pub unsafe extern "C" fn mpd_qdiv_uint(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qdiv_i32(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qdiv_ssize(result, a, b as mpd_ssize_t, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qdiv_u32(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qdiv_uint(result, a, b as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qdiv_i64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qdiv_ssize(result, a, b as mpd_ssize_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qdiv_i64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -6531,21 +6433,21 @@ pub unsafe extern "C" fn mpd_qdiv_i64(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qdiv_u64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qdiv_uint(result, a, b as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qdiv_u64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -6575,21 +6477,21 @@ pub unsafe extern "C" fn mpd_qdiv_u64(
     mpd_del(&raw mut bb);
 }
 unsafe extern "C" fn _mpd_zeropad(
-    mut result: *mut mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isspecial(result) == 0 && mpd_iszero(result) == 0 && (*result).digits < (*ctx).prec {
-        let mut shift: mpd_ssize_t = (*ctx).prec - (*result).digits;
+        let shift: mpd_ssize_t = (*ctx).prec - (*result).digits;
         mpd_qshiftl(result, result, shift, status);
         (*result).exp -= shift;
     }
 }
 unsafe extern "C" fn _mpd_qexp_check_one(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     let mut lim_data: [mpd_uint_t; 1] = [9 as mpd_uint_t];
     let mut lim: mpd_t = mpd_t {
@@ -6618,15 +6520,13 @@ unsafe extern "C" fn _mpd_qexp_check_one(
         *status = (*status as ::core::ffi::c_uint | (MPD_Rounded | MPD_Inexact)) as uint32_t;
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_get_exp_iterations(
-    mut r: *const mpd_t,
-    mut p: mpd_ssize_t,
+    r: *const mpd_t,
+    p: mpd_ssize_t,
 ) -> mpd_ssize_t {
-    let mut log10pbyr: mpd_ssize_t = 0;
-    let mut n: mpd_ssize_t = 0;
     if p >= 10 as mpd_ssize_t {
     } else {
         mpd_c2rust_assert_fail(b"p >= 10\0" as *const u8 as *const ::core::ffi::c_char);
@@ -6642,27 +6542,25 @@ unsafe extern "C" fn _mpd_get_exp_iterations(
                 as *const ::core::ffi::c_char,
         );
     };
-    if p > ((1 as u64) << 52 as ::core::ffi::c_int) as mpd_ssize_t {
+    if p > (1_u64 << 52 as ::core::ffi::c_int) as mpd_ssize_t {
         return MPD_SSIZE_MAX as mpd_ssize_t;
     }
-    log10pbyr = (mpd_word_digits(p as mpd_uint_t) - 1 as ::core::ffi::c_int) as mpd_ssize_t
+    let log10pbyr: mpd_ssize_t = (mpd_word_digits(p as mpd_uint_t) - 1 as ::core::ffi::c_int) as mpd_ssize_t
         - (mpd_adjexp(r) + 1 as mpd_ssize_t);
-    n = ceil(
+    let n: mpd_ssize_t = ceil(
         (1.43503f64 * p as ::core::ffi::c_double - 1.182f64) / log10pbyr as ::core::ffi::c_double,
     ) as mpd_ssize_t;
-    return if n >= 3 as mpd_ssize_t {
+    if n >= 3 as mpd_ssize_t {
         n
     } else {
         3 as mpd_ssize_t
-    };
+    }
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_get_exp_iterations(
-    mut r: *const mpd_t,
-    mut p: mpd_ssize_t,
+    r: *const mpd_t,
+    p: mpd_ssize_t,
 ) -> mpd_ssize_t {
-    let mut log10pbyr: mpd_ssize_t = 0;
-    let mut n: mpd_ssize_t = 0;
     if p >= 10 as mpd_ssize_t {
     } else {
         mpd_c2rust_assert_fail(b"p >= 10\0" as *const u8 as *const ::core::ffi::c_char);
@@ -6678,24 +6576,24 @@ unsafe extern "C" fn _mpd_get_exp_iterations(
                 as *const ::core::ffi::c_char,
         );
     };
-    log10pbyr = mpd_word_digits(p as mpd_uint_t) as mpd_ssize_t
+    let log10pbyr: mpd_ssize_t = mpd_word_digits(p as mpd_uint_t) as mpd_ssize_t
         - 1 as mpd_ssize_t
         - (mpd_adjexp(r) + 1 as mpd_ssize_t);
-    n = ceil(
+    let n: mpd_ssize_t = ceil(
         (1.43503f64 * p as ::core::ffi::c_double - 1.182f64) / log10pbyr as ::core::ffi::c_double,
     ) as mpd_ssize_t;
-    return if n >= 3 as mpd_ssize_t {
+    if n >= 3 as mpd_ssize_t {
         n
     } else {
         3 as mpd_ssize_t
-    };
+    }
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qexp(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -6741,9 +6639,8 @@ unsafe extern "C" fn _mpd_qexp(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut word_data as *mut mpd_uint_t,
     };
-    let mut j: mpd_ssize_t = 0;
-    let mut n: mpd_ssize_t = 0;
-    let mut t: mpd_ssize_t = 0;
+    let mut j: mpd_ssize_t;
+    let mut t: mpd_ssize_t;
     if mpd_isspecial(a) == 0 {
     } else {
         mpd_c2rust_assert_fail(b"!mpd_isspecial(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -6786,7 +6683,7 @@ unsafe extern "C" fn _mpd_qexp(
         return 1 as ::core::ffi::c_int;
     }
     (*result).exp -= t;
-    n = _mpd_get_exp_iterations(result, workctx.prec);
+    let n: mpd_ssize_t = _mpd_get_exp_iterations(result, workctx.prec);
     if n == MPD_SSIZE_MAX as mpd_ssize_t {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return 1 as ::core::ffi::c_int;
@@ -6794,7 +6691,7 @@ unsafe extern "C" fn _mpd_qexp(
     _settriple(&raw mut sum, MPD_POS, 1 as mpd_uint_t, 0 as mpd_ssize_t);
     j = n - 1 as mpd_ssize_t;
     while j >= 1 as mpd_ssize_t {
-        *word.data.offset(0 as isize) = j as mpd_uint_t;
+        *word.data.offset(0_isize) = j as mpd_uint_t;
         mpd_setdigits(&raw mut word);
         mpd_qdiv(
             &raw mut tmp,
@@ -6827,14 +6724,14 @@ unsafe extern "C" fn _mpd_qexp(
         | (workctx.status & MPD_Errors as uint32_t) as ::core::ffi::c_uint)
         as uint32_t;
     *status = (*status as ::core::ffi::c_uint | (MPD_Inexact | MPD_Rounded)) as uint32_t;
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qexp(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -6880,9 +6777,8 @@ unsafe extern "C" fn _mpd_qexp(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut word_data as *mut mpd_uint_t,
     };
-    let mut j: mpd_ssize_t = 0;
-    let mut n: mpd_ssize_t = 0;
-    let mut t: mpd_ssize_t = 0;
+    let mut j: mpd_ssize_t;
+    let mut t: mpd_ssize_t;
     if mpd_isspecial(a) == 0 {
     } else {
         mpd_c2rust_assert_fail(b"!mpd_isspecial(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -6925,7 +6821,7 @@ unsafe extern "C" fn _mpd_qexp(
         return 1 as ::core::ffi::c_int;
     }
     (*result).exp -= t;
-    n = _mpd_get_exp_iterations(result, workctx.prec);
+    let n: mpd_ssize_t = _mpd_get_exp_iterations(result, workctx.prec);
     if n == MPD_SSIZE_MAX as mpd_ssize_t {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return 1 as ::core::ffi::c_int;
@@ -6933,7 +6829,7 @@ unsafe extern "C" fn _mpd_qexp(
     _settriple(&raw mut sum, MPD_POS, 1 as mpd_uint_t, 0 as mpd_ssize_t);
     j = n - 1 as mpd_ssize_t;
     while j >= 1 as mpd_ssize_t {
-        *word.data.offset(0 as isize) = j as mpd_uint_t;
+        *word.data.offset(0_isize) = j as mpd_uint_t;
         mpd_setdigits(&raw mut word);
         mpd_qdiv(
             &raw mut tmp,
@@ -6986,7 +6882,7 @@ unsafe extern "C" fn _mpd_qexp(
         | (workctx.status & MPD_Errors as uint32_t) as ::core::ffi::c_uint)
         as uint32_t;
     *status = (*status as ::core::ffi::c_uint | (MPD_Inexact | MPD_Rounded)) as uint32_t;
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 pub const MPD_EXP_MAX_T: ::core::ffi::c_int = 19 as ::core::ffi::c_int;
@@ -6994,10 +6890,10 @@ pub const MPD_EXP_MAX_T: ::core::ffi::c_int = 19 as ::core::ffi::c_int;
 pub const MPD_EXP_MAX_T: ::core::ffi::c_int = 10 as ::core::ffi::c_int;
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qexp(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -7073,9 +6969,9 @@ pub unsafe extern "C" fn mpd_qexp(
             data: &raw mut aa_data as *mut mpd_uint_t,
         };
         let mut loop_protect: uint32_t = 0 as uint32_t;
-        let mut prec: mpd_ssize_t = 0;
-        let mut ulpexp: mpd_ssize_t = 0;
-        if result == a as *mut mpd_t {
+        let mut prec: mpd_ssize_t;
+        let mut ulpexp: mpd_ssize_t;
+        if ::core::ptr::eq(result, a) {
             if mpd_qcopy(&raw mut aa, a, status) == 0 {
                 mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
                 return;
@@ -7088,11 +6984,10 @@ pub unsafe extern "C" fn mpd_qexp(
             let mut status_res: uint32_t = 0 as uint32_t;
             let mut status_hi: uint32_t = 0 as uint32_t;
             let mut status_lo: uint32_t = 0 as uint32_t;
-            let mut shortcut: ::core::ffi::c_int = 0;
-            let mut bounds_eq: ::core::ffi::c_int = 0;
-            let mut subnormal_eq: ::core::ffi::c_int = 0;
+            let bounds_eq: ::core::ffi::c_int;
+            let mut subnormal_eq: ::core::ffi::c_int;
             workctx.prec = prec;
-            shortcut = _mpd_qexp(result, a, &raw mut workctx, &raw mut status_res);
+            let shortcut: ::core::ffi::c_int = _mpd_qexp(result, a, &raw mut workctx, &raw mut status_res);
             if mpd_isnan(result) != 0 {
                 mpd_seterror(result, status_res, status);
                 break;
@@ -7174,10 +7069,10 @@ pub unsafe extern "C" fn mpd_qexp(
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qexp(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -7253,9 +7148,9 @@ pub unsafe extern "C" fn mpd_qexp(
             data: &raw mut aa_data as *mut mpd_uint_t,
         };
         let mut loop_protect: uint32_t = 0 as uint32_t;
-        let mut prec: mpd_ssize_t = 0;
-        let mut ulpexp: mpd_ssize_t = 0;
-        if result == a as *mut mpd_t {
+        let mut prec: mpd_ssize_t;
+        let mut ulpexp: mpd_ssize_t;
+        if ::core::ptr::eq(result, a) {
             if mpd_qcopy(&raw mut aa, a, status) == 0 {
                 mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
                 return;
@@ -7268,11 +7163,10 @@ pub unsafe extern "C" fn mpd_qexp(
             let mut status_res: uint32_t = 0 as uint32_t;
             let mut status_hi: uint32_t = 0 as uint32_t;
             let mut status_lo: uint32_t = 0 as uint32_t;
-            let mut shortcut: ::core::ffi::c_int = 0;
-            let mut bounds_eq: ::core::ffi::c_int = 0;
-            let mut subnormal_eq: ::core::ffi::c_int = 0;
+            let bounds_eq: ::core::ffi::c_int;
+            let mut subnormal_eq: ::core::ffi::c_int;
             workctx.prec = prec;
-            shortcut = _mpd_qexp(result, a, &raw mut workctx, &raw mut status_res);
+            let shortcut: ::core::ffi::c_int = _mpd_qexp(result, a, &raw mut workctx, &raw mut status_res);
             if mpd_isnan(result) != 0 {
                 mpd_seterror(result, status_res, status);
                 break;
@@ -7354,16 +7248,16 @@ pub unsafe extern "C" fn mpd_qexp(
     };
 }
 pub unsafe extern "C" fn mpd_qfma(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
     mut c: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     let mut cc: *mut mpd_t = ::core::ptr::null_mut::<mpd_t>();
-    if result == c as *mut mpd_t {
+    if ::core::ptr::eq(result, c) {
         cc = mpd_qncopy(c);
         if cc.is_null() {
             mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
@@ -7381,12 +7275,12 @@ pub unsafe extern "C" fn mpd_qfma(
     *status |= workstatus;
 }
 unsafe extern "C" fn ln_schedule_prec(
-    mut klist: *mut mpd_ssize_t,
-    mut maxprec: mpd_ssize_t,
-    mut initprec: mpd_ssize_t,
+    klist: *mut mpd_ssize_t,
+    maxprec: mpd_ssize_t,
+    initprec: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
-    let mut k: mpd_ssize_t = 0;
-    let mut i: ::core::ffi::c_int = 0;
+    let mut k: mpd_ssize_t;
+    let mut i: ::core::ffi::c_int;
     if maxprec >= 2 as mpd_ssize_t && initprec >= 2 as mpd_ssize_t {
     } else {
         mpd_c2rust_assert_fail(
@@ -7401,175 +7295,171 @@ unsafe extern "C" fn ln_schedule_prec(
     loop {
         k = (k + 2 as mpd_ssize_t) / 2 as mpd_ssize_t;
         let fresh0 = i;
-        i = i + 1;
+        i += 1;
         *klist.offset(fresh0 as isize) = k;
         if !(k > initprec) {
             break;
         }
     }
-    return i - 1 as ::core::ffi::c_int;
+    i - 1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 static mut mpd_ln10_data: [mpd_uint_t; 64] = [
-    6983716328982174407 as u64,
-    9089704281976336583 as u64,
-    1515961135648465461 as u64,
-    4416816335727555703 as u64,
-    2900988039194170265 as u64,
-    2307925037472986509 as u64,
-    107598438319191292 as u64,
-    3466624107184669231 as u64,
-    4450099781311469159 as u64,
-    9807828059751193854 as u64,
-    7713456862091670584 as u64,
-    1492198849978748873 as u64,
-    6528728696511086257 as u64,
-    2385392051446341972 as u64,
-    8692180205189339507 as u64,
-    6518769751037497088 as u64,
-    2375253577097505395 as u64,
-    9095610299291824318 as u64,
-    982748238504564801 as u64,
-    5438635917781170543 as u64,
-    7547331541421808427 as u64,
-    752371033310119785 as u64,
-    3171643095059950878 as u64,
-    9785265383207606726 as u64,
-    2932258279850258550 as u64,
-    5497347726624257094 as u64,
-    2976979522110718264 as u64,
-    9221477656763693866 as u64,
-    1979650047149510504 as u64,
-    6674183485704422507 as u64,
-    9702766860595249671 as u64,
-    9278096762712757753 as u64,
-    9314848524948644871 as u64,
-    6826928280848118428 as u64,
-    754403708474699401 as u64,
-    230105703089634572 as u64,
-    1929203337658714166 as u64,
-    7589402567763113569 as u64,
-    4208241314695689016 as u64,
-    2922455440575892572 as u64,
-    9356734206705811364 as u64,
-    2684916746550586856 as u64,
-    644507064800027750 as u64,
-    9476834636167921018 as u64,
-    5659121373450747856 as u64,
-    2835522011480466371 as u64,
-    6470806855677432162 as u64,
-    7141748003688084012 as u64,
-    9619404400222105101 as u64,
-    5504893431493939147 as u64,
-    6674744042432743651 as u64,
-    2287698219886746543 as u64,
-    7773262884616336622 as u64,
-    1985283935053089653 as u64,
-    4680843799894826233 as u64,
-    8168948290720832555 as u64,
-    8067566662873690987 as u64,
-    6248633409525465082 as u64,
-    9829834196778404228 as u64,
-    3524802359972050895 as u64,
-    3327900967572609677 as u64,
-    110148862877297603 as u64,
-    179914546843642076 as u64,
-    2302585092994045684 as u64,
+    6983716328982174407_u64,
+    9089704281976336583_u64,
+    1515961135648465461_u64,
+    4416816335727555703_u64,
+    2900988039194170265_u64,
+    2307925037472986509_u64,
+    107598438319191292_u64,
+    3466624107184669231_u64,
+    4450099781311469159_u64,
+    9807828059751193854_u64,
+    7713456862091670584_u64,
+    1492198849978748873_u64,
+    6528728696511086257_u64,
+    2385392051446341972_u64,
+    8692180205189339507_u64,
+    6518769751037497088_u64,
+    2375253577097505395_u64,
+    9095610299291824318_u64,
+    982748238504564801_u64,
+    5438635917781170543_u64,
+    7547331541421808427_u64,
+    752371033310119785_u64,
+    3171643095059950878_u64,
+    9785265383207606726_u64,
+    2932258279850258550_u64,
+    5497347726624257094_u64,
+    2976979522110718264_u64,
+    9221477656763693866_u64,
+    1979650047149510504_u64,
+    6674183485704422507_u64,
+    9702766860595249671_u64,
+    9278096762712757753_u64,
+    9314848524948644871_u64,
+    6826928280848118428_u64,
+    754403708474699401_u64,
+    230105703089634572_u64,
+    1929203337658714166_u64,
+    7589402567763113569_u64,
+    4208241314695689016_u64,
+    2922455440575892572_u64,
+    9356734206705811364_u64,
+    2684916746550586856_u64,
+    644507064800027750_u64,
+    9476834636167921018_u64,
+    5659121373450747856_u64,
+    2835522011480466371_u64,
+    6470806855677432162_u64,
+    7141748003688084012_u64,
+    9619404400222105101_u64,
+    5504893431493939147_u64,
+    6674744042432743651_u64,
+    2287698219886746543_u64,
+    7773262884616336622_u64,
+    1985283935053089653_u64,
+    4680843799894826233_u64,
+    8168948290720832555_u64,
+    8067566662873690987_u64,
+    6248633409525465082_u64,
+    9829834196778404228_u64,
+    3524802359972050895_u64,
+    3327900967572609677_u64,
+    110148862877297603_u64,
+    179914546843642076_u64,
+    2302585092994045684_u64,
 ];
 #[cfg(target_pointer_width = "32")]
 static mut mpd_ln10_data: [mpd_uint_t; 64] = [
-    401682692 as u32 as mpd_uint_t,
-    708474699 as u32 as mpd_uint_t,
-    720754403 as u32 as mpd_uint_t,
-    30896345 as u32 as mpd_uint_t,
-    602301057 as u32 as mpd_uint_t,
-    765871416 as u32 as mpd_uint_t,
-    192920333 as u32 as mpd_uint_t,
-    763113569 as u32 as mpd_uint_t,
-    589402567 as u32 as mpd_uint_t,
-    956890167 as u32 as mpd_uint_t,
-    82413146 as u32 as mpd_uint_t,
-    589257242 as u32 as mpd_uint_t,
-    245544057 as u32 as mpd_uint_t,
-    811364292 as u32 as mpd_uint_t,
-    734206705 as u32 as mpd_uint_t,
-    868569356 as u32 as mpd_uint_t,
-    167465505 as u32 as mpd_uint_t,
-    775026849 as u32 as mpd_uint_t,
-    706480002 as u32 as mpd_uint_t,
-    18064450 as u32 as mpd_uint_t,
-    636167921 as u32 as mpd_uint_t,
-    569476834 as u32 as mpd_uint_t,
-    734507478 as u32 as mpd_uint_t,
-    156591213 as u32 as mpd_uint_t,
-    148046637 as u32 as mpd_uint_t,
-    283552201 as u32 as mpd_uint_t,
-    677432162 as u32 as mpd_uint_t,
-    470806855 as u32 as mpd_uint_t,
-    880840126 as u32 as mpd_uint_t,
-    417480036 as u32 as mpd_uint_t,
-    210510171 as u32 as mpd_uint_t,
-    940440022 as u32 as mpd_uint_t,
-    939147961 as u32 as mpd_uint_t,
-    893431493 as u32 as mpd_uint_t,
-    436515504 as u32 as mpd_uint_t,
-    440424327 as u32 as mpd_uint_t,
-    654366747 as u32 as mpd_uint_t,
-    821988674 as u32 as mpd_uint_t,
-    622228769 as u32 as mpd_uint_t,
-    884616336 as u32 as mpd_uint_t,
-    537773262 as u32 as mpd_uint_t,
-    350530896 as u32 as mpd_uint_t,
-    319852839 as u32 as mpd_uint_t,
-    989482623 as u32 as mpd_uint_t,
-    468084379 as u32 as mpd_uint_t,
-    720832555 as u32 as mpd_uint_t,
-    168948290 as u32 as mpd_uint_t,
-    736909878 as u32 as mpd_uint_t,
-    675666628 as u32 as mpd_uint_t,
-    546508280 as u32 as mpd_uint_t,
-    863340952 as u32 as mpd_uint_t,
-    404228624 as u32 as mpd_uint_t,
-    834196778 as u32 as mpd_uint_t,
-    508959829 as u32 as mpd_uint_t,
-    23599720 as u32 as mpd_uint_t,
-    967735248 as u32 as mpd_uint_t,
-    96757260 as u32 as mpd_uint_t,
-    603332790 as u32 as mpd_uint_t,
-    862877297 as u32 as mpd_uint_t,
-    760110148 as u32 as mpd_uint_t,
-    468436420 as u32 as mpd_uint_t,
-    401799145 as u32 as mpd_uint_t,
-    299404568 as u32 as mpd_uint_t,
-    230258509 as u32 as mpd_uint_t,
+    401682692_u32 as mpd_uint_t,
+    708474699_u32 as mpd_uint_t,
+    720754403_u32 as mpd_uint_t,
+    30896345_u32 as mpd_uint_t,
+    602301057_u32 as mpd_uint_t,
+    765871416_u32 as mpd_uint_t,
+    192920333_u32 as mpd_uint_t,
+    763113569_u32 as mpd_uint_t,
+    589402567_u32 as mpd_uint_t,
+    956890167_u32 as mpd_uint_t,
+    82413146_u32 as mpd_uint_t,
+    589257242_u32 as mpd_uint_t,
+    245544057_u32 as mpd_uint_t,
+    811364292_u32 as mpd_uint_t,
+    734206705_u32 as mpd_uint_t,
+    868569356_u32 as mpd_uint_t,
+    167465505_u32 as mpd_uint_t,
+    775026849_u32 as mpd_uint_t,
+    706480002_u32 as mpd_uint_t,
+    18064450_u32 as mpd_uint_t,
+    636167921_u32 as mpd_uint_t,
+    569476834_u32 as mpd_uint_t,
+    734507478_u32 as mpd_uint_t,
+    156591213_u32 as mpd_uint_t,
+    148046637_u32 as mpd_uint_t,
+    283552201_u32 as mpd_uint_t,
+    677432162_u32 as mpd_uint_t,
+    470806855_u32 as mpd_uint_t,
+    880840126_u32 as mpd_uint_t,
+    417480036_u32 as mpd_uint_t,
+    210510171_u32 as mpd_uint_t,
+    940440022_u32 as mpd_uint_t,
+    939147961_u32 as mpd_uint_t,
+    893431493_u32 as mpd_uint_t,
+    436515504_u32 as mpd_uint_t,
+    440424327_u32 as mpd_uint_t,
+    654366747_u32 as mpd_uint_t,
+    821988674_u32 as mpd_uint_t,
+    622228769_u32 as mpd_uint_t,
+    884616336_u32 as mpd_uint_t,
+    537773262_u32 as mpd_uint_t,
+    350530896_u32 as mpd_uint_t,
+    319852839_u32 as mpd_uint_t,
+    989482623_u32 as mpd_uint_t,
+    468084379_u32 as mpd_uint_t,
+    720832555_u32 as mpd_uint_t,
+    168948290_u32 as mpd_uint_t,
+    736909878_u32 as mpd_uint_t,
+    675666628_u32 as mpd_uint_t,
+    546508280_u32 as mpd_uint_t,
+    863340952_u32 as mpd_uint_t,
+    404228624_u32 as mpd_uint_t,
+    834196778_u32 as mpd_uint_t,
+    508959829_u32 as mpd_uint_t,
+    23599720_u32 as mpd_uint_t,
+    967735248_u32 as mpd_uint_t,
+    96757260_u32 as mpd_uint_t,
+    603332790_u32 as mpd_uint_t,
+    862877297_u32 as mpd_uint_t,
+    760110148_u32 as mpd_uint_t,
+    468436420_u32 as mpd_uint_t,
+    401799145_u32 as mpd_uint_t,
+    299404568_u32 as mpd_uint_t,
+    230258509_u32 as mpd_uint_t,
 ];
 #[cfg(target_pointer_width = "64")]
-static mut _mpd_ln10: mpd_t = unsafe {
-    mpd_t {
-        flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
-        exp: -(MPD_MINALLOC_MAX * MPD_RDIGITS - 1 as ::core::ffi::c_int) as mpd_ssize_t,
-        digits: (MPD_MINALLOC_MAX * MPD_RDIGITS) as mpd_ssize_t,
-        len: MPD_MINALLOC_MAX as mpd_ssize_t,
-        alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
-        data: &raw const mpd_ln10_data as *const mpd_uint_t as *mut mpd_uint_t,
-    }
+static mut _mpd_ln10: mpd_t = mpd_t {
+    flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
+    exp: -(MPD_MINALLOC_MAX * MPD_RDIGITS - 1 as ::core::ffi::c_int) as mpd_ssize_t,
+    digits: (MPD_MINALLOC_MAX * MPD_RDIGITS) as mpd_ssize_t,
+    len: MPD_MINALLOC_MAX as mpd_ssize_t,
+    alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
+    data: &raw const mpd_ln10_data as *const mpd_uint_t as *mut mpd_uint_t,
 };
 #[cfg(target_pointer_width = "32")]
-static mut _mpd_ln10: mpd_t = unsafe {
-    mpd_t {
-        flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
-        exp: -(MPD_MINALLOC_MAX as mpd_ssize_t * MPD_RDIGITS as mpd_ssize_t - 1 as mpd_ssize_t),
-        digits: MPD_MINALLOC_MAX as mpd_ssize_t * MPD_RDIGITS as mpd_ssize_t,
-        len: MPD_MINALLOC_MAX as mpd_ssize_t,
-        alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
-        data: &raw const mpd_ln10_data as *const mpd_uint_t as *mut mpd_uint_t,
-    }
+static mut _mpd_ln10: mpd_t = mpd_t {
+    flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int) as uint8_t,
+    exp: -(MPD_MINALLOC_MAX as mpd_ssize_t * MPD_RDIGITS as mpd_ssize_t - 1 as mpd_ssize_t),
+    digits: MPD_MINALLOC_MAX as mpd_ssize_t * MPD_RDIGITS as mpd_ssize_t,
+    len: MPD_MINALLOC_MAX as mpd_ssize_t,
+    alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
+    data: &raw const mpd_ln10_data as *const mpd_uint_t as *mut mpd_uint_t,
 };
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qln10(
-    mut result: *mut mpd_t,
-    mut prec: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    prec: mpd_ssize_t,
+    status: *mut uint32_t,
 ) {
     let mut varcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -7616,9 +7506,8 @@ pub unsafe extern "C" fn mpd_qln10(
         data: &raw mut static10_data as *mut mpd_uint_t,
     };
     let mut klist: [mpd_ssize_t; 64] = [0; 64];
-    let mut rnd: mpd_uint_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut i: ::core::ffi::c_int = 0;
+    let mut shift: mpd_ssize_t;
+    let mut i: ::core::ffi::c_int;
     if prec >= 1 as mpd_ssize_t {
     } else {
         mpd_c2rust_assert_fail(b"prec >= 1\0" as *const u8 as *const ::core::ffi::c_char);
@@ -7629,7 +7518,7 @@ pub unsafe extern "C" fn mpd_qln10(
     } else {
         shift
     };
-    rnd = mpd_qshiftr(result, &raw const _mpd_ln10, shift, status);
+    let rnd: mpd_uint_t = mpd_qshiftr(result, &raw const _mpd_ln10, shift, status);
     if rnd == MPD_UINT_MAX as mpd_uint_t {
         mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
         return;
@@ -7682,9 +7571,9 @@ pub unsafe extern "C" fn mpd_qln10(
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qln10(
-    mut result: *mut mpd_t,
-    mut prec: mpd_ssize_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    prec: mpd_ssize_t,
+    status: *mut uint32_t,
 ) {
     let mut varcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -7731,9 +7620,8 @@ pub unsafe extern "C" fn mpd_qln10(
         data: &raw mut static10_data as *mut mpd_uint_t,
     };
     let mut klist: [mpd_ssize_t; 32] = [0; 32];
-    let mut rnd: mpd_uint_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut i: ::core::ffi::c_int = 0;
+    let mut shift: mpd_ssize_t;
+    let mut i: ::core::ffi::c_int;
     if prec >= 1 as mpd_ssize_t {
     } else {
         mpd_c2rust_assert_fail(b"prec >= 1\0" as *const u8 as *const ::core::ffi::c_char);
@@ -7744,7 +7632,7 @@ pub unsafe extern "C" fn mpd_qln10(
     } else {
         shift
     };
-    rnd = mpd_qshiftr(result, &raw const _mpd_ln10, shift, status);
+    let rnd: mpd_uint_t = mpd_qshiftr(result, &raw const _mpd_ln10, shift, status);
     if rnd == MPD_UINT_MAX as mpd_uint_t {
         mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
         return;
@@ -8699,12 +8587,12 @@ static mut lnapprox: [uint16_t; 900] = [
 ];
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qln(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut current_block: u64;
+    let current_block: u64;
     let mut varcontext: mpd_context_t = mpd_context_t {
         prec: 0,
         emax: 0,
@@ -8727,7 +8615,7 @@ unsafe extern "C" fn _mpd_qln(
         clamp: 0,
         allcr: 0,
     };
-    let mut z: *mut mpd_t = result;
+    let z: *mut mpd_t = result;
     let mut v_data: [mpd_uint_t; 64] = [0; 64];
     let mut v: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
@@ -8762,15 +8650,15 @@ unsafe extern "C" fn _mpd_qln(
         data: &raw mut tmp_data as *mut mpd_uint_t,
     };
     let mut klist: [mpd_ssize_t; 64] = [0; 64];
-    let mut maxprec: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut t: mpd_ssize_t = 0;
-    let mut a_digits: mpd_ssize_t = 0;
-    let mut a_exp: mpd_ssize_t = 0;
+    let mut maxprec: mpd_ssize_t;
+    let mut shift: mpd_ssize_t;
+    let t: mpd_ssize_t;
+    let a_digits: mpd_ssize_t;
+    let a_exp: mpd_ssize_t;
     let mut dummy: mpd_uint_t = 0;
     let mut x: mpd_uint_t = 0;
     let mut ret: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
-    let mut i: ::core::ffi::c_int = 0;
+    let mut i: ::core::ffi::c_int;
     if mpd_isspecial(a) == 0 && mpd_iszerocoeff(a) == 0 {
     } else {
         mpd_c2rust_assert_fail(
@@ -8798,7 +8686,7 @@ unsafe extern "C" fn _mpd_qln(
         a_exp = (*a).exp;
         mpd_minalloc(z);
         mpd_clear_flags(z);
-        *(*z).data.offset(0 as isize) = lnapprox[x as usize] as mpd_uint_t;
+        *(*z).data.offset(0_isize) = lnapprox[x as usize] as mpd_uint_t;
         (*z).len = 1 as mpd_ssize_t;
         (*z).exp = -(3 as ::core::ffi::c_int) as mpd_ssize_t;
         mpd_setdigits(z);
@@ -8815,7 +8703,7 @@ unsafe extern "C" fn _mpd_qln(
         varcontext.round = MPD_ROUND_TRUNC as ::core::ffi::c_int;
         maxprec = (*ctx).prec + 2 as mpd_ssize_t;
         if t == 0 as mpd_ssize_t && (x <= 15 as mpd_uint_t || x >= 800 as mpd_uint_t) {
-            let mut cmp: ::core::ffi::c_int = _mpd_cmp(&raw mut v, &raw const one);
+            let cmp: ::core::ffi::c_int = _mpd_cmp(&raw mut v, &raw const one);
             _mpd_qsub(
                 &raw mut tmp,
                 &raw mut v,
@@ -8841,7 +8729,7 @@ unsafe extern "C" fn _mpd_qln(
                 } else {
                     tmp.exp -= 1 as mpd_ssize_t;
                     if mpd_adjexp(&raw mut tmp) < 0 as mpd_ssize_t {
-                        maxprec = maxprec - mpd_adjexp(&raw mut tmp);
+                        maxprec -= mpd_adjexp(&raw mut tmp);
                     }
                     current_block = 2;
                 }
@@ -8908,16 +8796,16 @@ unsafe extern "C" fn _mpd_qln(
     mpd_del(&raw mut v);
     mpd_del(&raw mut vtmp);
     mpd_del(&raw mut tmp);
-    return ret;
+    ret
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qln(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut current_block: u64;
+    let current_block: u64;
     let mut varcontext: mpd_context_t = mpd_context_t {
         prec: 0,
         emax: 0,
@@ -8940,7 +8828,7 @@ unsafe extern "C" fn _mpd_qln(
         clamp: 0,
         allcr: 0,
     };
-    let mut z: *mut mpd_t = result;
+    let z: *mut mpd_t = result;
     let mut v_data: [mpd_uint_t; 64] = [0; 64];
     let mut v: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
@@ -8975,15 +8863,15 @@ unsafe extern "C" fn _mpd_qln(
         data: &raw mut tmp_data as *mut mpd_uint_t,
     };
     let mut klist: [mpd_ssize_t; 32] = [0; 32];
-    let mut maxprec: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut t: mpd_ssize_t = 0;
-    let mut a_digits: mpd_ssize_t = 0;
-    let mut a_exp: mpd_ssize_t = 0;
+    let mut maxprec: mpd_ssize_t;
+    let mut shift: mpd_ssize_t;
+    let t: mpd_ssize_t;
+    let a_digits: mpd_ssize_t;
+    let a_exp: mpd_ssize_t;
     let mut dummy: mpd_uint_t = 0;
     let mut x: mpd_uint_t = 0;
     let mut ret: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
-    let mut i: ::core::ffi::c_int = 0;
+    let mut i: ::core::ffi::c_int;
     if mpd_isspecial(a) == 0 && mpd_iszerocoeff(a) == 0 {
     } else {
         mpd_c2rust_assert_fail(
@@ -9011,7 +8899,7 @@ unsafe extern "C" fn _mpd_qln(
         a_exp = (*a).exp;
         mpd_minalloc(z);
         mpd_clear_flags(z);
-        *(*z).data.offset(0 as isize) = lnapprox[x as usize] as mpd_uint_t;
+        *(*z).data.offset(0_isize) = lnapprox[x as usize] as mpd_uint_t;
         (*z).len = 1 as mpd_ssize_t;
         (*z).exp = -(3 as ::core::ffi::c_int) as mpd_ssize_t;
         mpd_setdigits(z);
@@ -9028,7 +8916,7 @@ unsafe extern "C" fn _mpd_qln(
         varcontext.round = MPD_ROUND_TRUNC as ::core::ffi::c_int;
         maxprec = (*ctx).prec + 2 as mpd_ssize_t;
         if t == 0 as mpd_ssize_t && (x <= 15 as mpd_uint_t || x >= 800 as mpd_uint_t) {
-            let mut cmp: ::core::ffi::c_int = _mpd_cmp(&raw mut v, &raw const one);
+            let cmp: ::core::ffi::c_int = _mpd_cmp(&raw mut v, &raw const one);
             _mpd_qsub(
                 &raw mut tmp,
                 &raw mut v,
@@ -9056,7 +8944,7 @@ unsafe extern "C" fn _mpd_qln(
                     tmp.exp =
                         (tmp.exp as ::core::ffi::c_int - 1 as ::core::ffi::c_int) as mpd_ssize_t;
                     if mpd_adjexp(&raw mut tmp) < 0 as mpd_ssize_t {
-                        maxprec = maxprec - mpd_adjexp(&raw mut tmp);
+                        maxprec -= mpd_adjexp(&raw mut tmp);
                     }
                     current_block = 2;
                 }
@@ -9123,14 +9011,14 @@ unsafe extern "C" fn _mpd_qln(
     mpd_del(&raw mut v);
     mpd_del(&raw mut vtmp);
     mpd_del(&raw mut tmp);
-    return ret;
+    ret
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qln(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -9143,8 +9031,7 @@ pub unsafe extern "C" fn mpd_qln(
         clamp: 0,
         allcr: 0,
     };
-    let mut adjexp: mpd_ssize_t = 0;
-    let mut t: mpd_ssize_t = 0;
+    let mut t: mpd_ssize_t;
     if mpd_isspecial(a) != 0 {
         if mpd_qcheck_nan(result, a, ctx, status) != 0 {
             return;
@@ -9168,7 +9055,7 @@ pub unsafe extern "C" fn mpd_qln(
         _settriple(result, MPD_POS, 0 as mpd_uint_t, 0 as mpd_ssize_t);
         return;
     }
-    adjexp = mpd_adjexp(a);
+    let adjexp: mpd_ssize_t = mpd_adjexp(a);
     t = if adjexp < 0 as mpd_ssize_t {
         -adjexp - 1 as mpd_ssize_t
     } else {
@@ -9233,8 +9120,8 @@ pub unsafe extern "C" fn mpd_qln(
             data: &raw mut aa_data as *mut mpd_uint_t,
         };
         let mut loop_protect: uint32_t = 0 as uint32_t;
-        let mut prec: mpd_ssize_t = 0;
-        if result == a as *mut mpd_t {
+        let mut prec: mpd_ssize_t;
+        if ::core::ptr::eq(result, a) {
             if mpd_qcopy(&raw mut aa, a, status) == 0 {
                 mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
                 return;
@@ -9247,11 +9134,10 @@ pub unsafe extern "C" fn mpd_qln(
             let mut status_res: uint32_t = 0 as uint32_t;
             let mut status_hi: uint32_t = 0 as uint32_t;
             let mut status_lo: uint32_t = 0 as uint32_t;
-            let mut shortcut: ::core::ffi::c_int = 0;
-            let mut bounds_eq: ::core::ffi::c_int = 0;
-            let mut subnormal_eq: ::core::ffi::c_int = 0;
+            let bounds_eq: ::core::ffi::c_int;
+            let mut subnormal_eq: ::core::ffi::c_int;
             workctx.prec = prec;
-            shortcut = _mpd_qln(result, a, &raw mut workctx, &raw mut status_res);
+            let shortcut: ::core::ffi::c_int = _mpd_qln(result, a, &raw mut workctx, &raw mut status_res);
             if mpd_isnan(result) != 0 {
                 mpd_seterror(result, status_res, status);
                 break;
@@ -9331,10 +9217,10 @@ pub unsafe extern "C" fn mpd_qln(
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qln(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -9347,8 +9233,7 @@ pub unsafe extern "C" fn mpd_qln(
         clamp: 0,
         allcr: 0,
     };
-    let mut adjexp: mpd_ssize_t = 0;
-    let mut t: mpd_ssize_t = 0;
+    let mut t: mpd_ssize_t;
     if mpd_isspecial(a) != 0 {
         if mpd_qcheck_nan(result, a, ctx, status) != 0 {
             return;
@@ -9372,7 +9257,7 @@ pub unsafe extern "C" fn mpd_qln(
         _settriple(result, MPD_POS, 0 as mpd_uint_t, 0 as mpd_ssize_t);
         return;
     }
-    adjexp = mpd_adjexp(a);
+    let adjexp: mpd_ssize_t = mpd_adjexp(a);
     t = if adjexp < 0 as mpd_ssize_t {
         -adjexp - 1 as mpd_ssize_t
     } else {
@@ -9437,8 +9322,8 @@ pub unsafe extern "C" fn mpd_qln(
             data: &raw mut aa_data as *mut mpd_uint_t,
         };
         let mut loop_protect: uint32_t = 0 as uint32_t;
-        let mut prec: mpd_ssize_t = 0;
-        if result == a as *mut mpd_t {
+        let mut prec: mpd_ssize_t;
+        if ::core::ptr::eq(result, a) {
             if mpd_qcopy(&raw mut aa, a, status) == 0 {
                 mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
                 return;
@@ -9451,11 +9336,10 @@ pub unsafe extern "C" fn mpd_qln(
             let mut status_res: uint32_t = 0 as uint32_t;
             let mut status_hi: uint32_t = 0 as uint32_t;
             let mut status_lo: uint32_t = 0 as uint32_t;
-            let mut shortcut: ::core::ffi::c_int = 0;
-            let mut bounds_eq: ::core::ffi::c_int = 0;
-            let mut subnormal_eq: ::core::ffi::c_int = 0;
+            let bounds_eq: ::core::ffi::c_int;
+            let mut subnormal_eq: ::core::ffi::c_int;
             workctx.prec = prec;
-            shortcut = _mpd_qln(result, a, &raw mut workctx, &raw mut status_res);
+            let shortcut: ::core::ffi::c_int = _mpd_qln(result, a, &raw mut workctx, &raw mut status_res);
             if mpd_isnan(result) != 0 {
                 mpd_seterror(result, status_res, status);
                 break;
@@ -9535,11 +9419,11 @@ pub unsafe extern "C" fn mpd_qln(
     };
 }
 unsafe extern "C" fn _mpd_qlog10(
-    mut action: ::core::ffi::c_int,
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    action: ::core::ffi::c_int,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -9563,10 +9447,9 @@ unsafe extern "C" fn _mpd_qlog10(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut ln10_data as *mut mpd_uint_t,
     };
-    let mut ret: ::core::ffi::c_int = 0;
     mpd_maxcontext(&raw mut workctx);
     workctx.prec = (*ctx).prec + 3 as mpd_ssize_t;
-    ret = _mpd_qln(result, a, &raw mut workctx, status);
+    let ret: ::core::ffi::c_int = _mpd_qln(result, a, &raw mut workctx, status);
     mpd_qln10(&raw mut ln10, workctx.prec, status);
     if action == DO_FINALIZE as ::core::ffi::c_int {
         mpd_workcontext(&raw mut workctx, ctx);
@@ -9581,14 +9464,14 @@ unsafe extern "C" fn _mpd_qlog10(
         status,
     );
     mpd_del(&raw mut ln10);
-    return ret;
+    ret
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qlog10(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -9601,8 +9484,7 @@ pub unsafe extern "C" fn mpd_qlog10(
         clamp: 0,
         allcr: 0,
     };
-    let mut adjexp: mpd_ssize_t = 0;
-    let mut t: mpd_ssize_t = 0;
+    let mut adjexp: mpd_ssize_t;
     mpd_workcontext(&raw mut workctx, ctx);
     workctx.round = MPD_ROUND_HALF_EVEN as ::core::ffi::c_int;
     if mpd_isspecial(a) != 0 {
@@ -9636,7 +9518,7 @@ pub unsafe extern "C" fn mpd_qlog10(
         return;
     }
     adjexp = mpd_adjexp(a);
-    t = if adjexp < 0 as mpd_ssize_t {
+    let t: mpd_ssize_t = if adjexp < 0 as mpd_ssize_t {
         -adjexp - 1 as mpd_ssize_t
     } else {
         adjexp
@@ -9697,8 +9579,8 @@ pub unsafe extern "C" fn mpd_qlog10(
             data: &raw mut aa_data as *mut mpd_uint_t,
         };
         let mut loop_protect: uint32_t = 0 as uint32_t;
-        let mut prec: mpd_ssize_t = 0;
-        if result == a as *mut mpd_t {
+        let mut prec: mpd_ssize_t;
+        if ::core::ptr::eq(result, a) {
             if mpd_qcopy(&raw mut aa, a, status) == 0 {
                 mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
                 return;
@@ -9711,11 +9593,10 @@ pub unsafe extern "C" fn mpd_qlog10(
             let mut status_res: uint32_t = 0 as uint32_t;
             let mut status_hi: uint32_t = 0 as uint32_t;
             let mut status_lo: uint32_t = 0 as uint32_t;
-            let mut shortcut: ::core::ffi::c_int = 0;
-            let mut bounds_eq: ::core::ffi::c_int = 0;
-            let mut subnormal_eq: ::core::ffi::c_int = 0;
+            let bounds_eq: ::core::ffi::c_int;
+            let mut subnormal_eq: ::core::ffi::c_int;
             workctx.prec = prec;
-            shortcut = _mpd_qlog10(
+            let shortcut: ::core::ffi::c_int = _mpd_qlog10(
                 SKIP_FINALIZE as ::core::ffi::c_int,
                 result,
                 a,
@@ -9806,10 +9687,10 @@ pub unsafe extern "C" fn mpd_qlog10(
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qlog10(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -9822,8 +9703,7 @@ pub unsafe extern "C" fn mpd_qlog10(
         clamp: 0,
         allcr: 0,
     };
-    let mut adjexp: mpd_ssize_t = 0;
-    let mut t: mpd_ssize_t = 0;
+    let mut adjexp: mpd_ssize_t;
     mpd_workcontext(&raw mut workctx, ctx);
     workctx.round = MPD_ROUND_HALF_EVEN as ::core::ffi::c_int;
     if mpd_isspecial(a) != 0 {
@@ -9857,7 +9737,7 @@ pub unsafe extern "C" fn mpd_qlog10(
         return;
     }
     adjexp = mpd_adjexp(a);
-    t = if adjexp < 0 as mpd_ssize_t {
+    let t: mpd_ssize_t = if adjexp < 0 as mpd_ssize_t {
         -adjexp - 1 as mpd_ssize_t
     } else {
         adjexp
@@ -9918,8 +9798,8 @@ pub unsafe extern "C" fn mpd_qlog10(
             data: &raw mut aa_data as *mut mpd_uint_t,
         };
         let mut loop_protect: uint32_t = 0 as uint32_t;
-        let mut prec: mpd_ssize_t = 0;
-        if result == a as *mut mpd_t {
+        let mut prec: mpd_ssize_t;
+        if ::core::ptr::eq(result, a) {
             if mpd_qcopy(&raw mut aa, a, status) == 0 {
                 mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
                 return;
@@ -9932,11 +9812,10 @@ pub unsafe extern "C" fn mpd_qlog10(
             let mut status_res: uint32_t = 0 as uint32_t;
             let mut status_hi: uint32_t = 0 as uint32_t;
             let mut status_lo: uint32_t = 0 as uint32_t;
-            let mut shortcut: ::core::ffi::c_int = 0;
-            let mut bounds_eq: ::core::ffi::c_int = 0;
-            let mut subnormal_eq: ::core::ffi::c_int = 0;
+            let bounds_eq: ::core::ffi::c_int;
+            let mut subnormal_eq: ::core::ffi::c_int;
             workctx.prec = prec;
-            shortcut = _mpd_qlog10(
+            let shortcut: ::core::ffi::c_int = _mpd_qlog10(
                 SKIP_FINALIZE as ::core::ffi::c_int,
                 result,
                 a,
@@ -10027,13 +9906,13 @@ pub unsafe extern "C" fn mpd_qlog10(
     };
 }
 pub unsafe extern "C" fn mpd_qmax(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut c: ::core::ffi::c_int = 0;
+    let mut c: ::core::ffi::c_int;
     if mpd_isqnan(a) != 0 && mpd_isnan(b) == 0 {
         mpd_qcopy(result, b, status);
     } else if mpd_isqnan(b) != 0 && mpd_isnan(a) == 0 {
@@ -10054,13 +9933,13 @@ pub unsafe extern "C" fn mpd_qmax(
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qmax_mag(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut c: ::core::ffi::c_int = 0;
+    let mut c: ::core::ffi::c_int;
     if mpd_isqnan(a) != 0 && mpd_isnan(b) == 0 {
         mpd_qcopy(result, b, status);
     } else if mpd_isqnan(b) != 0 && mpd_isnan(a) == 0 {
@@ -10081,13 +9960,13 @@ pub unsafe extern "C" fn mpd_qmax_mag(
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qmin(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut c: ::core::ffi::c_int = 0;
+    let mut c: ::core::ffi::c_int;
     if mpd_isqnan(a) != 0 && mpd_isnan(b) == 0 {
         mpd_qcopy(result, b, status);
     } else if mpd_isqnan(b) != 0 && mpd_isnan(a) == 0 {
@@ -10108,13 +9987,13 @@ pub unsafe extern "C" fn mpd_qmin(
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qmin_mag(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut c: ::core::ffi::c_int = 0;
+    let mut c: ::core::ffi::c_int;
     if mpd_isqnan(a) != 0 && mpd_isnan(b) == 0 {
         mpd_qcopy(result, b, status);
     } else if mpd_isqnan(b) != 0 && mpd_isnan(a) == 0 {
@@ -10134,9 +10013,9 @@ pub unsafe extern "C" fn mpd_qmin_mag(
     }
     mpd_qfinalize(result, ctx, status);
 }
-unsafe extern "C" fn _kmul_resultsize(mut la: mpd_size_t, mut lb: mpd_size_t) -> mpd_size_t {
-    let mut n: mpd_size_t = 0;
-    let mut m: mpd_size_t = 0;
+unsafe extern "C" fn _kmul_resultsize(la: mpd_size_t, lb: mpd_size_t) -> mpd_size_t {
+    let mut n: mpd_size_t;
+    let mut m: mpd_size_t;
     n = add_size_t(la, lb);
     n = add_size_t(n, 1 as mpd_size_t);
     m = la
@@ -10144,30 +10023,28 @@ unsafe extern "C" fn _kmul_resultsize(mut la: mpd_size_t, mut lb: mpd_size_t) ->
         .wrapping_div(2 as mpd_size_t)
         .wrapping_add(1 as mpd_size_t);
     m = mul_size_t(m, 3 as mpd_size_t);
-    return if m > n { m } else { n };
+    if m > n { m } else { n }
 }
-unsafe extern "C" fn _kmul_worksize(mut n: mpd_size_t, mut lim: mpd_size_t) -> mpd_size_t {
-    let mut m: mpd_size_t = 0;
+unsafe extern "C" fn _kmul_worksize(n: mpd_size_t, lim: mpd_size_t) -> mpd_size_t {
     if n <= lim {
         return 0 as mpd_size_t;
     }
-    m = n
+    let m: mpd_size_t = n
         .wrapping_add(1 as mpd_size_t)
         .wrapping_div(2 as mpd_size_t)
         .wrapping_add(1 as mpd_size_t);
-    return add_size_t(mul_size_t(m, 2 as mpd_size_t), _kmul_worksize(m, lim));
+    add_size_t(mul_size_t(m, 2 as mpd_size_t), _kmul_worksize(m, lim))
 }
 pub const MPD_KARATSUBA_BASECASE: ::core::ffi::c_int = 16 as ::core::ffi::c_int;
 unsafe extern "C" fn _karatsuba_rec(
-    mut c: *mut mpd_uint_t,
-    mut a: *const mpd_uint_t,
-    mut b: *const mpd_uint_t,
-    mut w: *mut mpd_uint_t,
-    mut la: mpd_size_t,
-    mut lb: mpd_size_t,
+    c: *mut mpd_uint_t,
+    a: *const mpd_uint_t,
+    b: *const mpd_uint_t,
+    w: *mut mpd_uint_t,
+    la: mpd_size_t,
+    lb: mpd_size_t,
 ) {
-    let mut m: mpd_size_t = 0;
-    let mut lt: mpd_size_t = 0;
+    let mut lt: mpd_size_t;
     if la >= lb && lb > 0 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"la >= lb && lb > 0\0" as *const u8 as *const ::core::ffi::c_char);
@@ -10183,7 +10060,7 @@ unsafe extern "C" fn _karatsuba_rec(
         _mpd_basemul(c, a, b, la, lb);
         return;
     }
-    m = la
+    let m: mpd_size_t = la
         .wrapping_add(1 as mpd_size_t)
         .wrapping_div(2 as mpd_size_t);
     if lb <= m {
@@ -10277,15 +10154,13 @@ unsafe extern "C" fn _karatsuba_rec(
 }
 #[cfg(not(feature = "test-hooks"))]
 unsafe extern "C" fn _mpd_kmul(
-    mut u: *const mpd_uint_t,
-    mut v: *const mpd_uint_t,
-    mut ulen: mpd_size_t,
-    mut vlen: mpd_size_t,
-    mut rsize: *mut mpd_size_t,
+    u: *const mpd_uint_t,
+    v: *const mpd_uint_t,
+    ulen: mpd_size_t,
+    vlen: mpd_size_t,
+    rsize: *mut mpd_size_t,
 ) -> *mut mpd_uint_t {
-    let mut result: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut w: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut m: mpd_size_t = 0;
     if ulen >= 4 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"ulen >= 4\0" as *const u8 as *const ::core::ffi::c_char);
@@ -10295,12 +10170,11 @@ unsafe extern "C" fn _mpd_kmul(
         mpd_c2rust_assert_fail(b"ulen >= vlen\0" as *const u8 as *const ::core::ffi::c_char);
     };
     *rsize = _kmul_resultsize(ulen, vlen);
-    result =
-        mpd_calloc(*rsize, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
+    let result: *mut mpd_uint_t = mpd_calloc(*rsize, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
     if result.is_null() {
         return ::core::ptr::null_mut::<mpd_uint_t>();
     }
-    m = _kmul_worksize(ulen, MPD_KARATSUBA_BASECASE as mpd_size_t);
+    let m: mpd_size_t = _kmul_worksize(ulen, MPD_KARATSUBA_BASECASE as mpd_size_t);
     if m != 0 && {
         w = mpd_calloc(m, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
         w.is_null()
@@ -10312,20 +10186,18 @@ unsafe extern "C" fn _mpd_kmul(
     if !w.is_null() {
         mpd_free.expect("non-null function pointer")(w as *mut ::core::ffi::c_void);
     }
-    return result;
+    result
 }
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn _mpd_kmul(
-    mut u: *const mpd_uint_t,
-    mut v: *const mpd_uint_t,
-    mut ulen: mpd_size_t,
-    mut vlen: mpd_size_t,
-    mut rsize: *mut mpd_size_t,
+    u: *const mpd_uint_t,
+    v: *const mpd_uint_t,
+    ulen: mpd_size_t,
+    vlen: mpd_size_t,
+    rsize: *mut mpd_size_t,
 ) -> *mut mpd_uint_t {
-    let mut result: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut w: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut m: mpd_size_t = 0;
     if ulen >= 4 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"ulen >= 4\0" as *const u8 as *const ::core::ffi::c_char);
@@ -10335,12 +10207,11 @@ pub unsafe extern "C" fn _mpd_kmul(
         mpd_c2rust_assert_fail(b"ulen >= vlen\0" as *const u8 as *const ::core::ffi::c_char);
     };
     *rsize = _kmul_resultsize(ulen, vlen);
-    result =
-        mpd_calloc(*rsize, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
+    let result: *mut mpd_uint_t = mpd_calloc(*rsize, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
     if result.is_null() {
         return ::core::ptr::null_mut::<mpd_uint_t>();
     }
-    m = _kmul_worksize(ulen, MPD_KARATSUBA_BASECASE as mpd_size_t);
+    let m: mpd_size_t = _kmul_worksize(ulen, MPD_KARATSUBA_BASECASE as mpd_size_t);
     if m != 0 && {
         w = mpd_calloc(m, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
         w.is_null()
@@ -10352,25 +10223,24 @@ pub unsafe extern "C" fn _mpd_kmul(
     if !w.is_null() {
         mpd_free.expect("non-null function pointer")(w as *mut ::core::ffi::c_void);
     }
-    return result;
+    result
 }
 #[cfg(target_pointer_width = "64")]
-unsafe extern "C" fn _mpd_get_transform_len(mut rsize: mpd_size_t) -> mpd_size_t {
-    let mut log2rsize: mpd_size_t = 0;
-    let mut x: mpd_size_t = 0;
-    let mut step: mpd_size_t = 0;
+unsafe extern "C" fn _mpd_get_transform_len(rsize: mpd_size_t) -> mpd_size_t {
+    let mut x: mpd_size_t;
+    let step: mpd_size_t;
     if rsize >= 4 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"rsize >= 4\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    log2rsize = mpd_bsr(rsize) as mpd_size_t;
+    let log2rsize: mpd_size_t = mpd_bsr(rsize) as mpd_size_t;
     if rsize <= 1024 as mpd_size_t {
         x = (1 as mpd_size_t) << log2rsize;
-        return if rsize == x {
+        if rsize == x {
             x
         } else {
             x << 1 as ::core::ffi::c_int
-        };
+        }
     } else if rsize as u64 <= MPD_MAXTRANSFORM_2N {
         x = (1 as mpd_size_t) << log2rsize;
         if rsize == x {
@@ -10378,35 +10248,34 @@ unsafe extern "C" fn _mpd_get_transform_len(mut rsize: mpd_size_t) -> mpd_size_t
         }
         step = x >> 1 as ::core::ffi::c_int;
         x = x.wrapping_add(step);
-        return if rsize <= x { x } else { x.wrapping_add(step) };
+        if rsize <= x { x } else { x.wrapping_add(step) }
     } else if rsize as u64
-        <= MPD_MAXTRANSFORM_2N.wrapping_add(MPD_MAXTRANSFORM_2N.wrapping_div(2 as u64))
+        <= MPD_MAXTRANSFORM_2N.wrapping_add(MPD_MAXTRANSFORM_2N.wrapping_div(2_u64))
     {
-        return MPD_MAXTRANSFORM_2N.wrapping_add(MPD_MAXTRANSFORM_2N.wrapping_div(2 as u64))
-            as mpd_size_t;
-    } else if rsize as u64 <= (3 as u64).wrapping_mul(MPD_MAXTRANSFORM_2N) {
-        return (3 as u64).wrapping_mul(MPD_MAXTRANSFORM_2N) as mpd_size_t;
+        MPD_MAXTRANSFORM_2N.wrapping_add(MPD_MAXTRANSFORM_2N.wrapping_div(2_u64))
+            as mpd_size_t
+    } else if rsize as u64 <= 3_u64.wrapping_mul(MPD_MAXTRANSFORM_2N) {
+        3_u64.wrapping_mul(MPD_MAXTRANSFORM_2N) as mpd_size_t
     } else {
-        return MPD_SIZE_MAX as mpd_size_t;
-    };
+        MPD_SIZE_MAX as mpd_size_t
+    }
 }
 #[cfg(target_pointer_width = "32")]
-unsafe extern "C" fn _mpd_get_transform_len(mut rsize: mpd_size_t) -> mpd_size_t {
-    let mut log2rsize: mpd_size_t = 0;
-    let mut x: mpd_size_t = 0;
-    let mut step: mpd_size_t = 0;
+unsafe extern "C" fn _mpd_get_transform_len(rsize: mpd_size_t) -> mpd_size_t {
+    let mut x: mpd_size_t;
+    let step: mpd_size_t;
     if rsize >= 4 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"rsize >= 4\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    log2rsize = mpd_bsr(rsize) as mpd_size_t;
+    let log2rsize: mpd_size_t = mpd_bsr(rsize) as mpd_size_t;
     if rsize <= 1024 as mpd_size_t {
         x = (1 as mpd_size_t) << log2rsize;
-        return if rsize == x {
+        if rsize == x {
             x
         } else {
             x << 1 as ::core::ffi::c_int
-        };
+        }
     } else if rsize <= MPD_MAXTRANSFORM_2N as mpd_size_t {
         x = (1 as mpd_size_t) << log2rsize;
         if rsize == x {
@@ -10414,35 +10283,34 @@ unsafe extern "C" fn _mpd_get_transform_len(mut rsize: mpd_size_t) -> mpd_size_t
         }
         step = x >> 1 as ::core::ffi::c_int;
         x = x.wrapping_add(step);
-        return if rsize <= x { x } else { x.wrapping_add(step) };
+        if rsize <= x { x } else { x.wrapping_add(step) }
     } else if rsize
         <= (MPD_MAXTRANSFORM_2N as mpd_size_t)
             .wrapping_add((MPD_MAXTRANSFORM_2N as mpd_size_t).wrapping_div(2 as mpd_size_t))
     {
-        return (MPD_MAXTRANSFORM_2N as mpd_size_t)
-            .wrapping_add((MPD_MAXTRANSFORM_2N as mpd_size_t).wrapping_div(2 as mpd_size_t));
+        (MPD_MAXTRANSFORM_2N as mpd_size_t)
+            .wrapping_add((MPD_MAXTRANSFORM_2N as mpd_size_t).wrapping_div(2 as mpd_size_t))
     } else if rsize <= (3 as mpd_size_t).wrapping_mul(MPD_MAXTRANSFORM_2N as mpd_size_t) {
-        return (3 as mpd_size_t).wrapping_mul(MPD_MAXTRANSFORM_2N as mpd_size_t);
+        (3 as mpd_size_t).wrapping_mul(MPD_MAXTRANSFORM_2N as mpd_size_t)
     } else {
-        return MPD_SIZE_MAX as mpd_size_t;
-    };
+        MPD_SIZE_MAX as mpd_size_t
+    }
 }
 #[cfg(not(feature = "test-hooks"))]
 unsafe extern "C" fn _mpd_fntmul(
-    mut u: *const mpd_uint_t,
-    mut v: *const mpd_uint_t,
-    mut ulen: mpd_size_t,
-    mut vlen: mpd_size_t,
-    mut rsize: *mut mpd_size_t,
+    u: *const mpd_uint_t,
+    v: *const mpd_uint_t,
+    ulen: mpd_size_t,
+    vlen: mpd_size_t,
+    rsize: *mut mpd_size_t,
 ) -> *mut mpd_uint_t {
     let mut current_block: u64;
     let mut c1: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut c2: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut c3: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut vtmp: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut n: mpd_size_t = 0;
+    let vtmp: *mut mpd_uint_t;
     *rsize = add_size_t(ulen, vlen);
-    n = _mpd_get_transform_len(*rsize);
+    let n: mpd_size_t = _mpd_get_transform_len(*rsize);
     if n == MPD_SIZE_MAX as mpd_size_t {
         current_block = 1;
     } else {
@@ -10555,14 +10423,11 @@ unsafe extern "C" fn _mpd_fntmul(
             }
         }
     }
-    match current_block {
-        1 => {
-            if !c1.is_null() {
-                mpd_free.expect("non-null function pointer")(c1 as *mut ::core::ffi::c_void);
-            }
-            c1 = ::core::ptr::null_mut::<mpd_uint_t>();
+    if current_block == 1 {
+        if !c1.is_null() {
+            mpd_free.expect("non-null function pointer")(c1 as *mut ::core::ffi::c_void);
         }
-        _ => {}
+        c1 = ::core::ptr::null_mut::<mpd_uint_t>();
     }
     if !c2.is_null() {
         mpd_free.expect("non-null function pointer")(c2 as *mut ::core::ffi::c_void);
@@ -10570,25 +10435,24 @@ unsafe extern "C" fn _mpd_fntmul(
     if !c3.is_null() {
         mpd_free.expect("non-null function pointer")(c3 as *mut ::core::ffi::c_void);
     }
-    return c1;
+    c1
 }
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn _mpd_fntmul(
-    mut u: *const mpd_uint_t,
-    mut v: *const mpd_uint_t,
-    mut ulen: mpd_size_t,
-    mut vlen: mpd_size_t,
-    mut rsize: *mut mpd_size_t,
+    u: *const mpd_uint_t,
+    v: *const mpd_uint_t,
+    ulen: mpd_size_t,
+    vlen: mpd_size_t,
+    rsize: *mut mpd_size_t,
 ) -> *mut mpd_uint_t {
     let mut current_block: u64;
     let mut c1: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut c2: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
     let mut c3: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut vtmp: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut n: mpd_size_t = 0;
+    let vtmp: *mut mpd_uint_t;
     *rsize = add_size_t(ulen, vlen);
-    n = _mpd_get_transform_len(*rsize);
+    let n: mpd_size_t = _mpd_get_transform_len(*rsize);
     if n == MPD_SIZE_MAX as mpd_size_t {
         current_block = 1;
     } else {
@@ -10701,14 +10565,11 @@ pub unsafe extern "C" fn _mpd_fntmul(
             }
         }
     }
-    match current_block {
-        1 => {
-            if !c1.is_null() {
-                mpd_free.expect("non-null function pointer")(c1 as *mut ::core::ffi::c_void);
-            }
-            c1 = ::core::ptr::null_mut::<mpd_uint_t>();
+    if current_block == 1 {
+        if !c1.is_null() {
+            mpd_free.expect("non-null function pointer")(c1 as *mut ::core::ffi::c_void);
         }
-        _ => {}
+        c1 = ::core::ptr::null_mut::<mpd_uint_t>();
     }
     if !c2.is_null() {
         mpd_free.expect("non-null function pointer")(c2 as *mut ::core::ffi::c_void);
@@ -10716,24 +10577,23 @@ pub unsafe extern "C" fn _mpd_fntmul(
     if !c3.is_null() {
         mpd_free.expect("non-null function pointer")(c3 as *mut ::core::ffi::c_void);
     }
-    return c1;
+    c1
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _karatsuba_rec_fnt(
-    mut c: *mut mpd_uint_t,
-    mut a: *const mpd_uint_t,
-    mut b: *const mpd_uint_t,
-    mut w: *mut mpd_uint_t,
-    mut la: mpd_size_t,
-    mut lb: mpd_size_t,
+    c: *mut mpd_uint_t,
+    a: *const mpd_uint_t,
+    b: *const mpd_uint_t,
+    w: *mut mpd_uint_t,
+    la: mpd_size_t,
+    lb: mpd_size_t,
 ) -> ::core::ffi::c_int {
-    let mut m: mpd_size_t = 0;
-    let mut lt: mpd_size_t = 0;
+    let mut lt: mpd_size_t;
     if la >= lb && lb > 0 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"la >= lb && lb > 0\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    if la as u64 <= (3 as u64).wrapping_mul((4294967296 as u64).wrapping_div(2 as u64))
+    if la as u64 <= 3_u64.wrapping_mul(4294967296_u64.wrapping_div(2_u64))
         || !w.is_null()
     {
     } else {
@@ -10742,13 +10602,12 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
                 as *const ::core::ffi::c_char,
         );
     };
-    if la as u64 <= (3 as u64).wrapping_mul(MPD_MAXTRANSFORM_2N.wrapping_div(2 as u64)) {
+    if la as u64 <= 3_u64.wrapping_mul(MPD_MAXTRANSFORM_2N.wrapping_div(2_u64)) {
         if lb <= 192 as mpd_size_t {
             _mpd_basemul(c, b, a, lb, la);
         } else {
-            let mut result: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
             let mut dummy: mpd_size_t = 0;
-            result = _mpd_fntmul(a, b, la, lb, &raw mut dummy);
+            let result: *mut mpd_uint_t = _mpd_fntmul(a, b, la, lb, &raw mut dummy);
             if result.is_null() {
                 return 0 as ::core::ffi::c_int;
             }
@@ -10763,7 +10622,7 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
         }
         return 1 as ::core::ffi::c_int;
     }
-    m = la
+    let m: mpd_size_t = la
         .wrapping_add(1 as mpd_size_t)
         .wrapping_div(2 as mpd_size_t);
     if lb <= m {
@@ -10870,19 +10729,18 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
     }
     _mpd_baseaddto(c, w, m.wrapping_add(m));
     _mpd_basesubfrom(c.add(m), w, m.wrapping_add(m));
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _karatsuba_rec_fnt(
-    mut c: *mut mpd_uint_t,
-    mut a: *const mpd_uint_t,
-    mut b: *const mpd_uint_t,
-    mut w: *mut mpd_uint_t,
-    mut la: mpd_size_t,
-    mut lb: mpd_size_t,
+    c: *mut mpd_uint_t,
+    a: *const mpd_uint_t,
+    b: *const mpd_uint_t,
+    w: *mut mpd_uint_t,
+    la: mpd_size_t,
+    lb: mpd_size_t,
 ) -> ::core::ffi::c_int {
-    let mut m: mpd_size_t = 0;
-    let mut lt: mpd_size_t = 0;
+    let mut lt: mpd_size_t;
     if la >= lb && lb > 0 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"la >= lb && lb > 0\0" as *const u8 as *const ::core::ffi::c_char);
@@ -10903,9 +10761,8 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
         if lb <= 192 as mpd_size_t {
             _mpd_basemul(c, b, a, lb, la);
         } else {
-            let mut result: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
             let mut dummy: mpd_size_t = 0;
-            result = _mpd_fntmul(a, b, la, lb, &raw mut dummy);
+            let result: *mut mpd_uint_t = _mpd_fntmul(a, b, la, lb, &raw mut dummy);
             if result.is_null() {
                 return 0 as ::core::ffi::c_int;
             }
@@ -10920,7 +10777,7 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
         }
         return 1 as ::core::ffi::c_int;
     }
-    m = la
+    let m: mpd_size_t = la
         .wrapping_add(1 as mpd_size_t)
         .wrapping_div(2 as mpd_size_t);
     if lb <= m {
@@ -11027,20 +10884,19 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
     }
     _mpd_baseaddto(c, w, m.wrapping_add(m));
     _mpd_basesubfrom(c.add(m), w, m.wrapping_add(m));
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(not(feature = "test-hooks"))]
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_kmul_fnt(
-    mut u: *const mpd_uint_t,
-    mut v: *const mpd_uint_t,
-    mut ulen: mpd_size_t,
-    mut vlen: mpd_size_t,
-    mut rsize: *mut mpd_size_t,
+    u: *const mpd_uint_t,
+    v: *const mpd_uint_t,
+    ulen: mpd_size_t,
+    vlen: mpd_size_t,
+    rsize: *mut mpd_size_t,
 ) -> *mut mpd_uint_t {
-    let mut result: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
+    let mut result: *mut mpd_uint_t;
     let mut w: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut m: mpd_size_t = 0;
     if ulen >= 4 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"ulen >= 4\0" as *const u8 as *const ::core::ffi::c_char);
@@ -11055,9 +10911,9 @@ unsafe extern "C" fn _mpd_kmul_fnt(
     if result.is_null() {
         return ::core::ptr::null_mut::<mpd_uint_t>();
     }
-    m = _kmul_worksize(
+    let m: mpd_size_t = _kmul_worksize(
         ulen,
-        (3 as u64).wrapping_mul(MPD_MAXTRANSFORM_2N.wrapping_div(2 as u64)) as mpd_size_t,
+        3_u64.wrapping_mul(MPD_MAXTRANSFORM_2N.wrapping_div(2_u64)) as mpd_size_t,
     );
     if m != 0 && {
         w = mpd_calloc(m, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
@@ -11073,21 +10929,20 @@ unsafe extern "C" fn _mpd_kmul_fnt(
     if !w.is_null() {
         mpd_free.expect("non-null function pointer")(w as *mut ::core::ffi::c_void);
     }
-    return result;
+    result
 }
 #[cfg(feature = "test-hooks")]
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn _mpd_kmul_fnt(
-    mut u: *const mpd_uint_t,
-    mut v: *const mpd_uint_t,
-    mut ulen: mpd_size_t,
-    mut vlen: mpd_size_t,
-    mut rsize: *mut mpd_size_t,
+    u: *const mpd_uint_t,
+    v: *const mpd_uint_t,
+    ulen: mpd_size_t,
+    vlen: mpd_size_t,
+    rsize: *mut mpd_size_t,
 ) -> *mut mpd_uint_t {
-    let mut result: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
+    let mut result: *mut mpd_uint_t;
     let mut w: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut m: mpd_size_t = 0;
     if ulen >= 4 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"ulen >= 4\0" as *const u8 as *const ::core::ffi::c_char);
@@ -11102,9 +10957,9 @@ pub unsafe extern "C" fn _mpd_kmul_fnt(
     if result.is_null() {
         return ::core::ptr::null_mut::<mpd_uint_t>();
     }
-    m = _kmul_worksize(
+    let m: mpd_size_t = _kmul_worksize(
         ulen,
-        (3 as u64).wrapping_mul(MPD_MAXTRANSFORM_2N.wrapping_div(2 as u64)) as mpd_size_t,
+        3_u64.wrapping_mul(MPD_MAXTRANSFORM_2N.wrapping_div(2_u64)) as mpd_size_t,
     );
     if m != 0 && {
         w = mpd_calloc(m, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
@@ -11120,20 +10975,19 @@ pub unsafe extern "C" fn _mpd_kmul_fnt(
     if !w.is_null() {
         mpd_free.expect("non-null function pointer")(w as *mut ::core::ffi::c_void);
     }
-    return result;
+    result
 }
 #[cfg(not(feature = "test-hooks"))]
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_kmul_fnt(
-    mut u: *const mpd_uint_t,
-    mut v: *const mpd_uint_t,
-    mut ulen: mpd_size_t,
-    mut vlen: mpd_size_t,
-    mut rsize: *mut mpd_size_t,
+    u: *const mpd_uint_t,
+    v: *const mpd_uint_t,
+    ulen: mpd_size_t,
+    vlen: mpd_size_t,
+    rsize: *mut mpd_size_t,
 ) -> *mut mpd_uint_t {
-    let mut result: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
+    let mut result: *mut mpd_uint_t;
     let mut w: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut m: mpd_size_t = 0;
     if ulen >= 4 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"ulen >= 4\0" as *const u8 as *const ::core::ffi::c_char);
@@ -11148,7 +11002,7 @@ unsafe extern "C" fn _mpd_kmul_fnt(
     if result.is_null() {
         return ::core::ptr::null_mut::<mpd_uint_t>();
     }
-    m = _kmul_worksize(
+    let m: mpd_size_t = _kmul_worksize(
         ulen,
         (3 as mpd_size_t)
             .wrapping_mul((MPD_MAXTRANSFORM_2N as mpd_size_t).wrapping_div(2 as mpd_size_t)),
@@ -11167,21 +11021,20 @@ unsafe extern "C" fn _mpd_kmul_fnt(
     if !w.is_null() {
         mpd_free.expect("non-null function pointer")(w as *mut ::core::ffi::c_void);
     }
-    return result;
+    result
 }
 #[cfg(feature = "test-hooks")]
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn _mpd_kmul_fnt(
-    mut u: *const mpd_uint_t,
-    mut v: *const mpd_uint_t,
-    mut ulen: mpd_size_t,
-    mut vlen: mpd_size_t,
-    mut rsize: *mut mpd_size_t,
+    u: *const mpd_uint_t,
+    v: *const mpd_uint_t,
+    ulen: mpd_size_t,
+    vlen: mpd_size_t,
+    rsize: *mut mpd_size_t,
 ) -> *mut mpd_uint_t {
-    let mut result: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
+    let mut result: *mut mpd_uint_t;
     let mut w: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut m: mpd_size_t = 0;
     if ulen >= 4 as mpd_size_t {
     } else {
         mpd_c2rust_assert_fail(b"ulen >= 4\0" as *const u8 as *const ::core::ffi::c_char);
@@ -11196,7 +11049,7 @@ pub unsafe extern "C" fn _mpd_kmul_fnt(
     if result.is_null() {
         return ::core::ptr::null_mut::<mpd_uint_t>();
     }
-    m = _kmul_worksize(
+    let m: mpd_size_t = _kmul_worksize(
         ulen,
         (3 as mpd_size_t)
             .wrapping_mul((MPD_MAXTRANSFORM_2N as mpd_size_t).wrapping_div(2 as mpd_size_t)),
@@ -11215,13 +11068,13 @@ pub unsafe extern "C" fn _mpd_kmul_fnt(
     if !w.is_null() {
         mpd_free.expect("non-null function pointer")(w as *mut ::core::ffi::c_void);
     }
-    return result;
+    result
 }
 unsafe extern "C" fn _mpd_qmul_inf(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isinfinite(a) != 0 {
         if mpd_iszero(b) != 0 {
@@ -11251,18 +11104,18 @@ unsafe extern "C" fn _mpd_qmul_inf(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qmul(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut big: *const mpd_t = a;
     let mut small: *const mpd_t = b;
-    let mut rdata: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
+    let rdata: *mut mpd_uint_t;
     let mut rbuf: [mpd_uint_t; 64] = [0; 64];
-    let mut rsize: mpd_size_t = 0;
-    let mut i: mpd_size_t = 0;
+    let mut rsize: mpd_size_t;
+    let mut i: mpd_size_t;
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
             return;
@@ -11277,8 +11130,8 @@ unsafe extern "C" fn _mpd_qmul(
     if (*big).len == 1 as mpd_ssize_t {
         _mpd_singlemul(
             (*result).data as *mut mpd_uint_t,
-            *(*big).data.offset(0 as isize),
-            *(*small).data.offset(0 as isize),
+            *(*big).data.offset(0_isize),
+            *(*small).data.offset(0_isize),
         );
     } else if rsize <= MPD_MINALLOC_MAX as mpd_size_t {
         if (*big).len == 2 as mpd_ssize_t {
@@ -11295,7 +11148,7 @@ unsafe extern "C" fn _mpd_qmul(
                     &raw mut rbuf as *mut mpd_uint_t,
                     (*big).data,
                     (*big).len as mpd_size_t,
-                    *(*small).data.offset(0 as isize),
+                    *(*small).data.offset(0_isize),
                 );
             } else {
                 _mpd_basemul(
@@ -11325,7 +11178,7 @@ unsafe extern "C" fn _mpd_qmul(
                         rdata,
                         (*big).data,
                         (*big).len as mpd_size_t,
-                        *(*small).data.offset(0 as isize),
+                        *(*small).data.offset(0_isize),
                     );
                 } else {
                     _mpd_basemul(
@@ -11345,7 +11198,7 @@ unsafe extern "C" fn _mpd_qmul(
                 (*small).len as mpd_size_t,
                 &raw mut rsize,
             );
-        } else if rsize as u64 <= (3 as u64).wrapping_mul(MPD_MAXTRANSFORM_2N) {
+        } else if rsize as u64 <= 3_u64.wrapping_mul(MPD_MAXTRANSFORM_2N) {
             rdata = _mpd_fntmul(
                 (*big).data,
                 (*small).data,
@@ -11386,18 +11239,18 @@ unsafe extern "C" fn _mpd_qmul(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qmul(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut big: *const mpd_t = a;
     let mut small: *const mpd_t = b;
-    let mut rdata: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
+    let rdata: *mut mpd_uint_t;
     let mut rbuf: [mpd_uint_t; 64] = [0; 64];
-    let mut rsize: mpd_size_t = 0;
-    let mut i: mpd_size_t = 0;
+    let mut rsize: mpd_size_t;
+    let mut i: mpd_size_t;
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
             return;
@@ -11412,8 +11265,8 @@ unsafe extern "C" fn _mpd_qmul(
     if (*big).len == 1 as mpd_ssize_t {
         _mpd_singlemul(
             (*result).data as *mut mpd_uint_t,
-            *(*big).data.offset(0 as isize),
-            *(*small).data.offset(0 as isize),
+            *(*big).data.offset(0_isize),
+            *(*small).data.offset(0_isize),
         );
     } else if rsize <= MPD_MINALLOC_MAX as mpd_size_t {
         if (*big).len == 2 as mpd_ssize_t {
@@ -11430,7 +11283,7 @@ unsafe extern "C" fn _mpd_qmul(
                     &raw mut rbuf as *mut mpd_uint_t,
                     (*big).data,
                     (*big).len as mpd_size_t,
-                    *(*small).data.offset(0 as isize),
+                    *(*small).data.offset(0_isize),
                 );
             } else {
                 _mpd_basemul(
@@ -11460,7 +11313,7 @@ unsafe extern "C" fn _mpd_qmul(
                         rdata,
                         (*big).data,
                         (*big).len as mpd_size_t,
-                        *(*small).data.offset(0 as isize),
+                        *(*small).data.offset(0_isize),
                     );
                 } else {
                     _mpd_basemul(
@@ -11520,22 +11373,22 @@ unsafe extern "C" fn _mpd_qmul(
     mpd_setdigits(result);
 }
 pub unsafe extern "C" fn mpd_qmul(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _mpd_qmul(result, a, b, ctx, status);
     mpd_qfinalize(result, ctx, status);
 }
 #[cfg(not(feature = "test-hooks"))]
 unsafe extern "C" fn _mpd_qmul_exact(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     mpd_qmul(result, a, b, ctx, &raw mut workstatus);
@@ -11548,11 +11401,11 @@ unsafe extern "C" fn _mpd_qmul_exact(
 }
 #[cfg(feature = "test-hooks")]
 unsafe extern "C" fn _mpd_qmul_exact(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     mpd_qmul(result, a, b, ctx, &raw mut workstatus);
@@ -11568,11 +11421,11 @@ unsafe extern "C" fn _mpd_qmul_exact(
     }
 }
 pub unsafe extern "C" fn mpd_qmul_ssize(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -11602,11 +11455,11 @@ pub unsafe extern "C" fn mpd_qmul_ssize(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qmul_uint(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: mpd_uint_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: mpd_uint_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -11636,40 +11489,40 @@ pub unsafe extern "C" fn mpd_qmul_uint(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qmul_i32(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qmul_ssize(result, a, b as mpd_ssize_t, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qmul_u32(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qmul_uint(result, a, b as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qmul_i64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qmul_ssize(result, a, b as mpd_ssize_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qmul_i64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: int64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: int64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -11700,21 +11553,21 @@ pub unsafe extern "C" fn mpd_qmul_i64(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qmul_u64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     mpd_qmul_uint(result, a, b as mpd_uint_t, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qmul_u64(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: uint64_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: uint64_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -11744,16 +11597,15 @@ pub unsafe extern "C" fn mpd_qmul_u64(
     mpd_del(&raw mut bb);
 }
 pub unsafe extern "C" fn mpd_qminus(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    if mpd_isspecial(a) != 0 {
-        if mpd_qcheck_nan(result, a, ctx, status) != 0 {
+    if mpd_isspecial(a) != 0
+        && mpd_qcheck_nan(result, a, ctx, status) != 0 {
             return;
         }
-    }
     if mpd_iszero(a) != 0 && (*ctx).round != MPD_ROUND_FLOOR as ::core::ffi::c_int {
         mpd_qcopy_abs(result, a, status);
     } else {
@@ -11762,16 +11614,15 @@ pub unsafe extern "C" fn mpd_qminus(
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qplus(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    if mpd_isspecial(a) != 0 {
-        if mpd_qcheck_nan(result, a, ctx, status) != 0 {
+    if mpd_isspecial(a) != 0
+        && mpd_qcheck_nan(result, a, ctx, status) != 0 {
             return;
         }
-    }
     if mpd_iszero(a) != 0 && (*ctx).round != MPD_ROUND_FLOOR as ::core::ffi::c_int {
         mpd_qcopy_abs(result, a, status);
     } else {
@@ -11780,10 +11631,10 @@ pub unsafe extern "C" fn mpd_qplus(
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qnext_minus(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -11855,10 +11706,10 @@ pub unsafe extern "C" fn mpd_qnext_minus(
         as uint32_t;
 }
 pub unsafe extern "C" fn mpd_qnext_plus(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -11930,17 +11781,16 @@ pub unsafe extern "C" fn mpd_qnext_plus(
         as uint32_t;
 }
 pub unsafe extern "C" fn mpd_qnext_toward(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut c: ::core::ffi::c_int = 0;
     if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
         return;
     }
-    c = _mpd_cmp(a, b);
+    let c: ::core::ffi::c_int = _mpd_cmp(a, b);
     if c == 0 as ::core::ffi::c_int {
         mpd_qcopy_sign(result, a, b, status);
         return;
@@ -11963,15 +11813,15 @@ pub unsafe extern "C" fn mpd_qnext_toward(
     }
 }
 unsafe extern "C" fn _mpd_qpow_uint(
-    mut result: *mut mpd_t,
-    mut base: *const mpd_t,
-    mut exp: mpd_uint_t,
-    mut resultsign: uint8_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    base: *const mpd_t,
+    exp: mpd_uint_t,
+    resultsign: uint8_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut n: mpd_uint_t = 0;
+    let mut n: mpd_uint_t;
     if exp == 0 as mpd_uint_t {
         _settriple(result, resultsign, 1 as mpd_uint_t, 0 as mpd_ssize_t);
         return;
@@ -12000,12 +11850,12 @@ unsafe extern "C" fn _mpd_qpow_uint(
     mpd_set_sign(result, resultsign);
 }
 unsafe extern "C" fn _mpd_qpow_mpd(
-    mut result: *mut mpd_t,
-    mut tbase: *mut mpd_t,
-    mut texp: *mut mpd_t,
-    mut resultsign: uint8_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    tbase: *mut mpd_t,
+    texp: *mut mpd_t,
+    resultsign: uint8_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     let mut maxctx: mpd_context_t = mpd_context_t {
@@ -12059,12 +11909,12 @@ unsafe extern "C" fn _mpd_qpow_mpd(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qpow_int(
-    mut result: *mut mpd_t,
-    mut base: *const mpd_t,
-    mut exp: *const mpd_t,
-    mut resultsign: uint8_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    base: *const mpd_t,
+    exp: *const mpd_t,
+    resultsign: uint8_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut workctx: mpd_context_t = mpd_context_t {
@@ -12100,7 +11950,7 @@ unsafe extern "C" fn _mpd_qpow_int(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut texp_data as *mut mpd_uint_t,
     };
-    let mut n: mpd_uint_t = 0;
+    let n: mpd_uint_t;
     mpd_workcontext(&raw mut workctx, ctx);
     workctx.prec += (*exp).digits + (*exp).exp + 2 as mpd_ssize_t;
     workctx.round = MPD_ROUND_HALF_EVEN as ::core::ffi::c_int;
@@ -12128,50 +11978,47 @@ unsafe extern "C" fn _mpd_qpow_int(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            n = mpd_qabs_uint(exp, &raw mut workctx.status);
-            if workctx.status & MPD_Invalid_operation as uint32_t != 0 {
-                if mpd_qcopy(&raw mut texp, exp, status) == 0 {
-                    mpd_setspecial(result, MPD_POS, MPD_NAN);
-                    current_block = 1;
-                } else {
-                    _mpd_qpow_mpd(
-                        result,
-                        &raw mut tbase,
-                        &raw mut texp,
-                        resultsign,
-                        &raw mut workctx,
-                        status,
-                    );
-                    current_block = 3;
-                }
+    if current_block == 2 {
+        n = mpd_qabs_uint(exp, &raw mut workctx.status);
+        if workctx.status & MPD_Invalid_operation as uint32_t != 0 {
+            if mpd_qcopy(&raw mut texp, exp, status) == 0 {
+                mpd_setspecial(result, MPD_POS, MPD_NAN);
+                current_block = 1;
             } else {
-                _mpd_qpow_uint(
+                _mpd_qpow_mpd(
                     result,
                     &raw mut tbase,
-                    n,
+                    &raw mut texp,
                     resultsign,
                     &raw mut workctx,
                     status,
                 );
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
-                    if mpd_isinfinite(result) != 0 {
-                        _settriple(
-                            result,
-                            resultsign,
-                            1 as mpd_uint_t,
-                            MPD_EXP_INF as mpd_ssize_t,
-                        );
-                    }
+        } else {
+            _mpd_qpow_uint(
+                result,
+                &raw mut tbase,
+                n,
+                resultsign,
+                &raw mut workctx,
+                status,
+            );
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                if mpd_isinfinite(result) != 0 {
+                    _settriple(
+                        result,
+                        resultsign,
+                        1 as mpd_uint_t,
+                        MPD_EXP_INF as mpd_ssize_t,
+                    );
                 }
             }
         }
-        _ => {}
     }
     mpd_del(&raw mut tbase);
     mpd_del(&raw mut texp);
@@ -12179,12 +12026,12 @@ unsafe extern "C" fn _mpd_qpow_int(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qpow_int(
-    mut result: *mut mpd_t,
-    mut base: *const mpd_t,
-    mut exp: *const mpd_t,
-    mut resultsign: uint8_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    base: *const mpd_t,
+    exp: *const mpd_t,
+    resultsign: uint8_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut workctx: mpd_context_t = mpd_context_t {
@@ -12220,7 +12067,7 @@ unsafe extern "C" fn _mpd_qpow_int(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut texp_data as *mut mpd_uint_t,
     };
-    let mut n: mpd_uint_t = 0;
+    let n: mpd_uint_t;
     mpd_workcontext(&raw mut workctx, ctx);
     workctx.prec = (workctx.prec as ::core::ffi::c_int
         + ((*exp).digits + (*exp).exp + 2 as mpd_ssize_t) as ::core::ffi::c_int)
@@ -12251,65 +12098,61 @@ unsafe extern "C" fn _mpd_qpow_int(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            n = mpd_qabs_uint(exp, &raw mut workctx.status);
-            if workctx.status & MPD_Invalid_operation as uint32_t != 0 {
-                if mpd_qcopy(&raw mut texp, exp, status) == 0 {
-                    mpd_setspecial(result, MPD_POS, MPD_NAN);
-                    current_block = 1;
-                } else {
-                    _mpd_qpow_mpd(
-                        result,
-                        &raw mut tbase,
-                        &raw mut texp,
-                        resultsign,
-                        &raw mut workctx,
-                        status,
-                    );
-                    current_block = 3;
-                }
+    if current_block == 2 {
+        n = mpd_qabs_uint(exp, &raw mut workctx.status);
+        if workctx.status & MPD_Invalid_operation as uint32_t != 0 {
+            if mpd_qcopy(&raw mut texp, exp, status) == 0 {
+                mpd_setspecial(result, MPD_POS, MPD_NAN);
+                current_block = 1;
             } else {
-                _mpd_qpow_uint(
+                _mpd_qpow_mpd(
                     result,
                     &raw mut tbase,
-                    n,
+                    &raw mut texp,
                     resultsign,
                     &raw mut workctx,
                     status,
                 );
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
-                    if mpd_isinfinite(result) != 0 {
-                        _settriple(
-                            result,
-                            resultsign,
-                            1 as mpd_uint_t,
-                            MPD_EXP_INF as mpd_ssize_t,
-                        );
-                    }
+        } else {
+            _mpd_qpow_uint(
+                result,
+                &raw mut tbase,
+                n,
+                resultsign,
+                &raw mut workctx,
+                status,
+            );
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                if mpd_isinfinite(result) != 0 {
+                    _settriple(
+                        result,
+                        resultsign,
+                        1 as mpd_uint_t,
+                        MPD_EXP_INF as mpd_ssize_t,
+                    );
                 }
             }
         }
-        _ => {}
     }
     mpd_del(&raw mut tbase);
     mpd_del(&raw mut texp);
     mpd_qfinalize(result, ctx, status);
 }
 unsafe extern "C" fn _qcheck_pow_one_inf(
-    mut result: *mut mpd_t,
-    mut base: *const mpd_t,
-    mut resultsign: uint8_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    base: *const mpd_t,
+    resultsign: uint8_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut shift: mpd_ssize_t = 0;
-    let mut cmp: ::core::ffi::c_int = 0;
-    cmp = _mpd_cmp(base, &raw const one);
+    let shift: mpd_ssize_t;
+    let cmp: ::core::ffi::c_int = _mpd_cmp(base, &raw const one);
     if cmp == 0 as ::core::ffi::c_int {
         shift = (*ctx).prec - 1 as mpd_ssize_t;
         mpd_qshiftl(result, &raw const one, shift, status);
@@ -12317,20 +12160,19 @@ unsafe extern "C" fn _qcheck_pow_one_inf(
         mpd_set_flags(result, resultsign);
         *status = (*status as ::core::ffi::c_uint | (MPD_Inexact | MPD_Rounded)) as uint32_t;
     }
-    return cmp;
+    cmp
 }
 unsafe extern "C" fn _qcheck_pow_one(
-    mut result: *mut mpd_t,
-    mut base: *const mpd_t,
-    mut exp: *const mpd_t,
-    mut resultsign: uint8_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    base: *const mpd_t,
+    exp: *const mpd_t,
+    resultsign: uint8_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut shift: mpd_ssize_t = 0;
-    let mut cmp: ::core::ffi::c_int = 0;
-    cmp = _mpd_cmp_abs(base, &raw const one);
+    let mut shift: mpd_ssize_t;
+    let cmp: ::core::ffi::c_int = _mpd_cmp_abs(base, &raw const one);
     if cmp == 0 as ::core::ffi::c_int {
         if _mpd_isint(exp) != 0 {
             if mpd_isnegative(exp) != 0 {
@@ -12361,12 +12203,12 @@ unsafe extern "C" fn _qcheck_pow_one(
         (*result).exp = -shift;
         mpd_set_flags(result, resultsign);
     }
-    return cmp;
+    cmp
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _lower_bound_zeta(
-    mut x: *const mpd_t,
-    mut status: *mut uint32_t,
+    x: *const mpd_t,
+    status: *mut uint32_t,
 ) -> mpd_ssize_t {
     let mut maxctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -12390,13 +12232,12 @@ unsafe extern "C" fn _lower_bound_zeta(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut scratch_data as *mut mpd_uint_t,
     };
-    let mut t: mpd_ssize_t = 0;
-    let mut u: mpd_ssize_t = 0;
-    t = mpd_adjexp(x);
+    let u: mpd_ssize_t;
+    let t: mpd_ssize_t = mpd_adjexp(x);
     if t > 0 as mpd_ssize_t {
-        return (mpd_exp_digits(t) - 1 as ::core::ffi::c_int) as mpd_ssize_t;
+        (mpd_exp_digits(t) - 1 as ::core::ffi::c_int) as mpd_ssize_t
     } else if t < -(1 as ::core::ffi::c_int) as mpd_ssize_t {
-        return (mpd_exp_digits(t + 1 as mpd_ssize_t) - 1 as ::core::ffi::c_int) as mpd_ssize_t;
+        (mpd_exp_digits(t + 1 as mpd_ssize_t) - 1 as ::core::ffi::c_int) as mpd_ssize_t
     } else {
         mpd_maxcontext(&raw mut maxctx);
         mpd_qsub(&raw mut scratch, x, &raw const one, &raw mut maxctx, status);
@@ -12406,17 +12247,17 @@ unsafe extern "C" fn _lower_bound_zeta(
         }
         u = mpd_adjexp(&raw mut scratch);
         mpd_del(&raw mut scratch);
-        return if t == 0 as mpd_ssize_t {
+        if t == 0 as mpd_ssize_t {
             u - 2 as mpd_ssize_t
         } else {
             u - 1 as mpd_ssize_t
-        };
-    };
+        }
+    }
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _lower_bound_zeta(
-    mut x: *const mpd_t,
-    mut status: *mut uint32_t,
+    x: *const mpd_t,
+    status: *mut uint32_t,
 ) -> mpd_ssize_t {
     let mut maxctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -12440,13 +12281,12 @@ unsafe extern "C" fn _lower_bound_zeta(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut scratch_data as *mut mpd_uint_t,
     };
-    let mut t: mpd_ssize_t = 0;
-    let mut u: mpd_ssize_t = 0;
-    t = mpd_adjexp(x);
+    let u: mpd_ssize_t;
+    let t: mpd_ssize_t = mpd_adjexp(x);
     if t > 0 as mpd_ssize_t {
-        return mpd_exp_digits(t) as mpd_ssize_t - 1 as mpd_ssize_t;
+        mpd_exp_digits(t) as mpd_ssize_t - 1 as mpd_ssize_t
     } else if t < -(1 as mpd_ssize_t) {
-        return mpd_exp_digits(t + 1 as mpd_ssize_t) as mpd_ssize_t - 1 as mpd_ssize_t;
+        mpd_exp_digits(t + 1 as mpd_ssize_t) as mpd_ssize_t - 1 as mpd_ssize_t
     } else {
         mpd_maxcontext(&raw mut maxctx);
         mpd_qsub(&raw mut scratch, x, &raw const one, &raw mut maxctx, status);
@@ -12456,20 +12296,20 @@ unsafe extern "C" fn _lower_bound_zeta(
         }
         u = mpd_adjexp(&raw mut scratch);
         mpd_del(&raw mut scratch);
-        return if t == 0 as mpd_ssize_t {
+        if t == 0 as mpd_ssize_t {
             u - 2 as mpd_ssize_t
         } else {
             u - 1 as mpd_ssize_t
-        };
-    };
+        }
+    }
 }
 unsafe extern "C" fn _qcheck_pow_bounds(
-    mut result: *mut mpd_t,
-    mut x: *const mpd_t,
-    mut y: *const mpd_t,
-    mut resultsign: uint8_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    x: *const mpd_t,
+    y: *const mpd_t,
+    resultsign: uint8_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     let mut abs_x: mpd_t = mpd_t {
         flags: ((*x).flags as ::core::ffi::c_int & !MPD_DATAFLAGS
@@ -12481,18 +12321,15 @@ unsafe extern "C" fn _qcheck_pow_bounds(
         alloc: (*x).alloc,
         data: (*x).data,
     };
-    let mut ub_omega: mpd_ssize_t = 0;
-    let mut lb_zeta: mpd_ssize_t = 0;
-    let mut lb_theta: mpd_ssize_t = 0;
-    let mut sign: uint8_t = 0;
+    let ub_omega: mpd_ssize_t;
     mpd_set_positive(&raw mut abs_x);
-    lb_theta = mpd_adjexp(y);
-    lb_zeta = _lower_bound_zeta(&raw mut abs_x, status);
+    let lb_theta: mpd_ssize_t = mpd_adjexp(y);
+    let lb_zeta: mpd_ssize_t = _lower_bound_zeta(&raw mut abs_x, status);
     if lb_zeta == MPD_SSIZE_MAX as mpd_ssize_t {
         mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
         return 1 as ::core::ffi::c_int;
     }
-    sign = ((mpd_adjexp(&raw mut abs_x) < 0 as mpd_ssize_t) as ::core::ffi::c_int
+    let sign: uint8_t = ((mpd_adjexp(&raw mut abs_x) < 0 as mpd_ssize_t) as ::core::ffi::c_int
         ^ mpd_sign(y) as ::core::ffi::c_int) as uint8_t;
     if sign as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
         ub_omega = mpd_exp_digits((*ctx).emax) as mpd_ssize_t;
@@ -12519,15 +12356,15 @@ unsafe extern "C" fn _qcheck_pow_bounds(
             return 1 as ::core::ffi::c_int;
         }
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qpow_real(
-    mut result: *mut mpd_t,
-    mut base: *const mpd_t,
-    mut exp: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    base: *const mpd_t,
+    exp: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -12581,11 +12418,11 @@ unsafe extern "C" fn _mpd_qpow_real(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qpow_real(
-    mut result: *mut mpd_t,
-    mut base: *const mpd_t,
-    mut exp: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    base: *const mpd_t,
+    exp: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -12639,20 +12476,19 @@ unsafe extern "C" fn _mpd_qpow_real(
     *status = (*status as ::core::ffi::c_uint | (MPD_Inexact | MPD_Rounded)) as uint32_t;
 }
 pub unsafe extern "C" fn mpd_qpow(
-    mut result: *mut mpd_t,
-    mut base: *const mpd_t,
-    mut exp: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    base: *const mpd_t,
+    exp: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut resultsign: uint8_t = 0 as uint8_t;
     let mut intexp: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut cmp: ::core::ffi::c_int = 0;
-    if mpd_isspecial(base) != 0 || mpd_isspecial(exp) != 0 {
-        if mpd_qcheck_nans(result, base, exp, ctx, status) != 0 {
+    let mut cmp: ::core::ffi::c_int;
+    if (mpd_isspecial(base) != 0 || mpd_isspecial(exp) != 0)
+        && mpd_qcheck_nans(result, base, exp, ctx, status) != 0 {
             return;
         }
-    }
     if mpd_isinteger(exp) != 0 {
         intexp = 1 as ::core::ffi::c_int;
         resultsign =
@@ -12668,12 +12504,11 @@ pub unsafe extern "C" fn mpd_qpow(
         }
         return;
     }
-    if mpd_isnegative(base) != 0 {
-        if intexp == 0 || mpd_isinfinite(exp) != 0 {
+    if mpd_isnegative(base) != 0
+        && (intexp == 0 || mpd_isinfinite(exp) != 0) {
             mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
             return;
         }
-    }
     if mpd_isinfinite(exp) != 0 {
         cmp = _qcheck_pow_one_inf(result, base, resultsign, ctx, status);
         if cmp == 0 as ::core::ffi::c_int {
@@ -12714,7 +12549,7 @@ pub unsafe extern "C" fn mpd_qpow(
         _mpd_qpow_real(result, base, exp, ctx, status);
         if mpd_isspecial(result) == 0 && _mpd_cmp(result, &raw const one) == 0 as ::core::ffi::c_int
         {
-            let mut shift: mpd_ssize_t = (*ctx).prec - 1 as mpd_ssize_t;
+            let shift: mpd_ssize_t = (*ctx).prec - 1 as mpd_ssize_t;
             mpd_qshiftl(result, &raw const one, shift, status);
             (*result).exp = -shift;
         }
@@ -12725,11 +12560,11 @@ pub unsafe extern "C" fn mpd_qpow(
     };
 }
 unsafe extern "C" fn _mpd_qpowmod_uint(
-    mut result: *mut mpd_t,
-    mut base: *mut mpd_t,
+    result: *mut mpd_t,
+    base: *mut mpd_t,
     mut exp: mpd_uint_t,
-    mut mod_0: *const mpd_t,
-    mut status: *mut uint32_t,
+    mod_0: *const mpd_t,
+    status: *mut uint32_t,
 ) {
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -12755,14 +12590,14 @@ unsafe extern "C" fn _mpd_qpowmod_uint(
     }
 }
 pub unsafe extern "C" fn mpd_qpowmod(
-    mut result: *mut mpd_t,
-    mut base: *const mpd_t,
-    mut exp: *const mpd_t,
-    mut mod_0: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    base: *const mpd_t,
+    exp: *const mpd_t,
+    mod_0: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut current_block: u64;
+    let current_block: u64;
     let mut maxcontext: mpd_context_t = mpd_context_t {
         prec: 0,
         emax: 0,
@@ -12829,19 +12664,11 @@ pub unsafe extern "C" fn mpd_qpowmod(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut two_data as *mut mpd_uint_t,
     };
-    let mut tbase_exp: mpd_ssize_t = 0;
-    let mut texp_exp: mpd_ssize_t = 0;
-    let mut i: mpd_ssize_t = 0;
-    let mut t: mpd_t = mpd_t {
-        flags: 0,
-        exp: 0,
-        digits: 0,
-        len: 0,
-        alloc: 0,
-        data: ::core::ptr::null_mut::<mpd_uint_t>(),
-    };
-    let mut r: mpd_uint_t = 0;
-    let mut sign: uint8_t = 0;
+    let tbase_exp: mpd_ssize_t;
+    let texp_exp: mpd_ssize_t;
+    let mut i: mpd_ssize_t;
+    let mut t: mpd_t;
+    let r: mpd_uint_t;
     if mpd_isspecial(base) != 0 || mpd_isspecial(exp) != 0 || mpd_isspecial(mod_0) != 0 {
         if mpd_qcheck_3nans(result, base, exp, mod_0, ctx, status) != 0 {
             return;
@@ -12861,7 +12688,7 @@ pub unsafe extern "C" fn mpd_qpowmod(
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
     }
-    sign = (mpd_isnegative(base) != 0 && mpd_isodd(exp) != 0) as ::core::ffi::c_int as uint8_t;
+    let sign: uint8_t = (mpd_isnegative(base) != 0 && mpd_isodd(exp) != 0) as ::core::ffi::c_int as uint8_t;
     if mpd_iszerocoeff(exp) != 0 {
         if mpd_iszerocoeff(base) != 0 {
             mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
@@ -13008,17 +12835,16 @@ pub unsafe extern "C" fn mpd_qpowmod(
     mpd_del(&raw mut tmp);
 }
 pub unsafe extern "C" fn mpd_qquantize(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
-    let mut b_exp: mpd_ssize_t = (*b).exp;
-    let mut expdiff: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut rnd: mpd_uint_t = 0;
+    let b_exp: mpd_ssize_t = (*b).exp;
+    let shift: mpd_ssize_t;
+    let rnd: mpd_uint_t;
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(result, a, b, ctx, status) != 0 {
             return;
@@ -13039,7 +12865,7 @@ pub unsafe extern "C" fn mpd_qquantize(
         mpd_qfinalize(result, ctx, status);
         return;
     }
-    expdiff = (*a).exp - (*b).exp;
+    let expdiff: mpd_ssize_t = (*a).exp - (*b).exp;
     if (*a).digits + expdiff > (*ctx).prec {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
@@ -13073,15 +12899,13 @@ pub unsafe extern "C" fn mpd_qquantize(
     mpd_qfinalize(result, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qreduce(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut shift: mpd_ssize_t = 0;
-    let mut maxexp: mpd_ssize_t = 0;
-    let mut maxshift: mpd_ssize_t = 0;
-    let mut sign_a: uint8_t = mpd_sign(a);
+    let mut shift: mpd_ssize_t;
+    let sign_a: uint8_t = mpd_sign(a);
     if mpd_isspecial(a) != 0 {
         if mpd_qcheck_nan(result, a, ctx, status) != 0 {
             return;
@@ -13101,22 +12925,22 @@ pub unsafe extern "C" fn mpd_qreduce(
         return;
     }
     shift = mpd_trail_zeros(result);
-    maxexp = if (*ctx).clamp != 0 {
+    let maxexp: mpd_ssize_t = if (*ctx).clamp != 0 {
         mpd_etop(ctx)
     } else {
         (*ctx).emax
     };
-    maxshift = maxexp - (*result).exp;
+    let maxshift: mpd_ssize_t = maxexp - (*result).exp;
     shift = if shift > maxshift { maxshift } else { shift };
     mpd_qshiftr_inplace(result, shift);
     (*result).exp += shift;
 }
 pub unsafe extern "C" fn mpd_qrem(
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut q_data: [mpd_uint_t; 64] = [0; 64];
     let mut q: mpd_t = mpd_t {
@@ -13158,11 +12982,11 @@ pub unsafe extern "C" fn mpd_qrem(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qrem_near(
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
     mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -13197,11 +13021,11 @@ pub unsafe extern "C" fn mpd_qrem_near(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut q_data as *mut mpd_uint_t,
     };
-    let mut expdiff: mpd_ssize_t = 0;
-    let mut qdigits: mpd_ssize_t = 0;
-    let mut cmp: ::core::ffi::c_int = 0;
-    let mut isodd: ::core::ffi::c_int = 0;
-    let mut allnine: ::core::ffi::c_int = 0;
+    let expdiff: mpd_ssize_t;
+    let qdigits: mpd_ssize_t;
+    let cmp: ::core::ffi::c_int;
+    let isodd: ::core::ffi::c_int;
+    let allnine: ::core::ffi::c_int;
     if !r.is_null() {
     } else {
         mpd_c2rust_assert_fail(b"r != NULL\0" as *const u8 as *const ::core::ffi::c_char);
@@ -13229,7 +13053,7 @@ pub unsafe extern "C" fn mpd_qrem_near(
         }
         return;
     }
-    if r == b as *mut mpd_t {
+    if ::core::ptr::eq(r, b) {
         if mpd_qcopy(&raw mut btmp, b, status) == 0 {
             mpd_seterror(r, MPD_Malloc_error as uint32_t, status);
             return;
@@ -13237,8 +13061,8 @@ pub unsafe extern "C" fn mpd_qrem_near(
         b = &raw mut btmp;
     }
     _mpd_qdivmod(&raw mut q, r, a, b, ctx, status);
-    if !(mpd_isnan(&raw mut q) != 0 || mpd_isnan(r) != 0) {
-        if !(mpd_iszerocoeff(r) != 0) {
+    if !(mpd_isnan(&raw mut q) != 0 || mpd_isnan(r) != 0)
+        && !(mpd_iszerocoeff(r) != 0) {
             expdiff = mpd_adjexp(b) - mpd_adjexp(r);
             if -(1 as ::core::ffi::c_int) as mpd_ssize_t <= expdiff && expdiff <= 1 as mpd_ssize_t {
                 allnine = mpd_coeff_isallnine(&raw mut q);
@@ -13265,18 +13089,17 @@ pub unsafe extern "C" fn mpd_qrem_near(
                 }
             }
         }
-    }
     mpd_del(&raw mut btmp);
     mpd_del(&raw mut q);
     mpd_qfinalize(r, ctx, status);
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qrem_near(
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
     mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -13311,11 +13134,11 @@ pub unsafe extern "C" fn mpd_qrem_near(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut q_data as *mut mpd_uint_t,
     };
-    let mut expdiff: mpd_ssize_t = 0;
-    let mut qdigits: mpd_ssize_t = 0;
-    let mut cmp: ::core::ffi::c_int = 0;
-    let mut isodd: ::core::ffi::c_int = 0;
-    let mut allnine: ::core::ffi::c_int = 0;
+    let expdiff: mpd_ssize_t;
+    let qdigits: mpd_ssize_t;
+    let cmp: ::core::ffi::c_int;
+    let isodd: ::core::ffi::c_int;
+    let allnine: ::core::ffi::c_int;
     if !r.is_null() {
     } else {
         mpd_c2rust_assert_fail(b"r != NULL\0" as *const u8 as *const ::core::ffi::c_char);
@@ -13343,7 +13166,7 @@ pub unsafe extern "C" fn mpd_qrem_near(
         }
         return;
     }
-    if r == b as *mut mpd_t {
+    if ::core::ptr::eq(r, b) {
         if mpd_qcopy(&raw mut btmp, b, status) == 0 {
             mpd_seterror(r, MPD_Malloc_error as uint32_t, status);
             return;
@@ -13351,8 +13174,8 @@ pub unsafe extern "C" fn mpd_qrem_near(
         b = &raw mut btmp;
     }
     _mpd_qdivmod(&raw mut q, r, a, b, ctx, status);
-    if !(mpd_isnan(&raw mut q) != 0 || mpd_isnan(r) != 0) {
-        if !(mpd_iszerocoeff(r) != 0) {
+    if !(mpd_isnan(&raw mut q) != 0 || mpd_isnan(r) != 0)
+        && !(mpd_iszerocoeff(r) != 0) {
             expdiff = mpd_adjexp(b) - mpd_adjexp(r);
             if -(1 as mpd_ssize_t) <= expdiff && expdiff <= 1 as mpd_ssize_t {
                 allnine = mpd_coeff_isallnine(&raw mut q);
@@ -13379,21 +13202,19 @@ pub unsafe extern "C" fn mpd_qrem_near(
                 }
             }
         }
-    }
     mpd_del(&raw mut btmp);
     mpd_del(&raw mut q);
     mpd_qfinalize(r, ctx, status);
 }
 unsafe extern "C" fn _mpd_qrescale(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut exp: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    exp: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut expdiff: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut rnd: mpd_uint_t = 0;
+    let shift: mpd_ssize_t;
+    let rnd: mpd_uint_t;
     if mpd_isspecial(a) != 0 {
         mpd_qcopy(result, a, status);
         return;
@@ -13402,7 +13223,7 @@ unsafe extern "C" fn _mpd_qrescale(
         _settriple(result, mpd_sign(a), 0 as mpd_uint_t, exp);
         return;
     }
-    expdiff = (*a).exp - exp;
+    let expdiff: mpd_ssize_t = (*a).exp - exp;
     if expdiff >= 0 as mpd_ssize_t {
         shift = expdiff;
         if (*a).digits + shift > MPD_MAX_PREC as mpd_ssize_t + 1 as mpd_ssize_t {
@@ -13431,11 +13252,11 @@ unsafe extern "C" fn _mpd_qrescale(
     }
 }
 pub unsafe extern "C" fn mpd_qrescale(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut exp: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    exp: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if exp > MPD_MAX_EMAX as mpd_ssize_t + 1 as mpd_ssize_t || exp < MPD_MIN_ETINY as mpd_ssize_t {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
@@ -13444,11 +13265,11 @@ pub unsafe extern "C" fn mpd_qrescale(
     _mpd_qrescale(result, a, exp, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qrescale_fmt(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut exp: mpd_ssize_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    exp: mpd_ssize_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if exp > MPD_MAX_EMAX as mpd_ssize_t + 1 as mpd_ssize_t
         || exp < MPD_MIN_ETINY as mpd_ssize_t - MPD_MAX_PREC as mpd_ssize_t
@@ -13459,13 +13280,12 @@ pub unsafe extern "C" fn mpd_qrescale_fmt(
     _mpd_qrescale(result, a, exp, ctx, status);
 }
 unsafe extern "C" fn _mpd_qround_to_integral(
-    mut action: ::core::ffi::c_int,
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    action: ::core::ffi::c_int,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut rnd: mpd_uint_t = 0;
     if mpd_isspecial(a) != 0 {
         if mpd_qcheck_nan(result, a, ctx, status) != 0 {
             return;
@@ -13481,7 +13301,7 @@ unsafe extern "C" fn _mpd_qround_to_integral(
         _settriple(result, mpd_sign(a), 0 as mpd_uint_t, 0 as mpd_ssize_t);
         return;
     }
-    rnd = mpd_qshiftr(result, a, -(*a).exp, status);
+    let rnd: mpd_uint_t = mpd_qshiftr(result, a, -(*a).exp, status);
     if rnd == MPD_UINT_MAX as mpd_uint_t {
         return;
     }
@@ -13498,26 +13318,26 @@ unsafe extern "C" fn _mpd_qround_to_integral(
     }
 }
 pub unsafe extern "C" fn mpd_qround_to_intx(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _mpd_qround_to_integral(TO_INT_EXACT as ::core::ffi::c_int, result, a, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qround_to_int(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _mpd_qround_to_integral(TO_INT_SILENT as ::core::ffi::c_int, result, a, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qtrunc(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     if mpd_isspecial(a) != 0 {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
@@ -13526,10 +13346,10 @@ pub unsafe extern "C" fn mpd_qtrunc(
     _mpd_qround_to_integral(TO_INT_TRUNC as ::core::ffi::c_int, result, a, ctx, status);
 }
 pub unsafe extern "C" fn mpd_qfloor(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -13557,10 +13377,10 @@ pub unsafe extern "C" fn mpd_qfloor(
     );
 }
 pub unsafe extern "C" fn mpd_qceil(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -13588,23 +13408,23 @@ pub unsafe extern "C" fn mpd_qceil(
     );
 }
 pub unsafe extern "C" fn mpd_same_quantum(
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
 ) -> ::core::ffi::c_int {
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         return (mpd_isnan(a) != 0 && mpd_isnan(b) != 0
             || mpd_isinfinite(a) != 0 && mpd_isinfinite(b) != 0)
             as ::core::ffi::c_int;
     }
-    return ((*a).exp == (*b).exp) as ::core::ffi::c_int;
+    ((*a).exp == (*b).exp) as ::core::ffi::c_int
 }
 unsafe extern "C" fn recpr_schedule_prec(
-    mut klist: *mut mpd_ssize_t,
-    mut maxprec: mpd_ssize_t,
-    mut initprec: mpd_ssize_t,
+    klist: *mut mpd_ssize_t,
+    maxprec: mpd_ssize_t,
+    initprec: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
-    let mut k: mpd_ssize_t = 0;
-    let mut i: ::core::ffi::c_int = 0;
+    let mut k: mpd_ssize_t;
+    let mut i: ::core::ffi::c_int;
     if maxprec > 0 as mpd_ssize_t && initprec > 0 as mpd_ssize_t {
     } else {
         mpd_c2rust_assert_fail(
@@ -13619,18 +13439,18 @@ unsafe extern "C" fn recpr_schedule_prec(
     loop {
         k = (k + 1 as mpd_ssize_t) / 2 as mpd_ssize_t;
         let fresh0 = i;
-        i = i + 1;
+        i += 1;
         *klist.offset(fresh0 as isize) = k;
         if !(k > initprec) {
             break;
         }
     }
-    return i - 1 as ::core::ffi::c_int;
+    i - 1 as ::core::ffi::c_int
 }
 unsafe extern "C" fn _mpd_qreciprocal_approx(
-    mut z: *mut mpd_t,
-    mut v: *const mpd_t,
-    mut status: *mut uint32_t,
+    z: *mut mpd_t,
+    v: *const mpd_t,
+    status: *mut uint32_t,
 ) {
     let mut p10data: [mpd_uint_t; 2] = [
         0 as mpd_uint_t,
@@ -13639,7 +13459,6 @@ unsafe extern "C" fn _mpd_qreciprocal_approx(
     ];
     let mut dummy: mpd_uint_t = 0;
     let mut word: mpd_uint_t = 0;
-    let mut n: ::core::ffi::c_int = 0;
     if (*v).exp == -(*v).digits {
     } else {
         mpd_c2rust_assert_fail(
@@ -13652,7 +13471,7 @@ unsafe extern "C" fn _mpd_qreciprocal_approx(
         v,
         MPD_RDIGITS as ::core::ffi::c_uint,
     );
-    n = mpd_word_digits(word);
+    let n: ::core::ffi::c_int = mpd_word_digits(word);
     word = word.wrapping_mul(
         *(&raw const mpd_pow10 as *const mpd_uint_t).offset((MPD_RDIGITS - n) as isize),
     );
@@ -13665,7 +13484,7 @@ unsafe extern "C" fn _mpd_qreciprocal_approx(
     );
     mpd_clear_flags(z);
     (*z).exp = -(MPD_RDIGITS - 2 as ::core::ffi::c_int) as mpd_ssize_t;
-    (*z).len = (if *(*z).data.offset(1 as isize) == 0 as mpd_uint_t {
+    (*z).len = (if *(*z).data.offset(1_isize) == 0 as mpd_uint_t {
         1 as ::core::ffi::c_int
     } else {
         2 as ::core::ffi::c_int
@@ -13674,10 +13493,10 @@ unsafe extern "C" fn _mpd_qreciprocal_approx(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qreciprocal(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut varcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -13701,8 +13520,7 @@ unsafe extern "C" fn _mpd_qreciprocal(
         clamp: 0,
         allcr: 0,
     };
-    let mut z: *mut mpd_t = result;
-    let mut v: *mut mpd_t = ::core::ptr::null_mut::<mpd_t>();
+    let z: *mut mpd_t = result;
     let mut vtmp: mpd_t = mpd_t {
         flags: ((*a).flags as ::core::ffi::c_int & !MPD_DATAFLAGS
             | MPD_STATIC as ::core::ffi::c_int
@@ -13747,32 +13565,30 @@ unsafe extern "C" fn _mpd_qreciprocal(
         data: &raw mut two_data as *mut mpd_uint_t,
     };
     let mut klist: [mpd_ssize_t; 64] = [0; 64];
-    let mut adj: mpd_ssize_t = 0;
-    let mut maxprec: mpd_ssize_t = 0;
-    let mut initprec: mpd_ssize_t = 0;
-    let mut sign: uint8_t = mpd_sign(a);
-    let mut i: ::core::ffi::c_int = 0;
-    if result != a as *mut mpd_t {
+    let mut maxprec: mpd_ssize_t;
+    let sign: uint8_t = mpd_sign(a);
+    let mut i: ::core::ffi::c_int;
+    if !::core::ptr::eq(result, a) {
     } else {
         mpd_c2rust_assert_fail(b"result != a\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    v = &raw mut vtmp;
+    let v: *mut mpd_t = &raw mut vtmp;
     mpd_clear_flags(v);
-    adj = (*v).digits + (*v).exp;
+    let adj: mpd_ssize_t = (*v).digits + (*v).exp;
     (*v).exp = -(*v).digits;
     _mpd_qreciprocal_approx(z, v, status);
     mpd_maxcontext(&raw mut varcontext);
     mpd_maxcontext(&raw mut maxcontext);
     maxcontext.round = MPD_ROUND_TRUNC as ::core::ffi::c_int;
     varcontext.round = maxcontext.round;
-    maxcontext.emax = (MPD_MAX_EMAX + 100 as i64) as mpd_ssize_t;
+    maxcontext.emax = (MPD_MAX_EMAX + 100_i64) as mpd_ssize_t;
     varcontext.emax = maxcontext.emax;
-    maxcontext.emin = (MPD_MIN_EMIN - 100 as i64) as mpd_ssize_t;
+    maxcontext.emin = (MPD_MIN_EMIN - 100_i64) as mpd_ssize_t;
     varcontext.emin = maxcontext.emin;
-    maxcontext.prec = (MPD_MAX_PREC + 100 as i64) as mpd_ssize_t;
+    maxcontext.prec = (MPD_MAX_PREC + 100_i64) as mpd_ssize_t;
     maxprec = (*ctx).prec;
     maxprec += 2 as mpd_ssize_t;
-    initprec = (MPD_RDIGITS - 3 as ::core::ffi::c_int) as mpd_ssize_t;
+    let initprec: mpd_ssize_t = (MPD_RDIGITS - 3 as ::core::ffi::c_int) as mpd_ssize_t;
     i = recpr_schedule_prec(&raw mut klist as *mut mpd_ssize_t, maxprec, initprec);
     while i >= 0 as ::core::ffi::c_int {
         _mpd_qmul_exact(&raw mut s, z, z, &raw mut maxcontext, status);
@@ -13804,10 +13620,10 @@ unsafe extern "C" fn _mpd_qreciprocal(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qreciprocal(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut varcontext: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -13831,8 +13647,7 @@ unsafe extern "C" fn _mpd_qreciprocal(
         clamp: 0,
         allcr: 0,
     };
-    let mut z: *mut mpd_t = result;
-    let mut v: *mut mpd_t = ::core::ptr::null_mut::<mpd_t>();
+    let z: *mut mpd_t = result;
     let mut vtmp: mpd_t = mpd_t {
         flags: ((*a).flags as ::core::ffi::c_int & !MPD_DATAFLAGS
             | MPD_STATIC as ::core::ffi::c_int
@@ -13877,18 +13692,16 @@ unsafe extern "C" fn _mpd_qreciprocal(
         data: &raw mut two_data as *mut mpd_uint_t,
     };
     let mut klist: [mpd_ssize_t; 32] = [0; 32];
-    let mut adj: mpd_ssize_t = 0;
-    let mut maxprec: mpd_ssize_t = 0;
-    let mut initprec: mpd_ssize_t = 0;
-    let mut sign: uint8_t = mpd_sign(a);
-    let mut i: ::core::ffi::c_int = 0;
-    if result != a as *mut mpd_t {
+    let mut maxprec: mpd_ssize_t;
+    let sign: uint8_t = mpd_sign(a);
+    let mut i: ::core::ffi::c_int;
+    if !::core::ptr::eq(result, a) {
     } else {
         mpd_c2rust_assert_fail(b"result != a\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    v = &raw mut vtmp;
+    let v: *mut mpd_t = &raw mut vtmp;
     mpd_clear_flags(v);
-    adj = (*v).digits + (*v).exp;
+    let adj: mpd_ssize_t = (*v).digits + (*v).exp;
     (*v).exp = -(*v).digits;
     _mpd_qreciprocal_approx(z, v, status);
     mpd_maxcontext(&raw mut varcontext);
@@ -13902,7 +13715,7 @@ unsafe extern "C" fn _mpd_qreciprocal(
     maxcontext.prec = (MPD_MAX_PREC + 100 as ::core::ffi::c_int) as mpd_ssize_t;
     maxprec = (*ctx).prec;
     maxprec = (maxprec as ::core::ffi::c_int + 2 as ::core::ffi::c_int) as mpd_ssize_t;
-    initprec = (MPD_RDIGITS - 3 as ::core::ffi::c_int) as mpd_ssize_t;
+    let initprec: mpd_ssize_t = (MPD_RDIGITS - 3 as ::core::ffi::c_int) as mpd_ssize_t;
     i = recpr_schedule_prec(&raw mut klist as *mut mpd_ssize_t, maxprec, initprec);
     while i >= 0 as ::core::ffi::c_int {
         _mpd_qmul_exact(&raw mut s, z, z, &raw mut maxcontext, status);
@@ -13934,11 +13747,11 @@ unsafe extern "C" fn _mpd_qreciprocal(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_base_ndivmod(
-    mut q: *mut mpd_t,
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut status: *mut uint32_t,
+    q: *mut mpd_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut workctx: mpd_context_t = mpd_context_t {
@@ -13970,14 +13783,14 @@ unsafe extern "C" fn _mpd_base_ndivmod(
         alloc: 0,
         data: ::core::ptr::null_mut::<mpd_uint_t>(),
     };
-    let mut k: ::core::ffi::c_int = 0;
+    let mut k: ::core::ffi::c_int;
     _mpd_copy_shared(&raw mut aa, a);
     _mpd_copy_shared(&raw mut bb, b);
     mpd_set_positive(&raw mut aa);
     mpd_set_positive(&raw mut bb);
     aa.exp = 0 as mpd_ssize_t;
     bb.exp = 0 as mpd_ssize_t;
-    if q == a as *mut mpd_t || q == b as *mut mpd_t {
+    if ::core::ptr::eq(q, a) || ::core::ptr::eq(q, b) {
         qq = mpd_qnew();
         if qq.is_null() {
             *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
@@ -13988,163 +13801,161 @@ unsafe extern "C" fn _mpd_base_ndivmod(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            if r == a as *mut mpd_t || r == b as *mut mpd_t {
-                rr = mpd_qnew();
-                if rr.is_null() {
-                    *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
-                    current_block = 1;
-                } else {
-                    current_block = 3;
-                }
+    if current_block == 2 {
+        if ::core::ptr::eq(r, a) || ::core::ptr::eq(r, b) {
+            rr = mpd_qnew();
+            if rr.is_null() {
+                *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
+                current_block = 1;
             } else {
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
-                    mpd_maxcontext(&raw mut workctx);
-                    workctx.prec = (*a).digits - (*b).digits + 1 as mpd_ssize_t + 3 as mpd_ssize_t;
-                    if (*a).digits > MPD_MAX_PREC as mpd_ssize_t
-                        || workctx.prec > MPD_MAX_PREC as mpd_ssize_t
-                    {
-                        *status =
-                            (*status as ::core::ffi::c_uint | MPD_Division_impossible) as uint32_t;
-                    } else {
-                        _mpd_qreciprocal(
-                            rr,
-                            &raw mut bb,
-                            &raw mut workctx,
-                            &raw mut workctx.status,
-                        );
-                        _mpd_qmul(
-                            qq,
-                            &raw mut aa,
-                            rr,
-                            &raw mut workctx,
-                            &raw mut workctx.status,
-                        );
-                        mpd_qtrunc(qq, qq, &raw mut workctx, &raw mut workctx.status);
-                        workctx.prec = aa.digits + 3 as mpd_ssize_t;
-                        workctx.emax = (MPD_MAX_EMAX + 3 as i64) as mpd_ssize_t;
-                        workctx.emin = (MPD_MIN_EMIN - 3 as i64) as mpd_ssize_t;
-                        _mpd_qmul(
-                            rr,
-                            &raw mut bb,
-                            qq,
-                            &raw mut workctx,
-                            &raw mut workctx.status,
-                        );
-                        _mpd_qsub_exact(
-                            rr,
-                            &raw mut aa,
-                            rr,
-                            &raw mut workctx,
-                            &raw mut workctx.status,
-                        );
-                        k = 0 as ::core::ffi::c_int;
-                        loop {
-                            if mpd_isspecial(qq) != 0 || mpd_isspecial(rr) != 0 {
-                                *status = (*status as ::core::ffi::c_uint
-                                    | (workctx.status & MPD_Errors as uint32_t)
-                                        as ::core::ffi::c_uint)
-                                    as uint32_t;
-                                current_block = 1;
-                                break;
-                            } else if k > 2 as ::core::ffi::c_int {
-                                fprintf(
-                                    mpd_c2rust_stderr(),
-                                    b"%s:%d: warning: \0" as *const u8
-                                        as *const ::core::ffi::c_char,
-                                    b"libmpdec/mpdecimal.c\0" as *const u8
-                                        as *const ::core::ffi::c_char,
-                                    7764 as ::core::ffi::c_int,
+        } else {
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                mpd_maxcontext(&raw mut workctx);
+                workctx.prec = (*a).digits - (*b).digits + 1 as mpd_ssize_t + 3 as mpd_ssize_t;
+                if (*a).digits > MPD_MAX_PREC as mpd_ssize_t
+                    || workctx.prec > MPD_MAX_PREC as mpd_ssize_t
+                {
+                    *status =
+                        (*status as ::core::ffi::c_uint | MPD_Division_impossible) as uint32_t;
+                } else {
+                    _mpd_qreciprocal(
+                        rr,
+                        &raw mut bb,
+                        &raw mut workctx,
+                        &raw mut workctx.status,
+                    );
+                    _mpd_qmul(
+                        qq,
+                        &raw mut aa,
+                        rr,
+                        &raw mut workctx,
+                        &raw mut workctx.status,
+                    );
+                    mpd_qtrunc(qq, qq, &raw mut workctx, &raw mut workctx.status);
+                    workctx.prec = aa.digits + 3 as mpd_ssize_t;
+                    workctx.emax = (MPD_MAX_EMAX + 3_i64) as mpd_ssize_t;
+                    workctx.emin = (MPD_MIN_EMIN - 3_i64) as mpd_ssize_t;
+                    _mpd_qmul(
+                        rr,
+                        &raw mut bb,
+                        qq,
+                        &raw mut workctx,
+                        &raw mut workctx.status,
+                    );
+                    _mpd_qsub_exact(
+                        rr,
+                        &raw mut aa,
+                        rr,
+                        &raw mut workctx,
+                        &raw mut workctx.status,
+                    );
+                    k = 0 as ::core::ffi::c_int;
+                    loop {
+                        if mpd_isspecial(qq) != 0 || mpd_isspecial(rr) != 0 {
+                            *status = (*status as ::core::ffi::c_uint
+                                | (workctx.status & MPD_Errors as uint32_t)
+                                    as ::core::ffi::c_uint)
+                                as uint32_t;
+                            current_block = 1;
+                            break;
+                        } else if k > 2 as ::core::ffi::c_int {
+                            fprintf(
+                                mpd_c2rust_stderr(),
+                                b"%s:%d: warning: \0" as *const u8
+                                    as *const ::core::ffi::c_char,
+                                b"libmpdec/mpdecimal.c\0" as *const u8
+                                    as *const ::core::ffi::c_char,
+                                7764 as ::core::ffi::c_int,
+                            );
+                            fprintf(
+                                mpd_c2rust_stderr(),
+                                b"libmpdec: internal error in _mpd_base_ndivmod: please report\0"
+                                    as *const u8 as *const ::core::ffi::c_char,
+                            );
+                            fputc('\n' as i32, mpd_c2rust_stderr());
+                            *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation)
+                                as uint32_t;
+                            current_block = 1;
+                            break;
+                        } else {
+                            if _mpd_cmp(&raw const zero, rr) == 1 as ::core::ffi::c_int {
+                                _mpd_qadd_exact(
+                                    rr,
+                                    rr,
+                                    &raw mut bb,
+                                    &raw mut workctx,
+                                    &raw mut workctx.status,
                                 );
-                                fprintf(
-                                    mpd_c2rust_stderr(),
-                                    b"libmpdec: internal error in _mpd_base_ndivmod: please report\0"
-                                        as *const u8 as *const ::core::ffi::c_char,
+                                _mpd_qadd_exact(
+                                    qq,
+                                    qq,
+                                    &raw const minus_one,
+                                    &raw mut workctx,
+                                    &raw mut workctx.status,
                                 );
-                                fputc('\n' as i32, mpd_c2rust_stderr());
-                                *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation)
-                                    as uint32_t;
-                                current_block = 1;
-                                break;
                             } else {
-                                if _mpd_cmp(&raw const zero, rr) == 1 as ::core::ffi::c_int {
-                                    _mpd_qadd_exact(
-                                        rr,
-                                        rr,
-                                        &raw mut bb,
-                                        &raw mut workctx,
-                                        &raw mut workctx.status,
-                                    );
-                                    _mpd_qadd_exact(
-                                        qq,
-                                        qq,
-                                        &raw const minus_one,
-                                        &raw mut workctx,
-                                        &raw mut workctx.status,
-                                    );
-                                } else {
-                                    if _mpd_cmp(rr, &raw mut bb) == -(1 as ::core::ffi::c_int) {
-                                        current_block = 4;
-                                        break;
-                                    }
-                                    _mpd_qsub_exact(
-                                        rr,
-                                        rr,
-                                        &raw mut bb,
-                                        &raw mut workctx,
-                                        &raw mut workctx.status,
-                                    );
-                                    _mpd_qadd_exact(
-                                        qq,
-                                        qq,
-                                        &raw const one,
-                                        &raw mut workctx,
-                                        &raw mut workctx.status,
-                                    );
+                                if _mpd_cmp(rr, &raw mut bb) == -(1 as ::core::ffi::c_int) {
+                                    current_block = 4;
+                                    break;
                                 }
-                                k += 1;
+                                _mpd_qsub_exact(
+                                    rr,
+                                    rr,
+                                    &raw mut bb,
+                                    &raw mut workctx,
+                                    &raw mut workctx.status,
+                                );
+                                _mpd_qadd_exact(
+                                    qq,
+                                    qq,
+                                    &raw const one,
+                                    &raw mut workctx,
+                                    &raw mut workctx.status,
+                                );
                             }
+                            k += 1;
                         }
-                        match current_block {
-                            1 => {}
-                            _ => {
-                                if qq != q {
-                                    if mpd_qcopy(q, qq, status) == 0 {
-                                        current_block = 1;
-                                    } else {
-                                        mpd_del(qq);
-                                        current_block = 5;
-                                    }
+                    }
+                    match current_block {
+                        1 => {}
+                        _ => {
+                            if qq != q {
+                                if mpd_qcopy(q, qq, status) == 0 {
+                                    current_block = 1;
                                 } else {
+                                    mpd_del(qq);
                                     current_block = 5;
                                 }
-                                match current_block {
-                                    1 => {}
-                                    _ => {
-                                        if rr != r {
-                                            if mpd_qcopy(r, rr, status) == 0 {
-                                                current_block = 1;
-                                            } else {
-                                                mpd_del(rr);
-                                                current_block = 6;
-                                            }
+                            } else {
+                                current_block = 5;
+                            }
+                            match current_block {
+                                1 => {}
+                                _ => {
+                                    if rr != r {
+                                        if mpd_qcopy(r, rr, status) == 0 {
+                                            current_block = 1;
                                         } else {
+                                            mpd_del(rr);
                                             current_block = 6;
                                         }
-                                        match current_block {
-                                            1 => {}
-                                            _ => {
-                                                *status = (*status as ::core::ffi::c_uint
-                                                    | (workctx.status & MPD_Errors as uint32_t)
-                                                        as ::core::ffi::c_uint)
-                                                    as uint32_t;
-                                                return;
-                                            }
+                                    } else {
+                                        current_block = 6;
+                                    }
+                                    match current_block {
+                                        1 => {}
+                                        _ => {
+                                            *status = (*status as ::core::ffi::c_uint
+                                                | (workctx.status & MPD_Errors as uint32_t)
+                                                    as ::core::ffi::c_uint)
+                                                as uint32_t;
+                                            return;
                                         }
                                     }
                                 }
@@ -14154,7 +13965,6 @@ unsafe extern "C" fn _mpd_base_ndivmod(
                 }
             }
         }
-        _ => {}
     }
     if !qq.is_null() && qq != q {
         mpd_del(qq);
@@ -14167,11 +13977,11 @@ unsafe extern "C" fn _mpd_base_ndivmod(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_base_ndivmod(
-    mut q: *mut mpd_t,
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut status: *mut uint32_t,
+    q: *mut mpd_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut workctx: mpd_context_t = mpd_context_t {
@@ -14203,14 +14013,14 @@ unsafe extern "C" fn _mpd_base_ndivmod(
         alloc: 0,
         data: ::core::ptr::null_mut::<mpd_uint_t>(),
     };
-    let mut k: ::core::ffi::c_int = 0;
+    let mut k: ::core::ffi::c_int;
     _mpd_copy_shared(&raw mut aa, a);
     _mpd_copy_shared(&raw mut bb, b);
     mpd_set_positive(&raw mut aa);
     mpd_set_positive(&raw mut bb);
     aa.exp = 0 as mpd_ssize_t;
     bb.exp = 0 as mpd_ssize_t;
-    if q == a as *mut mpd_t || q == b as *mut mpd_t {
+    if ::core::ptr::eq(q, a) || ::core::ptr::eq(q, b) {
         qq = mpd_qnew();
         if qq.is_null() {
             *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
@@ -14221,163 +14031,161 @@ unsafe extern "C" fn _mpd_base_ndivmod(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            if r == a as *mut mpd_t || r == b as *mut mpd_t {
-                rr = mpd_qnew();
-                if rr.is_null() {
-                    *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
-                    current_block = 1;
-                } else {
-                    current_block = 3;
-                }
+    if current_block == 2 {
+        if ::core::ptr::eq(r, a) || ::core::ptr::eq(r, b) {
+            rr = mpd_qnew();
+            if rr.is_null() {
+                *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
+                current_block = 1;
             } else {
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
-                    mpd_maxcontext(&raw mut workctx);
-                    workctx.prec = (*a).digits - (*b).digits + 1 as mpd_ssize_t + 3 as mpd_ssize_t;
-                    if (*a).digits > MPD_MAX_PREC as mpd_ssize_t
-                        || workctx.prec > MPD_MAX_PREC as mpd_ssize_t
-                    {
-                        *status =
-                            (*status as ::core::ffi::c_uint | MPD_Division_impossible) as uint32_t;
-                    } else {
-                        _mpd_qreciprocal(
-                            rr,
-                            &raw mut bb,
-                            &raw mut workctx,
-                            &raw mut workctx.status,
-                        );
-                        _mpd_qmul(
-                            qq,
-                            &raw mut aa,
-                            rr,
-                            &raw mut workctx,
-                            &raw mut workctx.status,
-                        );
-                        mpd_qtrunc(qq, qq, &raw mut workctx, &raw mut workctx.status);
-                        workctx.prec = aa.digits + 3 as mpd_ssize_t;
-                        workctx.emax = (MPD_MAX_EMAX + 3 as ::core::ffi::c_int) as mpd_ssize_t;
-                        workctx.emin = (MPD_MIN_EMIN - 3 as ::core::ffi::c_int) as mpd_ssize_t;
-                        _mpd_qmul(
-                            rr,
-                            &raw mut bb,
-                            qq,
-                            &raw mut workctx,
-                            &raw mut workctx.status,
-                        );
-                        _mpd_qsub_exact(
-                            rr,
-                            &raw mut aa,
-                            rr,
-                            &raw mut workctx,
-                            &raw mut workctx.status,
-                        );
-                        k = 0 as ::core::ffi::c_int;
-                        loop {
-                            if mpd_isspecial(qq) != 0 || mpd_isspecial(rr) != 0 {
-                                *status = (*status as ::core::ffi::c_uint
-                                    | (workctx.status & MPD_Errors as uint32_t)
-                                        as ::core::ffi::c_uint)
-                                    as uint32_t;
-                                current_block = 1;
-                                break;
-                            } else if k > 2 as ::core::ffi::c_int {
-                                fprintf(
-                                    mpd_c2rust_stderr(),
-                                    b"%s:%d: warning: \0" as *const u8
-                                        as *const ::core::ffi::c_char,
-                                    b"libmpdec/mpdecimal.c\0" as *const u8
-                                        as *const ::core::ffi::c_char,
-                                    7764 as ::core::ffi::c_int,
+        } else {
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                mpd_maxcontext(&raw mut workctx);
+                workctx.prec = (*a).digits - (*b).digits + 1 as mpd_ssize_t + 3 as mpd_ssize_t;
+                if (*a).digits > MPD_MAX_PREC as mpd_ssize_t
+                    || workctx.prec > MPD_MAX_PREC as mpd_ssize_t
+                {
+                    *status =
+                        (*status as ::core::ffi::c_uint | MPD_Division_impossible) as uint32_t;
+                } else {
+                    _mpd_qreciprocal(
+                        rr,
+                        &raw mut bb,
+                        &raw mut workctx,
+                        &raw mut workctx.status,
+                    );
+                    _mpd_qmul(
+                        qq,
+                        &raw mut aa,
+                        rr,
+                        &raw mut workctx,
+                        &raw mut workctx.status,
+                    );
+                    mpd_qtrunc(qq, qq, &raw mut workctx, &raw mut workctx.status);
+                    workctx.prec = aa.digits + 3 as mpd_ssize_t;
+                    workctx.emax = (MPD_MAX_EMAX + 3 as ::core::ffi::c_int) as mpd_ssize_t;
+                    workctx.emin = (MPD_MIN_EMIN - 3 as ::core::ffi::c_int) as mpd_ssize_t;
+                    _mpd_qmul(
+                        rr,
+                        &raw mut bb,
+                        qq,
+                        &raw mut workctx,
+                        &raw mut workctx.status,
+                    );
+                    _mpd_qsub_exact(
+                        rr,
+                        &raw mut aa,
+                        rr,
+                        &raw mut workctx,
+                        &raw mut workctx.status,
+                    );
+                    k = 0 as ::core::ffi::c_int;
+                    loop {
+                        if mpd_isspecial(qq) != 0 || mpd_isspecial(rr) != 0 {
+                            *status = (*status as ::core::ffi::c_uint
+                                | (workctx.status & MPD_Errors as uint32_t)
+                                    as ::core::ffi::c_uint)
+                                as uint32_t;
+                            current_block = 1;
+                            break;
+                        } else if k > 2 as ::core::ffi::c_int {
+                            fprintf(
+                                mpd_c2rust_stderr(),
+                                b"%s:%d: warning: \0" as *const u8
+                                    as *const ::core::ffi::c_char,
+                                b"libmpdec/mpdecimal.c\0" as *const u8
+                                    as *const ::core::ffi::c_char,
+                                7764 as ::core::ffi::c_int,
+                            );
+                            fprintf(
+                                mpd_c2rust_stderr(),
+                                b"libmpdec: internal error in _mpd_base_ndivmod: please report\0"
+                                    as *const u8 as *const ::core::ffi::c_char,
+                            );
+                            fputc('\n' as i32, mpd_c2rust_stderr());
+                            *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation)
+                                as uint32_t;
+                            current_block = 1;
+                            break;
+                        } else {
+                            if _mpd_cmp(&raw const zero, rr) == 1 as ::core::ffi::c_int {
+                                _mpd_qadd_exact(
+                                    rr,
+                                    rr,
+                                    &raw mut bb,
+                                    &raw mut workctx,
+                                    &raw mut workctx.status,
                                 );
-                                fprintf(
-                                    mpd_c2rust_stderr(),
-                                    b"libmpdec: internal error in _mpd_base_ndivmod: please report\0"
-                                        as *const u8 as *const ::core::ffi::c_char,
+                                _mpd_qadd_exact(
+                                    qq,
+                                    qq,
+                                    &raw const minus_one,
+                                    &raw mut workctx,
+                                    &raw mut workctx.status,
                                 );
-                                fputc('\n' as i32, mpd_c2rust_stderr());
-                                *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation)
-                                    as uint32_t;
-                                current_block = 1;
-                                break;
                             } else {
-                                if _mpd_cmp(&raw const zero, rr) == 1 as ::core::ffi::c_int {
-                                    _mpd_qadd_exact(
-                                        rr,
-                                        rr,
-                                        &raw mut bb,
-                                        &raw mut workctx,
-                                        &raw mut workctx.status,
-                                    );
-                                    _mpd_qadd_exact(
-                                        qq,
-                                        qq,
-                                        &raw const minus_one,
-                                        &raw mut workctx,
-                                        &raw mut workctx.status,
-                                    );
-                                } else {
-                                    if _mpd_cmp(rr, &raw mut bb) == -(1 as ::core::ffi::c_int) {
-                                        current_block = 4;
-                                        break;
-                                    }
-                                    _mpd_qsub_exact(
-                                        rr,
-                                        rr,
-                                        &raw mut bb,
-                                        &raw mut workctx,
-                                        &raw mut workctx.status,
-                                    );
-                                    _mpd_qadd_exact(
-                                        qq,
-                                        qq,
-                                        &raw const one,
-                                        &raw mut workctx,
-                                        &raw mut workctx.status,
-                                    );
+                                if _mpd_cmp(rr, &raw mut bb) == -(1 as ::core::ffi::c_int) {
+                                    current_block = 4;
+                                    break;
                                 }
-                                k += 1;
+                                _mpd_qsub_exact(
+                                    rr,
+                                    rr,
+                                    &raw mut bb,
+                                    &raw mut workctx,
+                                    &raw mut workctx.status,
+                                );
+                                _mpd_qadd_exact(
+                                    qq,
+                                    qq,
+                                    &raw const one,
+                                    &raw mut workctx,
+                                    &raw mut workctx.status,
+                                );
                             }
+                            k += 1;
                         }
-                        match current_block {
-                            1 => {}
-                            _ => {
-                                if qq != q {
-                                    if mpd_qcopy(q, qq, status) == 0 {
-                                        current_block = 1;
-                                    } else {
-                                        mpd_del(qq);
-                                        current_block = 5;
-                                    }
+                    }
+                    match current_block {
+                        1 => {}
+                        _ => {
+                            if qq != q {
+                                if mpd_qcopy(q, qq, status) == 0 {
+                                    current_block = 1;
                                 } else {
+                                    mpd_del(qq);
                                     current_block = 5;
                                 }
-                                match current_block {
-                                    1 => {}
-                                    _ => {
-                                        if rr != r {
-                                            if mpd_qcopy(r, rr, status) == 0 {
-                                                current_block = 1;
-                                            } else {
-                                                mpd_del(rr);
-                                                current_block = 6;
-                                            }
+                            } else {
+                                current_block = 5;
+                            }
+                            match current_block {
+                                1 => {}
+                                _ => {
+                                    if rr != r {
+                                        if mpd_qcopy(r, rr, status) == 0 {
+                                            current_block = 1;
                                         } else {
+                                            mpd_del(rr);
                                             current_block = 6;
                                         }
-                                        match current_block {
-                                            1 => {}
-                                            _ => {
-                                                *status = (*status as ::core::ffi::c_uint
-                                                    | (workctx.status & MPD_Errors as uint32_t)
-                                                        as ::core::ffi::c_uint)
-                                                    as uint32_t;
-                                                return;
-                                            }
+                                    } else {
+                                        current_block = 6;
+                                    }
+                                    match current_block {
+                                        1 => {}
+                                        _ => {
+                                            *status = (*status as ::core::ffi::c_uint
+                                                | (workctx.status & MPD_Errors as uint32_t)
+                                                    as ::core::ffi::c_uint)
+                                                as uint32_t;
+                                            return;
                                         }
                                     }
                                 }
@@ -14387,7 +14195,6 @@ unsafe extern "C" fn _mpd_base_ndivmod(
                 }
             }
         }
-        _ => {}
     }
     if !qq.is_null() && qq != q {
         mpd_del(qq);
@@ -14399,12 +14206,12 @@ unsafe extern "C" fn _mpd_base_ndivmod(
     mpd_setspecial(r, MPD_POS, MPD_NAN);
 }
 unsafe extern "C" fn invroot_schedule_prec(
-    mut klist: *mut mpd_ssize_t,
-    mut maxprec: mpd_ssize_t,
-    mut initprec: mpd_ssize_t,
+    klist: *mut mpd_ssize_t,
+    maxprec: mpd_ssize_t,
+    initprec: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
-    let mut k: mpd_ssize_t = 0;
-    let mut i: ::core::ffi::c_int = 0;
+    let mut k: mpd_ssize_t;
+    let mut i: ::core::ffi::c_int;
     if maxprec >= 3 as mpd_ssize_t && initprec >= 3 as mpd_ssize_t {
     } else {
         mpd_c2rust_assert_fail(
@@ -14419,20 +14226,20 @@ unsafe extern "C" fn invroot_schedule_prec(
     loop {
         k = (k + 3 as mpd_ssize_t) / 2 as mpd_ssize_t;
         let fresh0 = i;
-        i = i + 1;
+        i += 1;
         *klist.offset(fresh0 as isize) = k;
         if !(k > initprec) {
             break;
         }
     }
-    return i - 1 as ::core::ffi::c_int;
+    i - 1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
-unsafe extern "C" fn _invroot_init_approx(mut z: *mut mpd_t, mut vhat: mpd_uint_t) {
+unsafe extern "C" fn _invroot_init_approx(z: *mut mpd_t, vhat: mpd_uint_t) {
     let mut lo: mpd_uint_t = 1000 as mpd_uint_t;
     let mut hi: mpd_uint_t = 10000 as mpd_uint_t;
-    let mut a: mpd_uint_t = 0;
-    let mut sq: mpd_uint_t = 0;
+    let mut a: mpd_uint_t;
+    let mut sq: mpd_uint_t;
     if lo.wrapping_mul(lo) <= vhat
         && vhat
             < hi.wrapping_add(1 as mpd_uint_t)
@@ -14460,17 +14267,17 @@ unsafe extern "C" fn _invroot_init_approx(mut z: *mut mpd_t, mut vhat: mpd_uint_
     }
     mpd_minalloc(z);
     mpd_clear_flags(z);
-    *(*z).data.offset(0 as isize) = (1000000000 as mpd_uint_t).wrapping_div(a);
+    *(*z).data.offset(0_isize) = (1000000000 as mpd_uint_t).wrapping_div(a);
     (*z).len = 1 as mpd_ssize_t;
     (*z).exp = -(6 as ::core::ffi::c_int) as mpd_ssize_t;
     mpd_setdigits(z);
 }
 #[cfg(target_pointer_width = "32")]
-unsafe extern "C" fn _invroot_init_approx(mut z: *mut mpd_t, mut vhat: mpd_uint_t) {
+unsafe extern "C" fn _invroot_init_approx(z: *mut mpd_t, vhat: mpd_uint_t) {
     let mut lo: mpd_uint_t = 1000 as mpd_uint_t;
     let mut hi: mpd_uint_t = 10000 as mpd_uint_t;
-    let mut a: mpd_uint_t = 0;
-    let mut sq: mpd_uint_t = 0;
+    let mut a: mpd_uint_t;
+    let mut sq: mpd_uint_t;
     if lo.wrapping_mul(lo) <= vhat
         && vhat
             < hi.wrapping_add(1 as mpd_uint_t)
@@ -14498,17 +14305,17 @@ unsafe extern "C" fn _invroot_init_approx(mut z: *mut mpd_t, mut vhat: mpd_uint_
     }
     mpd_minalloc(z);
     mpd_clear_flags(z);
-    *(*z).data.offset(0 as isize) = (1000000000 as u32).wrapping_div(a as u32) as mpd_uint_t;
+    *(*z).data.offset(0_isize) = 1000000000_u32.wrapping_div(a as u32) as mpd_uint_t;
     (*z).len = 1 as mpd_ssize_t;
     (*z).exp = -(6 as ::core::ffi::c_int) as mpd_ssize_t;
     mpd_setdigits(z);
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qinvroot(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     let mut varcontext: mpd_context_t = mpd_context_t {
@@ -14533,8 +14340,8 @@ unsafe extern "C" fn _mpd_qinvroot(
         clamp: 0,
         allcr: 0,
     };
-    let mut z: *mut mpd_t = result;
-    let mut v: *mut mpd_t = ::core::ptr::null_mut::<mpd_t>();
+    let z: *mut mpd_t = result;
+    let mut v: *mut mpd_t;
     let mut vtmp: mpd_t = mpd_t {
         flags: ((*a).flags as ::core::ffi::c_int & !MPD_DATAFLAGS
             | MPD_STATIC as ::core::ffi::c_int
@@ -14590,26 +14397,22 @@ unsafe extern "C" fn _mpd_qinvroot(
         data: &raw mut three_data as *mut mpd_uint_t,
     };
     let mut klist: [mpd_ssize_t; 64] = [0; 64];
-    let mut ideal_exp: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut adj: mpd_ssize_t = 0;
-    let mut tz: mpd_ssize_t = 0;
-    let mut maxprec: mpd_ssize_t = 0;
-    let mut fracdigits: mpd_ssize_t = 0;
+    let mut shift: mpd_ssize_t;
+    let fracdigits: mpd_ssize_t;
     let mut vhat: mpd_uint_t = 0;
     let mut dummy: mpd_uint_t = 0;
-    let mut i: ::core::ffi::c_int = 0;
-    let mut n: ::core::ffi::c_int = 0;
-    ideal_exp = -((*a).exp - ((*a).exp & 1 as mpd_ssize_t)) / 2 as mpd_ssize_t;
+    let mut i: ::core::ffi::c_int;
+    let n: ::core::ffi::c_int;
+    let ideal_exp: mpd_ssize_t = -((*a).exp - ((*a).exp & 1 as mpd_ssize_t)) / 2 as mpd_ssize_t;
     v = &raw mut vtmp;
-    if result == a as *mut mpd_t {
+    if ::core::ptr::eq(result, a) {
         v = mpd_qncopy(a);
         if v.is_null() {
             mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
             return;
         }
     }
-    if (*v).digits + (*v).exp & 1 as mpd_ssize_t != 0 {
+    if ((*v).digits + (*v).exp) & 1 as mpd_ssize_t != 0 {
         fracdigits = (*v).digits - 1 as mpd_ssize_t;
         (*v).exp = -fracdigits;
         n = if (*v).digits > 7 as mpd_ssize_t {
@@ -14640,12 +14443,12 @@ unsafe extern "C" fn _mpd_qinvroot(
             );
         }
     }
-    adj = ((*a).exp - (*v).exp) / 2 as mpd_ssize_t;
+    let adj: mpd_ssize_t = ((*a).exp - (*v).exp) / 2 as mpd_ssize_t;
     _invroot_init_approx(z, vhat);
     mpd_maxcontext(&raw mut maxcontext);
     mpd_maxcontext(&raw mut varcontext);
     varcontext.round = MPD_ROUND_TRUNC as ::core::ffi::c_int;
-    maxprec = (*ctx).prec + 1 as mpd_ssize_t;
+    let maxprec: mpd_ssize_t = (*ctx).prec + 1 as mpd_ssize_t;
     i = invroot_schedule_prec(
         &raw mut klist as *mut mpd_ssize_t,
         maxprec,
@@ -14692,7 +14495,7 @@ unsafe extern "C" fn _mpd_qinvroot(
         i -= 1;
     }
     (*z).exp -= adj;
-    tz = mpd_trail_zeros(result);
+    let tz: mpd_ssize_t = mpd_trail_zeros(result);
     shift = ideal_exp - (*result).exp;
     shift = if tz > shift { shift } else { tz };
     if shift > 0 as mpd_ssize_t {
@@ -14710,10 +14513,10 @@ unsafe extern "C" fn _mpd_qinvroot(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qinvroot(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workstatus: uint32_t = 0 as uint32_t;
     let mut varcontext: mpd_context_t = mpd_context_t {
@@ -14738,8 +14541,8 @@ unsafe extern "C" fn _mpd_qinvroot(
         clamp: 0,
         allcr: 0,
     };
-    let mut z: *mut mpd_t = result;
-    let mut v: *mut mpd_t = ::core::ptr::null_mut::<mpd_t>();
+    let z: *mut mpd_t = result;
+    let mut v: *mut mpd_t;
     let mut vtmp: mpd_t = mpd_t {
         flags: ((*a).flags as ::core::ffi::c_int & !MPD_DATAFLAGS
             | MPD_STATIC as ::core::ffi::c_int
@@ -14795,26 +14598,22 @@ unsafe extern "C" fn _mpd_qinvroot(
         data: &raw mut three_data as *mut mpd_uint_t,
     };
     let mut klist: [mpd_ssize_t; 32] = [0; 32];
-    let mut ideal_exp: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut adj: mpd_ssize_t = 0;
-    let mut tz: mpd_ssize_t = 0;
-    let mut maxprec: mpd_ssize_t = 0;
-    let mut fracdigits: mpd_ssize_t = 0;
+    let mut shift: mpd_ssize_t;
+    let fracdigits: mpd_ssize_t;
     let mut vhat: mpd_uint_t = 0;
     let mut dummy: mpd_uint_t = 0;
-    let mut i: ::core::ffi::c_int = 0;
-    let mut n: ::core::ffi::c_int = 0;
-    ideal_exp = -((*a).exp - ((*a).exp & 1 as mpd_ssize_t)) / 2 as mpd_ssize_t;
+    let mut i: ::core::ffi::c_int;
+    let n: ::core::ffi::c_int;
+    let ideal_exp: mpd_ssize_t = -((*a).exp - ((*a).exp & 1 as mpd_ssize_t)) / 2 as mpd_ssize_t;
     v = &raw mut vtmp;
-    if result == a as *mut mpd_t {
+    if ::core::ptr::eq(result, a) {
         v = mpd_qncopy(a);
         if v.is_null() {
             mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
             return;
         }
     }
-    if (*v).digits + (*v).exp & 1 as mpd_ssize_t != 0 {
+    if ((*v).digits + (*v).exp) & 1 as mpd_ssize_t != 0 {
         fracdigits = (*v).digits - 1 as mpd_ssize_t;
         (*v).exp = -fracdigits;
         n = if (*v).digits > 7 as mpd_ssize_t {
@@ -14845,12 +14644,12 @@ unsafe extern "C" fn _mpd_qinvroot(
             );
         }
     }
-    adj = ((*a).exp - (*v).exp) / 2 as mpd_ssize_t;
+    let adj: mpd_ssize_t = ((*a).exp - (*v).exp) / 2 as mpd_ssize_t;
     _invroot_init_approx(z, vhat);
     mpd_maxcontext(&raw mut maxcontext);
     mpd_maxcontext(&raw mut varcontext);
     varcontext.round = MPD_ROUND_TRUNC as ::core::ffi::c_int;
-    maxprec = (*ctx).prec + 1 as mpd_ssize_t;
+    let maxprec: mpd_ssize_t = (*ctx).prec + 1 as mpd_ssize_t;
     i = invroot_schedule_prec(
         &raw mut klist as *mut mpd_ssize_t,
         maxprec,
@@ -14897,7 +14696,7 @@ unsafe extern "C" fn _mpd_qinvroot(
         i -= 1;
     }
     (*z).exp -= adj;
-    tz = mpd_trail_zeros(result);
+    let tz: mpd_ssize_t = mpd_trail_zeros(result);
     shift = ideal_exp - (*result).exp;
     shift = if tz > shift { shift } else { tz };
     if shift > 0 as mpd_ssize_t {
@@ -14915,10 +14714,10 @@ unsafe extern "C" fn _mpd_qinvroot(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qinvroot(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -14960,10 +14759,10 @@ pub unsafe extern "C" fn mpd_qinvroot(
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qinvroot(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut workctx: mpd_context_t = mpd_context_t {
         prec: 0,
@@ -15005,10 +14804,10 @@ pub unsafe extern "C" fn mpd_qinvroot(
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _mpd_qsqrt(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut maxcontext: mpd_context_t = mpd_context_t {
@@ -15066,10 +14865,9 @@ unsafe extern "C" fn _mpd_qsqrt(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut two_data as *mut mpd_uint_t,
     };
-    let mut prec: mpd_ssize_t = 0;
-    let mut ideal_exp: mpd_ssize_t = 0;
+    let mut ideal_exp: mpd_ssize_t;
     let mut l: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
+    let shift: mpd_ssize_t;
     let mut exact: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     ideal_exp = ((*a).exp - ((*a).exp & 1 as mpd_ssize_t)) / 2 as mpd_ssize_t;
     if mpd_isspecial(a) != 0 {
@@ -15093,7 +14891,7 @@ unsafe extern "C" fn _mpd_qsqrt(
         return;
     }
     mpd_maxcontext(&raw mut maxcontext);
-    prec = (*ctx).prec + 1 as mpd_ssize_t;
+    let prec: mpd_ssize_t = (*ctx).prec + 1 as mpd_ssize_t;
     if mpd_qcopy(&raw mut c, a, status) == 0 {
         current_block = 1;
     } else {
@@ -15106,7 +14904,7 @@ unsafe extern "C" fn _mpd_qsqrt(
                 current_block = 2;
             }
         } else {
-            l = (*a).digits + 1 as mpd_ssize_t >> 1 as ::core::ffi::c_int;
+            l = ((*a).digits + 1 as mpd_ssize_t) >> 1 as ::core::ffi::c_int;
             current_block = 2;
         }
         match current_block {
@@ -15233,14 +15031,13 @@ unsafe extern "C" fn _mpd_qsqrt(
                                                     }
                                                 }
                                             } else {
-                                                let mut lsd: ::core::ffi::c_int =
-                                                    mpd_lsd(*(*result).data.offset(0 as isize))
+                                                let lsd: ::core::ffi::c_int =
+                                                    mpd_lsd(*(*result).data.offset(0_isize))
                                                         as ::core::ffi::c_int;
                                                 if lsd == 0 as ::core::ffi::c_int
                                                     || lsd == 5 as ::core::ffi::c_int
                                                 {
-                                                    let ref mut fresh0 =
-                                                        *(*result).data.offset(0 as isize);
+                                                    let fresh0 = &mut *(*result).data.offset(0_isize);
                                                     *fresh0 =
                                                         (*fresh0).wrapping_add(1 as mpd_uint_t);
                                                 }
@@ -15263,11 +15060,8 @@ unsafe extern "C" fn _mpd_qsqrt(
             }
         }
     }
-    match current_block {
-        1 => {
-            mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
-        }
-        _ => {}
+    if current_block == 1 {
+        mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
     }
     mpd_del(&raw mut c);
     mpd_del(&raw mut q);
@@ -15278,10 +15072,10 @@ unsafe extern "C" fn _mpd_qsqrt(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _mpd_qsqrt(
-    mut result: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    a: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut maxcontext: mpd_context_t = mpd_context_t {
@@ -15339,10 +15133,9 @@ unsafe extern "C" fn _mpd_qsqrt(
         alloc: 1 as mpd_ssize_t,
         data: &raw mut two_data as *mut mpd_uint_t,
     };
-    let mut prec: mpd_ssize_t = 0;
-    let mut ideal_exp: mpd_ssize_t = 0;
+    let mut ideal_exp: mpd_ssize_t;
     let mut l: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
+    let shift: mpd_ssize_t;
     let mut exact: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     ideal_exp = ((*a).exp - ((*a).exp & 1 as mpd_ssize_t)) / 2 as mpd_ssize_t;
     if mpd_isspecial(a) != 0 {
@@ -15366,7 +15159,7 @@ unsafe extern "C" fn _mpd_qsqrt(
         return;
     }
     mpd_maxcontext(&raw mut maxcontext);
-    prec = (*ctx).prec + 1 as mpd_ssize_t;
+    let prec: mpd_ssize_t = (*ctx).prec + 1 as mpd_ssize_t;
     if mpd_qcopy(&raw mut c, a, status) == 0 {
         current_block = 1;
     } else {
@@ -15379,7 +15172,7 @@ unsafe extern "C" fn _mpd_qsqrt(
                 current_block = 2;
             }
         } else {
-            l = (*a).digits + 1 as mpd_ssize_t >> 1 as ::core::ffi::c_int;
+            l = ((*a).digits + 1 as mpd_ssize_t) >> 1 as ::core::ffi::c_int;
             current_block = 2;
         }
         match current_block {
@@ -15504,14 +15297,13 @@ unsafe extern "C" fn _mpd_qsqrt(
                                                     }
                                                 }
                                             } else {
-                                                let mut lsd: ::core::ffi::c_int =
-                                                    mpd_lsd(*(*result).data.offset(0 as isize))
+                                                let lsd: ::core::ffi::c_int =
+                                                    mpd_lsd(*(*result).data.offset(0_isize))
                                                         as ::core::ffi::c_int;
                                                 if lsd == 0 as ::core::ffi::c_int
                                                     || lsd == 5 as ::core::ffi::c_int
                                                 {
-                                                    let ref mut fresh0 =
-                                                        *(*result).data.offset(0 as isize);
+                                                    let fresh0 = &mut *(*result).data.offset(0_isize);
                                                     *fresh0 =
                                                         (*fresh0).wrapping_add(1 as mpd_uint_t);
                                                 }
@@ -15534,11 +15326,8 @@ unsafe extern "C" fn _mpd_qsqrt(
             }
         }
     }
-    match current_block {
-        1 => {
-            mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
-        }
-        _ => {}
+    if current_block == 1 {
+        mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
     }
     mpd_del(&raw mut c);
     mpd_del(&raw mut q);
@@ -15548,12 +15337,12 @@ unsafe extern "C" fn _mpd_qsqrt(
     mpd_qfinalize(result, &raw mut maxcontext, status);
 }
 pub unsafe extern "C" fn mpd_qsqrt(
-    mut result: *mut mpd_t,
+    result: *mut mpd_t,
     mut a: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut current_block: u64;
+    let current_block: u64;
     let mut aa_data: [mpd_uint_t; 64] = [0; 64];
     let mut aa: mpd_t = mpd_t {
         flags: (0 as ::core::ffi::c_int
@@ -15566,7 +15355,7 @@ pub unsafe extern "C" fn mpd_qsqrt(
         data: &raw mut aa_data as *mut mpd_uint_t,
     };
     let mut xstatus: uint32_t = 0 as uint32_t;
-    if result == a as *mut mpd_t {
+    if ::core::ptr::eq(result, a) {
         if mpd_qcopy(&raw mut aa, a, status) == 0 {
             mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
             current_block = 1;
@@ -15577,49 +15366,43 @@ pub unsafe extern "C" fn mpd_qsqrt(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            _mpd_qsqrt(result, a, ctx, &raw mut xstatus);
-            if xstatus & (MPD_Malloc_error as uint32_t | MPD_Division_impossible as uint32_t) != 0 {
-                let mut ystatus: uint32_t = 0 as uint32_t;
-                let mut workctx: mpd_context_t = mpd_context_t {
-                    prec: 0,
-                    emax: 0,
-                    emin: 0,
-                    traps: 0,
-                    status: 0,
-                    newtrap: 0,
-                    round: 0,
-                    clamp: 0,
-                    allcr: 0,
-                };
-                mpd_workcontext(&raw mut workctx, ctx);
-                workctx.prec = (*a).digits;
-                if workctx.prec >= (*ctx).prec {
-                    *status = (*status as ::core::ffi::c_uint
-                        | (xstatus | MPD_Errors as uint32_t) as ::core::ffi::c_uint)
-                        as uint32_t;
-                } else {
-                    _mpd_qsqrt(result, a, &raw mut workctx, &raw mut ystatus);
-                    if ystatus != 0 as uint32_t {
-                        ystatus = *status | (xstatus | ystatus) & MPD_Errors as uint32_t;
-                        mpd_seterror(result, ystatus, status);
-                    }
-                }
+    if current_block == 2 {
+        _mpd_qsqrt(result, a, ctx, &raw mut xstatus);
+        if xstatus & (MPD_Malloc_error as uint32_t | MPD_Division_impossible as uint32_t) != 0 {
+            let mut ystatus: uint32_t = 0 as uint32_t;
+            let mut workctx: mpd_context_t = mpd_context_t {
+                prec: 0,
+                emax: 0,
+                emin: 0,
+                traps: 0,
+                status: 0,
+                newtrap: 0,
+                round: 0,
+                clamp: 0,
+                allcr: 0,
+            };
+            mpd_workcontext(&raw mut workctx, ctx);
+            workctx.prec = (*a).digits;
+            if workctx.prec >= (*ctx).prec {
+                *status = (*status as ::core::ffi::c_uint
+                    | (xstatus | MPD_Errors as uint32_t) as ::core::ffi::c_uint)
+                    as uint32_t;
             } else {
-                *status |= xstatus;
+                _mpd_qsqrt(result, a, &raw mut workctx, &raw mut ystatus);
+                if ystatus != 0 as uint32_t {
+                    ystatus = *status | (xstatus | ystatus) & MPD_Errors as uint32_t;
+                    mpd_seterror(result, ystatus, status);
+                }
             }
+        } else {
+            *status |= xstatus;
         }
-        _ => {}
     }
     mpd_del(&raw mut aa);
 }
 #[cfg(not(feature = "test-hooks"))]
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_sizeinbase(mut a: *const mpd_t, mut base: uint32_t) -> size_t {
-    let mut x: ::core::ffi::c_double = 0.;
-    let mut digits: size_t = 0;
-    let mut upper_bound: ::core::ffi::c_double = 0.;
+pub unsafe extern "C" fn mpd_sizeinbase(a: *const mpd_t, base: uint32_t) -> size_t {
     if mpd_isinteger(a) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"mpd_isinteger(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -15631,25 +15414,21 @@ pub unsafe extern "C" fn mpd_sizeinbase(mut a: *const mpd_t, mut base: uint32_t)
     if mpd_iszero(a) != 0 {
         return 1 as size_t;
     }
-    digits = ((*a).digits + (*a).exp) as size_t;
-    if digits as u64 > 2711437152599294 as u64 {
+    let digits: size_t = ((*a).digits + (*a).exp) as size_t;
+    if digits as u64 > 2711437152599294_u64 {
         return SIZE_MAX as size_t;
     }
-    upper_bound =
-        ((1 as u64) << 53 as ::core::ffi::c_int).wrapping_sub(1 as u64) as ::core::ffi::c_double;
-    x = digits as ::core::ffi::c_double / log10(base as ::core::ffi::c_double);
-    return if x > upper_bound {
+    let upper_bound: ::core::ffi::c_double = (1_u64 << 53 as ::core::ffi::c_int).wrapping_sub(1_u64) as ::core::ffi::c_double;
+    let x: ::core::ffi::c_double = digits as ::core::ffi::c_double / log10(base as ::core::ffi::c_double);
+    if x > upper_bound {
         SIZE_MAX as size_t
     } else {
         (x as size_t).wrapping_add(1 as size_t)
-    };
+    }
 }
 #[cfg(feature = "test-hooks")]
 #[cfg(target_pointer_width = "64")]
-pub unsafe extern "C" fn mpd_sizeinbase(mut a: *const mpd_t, mut base: uint32_t) -> size_t {
-    let mut x: ::core::ffi::c_double = 0.;
-    let mut digits: size_t = 0;
-    let mut upper_bound: ::core::ffi::c_double = 0.;
+pub unsafe extern "C" fn mpd_sizeinbase(a: *const mpd_t, base: uint32_t) -> size_t {
     if mpd_isinteger(a) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"mpd_isinteger(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -15661,29 +15440,25 @@ pub unsafe extern "C" fn mpd_sizeinbase(mut a: *const mpd_t, mut base: uint32_t)
     if mpd_iszero(a) != 0 {
         return 1 as size_t;
     }
-    digits = ((*a).digits + (*a).exp) as size_t;
+    let digits: size_t = ((*a).digits + (*a).exp) as size_t;
     func_count += 1;
     if func_count == func_fail {
         return SIZE_MAX as size_t;
     }
-    if digits as u64 > 2711437152599294 as u64 {
+    if digits as u64 > 2711437152599294_u64 {
         return SIZE_MAX as size_t;
     }
-    upper_bound =
-        ((1 as u64) << 53 as ::core::ffi::c_int).wrapping_sub(1 as u64) as ::core::ffi::c_double;
-    x = digits as ::core::ffi::c_double / log10(base as ::core::ffi::c_double);
-    return if x > upper_bound {
+    let upper_bound: ::core::ffi::c_double = (1_u64 << 53 as ::core::ffi::c_int).wrapping_sub(1_u64) as ::core::ffi::c_double;
+    let x: ::core::ffi::c_double = digits as ::core::ffi::c_double / log10(base as ::core::ffi::c_double);
+    if x > upper_bound {
         SIZE_MAX as size_t
     } else {
         (x as size_t).wrapping_add(1 as size_t)
-    };
+    }
 }
 #[cfg(not(feature = "test-hooks"))]
 #[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn mpd_sizeinbase(mut a: *const mpd_t, mut base: uint32_t) -> size_t {
-    let mut x: ::core::ffi::c_double = 0.;
-    let mut digits: size_t = 0;
-    let mut upper_bound: ::core::ffi::c_double = 0.;
+pub unsafe extern "C" fn mpd_sizeinbase(a: *const mpd_t, base: uint32_t) -> size_t {
     if mpd_isinteger(a) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"mpd_isinteger(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -15695,21 +15470,18 @@ pub unsafe extern "C" fn mpd_sizeinbase(mut a: *const mpd_t, mut base: uint32_t)
     if mpd_iszero(a) != 0 {
         return 1 as size_t;
     }
-    digits = ((*a).digits + (*a).exp) as size_t;
-    upper_bound = SIZE_MAX.wrapping_sub(1 as ::core::ffi::c_uint) as ::core::ffi::c_double;
-    x = digits as ::core::ffi::c_double / log10(base as ::core::ffi::c_double);
-    return if x > upper_bound {
+    let digits: size_t = ((*a).digits + (*a).exp) as size_t;
+    let upper_bound: ::core::ffi::c_double = SIZE_MAX.wrapping_sub(1 as ::core::ffi::c_uint) as ::core::ffi::c_double;
+    let x: ::core::ffi::c_double = digits as ::core::ffi::c_double / log10(base as ::core::ffi::c_double);
+    if x > upper_bound {
         SIZE_MAX as size_t
     } else {
         (x as size_t).wrapping_add(1 as size_t)
-    };
+    }
 }
 #[cfg(feature = "test-hooks")]
 #[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn mpd_sizeinbase(mut a: *const mpd_t, mut base: uint32_t) -> size_t {
-    let mut x: ::core::ffi::c_double = 0.;
-    let mut digits: size_t = 0;
-    let mut upper_bound: ::core::ffi::c_double = 0.;
+pub unsafe extern "C" fn mpd_sizeinbase(a: *const mpd_t, base: uint32_t) -> size_t {
     if mpd_isinteger(a) != 0 {
     } else {
         mpd_c2rust_assert_fail(b"mpd_isinteger(a)\0" as *const u8 as *const ::core::ffi::c_char);
@@ -15721,24 +15493,22 @@ pub unsafe extern "C" fn mpd_sizeinbase(mut a: *const mpd_t, mut base: uint32_t)
     if mpd_iszero(a) != 0 {
         return 1 as size_t;
     }
-    digits = ((*a).digits + (*a).exp) as size_t;
+    let digits: size_t = ((*a).digits + (*a).exp) as size_t;
     func_count += 1;
     if func_count == func_fail {
         return SIZE_MAX as size_t;
     }
-    upper_bound = SIZE_MAX.wrapping_sub(1 as ::core::ffi::c_uint) as ::core::ffi::c_double;
-    x = digits as ::core::ffi::c_double / log10(base as ::core::ffi::c_double);
-    return if x > upper_bound {
+    let upper_bound: ::core::ffi::c_double = SIZE_MAX.wrapping_sub(1 as ::core::ffi::c_uint) as ::core::ffi::c_double;
+    let x: ::core::ffi::c_double = digits as ::core::ffi::c_double / log10(base as ::core::ffi::c_double);
+    if x > upper_bound {
         SIZE_MAX as size_t
     } else {
         (x as size_t).wrapping_add(1 as size_t)
-    };
+    }
 }
 #[cfg(not(feature = "test-hooks"))]
 #[cfg(target_pointer_width = "64")]
-unsafe extern "C" fn _mpd_importsize(mut srclen: size_t, mut base: uint32_t) -> mpd_ssize_t {
-    let mut x: ::core::ffi::c_double = 0.;
-    let mut upper_bound: ::core::ffi::c_double = 0.;
+unsafe extern "C" fn _mpd_importsize(srclen: size_t, base: uint32_t) -> mpd_ssize_t {
     if srclen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(b"srclen > 0\0" as *const u8 as *const ::core::ffi::c_char);
@@ -15747,30 +15517,27 @@ unsafe extern "C" fn _mpd_importsize(mut srclen: size_t, mut base: uint32_t) -> 
     } else {
         mpd_c2rust_assert_fail(b"base >= 2\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    if srclen as u64 > (1 as u64) << 53 as ::core::ffi::c_int {
+    if srclen as u64 > 1_u64 << 53 as ::core::ffi::c_int {
         return MPD_SSIZE_MAX as mpd_ssize_t;
     }
-    if (1 as u64) << 53 as ::core::ffi::c_int <= 105263157894736842 as u64 {
+    if 1_u64 << 53 as ::core::ffi::c_int <= 105263157894736842_u64 {
     } else {
         mpd_c2rust_assert_fail(
             b"(1ULL<<53) <= MPD_MAXIMPORT\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    upper_bound =
-        ((1 as u64) << 53 as ::core::ffi::c_int).wrapping_sub(1 as u64) as ::core::ffi::c_double;
-    x = srclen as ::core::ffi::c_double
+    let upper_bound: ::core::ffi::c_double = (1_u64 << 53 as ::core::ffi::c_int).wrapping_sub(1_u64) as ::core::ffi::c_double;
+    let x: ::core::ffi::c_double = srclen as ::core::ffi::c_double
         * (log10(base as ::core::ffi::c_double) / MPD_RDIGITS as ::core::ffi::c_double);
-    return if x > upper_bound {
+    if x > upper_bound {
         MPD_SSIZE_MAX as mpd_ssize_t
     } else {
         x as mpd_ssize_t + 1 as mpd_ssize_t
-    };
+    }
 }
 #[cfg(feature = "test-hooks")]
 #[cfg(target_pointer_width = "64")]
-unsafe extern "C" fn _mpd_importsize(mut srclen: size_t, mut base: uint32_t) -> mpd_ssize_t {
-    let mut x: ::core::ffi::c_double = 0.;
-    let mut upper_bound: ::core::ffi::c_double = 0.;
+unsafe extern "C" fn _mpd_importsize(srclen: size_t, base: uint32_t) -> mpd_ssize_t {
     if srclen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(b"srclen > 0\0" as *const u8 as *const ::core::ffi::c_char);
@@ -15779,35 +15546,32 @@ unsafe extern "C" fn _mpd_importsize(mut srclen: size_t, mut base: uint32_t) -> 
     } else {
         mpd_c2rust_assert_fail(b"base >= 2\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    if srclen as u64 > (1 as u64) << 53 as ::core::ffi::c_int {
+    if srclen as u64 > 1_u64 << 53 as ::core::ffi::c_int {
         return MPD_SSIZE_MAX as mpd_ssize_t;
     }
-    if (1 as u64) << 53 as ::core::ffi::c_int <= 105263157894736842 as u64 {
+    if 1_u64 << 53 as ::core::ffi::c_int <= 105263157894736842_u64 {
     } else {
         mpd_c2rust_assert_fail(
             b"(1ULL<<53) <= MPD_MAXIMPORT\0" as *const u8 as *const ::core::ffi::c_char,
         );
     };
-    upper_bound =
-        ((1 as u64) << 53 as ::core::ffi::c_int).wrapping_sub(1 as u64) as ::core::ffi::c_double;
-    x = srclen as ::core::ffi::c_double
+    let upper_bound: ::core::ffi::c_double = (1_u64 << 53 as ::core::ffi::c_int).wrapping_sub(1_u64) as ::core::ffi::c_double;
+    let x: ::core::ffi::c_double = srclen as ::core::ffi::c_double
         * (log10(base as ::core::ffi::c_double) / MPD_RDIGITS as ::core::ffi::c_double);
     func_count += 1;
     if func_count == func_fail {
-        return 1 as mpd_ssize_t;
+        1 as mpd_ssize_t
     } else {
-        return if x > upper_bound {
+        if x > upper_bound {
             MPD_SSIZE_MAX as mpd_ssize_t
         } else {
             x as mpd_ssize_t + 1 as mpd_ssize_t
-        };
-    };
+        }
+    }
 }
 #[cfg(not(feature = "test-hooks"))]
 #[cfg(target_pointer_width = "32")]
-unsafe extern "C" fn _mpd_importsize(mut srclen: size_t, mut base: uint32_t) -> mpd_ssize_t {
-    let mut x: ::core::ffi::c_double = 0.;
-    let mut upper_bound: ::core::ffi::c_double = 0.;
+unsafe extern "C" fn _mpd_importsize(srclen: size_t, base: uint32_t) -> mpd_ssize_t {
     if srclen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(b"srclen > 0\0" as *const u8 as *const ::core::ffi::c_char);
@@ -15816,20 +15580,18 @@ unsafe extern "C" fn _mpd_importsize(mut srclen: size_t, mut base: uint32_t) -> 
     } else {
         mpd_c2rust_assert_fail(b"base >= 2\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    upper_bound = (MPD_MAXIMPORT - 1 as ::core::ffi::c_int) as ::core::ffi::c_double;
-    x = srclen as ::core::ffi::c_double
+    let upper_bound: ::core::ffi::c_double = (MPD_MAXIMPORT - 1 as ::core::ffi::c_int) as ::core::ffi::c_double;
+    let x: ::core::ffi::c_double = srclen as ::core::ffi::c_double
         * (log10(base as ::core::ffi::c_double) / MPD_RDIGITS as ::core::ffi::c_double);
-    return if x > upper_bound {
+    if x > upper_bound {
         MPD_SSIZE_MAX as mpd_ssize_t
     } else {
         x as mpd_ssize_t + 1 as mpd_ssize_t
-    };
+    }
 }
 #[cfg(feature = "test-hooks")]
 #[cfg(target_pointer_width = "32")]
-unsafe extern "C" fn _mpd_importsize(mut srclen: size_t, mut base: uint32_t) -> mpd_ssize_t {
-    let mut x: ::core::ffi::c_double = 0.;
-    let mut upper_bound: ::core::ffi::c_double = 0.;
+unsafe extern "C" fn _mpd_importsize(srclen: size_t, base: uint32_t) -> mpd_ssize_t {
     if srclen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(b"srclen > 0\0" as *const u8 as *const ::core::ffi::c_char);
@@ -15838,21 +15600,21 @@ unsafe extern "C" fn _mpd_importsize(mut srclen: size_t, mut base: uint32_t) -> 
     } else {
         mpd_c2rust_assert_fail(b"base >= 2\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    upper_bound = (MPD_MAXIMPORT - 1 as ::core::ffi::c_int) as ::core::ffi::c_double;
-    x = srclen as ::core::ffi::c_double
+    let upper_bound: ::core::ffi::c_double = (MPD_MAXIMPORT - 1 as ::core::ffi::c_int) as ::core::ffi::c_double;
+    let x: ::core::ffi::c_double = srclen as ::core::ffi::c_double
         * (log10(base as ::core::ffi::c_double) / MPD_RDIGITS as ::core::ffi::c_double);
     func_count += 1;
     if func_count == func_fail {
-        return 1 as mpd_ssize_t;
+        1 as mpd_ssize_t
     } else {
-        return if x > upper_bound {
+        if x > upper_bound {
             MPD_SSIZE_MAX as mpd_ssize_t
         } else {
             x as mpd_ssize_t + 1 as mpd_ssize_t
-        };
-    };
+        }
+    }
 }
-unsafe extern "C" fn mpd_resize_u16(mut w: *mut *mut uint16_t, mut nmemb: size_t) -> uint8_t {
+unsafe extern "C" fn mpd_resize_u16(w: *mut *mut uint16_t, nmemb: size_t) -> uint8_t {
     let mut err: uint8_t = 0 as uint8_t;
     *w = mpd_realloc(
         *w as *mut ::core::ffi::c_void,
@@ -15860,9 +15622,9 @@ unsafe extern "C" fn mpd_resize_u16(mut w: *mut *mut uint16_t, mut nmemb: size_t
         ::core::mem::size_of::<uint16_t>() as mpd_size_t,
         &raw mut err,
     ) as *mut uint16_t;
-    return (err == 0) as ::core::ffi::c_int as uint8_t;
+    (err == 0) as ::core::ffi::c_int as uint8_t
 }
-unsafe extern "C" fn mpd_resize_u32(mut w: *mut *mut uint32_t, mut nmemb: size_t) -> uint8_t {
+unsafe extern "C" fn mpd_resize_u32(w: *mut *mut uint32_t, nmemb: size_t) -> uint8_t {
     let mut err: uint8_t = 0 as uint8_t;
     *w = mpd_realloc(
         *w as *mut ::core::ffi::c_void,
@@ -15870,14 +15632,14 @@ unsafe extern "C" fn mpd_resize_u32(mut w: *mut *mut uint32_t, mut nmemb: size_t
         ::core::mem::size_of::<uint32_t>() as mpd_size_t,
         &raw mut err,
     ) as *mut uint32_t;
-    return (err == 0) as ::core::ffi::c_int as uint8_t;
+    (err == 0) as ::core::ffi::c_int as uint8_t
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _baseconv_to_u16(
-    mut w: *mut *mut uint16_t,
+    w: *mut *mut uint16_t,
     mut wlen: size_t,
-    mut wbase: mpd_uint_t,
-    mut u: *mut mpd_uint_t,
+    wbase: mpd_uint_t,
+    u: *mut mpd_uint_t,
     mut ulen: mpd_ssize_t,
 ) -> size_t {
     let mut n: size_t = 0 as size_t;
@@ -15906,14 +15668,14 @@ unsafe extern "C" fn _baseconv_to_u16(
             break;
         }
     }
-    return n;
+    n
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _baseconv_to_u16(
-    mut w: *mut *mut uint16_t,
+    w: *mut *mut uint16_t,
     mut wlen: size_t,
-    mut wbase: mpd_uint_t,
-    mut u: *mut mpd_uint_t,
+    wbase: mpd_uint_t,
+    u: *mut mpd_uint_t,
     mut ulen: mpd_ssize_t,
 ) -> size_t {
     let mut n: size_t = 0 as size_t;
@@ -15942,18 +15704,18 @@ unsafe extern "C" fn _baseconv_to_u16(
             break;
         }
     }
-    return n;
+    n
 }
 unsafe extern "C" fn _coeff_from_u16(
-    mut w: *mut mpd_t,
+    w: *mut mpd_t,
     mut wlen: mpd_ssize_t,
-    mut u: *const mpd_uint_t,
+    u: *const mpd_uint_t,
     mut ulen: size_t,
-    mut ubase: uint32_t,
-    mut status: *mut uint32_t,
+    ubase: uint32_t,
+    status: *mut uint32_t,
 ) -> size_t {
     let mut n: mpd_ssize_t = 0 as mpd_ssize_t;
-    let mut carry: mpd_uint_t = 0;
+    let mut carry: mpd_uint_t;
     if wlen > 0 as mpd_ssize_t && ulen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(
@@ -15966,7 +15728,7 @@ unsafe extern "C" fn _coeff_from_u16(
     };
     ulen = ulen.wrapping_sub(1);
     let fresh0 = n;
-    n = n + 1;
+    n += 1;
     *(*w).data.offset(fresh0 as isize) = *u.add(ulen);
     loop {
         ulen = ulen.wrapping_sub(1);
@@ -15982,7 +15744,7 @@ unsafe extern "C" fn _coeff_from_u16(
                 wlen = n + 1 as mpd_ssize_t;
             }
             let fresh1 = n;
-            n = n + 1;
+            n += 1;
             *(*w).data.offset(fresh1 as isize) = carry;
         }
         carry = _mpd_shortadd((*w).data, n as mpd_size_t, *u.add(ulen));
@@ -15994,20 +15756,20 @@ unsafe extern "C" fn _coeff_from_u16(
                 wlen = n + 1 as mpd_ssize_t;
             }
             let fresh2 = n;
-            n = n + 1;
+            n += 1;
             *(*w).data.offset(fresh2 as isize) = carry;
         }
     }
-    return n as size_t;
+    n as size_t
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _baseconv_to_smaller(
-    mut w: *mut *mut uint32_t,
+    w: *mut *mut uint32_t,
     mut wlen: size_t,
-    mut wbase: uint32_t,
-    mut u: *mut mpd_uint_t,
+    wbase: uint32_t,
+    u: *mut mpd_uint_t,
     mut ulen: mpd_ssize_t,
-    mut ubase: mpd_uint_t,
+    ubase: mpd_uint_t,
 ) -> size_t {
     let mut n: size_t = 0 as size_t;
     if wlen > 0 as size_t && ulen > 0 as mpd_ssize_t {
@@ -16036,16 +15798,16 @@ unsafe extern "C" fn _baseconv_to_smaller(
             break;
         }
     }
-    return n;
+    n
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _baseconv_to_smaller(
-    mut w: *mut *mut uint32_t,
+    w: *mut *mut uint32_t,
     mut wlen: size_t,
-    mut wbase: uint32_t,
-    mut u: *mut mpd_uint_t,
+    wbase: uint32_t,
+    u: *mut mpd_uint_t,
     mut ulen: mpd_ssize_t,
-    mut ubase: mpd_uint_t,
+    ubase: mpd_uint_t,
 ) -> size_t {
     let mut n: size_t = 0 as size_t;
     if wlen > 0 as size_t && ulen > 0 as mpd_ssize_t {
@@ -16074,38 +15836,37 @@ unsafe extern "C" fn _baseconv_to_smaller(
             break;
         }
     }
-    return n;
+    n
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _copy_equal_base(
-    mut w: *mut *mut uint32_t,
-    mut wlen: size_t,
-    mut u: *const uint32_t,
-    mut ulen: size_t,
+    w: *mut *mut uint32_t,
+    wlen: size_t,
+    u: *const uint32_t,
+    ulen: size_t,
 ) -> size_t {
-    if wlen < ulen {
-        if mpd_resize_u32(w, ulen) == 0 {
+    if wlen < ulen
+        && mpd_resize_u32(w, ulen) == 0 {
             return SIZE_MAX as size_t;
         }
-    }
     memcpy(
         *w as *mut ::core::ffi::c_void,
         u as *const ::core::ffi::c_void,
         ulen.wrapping_mul(::core::mem::size_of::<uint32_t>() as size_t),
     );
-    return ulen;
+    ulen
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _baseconv_to_larger(
-    mut w: *mut *mut uint32_t,
+    w: *mut *mut uint32_t,
     mut wlen: size_t,
-    mut wbase: mpd_uint_t,
-    mut u: *const mpd_uint_t,
+    wbase: mpd_uint_t,
+    u: *const mpd_uint_t,
     mut ulen: size_t,
-    mut ubase: mpd_uint_t,
+    ubase: mpd_uint_t,
 ) -> size_t {
     let mut n: size_t = 0 as size_t;
-    let mut carry: mpd_uint_t = 0;
+    let mut carry: mpd_uint_t;
     if wlen > 0 as size_t && ulen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(
@@ -16150,17 +15911,17 @@ unsafe extern "C" fn _baseconv_to_larger(
             *(*w).add(fresh2) = carry as uint32_t;
         }
     }
-    return n;
+    n
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _coeff_from_larger_base(
-    mut w: *mut mpd_t,
+    w: *mut mpd_t,
     mut wlen: size_t,
-    mut wbase: mpd_uint_t,
-    mut u: *mut mpd_uint_t,
+    wbase: mpd_uint_t,
+    u: *mut mpd_uint_t,
     mut ulen: mpd_ssize_t,
-    mut ubase: mpd_uint_t,
-    mut status: *mut uint32_t,
+    ubase: mpd_uint_t,
+    status: *mut uint32_t,
 ) -> size_t {
     let mut n: size_t = 0 as size_t;
     if wlen > 0 as size_t && ulen > 0 as mpd_ssize_t {
@@ -16189,19 +15950,19 @@ unsafe extern "C" fn _coeff_from_larger_base(
             break;
         }
     }
-    return n;
+    n
 }
 unsafe extern "C" fn _coeff_from_smaller_base(
-    mut w: *mut mpd_t,
+    w: *mut mpd_t,
     mut wlen: mpd_ssize_t,
-    mut wbase: mpd_uint_t,
-    mut u: *const uint32_t,
+    wbase: mpd_uint_t,
+    u: *const uint32_t,
     mut ulen: size_t,
-    mut ubase: mpd_uint_t,
-    mut status: *mut uint32_t,
+    ubase: mpd_uint_t,
+    status: *mut uint32_t,
 ) -> size_t {
     let mut n: mpd_ssize_t = 0 as mpd_ssize_t;
-    let mut carry: mpd_uint_t = 0;
+    let mut carry: mpd_uint_t;
     if wlen > 0 as mpd_ssize_t && ulen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(
@@ -16214,7 +15975,7 @@ unsafe extern "C" fn _coeff_from_smaller_base(
     };
     ulen = ulen.wrapping_sub(1);
     let fresh0 = n;
-    n = n + 1;
+    n += 1;
     *(*w).data.offset(fresh0 as isize) = *u.add(ulen) as mpd_uint_t;
     loop {
         ulen = ulen.wrapping_sub(1);
@@ -16230,7 +15991,7 @@ unsafe extern "C" fn _coeff_from_smaller_base(
                 wlen = n + 1 as mpd_ssize_t;
             }
             let fresh1 = n;
-            n = n + 1;
+            n += 1;
             *(*w).data.offset(fresh1 as isize) = carry;
         }
         carry = _mpd_shortadd_b(
@@ -16247,18 +16008,18 @@ unsafe extern "C" fn _coeff_from_smaller_base(
                 wlen = n + 1 as mpd_ssize_t;
             }
             let fresh2 = n;
-            n = n + 1;
+            n += 1;
             *(*w).data.offset(fresh2 as isize) = carry;
         }
     }
-    return n as size_t;
+    n as size_t
 }
 pub unsafe extern "C" fn mpd_qexport_u16(
-    mut rdata: *mut *mut uint16_t,
+    rdata: *mut *mut uint16_t,
     mut rlen: size_t,
-    mut rbase: uint32_t,
-    mut src: *const mpd_t,
-    mut status: *mut uint32_t,
+    rbase: uint32_t,
+    src: *const mpd_t,
+    status: *mut uint32_t,
 ) -> size_t {
     let mut current_block: u64;
     let mut tsrc_data: [mpd_uint_t; 64] = [0; 64];
@@ -16301,60 +16062,54 @@ pub unsafe extern "C" fn mpd_qexport_u16(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            if mpd_iszero(src) != 0 {
-                **rdata = 0 as uint16_t;
-                return 1 as size_t;
-            }
-            if (*src).exp >= 0 as mpd_ssize_t {
-                if mpd_qshiftl(&raw mut tsrc, src, (*src).exp, status) == 0 {
-                    current_block = 1;
-                } else {
-                    current_block = 3;
-                }
-            } else if mpd_qshiftr(&raw mut tsrc, src, -(*src).exp, status)
-                == MPD_UINT_MAX as mpd_uint_t
-            {
+    if current_block == 2 {
+        if mpd_iszero(src) != 0 {
+            **rdata = 0 as uint16_t;
+            return 1 as size_t;
+        }
+        if (*src).exp >= 0 as mpd_ssize_t {
+            if mpd_qshiftl(&raw mut tsrc, src, (*src).exp, status) == 0 {
                 current_block = 1;
             } else {
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
-                    n = _baseconv_to_u16(rdata, rlen, rbase as mpd_uint_t, tsrc.data, tsrc.len);
-                    if n == SIZE_MAX as size_t {
-                        current_block = 1;
-                    } else {
-                        current_block = 4;
-                    }
+        } else if mpd_qshiftr(&raw mut tsrc, src, -(*src).exp, status)
+            == MPD_UINT_MAX as mpd_uint_t
+        {
+            current_block = 1;
+        } else {
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                n = _baseconv_to_u16(rdata, rlen, rbase as mpd_uint_t, tsrc.data, tsrc.len);
+                if n == SIZE_MAX as size_t {
+                    current_block = 1;
+                } else {
+                    current_block = 4;
                 }
             }
         }
-        _ => {}
     }
-    match current_block {
-        1 => {
-            if alloc != 0 {
-                mpd_free.expect("non-null function pointer")(*rdata as *mut ::core::ffi::c_void);
-                *rdata = ::core::ptr::null_mut::<uint16_t>();
-            }
-            n = SIZE_MAX as size_t;
-            *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
+    if current_block == 1 {
+        if alloc != 0 {
+            mpd_free.expect("non-null function pointer")(*rdata as *mut ::core::ffi::c_void);
+            *rdata = ::core::ptr::null_mut::<uint16_t>();
         }
-        _ => {}
+        n = SIZE_MAX as size_t;
+        *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
     }
     mpd_del(&raw mut tsrc);
-    return n;
+    n
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qexport_u32(
-    mut rdata: *mut *mut uint32_t,
+    rdata: *mut *mut uint32_t,
     mut rlen: size_t,
-    mut rbase: uint32_t,
-    mut src: *const mpd_t,
-    mut status: *mut uint32_t,
+    rbase: uint32_t,
+    src: *const mpd_t,
+    status: *mut uint32_t,
 ) -> size_t {
     let mut current_block: u64;
     let mut tsrc_data: [mpd_uint_t; 64] = [0; 64];
@@ -16393,28 +16148,123 @@ pub unsafe extern "C" fn mpd_qexport_u32(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            if mpd_iszero(src) != 0 {
-                **rdata = 0 as uint32_t;
-                return 1 as size_t;
-            }
-            if (*src).exp >= 0 as mpd_ssize_t {
-                if mpd_qshiftl(&raw mut tsrc, src, (*src).exp, status) == 0 {
-                    current_block = 1;
-                } else {
-                    current_block = 3;
-                }
-            } else if mpd_qshiftr(&raw mut tsrc, src, -(*src).exp, status)
-                == MPD_UINT_MAX as mpd_uint_t
-            {
+    if current_block == 2 {
+        if mpd_iszero(src) != 0 {
+            **rdata = 0 as uint32_t;
+            return 1 as size_t;
+        }
+        if (*src).exp >= 0 as mpd_ssize_t {
+            if mpd_qshiftl(&raw mut tsrc, src, (*src).exp, status) == 0 {
                 current_block = 1;
             } else {
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
+        } else if mpd_qshiftr(&raw mut tsrc, src, -(*src).exp, status)
+            == MPD_UINT_MAX as mpd_uint_t
+        {
+            current_block = 1;
+        } else {
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                n = _baseconv_to_smaller(
+                    rdata,
+                    rlen,
+                    rbase,
+                    tsrc.data,
+                    tsrc.len,
+                    MPD_RADIX as mpd_uint_t,
+                );
+                if n == SIZE_MAX as size_t {
+                    current_block = 1;
+                } else {
+                    current_block = 4;
+                }
+            }
+        }
+    }
+    if current_block == 1 {
+        if alloc != 0 {
+            mpd_free.expect("non-null function pointer")(*rdata as *mut ::core::ffi::c_void);
+            *rdata = ::core::ptr::null_mut::<uint32_t>();
+        }
+        n = SIZE_MAX as size_t;
+        *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
+    }
+    mpd_del(&raw mut tsrc);
+    n
+}
+#[cfg(target_pointer_width = "32")]
+pub unsafe extern "C" fn mpd_qexport_u32(
+    rdata: *mut *mut uint32_t,
+    mut rlen: size_t,
+    rbase: uint32_t,
+    src: *const mpd_t,
+    status: *mut uint32_t,
+) -> size_t {
+    let mut current_block: u64;
+    let mut tsrc_data: [mpd_uint_t; 64] = [0; 64];
+    let mut tsrc: mpd_t = mpd_t {
+        flags: (0 as ::core::ffi::c_int
+            | MPD_STATIC as ::core::ffi::c_int
+            | MPD_STATIC_DATA as ::core::ffi::c_int) as uint8_t,
+        exp: 0 as mpd_ssize_t,
+        digits: 0 as mpd_ssize_t,
+        len: 0 as mpd_ssize_t,
+        alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
+        data: &raw mut tsrc_data as *mut mpd_uint_t,
+    };
+    let mut alloc: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
+    let mut n: size_t = 0;
+    if mpd_isspecial(src) != 0 || _mpd_isint(src) == 0 {
+        *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
+        return SIZE_MAX as size_t;
+    }
+    if (*rdata).is_null() {
+        rlen = mpd_sizeinbase(src, rbase);
+        if rlen == SIZE_MAX as size_t {
+            *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
+            return SIZE_MAX as size_t;
+        }
+        *rdata = mpd_alloc(
+            rlen as mpd_size_t,
+            ::core::mem::size_of::<uint32_t>() as mpd_size_t,
+        ) as *mut uint32_t;
+        if (*rdata).is_null() {
+            current_block = 1;
+        } else {
+            alloc = 1 as ::core::ffi::c_int;
+            current_block = 2;
+        }
+    } else {
+        current_block = 2;
+    }
+    if current_block == 2 {
+        if mpd_iszero(src) != 0 {
+            **rdata = 0 as uint32_t;
+            return 1 as size_t;
+        }
+        if (*src).exp >= 0 as mpd_ssize_t {
+            if mpd_qshiftl(&raw mut tsrc, src, (*src).exp, status) == 0 {
+                current_block = 1;
+            } else {
+                current_block = 3;
+            }
+        } else if mpd_qshiftr(&raw mut tsrc, src, -(*src).exp, status)
+            == MPD_UINT_MAX as mpd_uint_t
+        {
+            current_block = 1;
+        } else {
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                if rbase == MPD_RADIX as uint32_t {
+                    n = _copy_equal_base(rdata, rlen, tsrc.data, tsrc.len as size_t);
+                } else if rbase < MPD_RADIX as uint32_t {
                     n = _baseconv_to_smaller(
                         rdata,
                         rlen,
@@ -16423,154 +16273,45 @@ pub unsafe extern "C" fn mpd_qexport_u32(
                         tsrc.len,
                         MPD_RADIX as mpd_uint_t,
                     );
-                    if n == SIZE_MAX as size_t {
-                        current_block = 1;
-                    } else {
-                        current_block = 4;
-                    }
+                } else {
+                    n = _baseconv_to_larger(
+                        rdata,
+                        rlen,
+                        rbase as mpd_uint_t,
+                        tsrc.data,
+                        tsrc.len as size_t,
+                        MPD_RADIX as mpd_uint_t,
+                    );
                 }
-            }
-        }
-        _ => {}
-    }
-    match current_block {
-        1 => {
-            if alloc != 0 {
-                mpd_free.expect("non-null function pointer")(*rdata as *mut ::core::ffi::c_void);
-                *rdata = ::core::ptr::null_mut::<uint32_t>();
-            }
-            n = SIZE_MAX as size_t;
-            *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
-        }
-        _ => {}
-    }
-    mpd_del(&raw mut tsrc);
-    return n;
-}
-#[cfg(target_pointer_width = "32")]
-pub unsafe extern "C" fn mpd_qexport_u32(
-    mut rdata: *mut *mut uint32_t,
-    mut rlen: size_t,
-    mut rbase: uint32_t,
-    mut src: *const mpd_t,
-    mut status: *mut uint32_t,
-) -> size_t {
-    let mut current_block: u64;
-    let mut tsrc_data: [mpd_uint_t; 64] = [0; 64];
-    let mut tsrc: mpd_t = mpd_t {
-        flags: (0 as ::core::ffi::c_int
-            | MPD_STATIC as ::core::ffi::c_int
-            | MPD_STATIC_DATA as ::core::ffi::c_int) as uint8_t,
-        exp: 0 as mpd_ssize_t,
-        digits: 0 as mpd_ssize_t,
-        len: 0 as mpd_ssize_t,
-        alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
-        data: &raw mut tsrc_data as *mut mpd_uint_t,
-    };
-    let mut alloc: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut n: size_t = 0;
-    if mpd_isspecial(src) != 0 || _mpd_isint(src) == 0 {
-        *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
-        return SIZE_MAX as size_t;
-    }
-    if (*rdata).is_null() {
-        rlen = mpd_sizeinbase(src, rbase);
-        if rlen == SIZE_MAX as size_t {
-            *status = (*status as ::core::ffi::c_uint | MPD_Invalid_operation) as uint32_t;
-            return SIZE_MAX as size_t;
-        }
-        *rdata = mpd_alloc(
-            rlen as mpd_size_t,
-            ::core::mem::size_of::<uint32_t>() as mpd_size_t,
-        ) as *mut uint32_t;
-        if (*rdata).is_null() {
-            current_block = 1;
-        } else {
-            alloc = 1 as ::core::ffi::c_int;
-            current_block = 2;
-        }
-    } else {
-        current_block = 2;
-    }
-    match current_block {
-        2 => {
-            if mpd_iszero(src) != 0 {
-                **rdata = 0 as uint32_t;
-                return 1 as size_t;
-            }
-            if (*src).exp >= 0 as mpd_ssize_t {
-                if mpd_qshiftl(&raw mut tsrc, src, (*src).exp, status) == 0 {
+                if n == SIZE_MAX as size_t {
                     current_block = 1;
                 } else {
-                    current_block = 3;
-                }
-            } else if mpd_qshiftr(&raw mut tsrc, src, -(*src).exp, status)
-                == MPD_UINT_MAX as mpd_uint_t
-            {
-                current_block = 1;
-            } else {
-                current_block = 3;
-            }
-            match current_block {
-                1 => {}
-                _ => {
-                    if rbase == MPD_RADIX as uint32_t {
-                        n = _copy_equal_base(rdata, rlen, tsrc.data, tsrc.len as size_t);
-                    } else if rbase < MPD_RADIX as uint32_t {
-                        n = _baseconv_to_smaller(
-                            rdata,
-                            rlen,
-                            rbase,
-                            tsrc.data,
-                            tsrc.len,
-                            MPD_RADIX as mpd_uint_t,
-                        );
-                    } else {
-                        n = _baseconv_to_larger(
-                            rdata,
-                            rlen,
-                            rbase as mpd_uint_t,
-                            tsrc.data,
-                            tsrc.len as size_t,
-                            MPD_RADIX as mpd_uint_t,
-                        );
-                    }
-                    if n == SIZE_MAX as size_t {
-                        current_block = 1;
-                    } else {
-                        current_block = 4;
-                    }
+                    current_block = 4;
                 }
             }
         }
-        _ => {}
     }
-    match current_block {
-        1 => {
-            if alloc != 0 {
-                mpd_free.expect("non-null function pointer")(*rdata as *mut ::core::ffi::c_void);
-                *rdata = ::core::ptr::null_mut::<uint32_t>();
-            }
-            n = SIZE_MAX as size_t;
-            *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
+    if current_block == 1 {
+        if alloc != 0 {
+            mpd_free.expect("non-null function pointer")(*rdata as *mut ::core::ffi::c_void);
+            *rdata = ::core::ptr::null_mut::<uint32_t>();
         }
-        _ => {}
+        n = SIZE_MAX as size_t;
+        *status = (*status as ::core::ffi::c_uint | MPD_Malloc_error) as uint32_t;
     }
     mpd_del(&raw mut tsrc);
-    return n;
+    n
 }
 pub unsafe extern "C" fn mpd_qimport_u16(
-    mut result: *mut mpd_t,
-    mut srcdata: *const uint16_t,
-    mut srclen: size_t,
-    mut srcsign: uint8_t,
-    mut srcbase: uint32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    srcdata: *const uint16_t,
+    srclen: size_t,
+    srcsign: uint8_t,
+    srcbase: uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut usrc: *mut mpd_uint_t = ::core::ptr::null_mut::<mpd_uint_t>();
-    let mut rlen: mpd_ssize_t = 0;
-    let mut n: size_t = 0;
+    let mut n: size_t;
     if srclen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(b"srclen > 0\0" as *const u8 as *const ::core::ffi::c_char);
@@ -16579,12 +16320,12 @@ pub unsafe extern "C" fn mpd_qimport_u16(
     } else {
         mpd_c2rust_assert_fail(b"srcbase <= (1U<<16)\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    rlen = _mpd_importsize(srclen, srcbase);
+    let rlen: mpd_ssize_t = _mpd_importsize(srclen, srcbase);
     if rlen == MPD_SSIZE_MAX as mpd_ssize_t {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
     }
-    usrc = mpd_alloc(srclen, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
+    let usrc: *mut mpd_uint_t = mpd_alloc(srclen, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t) as *mut mpd_uint_t;
     if usrc.is_null() {
         mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
         return;
@@ -16609,21 +16350,19 @@ pub unsafe extern "C" fn mpd_qimport_u16(
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_qimport_u32(
-    mut result: *mut mpd_t,
-    mut srcdata: *const uint32_t,
-    mut srclen: size_t,
-    mut srcsign: uint8_t,
-    mut srcbase: uint32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    srcdata: *const uint32_t,
+    srclen: size_t,
+    srcsign: uint8_t,
+    srcbase: uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut rlen: mpd_ssize_t = 0;
-    let mut n: size_t = 0;
     if srclen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(b"srclen > 0\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    rlen = _mpd_importsize(srclen, srcbase);
+    let rlen: mpd_ssize_t = _mpd_importsize(srclen, srcbase);
     if rlen == MPD_SSIZE_MAX as mpd_ssize_t {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
@@ -16631,7 +16370,7 @@ pub unsafe extern "C" fn mpd_qimport_u32(
     if mpd_qresize(result, rlen, status) == 0 {
         return;
     }
-    n = _coeff_from_smaller_base(
+    let n: size_t = _coeff_from_smaller_base(
         result,
         rlen,
         MPD_RADIX as mpd_uint_t,
@@ -16652,21 +16391,20 @@ pub unsafe extern "C" fn mpd_qimport_u32(
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_qimport_u32(
-    mut result: *mut mpd_t,
-    mut srcdata: *const uint32_t,
-    mut srclen: size_t,
-    mut srcsign: uint8_t,
-    mut srcbase: uint32_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    srcdata: *const uint32_t,
+    srclen: size_t,
+    srcsign: uint8_t,
+    srcbase: uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut rlen: mpd_ssize_t = 0;
-    let mut n: size_t = 0;
+    let mut n: size_t;
     if srclen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(b"srclen > 0\0" as *const u8 as *const ::core::ffi::c_char);
     };
-    rlen = _mpd_importsize(srclen, srcbase);
+    let rlen: mpd_ssize_t = _mpd_importsize(srclen, srcbase);
     if rlen == MPD_SSIZE_MAX as mpd_ssize_t {
         mpd_seterror(result, MPD_Invalid_operation as uint32_t, status);
         return;
@@ -16695,7 +16433,7 @@ pub unsafe extern "C" fn mpd_qimport_u32(
             status,
         );
     } else {
-        let mut usrc: *mut mpd_uint_t =
+        let usrc: *mut mpd_uint_t =
             mpd_alloc(srclen, ::core::mem::size_of::<mpd_uint_t>() as mpd_size_t)
                 as *mut mpd_uint_t;
         if usrc.is_null() {
@@ -16730,14 +16468,14 @@ pub unsafe extern "C" fn mpd_qimport_u32(
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _uint_from_u16(
-    mut w: *mut mpd_uint_t,
-    mut wlen: mpd_ssize_t,
-    mut u: *const uint16_t,
+    w: *mut mpd_uint_t,
+    wlen: mpd_ssize_t,
+    u: *const uint16_t,
     mut ulen: size_t,
 ) -> size_t {
     let ubase: mpd_uint_t = (1 as mpd_uint_t) << 16 as ::core::ffi::c_int;
     let mut n: mpd_ssize_t = 0 as mpd_ssize_t;
-    let mut carry: mpd_uint_t = 0;
+    let mut carry: mpd_uint_t;
     if wlen > 0 as mpd_ssize_t && ulen > 0 as size_t {
     } else {
         mpd_c2rust_assert_fail(
@@ -16746,7 +16484,7 @@ unsafe extern "C" fn _uint_from_u16(
     };
     ulen = ulen.wrapping_sub(1);
     let fresh0 = n;
-    n = n + 1;
+    n += 1;
     *w.offset(fresh0 as isize) = *u.add(ulen) as mpd_uint_t;
     loop {
         ulen = ulen.wrapping_sub(1);
@@ -16759,7 +16497,7 @@ unsafe extern "C" fn _uint_from_u16(
                 abort();
             }
             let fresh1 = n;
-            n = n + 1;
+            n += 1;
             *w.offset(fresh1 as isize) = carry;
         }
         carry = _mpd_shortadd(w, n as mpd_size_t, *u.add(ulen) as mpd_uint_t);
@@ -16768,75 +16506,74 @@ unsafe extern "C" fn _uint_from_u16(
                 abort();
             }
             let fresh2 = n;
-            n = n + 1;
+            n += 1;
             *w.offset(fresh2 as isize) = carry;
         }
     }
-    return n as size_t;
+    n as size_t
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _set_coeff(
-    mut data: *mut uint64_t,
-    mut hi: uint64_t,
-    mut lo: uint64_t,
+    data: *mut uint64_t,
+    hi: uint64_t,
+    lo: uint64_t,
 ) -> mpd_ssize_t {
     let mut d: __uint128_t =
         ((hi as __uint128_t) << 64 as ::core::ffi::c_int).wrapping_add(lo as __uint128_t);
-    let mut q: __uint128_t = 0;
-    let mut r: __uint128_t = 0;
+    let mut q: __uint128_t;
+    let mut r: __uint128_t;
     q = d.wrapping_div(MPD_RADIX as __uint128_t);
     r = d.wrapping_rem(MPD_RADIX as __uint128_t);
-    *data.offset(0 as isize) = r as uint64_t;
+    *data.offset(0_isize) = r as uint64_t;
     d = q;
     q = d.wrapping_div(MPD_RADIX as __uint128_t);
     r = d.wrapping_rem(MPD_RADIX as __uint128_t);
-    *data.offset(1 as isize) = r as uint64_t;
+    *data.offset(1_isize) = r as uint64_t;
     d = q;
     q = d.wrapping_div(MPD_RADIX as __uint128_t);
     r = d.wrapping_rem(MPD_RADIX as __uint128_t);
-    *data.offset(2 as isize) = r as uint64_t;
+    *data.offset(2_isize) = r as uint64_t;
     if q != 0 as __uint128_t {
         abort();
     }
-    return (if *data.offset(2 as isize) != 0 as uint64_t {
+    (if *data.offset(2_isize) != 0 as uint64_t {
         3 as ::core::ffi::c_int
-    } else if *data.offset(1 as isize) != 0 as uint64_t {
+    } else if *data.offset(1_isize) != 0 as uint64_t {
         2 as ::core::ffi::c_int
     } else {
         1 as ::core::ffi::c_int
-    }) as mpd_ssize_t;
+    }) as mpd_ssize_t
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _set_coeff(
-    mut data: *mut mpd_uint_t,
-    mut len: mpd_ssize_t,
-    mut hi: uint64_t,
-    mut lo: uint64_t,
+    data: *mut mpd_uint_t,
+    len: mpd_ssize_t,
+    hi: uint64_t,
+    lo: uint64_t,
 ) -> mpd_ssize_t {
     let mut u16: [uint16_t; 8] = [0 as uint16_t, 0, 0, 0, 0, 0, 0, 0];
-    u16[7 as usize] =
+    u16[7_usize] =
         ((hi & 0xffff000000000000 as uint64_t) >> 48 as ::core::ffi::c_int) as uint16_t;
-    u16[6 as usize] = ((hi & 0xffff00000000 as uint64_t) >> 32 as ::core::ffi::c_int) as uint16_t;
-    u16[5 as usize] = ((hi & 0xffff0000 as uint64_t) >> 16 as ::core::ffi::c_int) as uint16_t;
-    u16[4 as usize] = (hi & 0xffff as uint64_t) as uint16_t;
-    u16[3 as usize] =
+    u16[6_usize] = ((hi & 0xffff00000000 as uint64_t) >> 32 as ::core::ffi::c_int) as uint16_t;
+    u16[5_usize] = ((hi & 0xffff0000 as uint64_t) >> 16 as ::core::ffi::c_int) as uint16_t;
+    u16[4_usize] = (hi & 0xffff as uint64_t) as uint16_t;
+    u16[3_usize] =
         ((lo & 0xffff000000000000 as uint64_t) >> 48 as ::core::ffi::c_int) as uint16_t;
-    u16[2 as usize] = ((lo & 0xffff00000000 as uint64_t) >> 32 as ::core::ffi::c_int) as uint16_t;
-    u16[1 as usize] = ((lo & 0xffff0000 as uint64_t) >> 16 as ::core::ffi::c_int) as uint16_t;
-    u16[0 as usize] = (lo & 0xffff as uint64_t) as uint16_t;
-    return _uint_from_u16(data, len, &raw mut u16 as *mut uint16_t, 8 as size_t) as mpd_ssize_t;
+    u16[2_usize] = ((lo & 0xffff00000000 as uint64_t) >> 32 as ::core::ffi::c_int) as uint16_t;
+    u16[1_usize] = ((lo & 0xffff0000 as uint64_t) >> 16 as ::core::ffi::c_int) as uint16_t;
+    u16[0_usize] = (lo & 0xffff as uint64_t) as uint16_t;
+    _uint_from_u16(data, len, &raw mut u16 as *mut uint16_t, 8 as size_t) as mpd_ssize_t
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _set_uint128_coeff_exp(
-    mut result: *mut mpd_t,
-    mut hi: uint64_t,
-    mut lo: uint64_t,
-    mut exp: mpd_ssize_t,
+    result: *mut mpd_t,
+    hi: uint64_t,
+    lo: uint64_t,
+    exp: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
     let mut data: [mpd_uint_t; 5] = [0 as mpd_uint_t, 0, 0, 0, 0];
     let mut status: uint32_t = 0 as uint32_t;
-    let mut len: mpd_ssize_t = 0;
-    len = _set_coeff(&raw mut data as *mut uint64_t, hi, lo);
+    let len: mpd_ssize_t = _set_coeff(&raw mut data as *mut uint64_t, hi, lo);
     if mpd_qresize(result, len, &raw mut status) == 0 {
         return -(1 as ::core::ffi::c_int);
     }
@@ -16848,19 +16585,18 @@ unsafe extern "C" fn _set_uint128_coeff_exp(
     (*result).exp = exp;
     (*result).len = len;
     mpd_setdigits(result);
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _set_uint128_coeff_exp(
-    mut result: *mut mpd_t,
-    mut hi: uint64_t,
-    mut lo: uint64_t,
-    mut exp: mpd_ssize_t,
+    result: *mut mpd_t,
+    hi: uint64_t,
+    lo: uint64_t,
+    exp: mpd_ssize_t,
 ) -> ::core::ffi::c_int {
     let mut data: [mpd_uint_t; 5] = [0 as mpd_uint_t, 0, 0, 0, 0];
     let mut status: uint32_t = 0 as uint32_t;
-    let mut len: mpd_ssize_t = 0;
-    len = _set_coeff(&raw mut data as *mut mpd_uint_t, 5 as mpd_ssize_t, hi, lo);
+    let len: mpd_ssize_t = _set_coeff(&raw mut data as *mut mpd_uint_t, 5 as mpd_ssize_t, hi, lo);
     if mpd_qresize(result, len, &raw mut status) == 0 {
         return -(1 as ::core::ffi::c_int);
     }
@@ -16872,15 +16608,15 @@ unsafe extern "C" fn _set_uint128_coeff_exp(
     (*result).exp = exp;
     (*result).len = len;
     mpd_setdigits(result);
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 pub unsafe extern "C" fn mpd_from_uint128_triple(
-    mut result: *mut mpd_t,
-    mut triple: *const mpd_uint128_triple_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    triple: *const mpd_uint128_triple_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
-    let mut current_block: u64;
+    let current_block: u64;
     static mut maxcontext: mpd_context_t = mpd_context_t {
         prec: MPD_MAX_PREC as mpd_ssize_t,
         emax: MPD_MAX_EMAX as mpd_ssize_t,
@@ -16896,7 +16632,7 @@ pub unsafe extern "C" fn mpd_from_uint128_triple(
     let sign: uint8_t = (*triple).sign;
     let hi: uint64_t = (*triple).hi;
     let lo: uint64_t = (*triple).lo;
-    let mut exp: mpd_ssize_t = 0;
+    let mut exp: mpd_ssize_t;
     exp = (*triple).exp;
     match tag as ::core::ffi::c_uint {
         2 | 3 => {
@@ -16947,7 +16683,7 @@ pub unsafe extern "C" fn mpd_from_uint128_triple(
                     exp = MPD_EXP_INF as mpd_ssize_t;
                 }
                 if exp == MPD_SSIZE_MIN as mpd_ssize_t {
-                    exp = (MPD_SSIZE_MIN + 1 as i64) as mpd_ssize_t;
+                    exp = (MPD_SSIZE_MIN + 1_i64) as mpd_ssize_t;
                 }
                 if _set_uint128_coeff_exp(result, hi, lo, exp) < 0 as ::core::ffi::c_int {
                     current_block = 2;
@@ -16974,19 +16710,19 @@ pub unsafe extern "C" fn mpd_from_uint128_triple(
     match current_block {
         2 => {
             mpd_seterror(result, MPD_Malloc_error as uint32_t, status);
-            return -(1 as ::core::ffi::c_int);
+            -(1 as ::core::ffi::c_int)
         }
         _ => {
             mpd_seterror(result, MPD_Conversion_syntax as uint32_t, status);
-            return -(1 as ::core::ffi::c_int);
+            -(1 as ::core::ffi::c_int)
         }
-    };
+    }
 }
 #[cfg(target_pointer_width = "32")]
 pub unsafe extern "C" fn mpd_from_uint128_triple(
-    mut result: *mut mpd_t,
-    mut triple: *const mpd_uint128_triple_t,
-    mut status: *mut uint32_t,
+    result: *mut mpd_t,
+    triple: *const mpd_uint128_triple_t,
+    status: *mut uint32_t,
 ) -> ::core::ffi::c_int {
     let mut current_block: u64;
     static mut maxcontext: mpd_context_t = mpd_context_t {
@@ -17004,7 +16740,7 @@ pub unsafe extern "C" fn mpd_from_uint128_triple(
     let sign: uint8_t = (*triple).sign;
     let hi: uint64_t = (*triple).hi;
     let lo: uint64_t = (*triple).lo;
-    let mut exp: mpd_ssize_t = 0;
+    let mut exp: mpd_ssize_t;
     if !((*triple).exp < MPD_SSIZE_MIN as int64_t || (*triple).exp > MPD_SSIZE_MAX as int64_t) {
         exp = (*triple).exp as mpd_ssize_t;
         match tag as ::core::ffi::c_uint {
@@ -17264,12 +17000,12 @@ pub unsafe extern "C" fn mpd_from_uint128_triple(
         }
     }
     mpd_seterror(result, MPD_Conversion_syntax as uint32_t, status);
-    return -(1 as ::core::ffi::c_int);
+    -(1 as ::core::ffi::c_int)
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _uint_to_u16(
-    mut w: *mut uint16_t,
-    mut u: *mut mpd_uint_t,
+    w: *mut uint16_t,
+    u: *mut mpd_uint_t,
     mut ulen: mpd_ssize_t,
 ) -> size_t {
     let wbase: mpd_uint_t = (1 as mpd_uint_t) << 16 as ::core::ffi::c_int;
@@ -17290,15 +17026,15 @@ unsafe extern "C" fn _uint_to_u16(
             break;
         }
     }
-    return n;
+    n
 }
 #[cfg(target_pointer_width = "64")]
-unsafe extern "C" fn _get_coeff(mut hi: *mut uint64_t, mut lo: *mut uint64_t, mut a: *const mpd_t) {
+unsafe extern "C" fn _get_coeff(hi: *mut uint64_t, lo: *mut uint64_t, a: *const mpd_t) {
     let mut u128: __uint128_t = 0 as __uint128_t;
-    let mut current_block_3: u64;
+    let current_block_3: u64;
     match (*a).len {
         3 => {
-            u128 = *(*a).data.offset(2 as isize) as __uint128_t;
+            u128 = *(*a).data.offset(2_isize) as __uint128_t;
             current_block_3 = 1;
         }
         2 => {
@@ -17311,28 +17047,25 @@ unsafe extern "C" fn _get_coeff(mut hi: *mut uint64_t, mut lo: *mut uint64_t, mu
             abort();
         }
     }
-    match current_block_3 {
-        1 => {
-            u128 = u128
-                .wrapping_mul(MPD_RADIX as __uint128_t)
-                .wrapping_add(*(*a).data.offset(1 as isize) as __uint128_t);
-        }
-        _ => {}
+    if current_block_3 == 1 {
+        u128 = u128
+            .wrapping_mul(MPD_RADIX as __uint128_t)
+            .wrapping_add(*(*a).data.offset(1_isize) as __uint128_t);
     }
     u128 = u128
         .wrapping_mul(MPD_RADIX as __uint128_t)
-        .wrapping_add(*(*a).data.offset(0 as isize) as __uint128_t);
+        .wrapping_add(*(*a).data.offset(0_isize) as __uint128_t);
     *hi = (u128 >> 64 as ::core::ffi::c_int) as uint64_t;
     *lo = u128 as uint64_t;
 }
 #[cfg(target_pointer_width = "32")]
-unsafe extern "C" fn _get_coeff(mut hi: *mut uint64_t, mut lo: *mut uint64_t, mut a: *const mpd_t) {
+unsafe extern "C" fn _get_coeff(hi: *mut uint64_t, lo: *mut uint64_t, a: *const mpd_t) {
     let mut u16: [uint16_t; 8] = [0 as uint16_t, 0, 0, 0, 0, 0, 0, 0];
     let mut data: [mpd_uint_t; 5] = [0 as mpd_uint_t, 0, 0, 0, 0];
     let mut current_block_5: u64;
     match (*a).len {
         5 => {
-            data[4 as usize] = *(*a).data.offset(4 as isize);
+            data[4_usize] = *(*a).data.offset(4_isize);
             current_block_5 = 1;
         }
         4 => {
@@ -17351,62 +17084,51 @@ unsafe extern "C" fn _get_coeff(mut hi: *mut uint64_t, mut lo: *mut uint64_t, mu
             abort();
         }
     }
-    match current_block_5 {
-        1 => {
-            data[3 as usize] = *(*a).data.offset(3 as isize);
-            current_block_5 = 2;
-        }
-        _ => {}
+    if current_block_5 == 1 {
+        data[3_usize] = *(*a).data.offset(3_isize);
+        current_block_5 = 2;
     }
-    match current_block_5 {
-        2 => {
-            data[2 as usize] = *(*a).data.offset(2 as isize);
-            current_block_5 = 3;
-        }
-        _ => {}
+    if current_block_5 == 2 {
+        data[2_usize] = *(*a).data.offset(2_isize);
+        current_block_5 = 3;
     }
-    match current_block_5 {
-        3 => {
-            data[1 as usize] = *(*a).data.offset(1 as isize);
-        }
-        _ => {}
+    if current_block_5 == 3 {
+        data[1_usize] = *(*a).data.offset(1_isize);
     }
-    data[0 as usize] = *(*a).data.offset(0 as isize);
+    data[0_usize] = *(*a).data.offset(0_isize);
     _uint_to_u16(
         &raw mut u16 as *mut uint16_t,
         &raw mut data as *mut mpd_uint_t,
         (*a).len,
     );
-    *hi = (u16[7 as usize] as uint64_t) << 48 as ::core::ffi::c_int;
-    *hi |= (u16[6 as usize] as uint64_t) << 32 as ::core::ffi::c_int;
-    *hi |= (u16[5 as usize] as uint64_t) << 16 as ::core::ffi::c_int;
-    *hi |= u16[4 as usize] as uint64_t;
-    *lo = (u16[3 as usize] as uint64_t) << 48 as ::core::ffi::c_int;
-    *lo |= (u16[2 as usize] as uint64_t) << 32 as ::core::ffi::c_int;
-    *lo |= (u16[1 as usize] as uint64_t) << 16 as ::core::ffi::c_int;
-    *lo |= u16[0 as usize] as uint64_t;
+    *hi = (u16[7_usize] as uint64_t) << 48 as ::core::ffi::c_int;
+    *hi |= (u16[6_usize] as uint64_t) << 32 as ::core::ffi::c_int;
+    *hi |= (u16[5_usize] as uint64_t) << 16 as ::core::ffi::c_int;
+    *hi |= u16[4_usize] as uint64_t;
+    *lo = (u16[3_usize] as uint64_t) << 48 as ::core::ffi::c_int;
+    *lo |= (u16[2_usize] as uint64_t) << 32 as ::core::ffi::c_int;
+    *lo |= (u16[1_usize] as uint64_t) << 16 as ::core::ffi::c_int;
+    *lo |= u16[0_usize] as uint64_t;
 }
 #[cfg(target_pointer_width = "64")]
 unsafe extern "C" fn _coeff_as_uint128(
-    mut hi: *mut uint64_t,
-    mut lo: *mut uint64_t,
-    mut a: *const mpd_t,
+    hi: *mut uint64_t,
+    lo: *mut uint64_t,
+    a: *const mpd_t,
 ) -> mpd_triple_class {
     static mut uint128_max_data: [mpd_uint_t; 3] = [
-        3374607431768211455 as u64,
-        4028236692093846346 as u64,
-        3 as u64,
+        3374607431768211455_u64,
+        4028236692093846346_u64,
+        3_u64,
     ];
-    static mut uint128_max: mpd_t = unsafe {
-        mpd_t {
-            flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int)
-                as uint8_t,
-            exp: 0 as mpd_ssize_t,
-            digits: 39 as mpd_ssize_t,
-            len: 3 as mpd_ssize_t,
-            alloc: 3 as mpd_ssize_t,
-            data: &raw const uint128_max_data as *mut mpd_uint_t,
-        }
+    static mut uint128_max: mpd_t = mpd_t {
+        flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int)
+            as uint8_t,
+        exp: 0 as mpd_ssize_t,
+        digits: 39 as mpd_ssize_t,
+        len: 3 as mpd_ssize_t,
+        alloc: 3 as mpd_ssize_t,
+        data: &raw const uint128_max_data as *mut mpd_uint_t,
     };
     let mut ret: mpd_triple_class = MPD_TRIPLE_NORMAL;
     let mut status: uint32_t = 0 as uint32_t;
@@ -17418,7 +17140,7 @@ unsafe extern "C" fn _coeff_as_uint128(
         alloc: 0,
         data: ::core::ptr::null_mut::<mpd_uint_t>(),
     };
-    *lo = 0 as u64 as uint64_t;
+    *lo = 0_u64 as uint64_t;
     *hi = *lo;
     if mpd_isspecial(a) != 0 {
         if mpd_isinfinite(a) != 0 {
@@ -17442,13 +17164,13 @@ unsafe extern "C" fn _coeff_as_uint128(
         return MPD_TRIPLE_ERROR;
     }
     _get_coeff(hi, lo, &raw mut coeff);
-    return ret;
+    ret
 }
 #[cfg(target_pointer_width = "32")]
 unsafe extern "C" fn _coeff_as_uint128(
-    mut hi: *mut uint64_t,
-    mut lo: *mut uint64_t,
-    mut a: *const mpd_t,
+    hi: *mut uint64_t,
+    lo: *mut uint64_t,
+    a: *const mpd_t,
 ) -> mpd_triple_class {
     static mut uint128_max_data: [mpd_uint_t; 5] = [
         768211455 as ::core::ffi::c_uint,
@@ -17457,16 +17179,14 @@ unsafe extern "C" fn _coeff_as_uint128(
         282366920 as ::core::ffi::c_uint,
         340 as ::core::ffi::c_uint,
     ];
-    static mut uint128_max: mpd_t = unsafe {
-        mpd_t {
-            flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int)
-                as uint8_t,
-            exp: 0 as mpd_ssize_t,
-            digits: 39 as mpd_ssize_t,
-            len: 5 as mpd_ssize_t,
-            alloc: 5 as mpd_ssize_t,
-            data: &raw const uint128_max_data as *mut mpd_uint_t,
-        }
+    static mut uint128_max: mpd_t = mpd_t {
+        flags: (MPD_STATIC as ::core::ffi::c_int | MPD_CONST_DATA as ::core::ffi::c_int)
+            as uint8_t,
+        exp: 0 as mpd_ssize_t,
+        digits: 39 as mpd_ssize_t,
+        len: 5 as mpd_ssize_t,
+        alloc: 5 as mpd_ssize_t,
+        data: &raw const uint128_max_data as *mut mpd_uint_t,
     };
     let mut ret: mpd_triple_class = MPD_TRIPLE_NORMAL;
     let mut status: uint32_t = 0 as uint32_t;
@@ -17478,7 +17198,7 @@ unsafe extern "C" fn _coeff_as_uint128(
         alloc: 0,
         data: ::core::ptr::null_mut::<mpd_uint_t>(),
     };
-    *lo = 0 as u64 as uint64_t;
+    *lo = 0_u64 as uint64_t;
     *hi = *lo;
     if mpd_isspecial(a) != 0 {
         if mpd_isinfinite(a) != 0 {
@@ -17502,9 +17222,9 @@ unsafe extern "C" fn _coeff_as_uint128(
         return MPD_TRIPLE_ERROR;
     }
     _get_coeff(hi, lo, &raw mut coeff);
-    return ret;
+    ret
 }
-pub unsafe extern "C" fn mpd_as_uint128_triple(mut a: *const mpd_t) -> mpd_uint128_triple_t {
+pub unsafe extern "C" fn mpd_as_uint128_triple(a: *const mpd_t) -> mpd_uint128_triple_t {
     let mut triple: mpd_uint128_triple_t = mpd_uint128_triple_t {
         tag: MPD_TRIPLE_ERROR,
         sign: 0 as uint8_t,
@@ -17524,26 +17244,26 @@ pub unsafe extern "C" fn mpd_as_uint128_triple(mut a: *const mpd_t) -> mpd_uint1
     {
         triple.exp = (*a).exp as int64_t;
     }
-    return triple;
+    triple
 }
 #[cfg(feature = "test-hooks")]
 unsafe extern "C" fn mpd_qtest_newtondiv(
-    mut q: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    q: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     _mpd_qtest_newtondiv(SET_IDEAL_EXP as ::core::ffi::c_int, q, a, b, ctx, status);
 }
 #[cfg(feature = "test-hooks")]
 unsafe extern "C" fn _mpd_qtest_newtondiv(
-    mut action: ::core::ffi::c_int,
-    mut q: *mut mpd_t,
+    action: ::core::ffi::c_int,
+    q: *mut mpd_t,
     mut a: *const mpd_t,
     mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut aligned_data: [mpd_uint_t; 64] = [0; 64];
@@ -17557,15 +17277,14 @@ unsafe extern "C" fn _mpd_qtest_newtondiv(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut aligned_data as *mut mpd_uint_t,
     };
-    let mut ld: mpd_uint_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut exp: mpd_ssize_t = 0;
-    let mut tz: mpd_ssize_t = 0;
-    let mut newsize: mpd_ssize_t = 0;
-    let mut ideal_exp: mpd_ssize_t = 0;
-    let mut rem: mpd_uint_t = 0;
-    let mut sign_a: uint8_t = mpd_sign(a);
-    let mut sign_b: uint8_t = mpd_sign(b);
+    let ld: mpd_uint_t;
+    let mut shift: mpd_ssize_t;
+    let mut exp: mpd_ssize_t;
+    let tz: mpd_ssize_t;
+    let mut newsize: mpd_ssize_t;
+    let rem: mpd_uint_t;
+    let sign_a: uint8_t = mpd_sign(a);
+    let sign_b: uint8_t = mpd_sign(b);
     if !q.is_null() {
     } else {
         mpd_c2rust_assert_fail(b"q != NULL\0" as *const u8 as *const ::core::ffi::c_char);
@@ -17602,7 +17321,7 @@ unsafe extern "C" fn _mpd_qtest_newtondiv(
         return;
     }
     shift = (*b).digits - (*a).digits + (*ctx).prec + 1 as mpd_ssize_t;
-    ideal_exp = (*a).exp - (*b).exp;
+    let ideal_exp: mpd_ssize_t = (*a).exp - (*b).exp;
     exp = ideal_exp - shift;
     if shift > 0 as mpd_ssize_t {
         if mpd_qshiftl(&raw mut aligned, a, shift, status) == 0 {
@@ -17624,87 +17343,84 @@ unsafe extern "C" fn _mpd_qtest_newtondiv(
     } else {
         current_block = 2;
     }
-    match current_block {
-        2 => {
-            newsize = (*a).len - (*b).len + 1 as mpd_ssize_t;
-            if q != b as *mut mpd_t && q != a as *mut mpd_t
-                || q == b as *mut mpd_t && newsize > (*b).len
-            {
-                if mpd_qresize(q, newsize, status) == 0 {
-                    mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
-                    current_block = 1;
-                } else {
-                    current_block = 3;
-                }
+    if current_block == 2 {
+        newsize = (*a).len - (*b).len + 1 as mpd_ssize_t;
+        if !::core::ptr::eq(q, b) && !::core::ptr::eq(q, a)
+            || ::core::ptr::eq(q, b) && newsize > (*b).len
+        {
+            if mpd_qresize(q, newsize, status) == 0 {
+                mpd_seterror(q, MPD_Malloc_error as uint32_t, status);
+                current_block = 1;
             } else {
                 current_block = 3;
             }
-            match current_block {
-                1 => {}
-                _ => {
-                    let mut r_data: [mpd_uint_t; 64] = [0; 64];
-                    let mut r: mpd_t = mpd_t {
-                        flags: (0 as ::core::ffi::c_int
-                            | MPD_STATIC as ::core::ffi::c_int
-                            | MPD_STATIC_DATA as ::core::ffi::c_int)
+        } else {
+            current_block = 3;
+        }
+        match current_block {
+            1 => {}
+            _ => {
+                let mut r_data: [mpd_uint_t; 64] = [0; 64];
+                let mut r: mpd_t = mpd_t {
+                    flags: (0 as ::core::ffi::c_int
+                        | MPD_STATIC as ::core::ffi::c_int
+                        | MPD_STATIC_DATA as ::core::ffi::c_int)
+                        as uint8_t,
+                    exp: 0 as mpd_ssize_t,
+                    digits: 0 as mpd_ssize_t,
+                    len: 0 as mpd_ssize_t,
+                    alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
+                    data: &raw mut r_data as *mut mpd_uint_t,
+                };
+                _mpd_base_ndivmod(q, &raw mut r, a, b, status);
+                if mpd_isspecial(q) != 0 || mpd_isspecial(&raw mut r) != 0 {
+                    mpd_setspecial(q, MPD_POS, MPD_NAN);
+                    mpd_del(&raw mut r);
+                } else {
+                    rem =
+                        (mpd_iszerocoeff(&raw mut r) == 0) as ::core::ffi::c_int as mpd_uint_t;
+                    mpd_del(&raw mut r);
+                    newsize = (*q).len;
+                    newsize = _mpd_real_size((*q).data, newsize);
+                    mpd_qresize(q, newsize, status);
+                    mpd_set_flags(
+                        q,
+                        (sign_a as ::core::ffi::c_int ^ sign_b as ::core::ffi::c_int)
                             as uint8_t,
-                        exp: 0 as mpd_ssize_t,
-                        digits: 0 as mpd_ssize_t,
-                        len: 0 as mpd_ssize_t,
-                        alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
-                        data: &raw mut r_data as *mut mpd_uint_t,
-                    };
-                    _mpd_base_ndivmod(q, &raw mut r, a, b, status);
-                    if mpd_isspecial(q) != 0 || mpd_isspecial(&raw mut r) != 0 {
-                        mpd_setspecial(q, MPD_POS, MPD_NAN);
-                        mpd_del(&raw mut r);
-                    } else {
-                        rem =
-                            (mpd_iszerocoeff(&raw mut r) == 0) as ::core::ffi::c_int as mpd_uint_t;
-                        mpd_del(&raw mut r);
-                        newsize = (*q).len;
-                        newsize = _mpd_real_size((*q).data, newsize);
-                        mpd_qresize(q, newsize, status);
-                        mpd_set_flags(
-                            q,
-                            (sign_a as ::core::ffi::c_int ^ sign_b as ::core::ffi::c_int)
-                                as uint8_t,
-                        );
-                        (*q).len = newsize;
-                        mpd_setdigits(q);
-                        shift = ideal_exp - exp;
-                        if rem != 0 {
-                            ld = mpd_lsd(*(*q).data.offset(0 as isize));
-                            if ld == 0 as mpd_uint_t || ld == 5 as mpd_uint_t {
-                                let ref mut fresh0 = *(*q).data.offset(0 as isize);
-                                *fresh0 = (*fresh0).wrapping_add(1 as mpd_uint_t);
-                            }
-                        } else if action == SET_IDEAL_EXP as ::core::ffi::c_int
-                            && shift > 0 as mpd_ssize_t
-                        {
-                            tz = mpd_trail_zeros(q);
-                            shift = if tz > shift { shift } else { tz };
-                            mpd_qshiftr_inplace(q, shift);
-                            exp += shift;
+                    );
+                    (*q).len = newsize;
+                    mpd_setdigits(q);
+                    shift = ideal_exp - exp;
+                    if rem != 0 {
+                        ld = mpd_lsd(*(*q).data.offset(0_isize));
+                        if ld == 0 as mpd_uint_t || ld == 5 as mpd_uint_t {
+                            let fresh0 = &mut *(*q).data.offset(0_isize);
+                            *fresh0 = (*fresh0).wrapping_add(1 as mpd_uint_t);
                         }
-                        (*q).exp = exp;
+                    } else if action == SET_IDEAL_EXP as ::core::ffi::c_int
+                        && shift > 0 as mpd_ssize_t
+                    {
+                        tz = mpd_trail_zeros(q);
+                        shift = if tz > shift { shift } else { tz };
+                        mpd_qshiftr_inplace(q, shift);
+                        exp += shift;
                     }
+                    (*q).exp = exp;
                 }
             }
         }
-        _ => {}
     }
     mpd_del(&raw mut aligned);
     mpd_qfinalize(q, ctx, status);
 }
 #[cfg(feature = "test-hooks")]
 unsafe extern "C" fn _mpd_qtest_ndivmod(
-    mut q: *mut mpd_t,
-    mut r: *mut mpd_t,
+    q: *mut mpd_t,
+    r: *mut mpd_t,
     mut a: *const mpd_t,
     mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut current_block: u64;
     let mut aligned_data: [mpd_uint_t; 64] = [0; 64];
@@ -17718,15 +17434,14 @@ unsafe extern "C" fn _mpd_qtest_ndivmod(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut aligned_data as *mut mpd_uint_t,
     };
-    let mut qsize: mpd_ssize_t = 0;
-    let mut rsize: mpd_ssize_t = 0;
-    let mut ideal_exp: mpd_ssize_t = 0;
-    let mut expdiff: mpd_ssize_t = 0;
-    let mut shift: mpd_ssize_t = 0;
-    let mut sign_a: uint8_t = mpd_sign(a);
-    let mut sign_ab: uint8_t =
+    let mut qsize: mpd_ssize_t;
+    let mut rsize: mpd_ssize_t;
+    let expdiff: mpd_ssize_t;
+    let mut shift: mpd_ssize_t;
+    let sign_a: uint8_t = mpd_sign(a);
+    let sign_ab: uint8_t =
         (mpd_sign(a) as ::core::ffi::c_int ^ mpd_sign(b) as ::core::ffi::c_int) as uint8_t;
-    ideal_exp = if (*a).exp > (*b).exp {
+    let ideal_exp: mpd_ssize_t = if (*a).exp > (*b).exp {
         (*b).exp
     } else {
         (*a).exp
@@ -17791,8 +17506,8 @@ unsafe extern "C" fn _mpd_qtest_ndivmod(
                 1 => {}
                 _ => {
                     qsize = (*a).len - (*b).len + 1 as mpd_ssize_t;
-                    if !(q == a as *mut mpd_t && qsize < (*a).len)
-                        && !(q == b as *mut mpd_t && qsize < (*b).len)
+                    if !(::core::ptr::eq(q, a) && qsize < (*a).len)
+                        && !(::core::ptr::eq(q, b) && qsize < (*b).len)
                     {
                         if mpd_qresize(q, qsize, status) == 0 {
                             current_block = 1;
@@ -17806,7 +17521,7 @@ unsafe extern "C" fn _mpd_qtest_ndivmod(
                         1 => {}
                         _ => {
                             rsize = (*b).len;
-                            if !(r == a as *mut mpd_t && rsize < (*a).len) {
+                            if !(::core::ptr::eq(r, a) && rsize < (*a).len) {
                                 if mpd_qresize(r, rsize, status) == 0 {
                                     current_block = 1;
                                 } else {
@@ -17853,22 +17568,19 @@ unsafe extern "C" fn _mpd_qtest_ndivmod(
             }
         }
     }
-    match current_block {
-        1 => {
-            mpd_setspecial(q, MPD_POS, MPD_NAN);
-            mpd_setspecial(r, MPD_POS, MPD_NAN);
-        }
-        _ => {}
+    if current_block == 1 {
+        mpd_setspecial(q, MPD_POS, MPD_NAN);
+        mpd_setspecial(r, MPD_POS, MPD_NAN);
     }
     mpd_del(&raw mut aligned);
 }
 #[cfg(feature = "test-hooks")]
 unsafe extern "C" fn mpd_qtest_newtondivint(
-    mut q: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    q: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut r_data: [mpd_uint_t; 64] = [0; 64];
     let mut r: mpd_t = mpd_t {
@@ -17881,7 +17593,7 @@ unsafe extern "C" fn mpd_qtest_newtondivint(
         alloc: MPD_MINALLOC_MAX as mpd_ssize_t,
         data: &raw mut r_data as *mut mpd_uint_t,
     };
-    let mut sign: uint8_t =
+    let sign: uint8_t =
         (mpd_sign(a) as ::core::ffi::c_int ^ mpd_sign(b) as ::core::ffi::c_int) as uint8_t;
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(q, a, b, ctx, status) != 0 {
@@ -17917,11 +17629,11 @@ unsafe extern "C" fn mpd_qtest_newtondivint(
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_qtest_newtonrem(
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
     let mut q_data: [mpd_uint_t; 64] = [0; 64];
     let mut q: mpd_t = mpd_t {
@@ -17963,14 +17675,14 @@ pub unsafe extern "C" fn mpd_qtest_newtonrem(
 }
 #[cfg(feature = "test-hooks")]
 unsafe extern "C" fn mpd_qtest_newtondivmod(
-    mut q: *mut mpd_t,
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *const mpd_context_t,
-    mut status: *mut uint32_t,
+    q: *mut mpd_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *const mpd_context_t,
+    status: *mut uint32_t,
 ) {
-    let mut sign: uint8_t =
+    let sign: uint8_t =
         (mpd_sign(a) as ::core::ffi::c_int ^ mpd_sign(b) as ::core::ffi::c_int) as uint8_t;
     if mpd_isspecial(a) != 0 || mpd_isspecial(b) != 0 {
         if mpd_qcheck_nans(q, a, b, ctx, status) != 0 {
@@ -18018,10 +17730,10 @@ unsafe extern "C" fn mpd_qtest_newtondivmod(
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_test_newtondiv(
-    mut q: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *mut mpd_context_t,
+    q: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *mut mpd_context_t,
 ) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qtest_newtondiv(q, a, b, ctx, &raw mut status);
@@ -18030,10 +17742,10 @@ pub unsafe extern "C" fn mpd_test_newtondiv(
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_test_newtondivint(
-    mut q: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *mut mpd_context_t,
+    q: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *mut mpd_context_t,
 ) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qtest_newtondivint(q, a, b, ctx, &raw mut status);
@@ -18042,10 +17754,10 @@ pub unsafe extern "C" fn mpd_test_newtondivint(
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_test_newtonrem(
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *mut mpd_context_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *mut mpd_context_t,
 ) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qtest_newtonrem(r, a, b, ctx, &raw mut status);
@@ -18054,11 +17766,11 @@ pub unsafe extern "C" fn mpd_test_newtonrem(
 #[cfg(feature = "test-hooks")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn mpd_test_newtondivmod(
-    mut q: *mut mpd_t,
-    mut r: *mut mpd_t,
-    mut a: *const mpd_t,
-    mut b: *const mpd_t,
-    mut ctx: *mut mpd_context_t,
+    q: *mut mpd_t,
+    r: *mut mpd_t,
+    a: *const mpd_t,
+    b: *const mpd_t,
+    ctx: *mut mpd_context_t,
 ) {
     let mut status: uint32_t = 0 as uint32_t;
     mpd_qtest_newtondivmod(q, r, a, b, ctx, &raw mut status);

@@ -7,28 +7,27 @@ use crate::fourstep::inv_four_step_fnt;
 use crate::sixstep::six_step_fnt;
 use crate::sixstep::inv_six_step_fnt;
 pub const SIX_STEP_THRESHOLD: ::core::ffi::c_int = 4096 as ::core::ffi::c_int;
-unsafe extern "C" fn std_setmodulus(mut modnum: ::core::ffi::c_int, mut umod: *mut mpd_uint_t) {
+unsafe extern "C" fn std_setmodulus(modnum: ::core::ffi::c_int, umod: *mut mpd_uint_t) {
     *umod = *(&raw const mpd_moduli as *const mpd_uint_t).offset(modnum as isize);
 }
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn fnt_convolute(
-    mut c1: *mut mpd_uint_t,
-    mut c2: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut modnum: ::core::ffi::c_int,
+    c1: *mut mpd_uint_t,
+    c2: *mut mpd_uint_t,
+    n: mpd_size_t,
+    modnum: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut fnt: Option<
+    let fnt: Option<
         unsafe extern "C" fn(*mut mpd_uint_t, mpd_size_t, ::core::ffi::c_int) -> ::core::ffi::c_int,
-    > = None;
-    let mut inv_fnt: Option<
+    >;
+    let inv_fnt: Option<
         unsafe extern "C" fn(*mut mpd_uint_t, mpd_size_t, ::core::ffi::c_int) -> ::core::ffi::c_int,
-    > = None;
-    let mut n_inv: mpd_uint_t = 0;
+    >;
     let mut umod: mpd_uint_t = 0;
-    let mut i: mpd_size_t = 0;
+    let mut i: mpd_size_t;
     std_setmodulus(modnum, &raw mut umod);
-    n_inv = x64_powmod(n as mpd_uint_t, umod.wrapping_sub(2 as mpd_uint_t), umod);
+    let n_inv: mpd_uint_t = x64_powmod(n as mpd_uint_t, umod.wrapping_sub(2 as mpd_uint_t), umod);
     if ispower2(n) != 0 {
         if n > SIX_STEP_THRESHOLD as mpd_size_t {
             fnt = Some(
@@ -134,9 +133,9 @@ pub unsafe extern "C" fn fnt_convolute(
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(1 as mpd_size_t) {
         let mut x0: mpd_uint_t = *c1.add(i);
-        let mut y0: mpd_uint_t = *c2.add(i);
+        let y0: mpd_uint_t = *c2.add(i);
         let mut x1: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
-        let mut y1: mpd_uint_t = *c2.add(i.wrapping_add(1 as mpd_size_t));
+        let y1: mpd_uint_t = *c2.add(i.wrapping_add(1 as mpd_size_t));
         x64_mulmod2(&raw mut x0, y0, &raw mut x1, y1, umod);
         *c1.add(i) = x0;
         *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1;
@@ -159,27 +158,26 @@ pub unsafe extern "C" fn fnt_convolute(
         *c1.add(i.wrapping_add(3 as mpd_size_t)) = x3;
         i = i.wrapping_add(4 as mpd_size_t);
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn fnt_convolute(
-    mut c1: *mut mpd_uint_t,
-    mut c2: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut modnum: ::core::ffi::c_int,
+    c1: *mut mpd_uint_t,
+    c2: *mut mpd_uint_t,
+    n: mpd_size_t,
+    modnum: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut fnt: Option<
+    let fnt: Option<
         unsafe extern "C" fn(*mut mpd_uint_t, mpd_size_t, ::core::ffi::c_int) -> ::core::ffi::c_int,
-    > = None;
-    let mut inv_fnt: Option<
+    >;
+    let inv_fnt: Option<
         unsafe extern "C" fn(*mut mpd_uint_t, mpd_size_t, ::core::ffi::c_int) -> ::core::ffi::c_int,
-    > = None;
-    let mut n_inv: mpd_uint_t = 0;
+    >;
     let mut umod: mpd_uint_t = 0;
-    let mut i: mpd_size_t = 0;
+    let mut i: mpd_size_t;
     std_setmodulus(modnum, &raw mut umod);
-    n_inv = std_powmod(n as mpd_uint_t, umod.wrapping_sub(2 as mpd_uint_t), umod);
+    let n_inv: mpd_uint_t = std_powmod(n as mpd_uint_t, umod.wrapping_sub(2 as mpd_uint_t), umod);
     if ispower2(n) != 0 {
         if n > SIX_STEP_THRESHOLD as mpd_size_t {
             fnt = Some(
@@ -285,9 +283,9 @@ pub unsafe extern "C" fn fnt_convolute(
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(1 as mpd_size_t) {
         let mut x0: mpd_uint_t = *c1.add(i);
-        let mut y0: mpd_uint_t = *c2.add(i);
+        let y0: mpd_uint_t = *c2.add(i);
         let mut x1: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
-        let mut y1: mpd_uint_t = *c2.add(i.wrapping_add(1 as mpd_size_t));
+        let y1: mpd_uint_t = *c2.add(i.wrapping_add(1 as mpd_size_t));
         std_mulmod2(&raw mut x0, y0, &raw mut x1, y1, umod);
         *c1.add(i) = x0;
         *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1;
@@ -310,26 +308,25 @@ pub unsafe extern "C" fn fnt_convolute(
         *c1.add(i.wrapping_add(3 as mpd_size_t)) = x3;
         i = i.wrapping_add(4 as mpd_size_t);
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "64")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn fnt_autoconvolute(
-    mut c1: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut modnum: ::core::ffi::c_int,
+    c1: *mut mpd_uint_t,
+    n: mpd_size_t,
+    modnum: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut fnt: Option<
+    let fnt: Option<
         unsafe extern "C" fn(*mut mpd_uint_t, mpd_size_t, ::core::ffi::c_int) -> ::core::ffi::c_int,
-    > = None;
-    let mut inv_fnt: Option<
+    >;
+    let inv_fnt: Option<
         unsafe extern "C" fn(*mut mpd_uint_t, mpd_size_t, ::core::ffi::c_int) -> ::core::ffi::c_int,
-    > = None;
-    let mut n_inv: mpd_uint_t = 0;
+    >;
     let mut umod: mpd_uint_t = 0;
-    let mut i: mpd_size_t = 0;
+    let mut i: mpd_size_t;
     std_setmodulus(modnum, &raw mut umod);
-    n_inv = x64_powmod(n as mpd_uint_t, umod.wrapping_sub(2 as mpd_uint_t), umod);
+    let n_inv: mpd_uint_t = x64_powmod(n as mpd_uint_t, umod.wrapping_sub(2 as mpd_uint_t), umod);
     if ispower2(n) != 0 {
         if n > SIX_STEP_THRESHOLD as mpd_size_t {
             fnt = Some(
@@ -455,26 +452,25 @@ pub unsafe extern "C" fn fnt_autoconvolute(
         *c1.add(i.wrapping_add(3 as mpd_size_t)) = x3;
         i = i.wrapping_add(4 as mpd_size_t);
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[cfg(target_pointer_width = "32")]
 #[cfg_attr(feature = "test-hooks", no_mangle)]
 pub unsafe extern "C" fn fnt_autoconvolute(
-    mut c1: *mut mpd_uint_t,
-    mut n: mpd_size_t,
-    mut modnum: ::core::ffi::c_int,
+    c1: *mut mpd_uint_t,
+    n: mpd_size_t,
+    modnum: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut fnt: Option<
+    let fnt: Option<
         unsafe extern "C" fn(*mut mpd_uint_t, mpd_size_t, ::core::ffi::c_int) -> ::core::ffi::c_int,
-    > = None;
-    let mut inv_fnt: Option<
+    >;
+    let inv_fnt: Option<
         unsafe extern "C" fn(*mut mpd_uint_t, mpd_size_t, ::core::ffi::c_int) -> ::core::ffi::c_int,
-    > = None;
-    let mut n_inv: mpd_uint_t = 0;
+    >;
     let mut umod: mpd_uint_t = 0;
-    let mut i: mpd_size_t = 0;
+    let mut i: mpd_size_t;
     std_setmodulus(modnum, &raw mut umod);
-    n_inv = std_powmod(n as mpd_uint_t, umod.wrapping_sub(2 as mpd_uint_t), umod);
+    let n_inv: mpd_uint_t = std_powmod(n as mpd_uint_t, umod.wrapping_sub(2 as mpd_uint_t), umod);
     if ispower2(n) != 0 {
         if n > SIX_STEP_THRESHOLD as mpd_size_t {
             fnt = Some(
@@ -600,5 +596,5 @@ pub unsafe extern "C" fn fnt_autoconvolute(
         *c1.add(i.wrapping_add(3 as mpd_size_t)) = x3;
         i = i.wrapping_add(4 as mpd_size_t);
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
