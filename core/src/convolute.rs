@@ -133,13 +133,13 @@ pub unsafe extern "C" fn fnt_convolute(
     }
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(1 as mpd_size_t) {
-        let mut x0: mpd_uint_t = *c1.offset(i as isize);
-        let mut y0: mpd_uint_t = *c2.offset(i as isize);
-        let mut x1: mpd_uint_t = *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize);
-        let mut y1: mpd_uint_t = *c2.offset(i.wrapping_add(1 as mpd_size_t) as isize);
+        let mut x0: mpd_uint_t = *c1.add(i);
+        let mut y0: mpd_uint_t = *c2.add(i);
+        let mut x1: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
+        let mut y1: mpd_uint_t = *c2.add(i.wrapping_add(1 as mpd_size_t));
         x64_mulmod2(&raw mut x0, y0, &raw mut x1, y1, umod);
-        *c1.offset(i as isize) = x0;
-        *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize) = x1;
+        *c1.add(i) = x0;
+        *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1;
         i = i.wrapping_add(2 as mpd_size_t);
     }
     if inv_fnt.expect("non-null function pointer")(c1, n, modnum) == 0 {
@@ -147,16 +147,16 @@ pub unsafe extern "C" fn fnt_convolute(
     }
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(3 as mpd_size_t) {
-        let mut x0_0: mpd_uint_t = *c1.offset(i as isize);
-        let mut x1_0: mpd_uint_t = *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize);
-        let mut x2: mpd_uint_t = *c1.offset(i.wrapping_add(2 as mpd_size_t) as isize);
-        let mut x3: mpd_uint_t = *c1.offset(i.wrapping_add(3 as mpd_size_t) as isize);
+        let mut x0_0: mpd_uint_t = *c1.add(i);
+        let mut x1_0: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
+        let mut x2: mpd_uint_t = *c1.add(i.wrapping_add(2 as mpd_size_t));
+        let mut x3: mpd_uint_t = *c1.add(i.wrapping_add(3 as mpd_size_t));
         x64_mulmod2c(&raw mut x0_0, &raw mut x1_0, n_inv, umod);
         x64_mulmod2c(&raw mut x2, &raw mut x3, n_inv, umod);
-        *c1.offset(i as isize) = x0_0;
-        *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize) = x1_0;
-        *c1.offset(i.wrapping_add(2 as mpd_size_t) as isize) = x2;
-        *c1.offset(i.wrapping_add(3 as mpd_size_t) as isize) = x3;
+        *c1.add(i) = x0_0;
+        *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1_0;
+        *c1.add(i.wrapping_add(2 as mpd_size_t)) = x2;
+        *c1.add(i.wrapping_add(3 as mpd_size_t)) = x3;
         i = i.wrapping_add(4 as mpd_size_t);
     }
     return 1 as ::core::ffi::c_int;
@@ -284,13 +284,13 @@ pub unsafe extern "C" fn fnt_convolute(
     }
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(1 as mpd_size_t) {
-        let mut x0: mpd_uint_t = *c1.offset(i as isize);
-        let mut y0: mpd_uint_t = *c2.offset(i as isize);
-        let mut x1: mpd_uint_t = *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize);
-        let mut y1: mpd_uint_t = *c2.offset(i.wrapping_add(1 as mpd_size_t) as isize);
+        let mut x0: mpd_uint_t = *c1.add(i);
+        let mut y0: mpd_uint_t = *c2.add(i);
+        let mut x1: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
+        let mut y1: mpd_uint_t = *c2.add(i.wrapping_add(1 as mpd_size_t));
         std_mulmod2(&raw mut x0, y0, &raw mut x1, y1, umod);
-        *c1.offset(i as isize) = x0;
-        *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize) = x1;
+        *c1.add(i) = x0;
+        *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1;
         i = i.wrapping_add(2 as mpd_size_t);
     }
     if inv_fnt.expect("non-null function pointer")(c1, n, modnum) == 0 {
@@ -298,16 +298,16 @@ pub unsafe extern "C" fn fnt_convolute(
     }
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(3 as mpd_size_t) {
-        let mut x0_0: mpd_uint_t = *c1.offset(i as isize);
-        let mut x1_0: mpd_uint_t = *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize);
-        let mut x2: mpd_uint_t = *c1.offset(i.wrapping_add(2 as mpd_size_t) as isize);
-        let mut x3: mpd_uint_t = *c1.offset(i.wrapping_add(3 as mpd_size_t) as isize);
+        let mut x0_0: mpd_uint_t = *c1.add(i);
+        let mut x1_0: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
+        let mut x2: mpd_uint_t = *c1.add(i.wrapping_add(2 as mpd_size_t));
+        let mut x3: mpd_uint_t = *c1.add(i.wrapping_add(3 as mpd_size_t));
         std_mulmod2c(&raw mut x0_0, &raw mut x1_0, n_inv, umod);
         std_mulmod2c(&raw mut x2, &raw mut x3, n_inv, umod);
-        *c1.offset(i as isize) = x0_0;
-        *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize) = x1_0;
-        *c1.offset(i.wrapping_add(2 as mpd_size_t) as isize) = x2;
-        *c1.offset(i.wrapping_add(3 as mpd_size_t) as isize) = x3;
+        *c1.add(i) = x0_0;
+        *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1_0;
+        *c1.add(i.wrapping_add(2 as mpd_size_t)) = x2;
+        *c1.add(i.wrapping_add(3 as mpd_size_t)) = x3;
         i = i.wrapping_add(4 as mpd_size_t);
     }
     return 1 as ::core::ffi::c_int;
@@ -431,11 +431,11 @@ pub unsafe extern "C" fn fnt_autoconvolute(
     }
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(1 as mpd_size_t) {
-        let mut x0: mpd_uint_t = *c1.offset(i as isize);
-        let mut x1: mpd_uint_t = *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize);
+        let mut x0: mpd_uint_t = *c1.add(i);
+        let mut x1: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
         x64_mulmod2(&raw mut x0, x0, &raw mut x1, x1, umod);
-        *c1.offset(i as isize) = x0;
-        *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize) = x1;
+        *c1.add(i) = x0;
+        *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1;
         i = i.wrapping_add(2 as mpd_size_t);
     }
     if inv_fnt.expect("non-null function pointer")(c1, n, modnum) == 0 {
@@ -443,16 +443,16 @@ pub unsafe extern "C" fn fnt_autoconvolute(
     }
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(3 as mpd_size_t) {
-        let mut x0_0: mpd_uint_t = *c1.offset(i as isize);
-        let mut x1_0: mpd_uint_t = *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize);
-        let mut x2: mpd_uint_t = *c1.offset(i.wrapping_add(2 as mpd_size_t) as isize);
-        let mut x3: mpd_uint_t = *c1.offset(i.wrapping_add(3 as mpd_size_t) as isize);
+        let mut x0_0: mpd_uint_t = *c1.add(i);
+        let mut x1_0: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
+        let mut x2: mpd_uint_t = *c1.add(i.wrapping_add(2 as mpd_size_t));
+        let mut x3: mpd_uint_t = *c1.add(i.wrapping_add(3 as mpd_size_t));
         x64_mulmod2c(&raw mut x0_0, &raw mut x1_0, n_inv, umod);
         x64_mulmod2c(&raw mut x2, &raw mut x3, n_inv, umod);
-        *c1.offset(i as isize) = x0_0;
-        *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize) = x1_0;
-        *c1.offset(i.wrapping_add(2 as mpd_size_t) as isize) = x2;
-        *c1.offset(i.wrapping_add(3 as mpd_size_t) as isize) = x3;
+        *c1.add(i) = x0_0;
+        *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1_0;
+        *c1.add(i.wrapping_add(2 as mpd_size_t)) = x2;
+        *c1.add(i.wrapping_add(3 as mpd_size_t)) = x3;
         i = i.wrapping_add(4 as mpd_size_t);
     }
     return 1 as ::core::ffi::c_int;
@@ -576,11 +576,11 @@ pub unsafe extern "C" fn fnt_autoconvolute(
     }
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(1 as mpd_size_t) {
-        let mut x0: mpd_uint_t = *c1.offset(i as isize);
-        let mut x1: mpd_uint_t = *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize);
+        let mut x0: mpd_uint_t = *c1.add(i);
+        let mut x1: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
         std_mulmod2(&raw mut x0, x0, &raw mut x1, x1, umod);
-        *c1.offset(i as isize) = x0;
-        *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize) = x1;
+        *c1.add(i) = x0;
+        *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1;
         i = i.wrapping_add(2 as mpd_size_t);
     }
     if inv_fnt.expect("non-null function pointer")(c1, n, modnum) == 0 {
@@ -588,16 +588,16 @@ pub unsafe extern "C" fn fnt_autoconvolute(
     }
     i = 0 as mpd_size_t;
     while i < n.wrapping_sub(3 as mpd_size_t) {
-        let mut x0_0: mpd_uint_t = *c1.offset(i as isize);
-        let mut x1_0: mpd_uint_t = *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize);
-        let mut x2: mpd_uint_t = *c1.offset(i.wrapping_add(2 as mpd_size_t) as isize);
-        let mut x3: mpd_uint_t = *c1.offset(i.wrapping_add(3 as mpd_size_t) as isize);
+        let mut x0_0: mpd_uint_t = *c1.add(i);
+        let mut x1_0: mpd_uint_t = *c1.add(i.wrapping_add(1 as mpd_size_t));
+        let mut x2: mpd_uint_t = *c1.add(i.wrapping_add(2 as mpd_size_t));
+        let mut x3: mpd_uint_t = *c1.add(i.wrapping_add(3 as mpd_size_t));
         std_mulmod2c(&raw mut x0_0, &raw mut x1_0, n_inv, umod);
         std_mulmod2c(&raw mut x2, &raw mut x3, n_inv, umod);
-        *c1.offset(i as isize) = x0_0;
-        *c1.offset(i.wrapping_add(1 as mpd_size_t) as isize) = x1_0;
-        *c1.offset(i.wrapping_add(2 as mpd_size_t) as isize) = x2;
-        *c1.offset(i.wrapping_add(3 as mpd_size_t) as isize) = x3;
+        *c1.add(i) = x0_0;
+        *c1.add(i.wrapping_add(1 as mpd_size_t)) = x1_0;
+        *c1.add(i.wrapping_add(2 as mpd_size_t)) = x2;
+        *c1.add(i.wrapping_add(3 as mpd_size_t)) = x3;
         i = i.wrapping_add(4 as mpd_size_t);
     }
     return 1 as ::core::ffi::c_int;

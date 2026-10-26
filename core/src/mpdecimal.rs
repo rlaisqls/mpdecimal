@@ -778,7 +778,7 @@ pub unsafe extern "C" fn mpd_uint_zero(mut dest: *mut mpd_uint_t, mut len: mpd_s
     let mut i: mpd_size_t = 0;
     i = 0 as mpd_size_t;
     while i < len {
-        *dest.offset(i as isize) = 0 as mpd_uint_t;
+        *dest.add(i) = 0 as mpd_uint_t;
         i = i.wrapping_add(1);
     }
 }
@@ -2888,12 +2888,12 @@ unsafe extern "C" fn _mpd_basecmp(
         _mpd_divmod_pow10(
             &raw mut h,
             &raw mut lprev,
-            *small.offset(fresh0 as isize),
+            *small.add(fresh0),
             (MPD_RDIGITS as mpd_uint_t).wrapping_sub(r),
         );
         if h != 0 as mpd_uint_t {
-            if *big.offset(n as isize) != h {
-                if *big.offset(n as isize) < h {
+            if *big.add(n) != h {
+                if *big.add(n) < h {
                     return -(1 as ::core::ffi::c_int);
                 }
                 return 1 as ::core::ffi::c_int;
@@ -2904,12 +2904,12 @@ unsafe extern "C" fn _mpd_basecmp(
             _mpd_divmod_pow10(
                 &raw mut h,
                 &raw mut l,
-                *small.offset(m as isize),
+                *small.add(m),
                 (MPD_RDIGITS as mpd_uint_t).wrapping_sub(r),
             );
             x = ph.wrapping_mul(lprev).wrapping_add(h);
-            if *big.offset(n as isize) != x {
-                if *big.offset(n as isize) < x {
+            if *big.add(n) != x {
+                if *big.add(n) < x {
                     return -(1 as ::core::ffi::c_int);
                 }
                 return 1 as ::core::ffi::c_int;
@@ -2931,10 +2931,10 @@ unsafe extern "C" fn _mpd_basecmp(
             if !(m != MPD_SIZE_MAX as mpd_size_t) {
                 break;
             }
-            if *big.offset((m as mpd_uint_t).wrapping_add(q) as isize) != *small.offset(m as isize)
+            if *big.add((m as mpd_uint_t).wrapping_add(q) as usize) != *small.add(m)
             {
-                if *big.offset((m as mpd_uint_t).wrapping_add(q) as isize)
-                    < *small.offset(m as isize)
+                if *big.add((m as mpd_uint_t).wrapping_add(q) as usize)
+                    < *small.add(m)
                 {
                     return -(1 as ::core::ffi::c_int);
                 }
@@ -2980,12 +2980,12 @@ unsafe extern "C" fn _mpd_basecmp(
         _mpd_divmod_pow10(
             &raw mut h,
             &raw mut lprev,
-            *small.offset(fresh0 as isize),
+            *small.add(fresh0),
             (MPD_RDIGITS as mpd_uint_t).wrapping_sub(r),
         );
         if h != 0 as mpd_uint_t {
-            if *big.offset(n as isize) != h {
-                if *big.offset(n as isize) < h {
+            if *big.add(n) != h {
+                if *big.add(n) < h {
                     return -(1 as ::core::ffi::c_int);
                 }
                 return 1 as ::core::ffi::c_int;
@@ -2996,12 +2996,12 @@ unsafe extern "C" fn _mpd_basecmp(
             _mpd_divmod_pow10(
                 &raw mut h,
                 &raw mut l,
-                *small.offset(m as isize),
+                *small.add(m),
                 (MPD_RDIGITS as mpd_uint_t).wrapping_sub(r),
             );
             x = ph.wrapping_mul(lprev).wrapping_add(h);
-            if *big.offset(n as isize) != x {
-                if *big.offset(n as isize) < x {
+            if *big.add(n) != x {
+                if *big.add(n) < x {
                     return -(1 as ::core::ffi::c_int);
                 }
                 return 1 as ::core::ffi::c_int;
@@ -3023,8 +3023,8 @@ unsafe extern "C" fn _mpd_basecmp(
             if !(m != MPD_SIZE_MAX as mpd_size_t) {
                 break;
             }
-            if *big.offset(m.wrapping_add(q as mpd_size_t) as isize) != *small.offset(m as isize) {
-                if *big.offset(m.wrapping_add(q as mpd_size_t) as isize) < *small.offset(m as isize)
+            if *big.add(m.wrapping_add(q as mpd_size_t)) != *small.add(m) {
+                if *big.add(m.wrapping_add(q as mpd_size_t)) < *small.add(m)
                 {
                     return -(1 as ::core::ffi::c_int);
                 }
@@ -10193,8 +10193,8 @@ unsafe extern "C" fn _karatsuba_rec(
             _karatsuba_rec(
                 w,
                 b,
-                a.offset(m as isize),
-                w.offset(lt as isize),
+                a.add(m),
+                w.add(lt),
                 lb,
                 la.wrapping_sub(m),
             );
@@ -10206,17 +10206,17 @@ unsafe extern "C" fn _karatsuba_rec(
             mpd_uint_zero(w, lt);
             _karatsuba_rec(
                 w,
-                a.offset(m as isize),
+                a.add(m),
                 b,
-                w.offset(lt as isize),
+                w.add(lt),
                 la.wrapping_sub(m),
                 lb,
             );
         }
-        _mpd_baseaddto(c.offset(m as isize), w, la.wrapping_sub(m).wrapping_add(lb));
+        _mpd_baseaddto(c.add(m), w, la.wrapping_sub(m).wrapping_add(lb));
         lt = m.wrapping_add(m).wrapping_add(1 as mpd_size_t);
         mpd_uint_zero(w, lt);
-        _karatsuba_rec(w, a, b, w.offset(lt as isize), m, lb);
+        _karatsuba_rec(w, a, b, w.add(lt), m, lb);
         _mpd_baseaddto(c, w, m.wrapping_add(lb));
         return;
     }
@@ -10225,24 +10225,24 @@ unsafe extern "C" fn _karatsuba_rec(
         a as *const ::core::ffi::c_void,
         (m as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
     );
-    *w.offset(m as isize) = 0 as mpd_uint_t;
-    _mpd_baseaddto(w, a.offset(m as isize), la.wrapping_sub(m));
+    *w.add(m) = 0 as mpd_uint_t;
+    _mpd_baseaddto(w, a.add(m), la.wrapping_sub(m));
     memcpy(
-        w.offset(m.wrapping_add(1 as mpd_size_t) as isize) as *mut ::core::ffi::c_void,
+        w.add(m.wrapping_add(1 as mpd_size_t)) as *mut ::core::ffi::c_void,
         b as *const ::core::ffi::c_void,
         (m as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
     );
-    *w.offset(m.wrapping_add(1 as mpd_size_t).wrapping_add(m) as isize) = 0 as mpd_uint_t;
+    *w.add(m.wrapping_add(1 as mpd_size_t).wrapping_add(m)) = 0 as mpd_uint_t;
     _mpd_baseaddto(
-        w.offset(m.wrapping_add(1 as mpd_size_t) as isize),
-        b.offset(m as isize),
+        w.add(m.wrapping_add(1 as mpd_size_t)),
+        b.add(m),
         lb.wrapping_sub(m),
     );
     _karatsuba_rec(
-        c.offset(m as isize),
+        c.add(m),
         w,
-        w.offset(m.wrapping_add(1 as mpd_size_t) as isize),
-        w.offset((2 as mpd_size_t).wrapping_mul(m.wrapping_add(1 as mpd_size_t)) as isize),
+        w.add(m.wrapping_add(1 as mpd_size_t)),
+        w.add((2 as mpd_size_t).wrapping_mul(m.wrapping_add(1 as mpd_size_t))),
         m.wrapping_add(1 as mpd_size_t),
         m.wrapping_add(1 as mpd_size_t),
     );
@@ -10253,27 +10253,27 @@ unsafe extern "C" fn _karatsuba_rec(
     mpd_uint_zero(w, lt);
     _karatsuba_rec(
         w,
-        a.offset(m as isize),
-        b.offset(m as isize),
-        w.offset(lt as isize),
+        a.add(m),
+        b.add(m),
+        w.add(lt),
         la.wrapping_sub(m),
         lb.wrapping_sub(m),
     );
     _mpd_baseaddto(
-        c.offset((2 as mpd_size_t).wrapping_mul(m) as isize),
+        c.add((2 as mpd_size_t).wrapping_mul(m)),
         w,
         la.wrapping_sub(m).wrapping_add(lb.wrapping_sub(m)),
     );
     _mpd_basesubfrom(
-        c.offset(m as isize),
+        c.add(m),
         w,
         la.wrapping_sub(m).wrapping_add(lb.wrapping_sub(m)),
     );
     lt = m.wrapping_add(m).wrapping_add(1 as mpd_size_t);
     mpd_uint_zero(w, lt);
-    _karatsuba_rec(w, a, b, w.offset(lt as isize), m, m);
+    _karatsuba_rec(w, a, b, w.add(lt), m, m);
     _mpd_baseaddto(c, w, m.wrapping_add(m));
-    _mpd_basesubfrom(c.offset(m as isize), w, m.wrapping_add(m));
+    _mpd_basesubfrom(c.add(m), w, m.wrapping_add(m));
 }
 #[cfg(not(feature = "test-hooks"))]
 unsafe extern "C" fn _mpd_kmul(
@@ -10512,7 +10512,7 @@ unsafe extern "C" fn _mpd_fntmul(
                                         ::core::mem::size_of::<mpd_uint_t>() as size_t,
                                     ),
                                 );
-                                mpd_uint_zero(vtmp.offset(vlen as isize), n.wrapping_sub(vlen));
+                                mpd_uint_zero(vtmp.add(vlen), n.wrapping_sub(vlen));
                                 if fnt_convolute(c2, vtmp, n, P2 as ::core::ffi::c_int) == 0 {
                                     mpd_free.expect("non-null function pointer")(
                                         vtmp as *mut ::core::ffi::c_void,
@@ -10528,7 +10528,7 @@ unsafe extern "C" fn _mpd_fntmul(
                                         )
                                             as size_t),
                                     );
-                                    mpd_uint_zero(vtmp.offset(vlen as isize), n.wrapping_sub(vlen));
+                                    mpd_uint_zero(vtmp.add(vlen), n.wrapping_sub(vlen));
                                     if fnt_convolute(c3, vtmp, n, P3 as ::core::ffi::c_int) == 0 {
                                         mpd_free.expect("non-null function pointer")(
                                             vtmp as *mut ::core::ffi::c_void,
@@ -10658,7 +10658,7 @@ pub unsafe extern "C" fn _mpd_fntmul(
                                         ::core::mem::size_of::<mpd_uint_t>() as size_t,
                                     ),
                                 );
-                                mpd_uint_zero(vtmp.offset(vlen as isize), n.wrapping_sub(vlen));
+                                mpd_uint_zero(vtmp.add(vlen), n.wrapping_sub(vlen));
                                 if fnt_convolute(c2, vtmp, n, P2 as ::core::ffi::c_int) == 0 {
                                     mpd_free.expect("non-null function pointer")(
                                         vtmp as *mut ::core::ffi::c_void,
@@ -10674,7 +10674,7 @@ pub unsafe extern "C" fn _mpd_fntmul(
                                         )
                                             as size_t),
                                     );
-                                    mpd_uint_zero(vtmp.offset(vlen as isize), n.wrapping_sub(vlen));
+                                    mpd_uint_zero(vtmp.add(vlen), n.wrapping_sub(vlen));
                                     if fnt_convolute(c3, vtmp, n, P3 as ::core::ffi::c_int) == 0 {
                                         mpd_free.expect("non-null function pointer")(
                                             vtmp as *mut ::core::ffi::c_void,
@@ -10773,8 +10773,8 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
             if _karatsuba_rec_fnt(
                 w,
                 b,
-                a.offset(m as isize),
-                w.offset(lt as isize),
+                a.add(m),
+                w.add(lt),
                 lb,
                 la.wrapping_sub(m),
             ) == 0
@@ -10789,9 +10789,9 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
             mpd_uint_zero(w, lt);
             if _karatsuba_rec_fnt(
                 w,
-                a.offset(m as isize),
+                a.add(m),
                 b,
-                w.offset(lt as isize),
+                w.add(lt),
                 la.wrapping_sub(m),
                 lb,
             ) == 0
@@ -10799,10 +10799,10 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
                 return 0 as ::core::ffi::c_int;
             }
         }
-        _mpd_baseaddto(c.offset(m as isize), w, la.wrapping_sub(m).wrapping_add(lb));
+        _mpd_baseaddto(c.add(m), w, la.wrapping_sub(m).wrapping_add(lb));
         lt = m.wrapping_add(m).wrapping_add(1 as mpd_size_t);
         mpd_uint_zero(w, lt);
-        if _karatsuba_rec_fnt(w, a, b, w.offset(lt as isize), m, lb) == 0 {
+        if _karatsuba_rec_fnt(w, a, b, w.add(lt), m, lb) == 0 {
             return 0 as ::core::ffi::c_int;
         }
         _mpd_baseaddto(c, w, m.wrapping_add(lb));
@@ -10813,24 +10813,24 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
         a as *const ::core::ffi::c_void,
         (m as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
     );
-    *w.offset(m as isize) = 0 as mpd_uint_t;
-    _mpd_baseaddto(w, a.offset(m as isize), la.wrapping_sub(m));
+    *w.add(m) = 0 as mpd_uint_t;
+    _mpd_baseaddto(w, a.add(m), la.wrapping_sub(m));
     memcpy(
-        w.offset(m.wrapping_add(1 as mpd_size_t) as isize) as *mut ::core::ffi::c_void,
+        w.add(m.wrapping_add(1 as mpd_size_t)) as *mut ::core::ffi::c_void,
         b as *const ::core::ffi::c_void,
         (m as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
     );
-    *w.offset(m.wrapping_add(1 as mpd_size_t).wrapping_add(m) as isize) = 0 as mpd_uint_t;
+    *w.add(m.wrapping_add(1 as mpd_size_t).wrapping_add(m)) = 0 as mpd_uint_t;
     _mpd_baseaddto(
-        w.offset(m.wrapping_add(1 as mpd_size_t) as isize),
-        b.offset(m as isize),
+        w.add(m.wrapping_add(1 as mpd_size_t)),
+        b.add(m),
         lb.wrapping_sub(m),
     );
     if _karatsuba_rec_fnt(
-        c.offset(m as isize),
+        c.add(m),
         w,
-        w.offset(m.wrapping_add(1 as mpd_size_t) as isize),
-        w.offset((2 as mpd_size_t).wrapping_mul(m.wrapping_add(1 as mpd_size_t)) as isize),
+        w.add(m.wrapping_add(1 as mpd_size_t)),
+        w.add((2 as mpd_size_t).wrapping_mul(m.wrapping_add(1 as mpd_size_t))),
         m.wrapping_add(1 as mpd_size_t),
         m.wrapping_add(1 as mpd_size_t),
     ) == 0
@@ -10844,9 +10844,9 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
     mpd_uint_zero(w, lt);
     if _karatsuba_rec_fnt(
         w,
-        a.offset(m as isize),
-        b.offset(m as isize),
-        w.offset(lt as isize),
+        a.add(m),
+        b.add(m),
+        w.add(lt),
         la.wrapping_sub(m),
         lb.wrapping_sub(m),
     ) == 0
@@ -10854,22 +10854,22 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
         return 0 as ::core::ffi::c_int;
     }
     _mpd_baseaddto(
-        c.offset((2 as mpd_size_t).wrapping_mul(m) as isize),
+        c.add((2 as mpd_size_t).wrapping_mul(m)),
         w,
         la.wrapping_sub(m).wrapping_add(lb.wrapping_sub(m)),
     );
     _mpd_basesubfrom(
-        c.offset(m as isize),
+        c.add(m),
         w,
         la.wrapping_sub(m).wrapping_add(lb.wrapping_sub(m)),
     );
     lt = m.wrapping_add(m).wrapping_add(1 as mpd_size_t);
     mpd_uint_zero(w, lt);
-    if _karatsuba_rec_fnt(w, a, b, w.offset(lt as isize), m, m) == 0 {
+    if _karatsuba_rec_fnt(w, a, b, w.add(lt), m, m) == 0 {
         return 0 as ::core::ffi::c_int;
     }
     _mpd_baseaddto(c, w, m.wrapping_add(m));
-    _mpd_basesubfrom(c.offset(m as isize), w, m.wrapping_add(m));
+    _mpd_basesubfrom(c.add(m), w, m.wrapping_add(m));
     return 1 as ::core::ffi::c_int;
 }
 #[cfg(target_pointer_width = "32")]
@@ -10930,8 +10930,8 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
             if _karatsuba_rec_fnt(
                 w,
                 b,
-                a.offset(m as isize),
-                w.offset(lt as isize),
+                a.add(m),
+                w.add(lt),
                 lb,
                 la.wrapping_sub(m),
             ) == 0
@@ -10946,9 +10946,9 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
             mpd_uint_zero(w, lt);
             if _karatsuba_rec_fnt(
                 w,
-                a.offset(m as isize),
+                a.add(m),
                 b,
-                w.offset(lt as isize),
+                w.add(lt),
                 la.wrapping_sub(m),
                 lb,
             ) == 0
@@ -10956,10 +10956,10 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
                 return 0 as ::core::ffi::c_int;
             }
         }
-        _mpd_baseaddto(c.offset(m as isize), w, la.wrapping_sub(m).wrapping_add(lb));
+        _mpd_baseaddto(c.add(m), w, la.wrapping_sub(m).wrapping_add(lb));
         lt = m.wrapping_add(m).wrapping_add(1 as mpd_size_t);
         mpd_uint_zero(w, lt);
-        if _karatsuba_rec_fnt(w, a, b, w.offset(lt as isize), m, lb) == 0 {
+        if _karatsuba_rec_fnt(w, a, b, w.add(lt), m, lb) == 0 {
             return 0 as ::core::ffi::c_int;
         }
         _mpd_baseaddto(c, w, m.wrapping_add(lb));
@@ -10970,24 +10970,24 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
         a as *const ::core::ffi::c_void,
         (m as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
     );
-    *w.offset(m as isize) = 0 as mpd_uint_t;
-    _mpd_baseaddto(w, a.offset(m as isize), la.wrapping_sub(m));
+    *w.add(m) = 0 as mpd_uint_t;
+    _mpd_baseaddto(w, a.add(m), la.wrapping_sub(m));
     memcpy(
-        w.offset(m.wrapping_add(1 as mpd_size_t) as isize) as *mut ::core::ffi::c_void,
+        w.add(m.wrapping_add(1 as mpd_size_t)) as *mut ::core::ffi::c_void,
         b as *const ::core::ffi::c_void,
         (m as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
     );
-    *w.offset(m.wrapping_add(1 as mpd_size_t).wrapping_add(m) as isize) = 0 as mpd_uint_t;
+    *w.add(m.wrapping_add(1 as mpd_size_t).wrapping_add(m)) = 0 as mpd_uint_t;
     _mpd_baseaddto(
-        w.offset(m.wrapping_add(1 as mpd_size_t) as isize),
-        b.offset(m as isize),
+        w.add(m.wrapping_add(1 as mpd_size_t)),
+        b.add(m),
         lb.wrapping_sub(m),
     );
     if _karatsuba_rec_fnt(
-        c.offset(m as isize),
+        c.add(m),
         w,
-        w.offset(m.wrapping_add(1 as mpd_size_t) as isize),
-        w.offset((2 as mpd_size_t).wrapping_mul(m.wrapping_add(1 as mpd_size_t)) as isize),
+        w.add(m.wrapping_add(1 as mpd_size_t)),
+        w.add((2 as mpd_size_t).wrapping_mul(m.wrapping_add(1 as mpd_size_t))),
         m.wrapping_add(1 as mpd_size_t),
         m.wrapping_add(1 as mpd_size_t),
     ) == 0
@@ -11001,9 +11001,9 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
     mpd_uint_zero(w, lt);
     if _karatsuba_rec_fnt(
         w,
-        a.offset(m as isize),
-        b.offset(m as isize),
-        w.offset(lt as isize),
+        a.add(m),
+        b.add(m),
+        w.add(lt),
         la.wrapping_sub(m),
         lb.wrapping_sub(m),
     ) == 0
@@ -11011,22 +11011,22 @@ unsafe extern "C" fn _karatsuba_rec_fnt(
         return 0 as ::core::ffi::c_int;
     }
     _mpd_baseaddto(
-        c.offset((2 as mpd_size_t).wrapping_mul(m) as isize),
+        c.add((2 as mpd_size_t).wrapping_mul(m)),
         w,
         la.wrapping_sub(m).wrapping_add(lb.wrapping_sub(m)),
     );
     _mpd_basesubfrom(
-        c.offset(m as isize),
+        c.add(m),
         w,
         la.wrapping_sub(m).wrapping_add(lb.wrapping_sub(m)),
     );
     lt = m.wrapping_add(m).wrapping_add(1 as mpd_size_t);
     mpd_uint_zero(w, lt);
-    if _karatsuba_rec_fnt(w, a, b, w.offset(lt as isize), m, m) == 0 {
+    if _karatsuba_rec_fnt(w, a, b, w.add(lt), m, m) == 0 {
         return 0 as ::core::ffi::c_int;
     }
     _mpd_baseaddto(c, w, m.wrapping_add(m));
-    _mpd_basesubfrom(c.offset(m as isize), w, m.wrapping_add(m));
+    _mpd_basesubfrom(c.add(m), w, m.wrapping_add(m));
     return 1 as ::core::ffi::c_int;
 }
 #[cfg(not(feature = "test-hooks"))]
@@ -11312,7 +11312,7 @@ unsafe extern "C" fn _mpd_qmul(
         }
         i = 0 as mpd_size_t;
         while i < rsize {
-            *(*result).data.offset(i as isize) = rbuf[i as usize];
+            *(*result).data.add(i) = rbuf[i as usize];
             i = i.wrapping_add(1);
         }
     } else {
@@ -11447,7 +11447,7 @@ unsafe extern "C" fn _mpd_qmul(
         }
         i = 0 as mpd_size_t;
         while i < rsize {
-            *(*result).data.offset(i as isize) = rbuf[i as usize];
+            *(*result).data.add(i) = rbuf[i as usize];
             i = i.wrapping_add(1);
         }
     } else {
@@ -15900,7 +15900,7 @@ unsafe extern "C" fn _baseconv_to_u16(
         }
         let fresh0 = n;
         n = n.wrapping_add(1);
-        *(*w).offset(fresh0 as isize) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
+        *(*w).add(fresh0) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
             break;
@@ -15936,7 +15936,7 @@ unsafe extern "C" fn _baseconv_to_u16(
         }
         let fresh0 = n;
         n = n.wrapping_add(1);
-        *(*w).offset(fresh0 as isize) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
+        *(*w).add(fresh0) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
             break;
@@ -15967,7 +15967,7 @@ unsafe extern "C" fn _coeff_from_u16(
     ulen = ulen.wrapping_sub(1);
     let fresh0 = n;
     n = n + 1;
-    *(*w).data.offset(fresh0 as isize) = *u.offset(ulen as isize);
+    *(*w).data.offset(fresh0 as isize) = *u.add(ulen);
     loop {
         ulen = ulen.wrapping_sub(1);
         if !(ulen != SIZE_MAX as size_t) {
@@ -15985,7 +15985,7 @@ unsafe extern "C" fn _coeff_from_u16(
             n = n + 1;
             *(*w).data.offset(fresh1 as isize) = carry;
         }
-        carry = _mpd_shortadd((*w).data, n as mpd_size_t, *u.offset(ulen as isize));
+        carry = _mpd_shortadd((*w).data, n as mpd_size_t, *u.add(ulen));
         if carry != 0 {
             if n >= wlen {
                 if mpd_qresize(w, n + 1 as mpd_ssize_t, status) == 0 {
@@ -16029,7 +16029,7 @@ unsafe extern "C" fn _baseconv_to_smaller(
         }
         let fresh0 = n;
         n = n.wrapping_add(1);
-        *(*w).offset(fresh0 as isize) =
+        *(*w).add(fresh0) =
             _mpd_shortdiv_b(u, u, ulen as mpd_size_t, wbase as mpd_uint_t, ubase) as uint32_t;
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
@@ -16067,7 +16067,7 @@ unsafe extern "C" fn _baseconv_to_smaller(
         }
         let fresh0 = n;
         n = n.wrapping_add(1);
-        *(*w).offset(fresh0 as isize) =
+        *(*w).add(fresh0) =
             _mpd_shortdiv_b(u, u, ulen as mpd_size_t, wbase as mpd_uint_t, ubase);
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
@@ -16119,7 +16119,7 @@ unsafe extern "C" fn _baseconv_to_larger(
     ulen = ulen.wrapping_sub(1);
     let fresh0 = n;
     n = n.wrapping_add(1);
-    *(*w).offset(fresh0 as isize) = *u.offset(ulen as isize) as uint32_t;
+    *(*w).add(fresh0) = *u.add(ulen) as uint32_t;
     loop {
         ulen = ulen.wrapping_sub(1);
         if !(ulen != SIZE_MAX as size_t) {
@@ -16135,9 +16135,9 @@ unsafe extern "C" fn _baseconv_to_larger(
             }
             let fresh1 = n;
             n = n.wrapping_add(1);
-            *(*w).offset(fresh1 as isize) = carry as uint32_t;
+            *(*w).add(fresh1) = carry as uint32_t;
         }
-        carry = _mpd_shortadd_b(*w, n as mpd_size_t, *u.offset(ulen as isize), wbase);
+        carry = _mpd_shortadd_b(*w, n as mpd_size_t, *u.add(ulen), wbase);
         if carry != 0 {
             if n >= wlen {
                 if mpd_resize_u32(w, n.wrapping_add(1 as size_t)) == 0 {
@@ -16147,7 +16147,7 @@ unsafe extern "C" fn _baseconv_to_larger(
             }
             let fresh2 = n;
             n = n.wrapping_add(1);
-            *(*w).offset(fresh2 as isize) = carry as uint32_t;
+            *(*w).add(fresh2) = carry as uint32_t;
         }
     }
     return n;
@@ -16182,7 +16182,7 @@ unsafe extern "C" fn _coeff_from_larger_base(
         }
         let fresh0 = n;
         n = n.wrapping_add(1);
-        *(*w).data.offset(fresh0 as isize) =
+        *(*w).data.add(fresh0) =
             _mpd_shortdiv_b(u, u, ulen as mpd_size_t, wbase, ubase) as mpd_uint_t;
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
@@ -16215,7 +16215,7 @@ unsafe extern "C" fn _coeff_from_smaller_base(
     ulen = ulen.wrapping_sub(1);
     let fresh0 = n;
     n = n + 1;
-    *(*w).data.offset(fresh0 as isize) = *u.offset(ulen as isize) as mpd_uint_t;
+    *(*w).data.offset(fresh0 as isize) = *u.add(ulen) as mpd_uint_t;
     loop {
         ulen = ulen.wrapping_sub(1);
         if !(ulen != SIZE_MAX as size_t) {
@@ -16236,7 +16236,7 @@ unsafe extern "C" fn _coeff_from_smaller_base(
         carry = _mpd_shortadd_b(
             (*w).data,
             n as mpd_size_t,
-            *u.offset(ulen as isize) as mpd_uint_t,
+            *u.add(ulen) as mpd_uint_t,
             wbase,
         );
         if carry != 0 {
@@ -16591,7 +16591,7 @@ pub unsafe extern "C" fn mpd_qimport_u16(
     }
     n = 0 as size_t;
     while n < srclen {
-        *usrc.offset(n as isize) = *srcdata.offset(n as isize) as mpd_uint_t;
+        *usrc.add(n) = *srcdata.add(n) as mpd_uint_t;
         n = n.wrapping_add(1);
     }
     if !(mpd_qresize(result, rlen, status) == 0) {
@@ -16704,7 +16704,7 @@ pub unsafe extern "C" fn mpd_qimport_u32(
         }
         n = 0 as size_t;
         while n < srclen {
-            *usrc.offset(n as isize) = *srcdata.offset(n as isize) as mpd_uint_t;
+            *usrc.add(n) = *srcdata.add(n) as mpd_uint_t;
             n = n.wrapping_add(1);
         }
         n = _coeff_from_larger_base(
@@ -16747,7 +16747,7 @@ unsafe extern "C" fn _uint_from_u16(
     ulen = ulen.wrapping_sub(1);
     let fresh0 = n;
     n = n + 1;
-    *w.offset(fresh0 as isize) = *u.offset(ulen as isize) as mpd_uint_t;
+    *w.offset(fresh0 as isize) = *u.add(ulen) as mpd_uint_t;
     loop {
         ulen = ulen.wrapping_sub(1);
         if !(ulen != SIZE_MAX as size_t) {
@@ -16762,7 +16762,7 @@ unsafe extern "C" fn _uint_from_u16(
             n = n + 1;
             *w.offset(fresh1 as isize) = carry;
         }
-        carry = _mpd_shortadd(w, n as mpd_size_t, *u.offset(ulen as isize) as mpd_uint_t);
+        carry = _mpd_shortadd(w, n as mpd_size_t, *u.add(ulen) as mpd_uint_t);
         if carry != 0 {
             if n >= wlen {
                 abort();
@@ -17284,7 +17284,7 @@ unsafe extern "C" fn _uint_to_u16(
         }
         let fresh0 = n;
         n = n.wrapping_add(1);
-        *w.offset(fresh0 as isize) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
+        *w.add(fresh0) = _mpd_shortdiv(u, u, ulen as mpd_size_t, wbase) as uint16_t;
         ulen = _mpd_real_size(u, ulen);
         if !(*u.offset((ulen - 1 as mpd_ssize_t) as isize) != 0 as mpd_uint_t) {
             break;

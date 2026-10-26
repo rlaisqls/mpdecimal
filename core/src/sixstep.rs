@@ -53,9 +53,9 @@ pub unsafe extern "C" fn six_step_fnt(
         return 0 as ::core::ffi::c_int;
     }
     x = a;
-    while x < a.offset(n as isize) {
+    while x < a.add(n) {
         fnt_dif2(x as *mut mpd_uint_t, R, tparams);
-        x = x.offset(R as isize);
+        x = x.add(R);
     }
     if transpose_pow2(a, C, R) == 0 {
         mpd_free.expect("non-null function pointer")(tparams as *mut ::core::ffi::c_void);
@@ -70,19 +70,19 @@ pub unsafe extern "C" fn six_step_fnt(
         wstep = x64_mulmod(w1, w1, umod);
         k = 0 as mpd_size_t;
         while k < C {
-            let mut x0: mpd_uint_t = *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize);
-            let mut x1: mpd_uint_t = *a.offset(
+            let mut x0: mpd_uint_t = *a.add(i.wrapping_mul(C).wrapping_add(k));
+            let mut x1: mpd_uint_t = *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             );
             x64_mulmod2(&raw mut x0, w0, &raw mut x1, w1, umod);
             x64_mulmod2c(&raw mut w0, &raw mut w1, wstep, umod);
-            *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize) = x0;
-            *a.offset(
+            *a.add(i.wrapping_mul(C).wrapping_add(k)) = x0;
+            *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             ) = x1;
             k = k.wrapping_add(2 as mpd_size_t);
         }
@@ -96,9 +96,9 @@ pub unsafe extern "C" fn six_step_fnt(
         }
     }
     x = a;
-    while x < a.offset(n as isize) {
+    while x < a.add(n) {
         fnt_dif2(x as *mut mpd_uint_t, C, tparams);
-        x = x.offset(C as isize);
+        x = x.add(C);
     }
     mpd_free.expect("non-null function pointer")(tparams as *mut ::core::ffi::c_void);
     return 1 as ::core::ffi::c_int;
@@ -147,9 +147,9 @@ pub unsafe extern "C" fn six_step_fnt(
         return 0 as ::core::ffi::c_int;
     }
     x = a;
-    while x < a.offset(n as isize) {
+    while x < a.add(n) {
         fnt_dif2(x as *mut mpd_uint_t, R, tparams);
-        x = x.offset(R as isize);
+        x = x.add(R);
     }
     if transpose_pow2(a, C, R) == 0 {
         mpd_free.expect("non-null function pointer")(tparams as *mut ::core::ffi::c_void);
@@ -164,19 +164,19 @@ pub unsafe extern "C" fn six_step_fnt(
         wstep = std_mulmod(w1, w1, umod);
         k = 0 as mpd_size_t;
         while k < C {
-            let mut x0: mpd_uint_t = *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize);
-            let mut x1: mpd_uint_t = *a.offset(
+            let mut x0: mpd_uint_t = *a.add(i.wrapping_mul(C).wrapping_add(k));
+            let mut x1: mpd_uint_t = *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             );
             std_mulmod2(&raw mut x0, w0, &raw mut x1, w1, umod);
             std_mulmod2c(&raw mut w0, &raw mut w1, wstep, umod);
-            *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize) = x0;
-            *a.offset(
+            *a.add(i.wrapping_mul(C).wrapping_add(k)) = x0;
+            *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             ) = x1;
             k = k.wrapping_add(2 as mpd_size_t);
         }
@@ -190,9 +190,9 @@ pub unsafe extern "C" fn six_step_fnt(
         }
     }
     x = a;
-    while x < a.offset(n as isize) {
+    while x < a.add(n) {
         fnt_dif2(x as *mut mpd_uint_t, C, tparams);
-        x = x.offset(C as isize);
+        x = x.add(C);
     }
     mpd_free.expect("non-null function pointer")(tparams as *mut ::core::ffi::c_void);
     return 1 as ::core::ffi::c_int;
@@ -238,9 +238,9 @@ pub unsafe extern "C" fn inv_six_step_fnt(
         return 0 as ::core::ffi::c_int;
     }
     x = a;
-    while x < a.offset(n as isize) {
+    while x < a.add(n) {
         fnt_dif2(x as *mut mpd_uint_t, C, tparams);
-        x = x.offset(C as isize);
+        x = x.add(C);
     }
     std_setmodulus(modnum, &raw mut umod);
     kernel = _mpd_getkernel(n as mpd_uint_t, 1 as ::core::ffi::c_int, modnum);
@@ -251,19 +251,19 @@ pub unsafe extern "C" fn inv_six_step_fnt(
         wstep = x64_mulmod(w1, w1, umod);
         k = 0 as mpd_size_t;
         while k < C {
-            let mut x0: mpd_uint_t = *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize);
-            let mut x1: mpd_uint_t = *a.offset(
+            let mut x0: mpd_uint_t = *a.add(i.wrapping_mul(C).wrapping_add(k));
+            let mut x1: mpd_uint_t = *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             );
             x64_mulmod2(&raw mut x0, w0, &raw mut x1, w1, umod);
             x64_mulmod2c(&raw mut w0, &raw mut w1, wstep, umod);
-            *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize) = x0;
-            *a.offset(
+            *a.add(i.wrapping_mul(C).wrapping_add(k)) = x0;
+            *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             ) = x1;
             k = k.wrapping_add(2 as mpd_size_t);
         }
@@ -281,9 +281,9 @@ pub unsafe extern "C" fn inv_six_step_fnt(
         }
     }
     x = a;
-    while x < a.offset(n as isize) {
+    while x < a.add(n) {
         fnt_dif2(x as *mut mpd_uint_t, R, tparams);
-        x = x.offset(R as isize);
+        x = x.add(R);
     }
     mpd_free.expect("non-null function pointer")(tparams as *mut ::core::ffi::c_void);
     if transpose_pow2(a, C, R) == 0 {
@@ -332,9 +332,9 @@ pub unsafe extern "C" fn inv_six_step_fnt(
         return 0 as ::core::ffi::c_int;
     }
     x = a;
-    while x < a.offset(n as isize) {
+    while x < a.add(n) {
         fnt_dif2(x as *mut mpd_uint_t, C, tparams);
-        x = x.offset(C as isize);
+        x = x.add(C);
     }
     std_setmodulus(modnum, &raw mut umod);
     kernel = _mpd_getkernel(n as mpd_uint_t, 1 as ::core::ffi::c_int, modnum);
@@ -345,19 +345,19 @@ pub unsafe extern "C" fn inv_six_step_fnt(
         wstep = std_mulmod(w1, w1, umod);
         k = 0 as mpd_size_t;
         while k < C {
-            let mut x0: mpd_uint_t = *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize);
-            let mut x1: mpd_uint_t = *a.offset(
+            let mut x0: mpd_uint_t = *a.add(i.wrapping_mul(C).wrapping_add(k));
+            let mut x1: mpd_uint_t = *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             );
             std_mulmod2(&raw mut x0, w0, &raw mut x1, w1, umod);
             std_mulmod2c(&raw mut w0, &raw mut w1, wstep, umod);
-            *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize) = x0;
-            *a.offset(
+            *a.add(i.wrapping_mul(C).wrapping_add(k)) = x0;
+            *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             ) = x1;
             k = k.wrapping_add(2 as mpd_size_t);
         }
@@ -375,9 +375,9 @@ pub unsafe extern "C" fn inv_six_step_fnt(
         }
     }
     x = a;
-    while x < a.offset(n as isize) {
+    while x < a.add(n) {
         fnt_dif2(x as *mut mpd_uint_t, R, tparams);
-        x = x.offset(R as isize);
+        x = x.add(R);
     }
     mpd_free.expect("non-null function pointer")(tparams as *mut ::core::ffi::c_void);
     if transpose_pow2(a, C, R) == 0 {

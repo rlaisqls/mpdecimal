@@ -4,6 +4,7 @@
 #![allow(non_upper_case_globals)]
 #![allow(unused_assignments)]
 #![allow(unused_mut)]
+#![deny(clippy::ptr_offset_with_cast, clippy::not_unsafe_ptr_arg_deref)]
 
 pub mod common;
 pub mod shim;

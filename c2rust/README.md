@@ -4,9 +4,9 @@ Phase 1 of the Rust port: translate `libmpdec/*.c` with c2rust and make the
 unmodified upstream C tests pass against the translated library through the
 C ABI. Every translation is produced by the scripts in this directory, and
 every run is appended to [RUNS.md](RUNS.md), so any output can be
-regenerated. The result is mpdecimal-core (`core/`), written by
-[install.py](install.py); mpdecimal-sys (`sys/`) exports the C ABI on top of
-it.
+regenerated. The result was installed as mpdecimal-core (`core/`) by
+[install.py](install.py), and `core/` has been edited by hand since;
+mpdecimal-sys (`sys/`) exports the C ABI on top of it.
 
 ## Configuration matrix
 

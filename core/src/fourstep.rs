@@ -118,9 +118,9 @@ pub unsafe extern "C" fn four_step_fnt(
         modnum,
     );
     p0 = a;
-    p1 = p0.offset(C as isize);
-    p2 = p0.offset((2 as mpd_size_t).wrapping_mul(C) as isize);
-    while p0 < a.offset(C as isize) {
+    p1 = p0.add(C);
+    p2 = p0.add((2 as mpd_size_t).wrapping_mul(C));
+    while p0 < a.add(C) {
         std_size3_ntt(p0, p1, p2, &raw mut w3table as *mut mpd_uint_t, umod);
         p0 = p0.offset(1);
         p1 = p1.offset(1);
@@ -134,30 +134,30 @@ pub unsafe extern "C" fn four_step_fnt(
         wstep = x64_mulmod(w1, w1, umod);
         k = 0 as mpd_size_t;
         while k < C.wrapping_sub(1 as mpd_size_t) {
-            let mut x0: mpd_uint_t = *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize);
-            let mut x1: mpd_uint_t = *a.offset(
+            let mut x0: mpd_uint_t = *a.add(i.wrapping_mul(C).wrapping_add(k));
+            let mut x1: mpd_uint_t = *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             );
             x64_mulmod2(&raw mut x0, w0, &raw mut x1, w1, umod);
             x64_mulmod2c(&raw mut w0, &raw mut w1, wstep, umod);
-            *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize) = x0;
-            *a.offset(
+            *a.add(i.wrapping_mul(C).wrapping_add(k)) = x0;
+            *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             ) = x1;
             k = k.wrapping_add(2 as mpd_size_t);
         }
         i = i.wrapping_add(1);
     }
     s = a;
-    while s < a.offset(n as isize) {
+    while s < a.add(n) {
         if six_step_fnt(s, C, modnum) == 0 {
             return 0 as ::core::ffi::c_int;
         }
-        s = s.offset(C as isize);
+        s = s.add(C);
     }
     return 1 as ::core::ffi::c_int;
 }
@@ -199,9 +199,9 @@ pub unsafe extern "C" fn four_step_fnt(
         modnum,
     );
     p0 = a;
-    p1 = p0.offset(C as isize);
-    p2 = p0.offset((2 as mpd_size_t).wrapping_mul(C) as isize);
-    while p0 < a.offset(C as isize) {
+    p1 = p0.add(C);
+    p2 = p0.add((2 as mpd_size_t).wrapping_mul(C));
+    while p0 < a.add(C) {
         std_size3_ntt(p0, p1, p2, &raw mut w3table as *mut mpd_uint_t, umod);
         p0 = p0.offset(1);
         p1 = p1.offset(1);
@@ -215,30 +215,30 @@ pub unsafe extern "C" fn four_step_fnt(
         wstep = std_mulmod(w1, w1, umod);
         k = 0 as mpd_size_t;
         while k < C.wrapping_sub(1 as mpd_size_t) {
-            let mut x0: mpd_uint_t = *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize);
-            let mut x1: mpd_uint_t = *a.offset(
+            let mut x0: mpd_uint_t = *a.add(i.wrapping_mul(C).wrapping_add(k));
+            let mut x1: mpd_uint_t = *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             );
             std_mulmod2(&raw mut x0, w0, &raw mut x1, w1, umod);
             std_mulmod2c(&raw mut w0, &raw mut w1, wstep, umod);
-            *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize) = x0;
-            *a.offset(
+            *a.add(i.wrapping_mul(C).wrapping_add(k)) = x0;
+            *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             ) = x1;
             k = k.wrapping_add(2 as mpd_size_t);
         }
         i = i.wrapping_add(1);
     }
     s = a;
-    while s < a.offset(n as isize) {
+    while s < a.add(n) {
         if six_step_fnt(s, C, modnum) == 0 {
             return 0 as ::core::ffi::c_int;
         }
-        s = s.offset(C as isize);
+        s = s.add(C);
     }
     return 1 as ::core::ffi::c_int;
 }
@@ -274,11 +274,11 @@ pub unsafe extern "C" fn inv_four_step_fnt(
         );
     };
     s = a;
-    while s < a.offset(n as isize) {
+    while s < a.add(n) {
         if inv_six_step_fnt(s, C, modnum) == 0 {
             return 0 as ::core::ffi::c_int;
         }
-        s = s.offset(C as isize);
+        s = s.add(C);
     }
     std_setmodulus(modnum, &raw mut umod);
     kernel = _mpd_getkernel(n as mpd_uint_t, 1 as ::core::ffi::c_int, modnum);
@@ -289,19 +289,19 @@ pub unsafe extern "C" fn inv_four_step_fnt(
         wstep = x64_mulmod(w1, w1, umod);
         k = 0 as mpd_size_t;
         while k < C {
-            let mut x0: mpd_uint_t = *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize);
-            let mut x1: mpd_uint_t = *a.offset(
+            let mut x0: mpd_uint_t = *a.add(i.wrapping_mul(C).wrapping_add(k));
+            let mut x1: mpd_uint_t = *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             );
             x64_mulmod2(&raw mut x0, w0, &raw mut x1, w1, umod);
             x64_mulmod2c(&raw mut w0, &raw mut w1, wstep, umod);
-            *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize) = x0;
-            *a.offset(
+            *a.add(i.wrapping_mul(C).wrapping_add(k)) = x0;
+            *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             ) = x1;
             k = k.wrapping_add(2 as mpd_size_t);
         }
@@ -313,9 +313,9 @@ pub unsafe extern "C" fn inv_four_step_fnt(
         modnum,
     );
     p0 = a;
-    p1 = p0.offset(C as isize);
-    p2 = p0.offset((2 as mpd_size_t).wrapping_mul(C) as isize);
-    while p0 < a.offset(C as isize) {
+    p1 = p0.add(C);
+    p2 = p0.add((2 as mpd_size_t).wrapping_mul(C));
+    while p0 < a.add(C) {
         std_size3_ntt(p0, p1, p2, &raw mut w3table as *mut mpd_uint_t, umod);
         p0 = p0.offset(1);
         p1 = p1.offset(1);
@@ -355,11 +355,11 @@ pub unsafe extern "C" fn inv_four_step_fnt(
         );
     };
     s = a;
-    while s < a.offset(n as isize) {
+    while s < a.add(n) {
         if inv_six_step_fnt(s, C, modnum) == 0 {
             return 0 as ::core::ffi::c_int;
         }
-        s = s.offset(C as isize);
+        s = s.add(C);
     }
     std_setmodulus(modnum, &raw mut umod);
     kernel = _mpd_getkernel(n as mpd_uint_t, 1 as ::core::ffi::c_int, modnum);
@@ -370,19 +370,19 @@ pub unsafe extern "C" fn inv_four_step_fnt(
         wstep = std_mulmod(w1, w1, umod);
         k = 0 as mpd_size_t;
         while k < C {
-            let mut x0: mpd_uint_t = *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize);
-            let mut x1: mpd_uint_t = *a.offset(
+            let mut x0: mpd_uint_t = *a.add(i.wrapping_mul(C).wrapping_add(k));
+            let mut x1: mpd_uint_t = *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             );
             std_mulmod2(&raw mut x0, w0, &raw mut x1, w1, umod);
             std_mulmod2c(&raw mut w0, &raw mut w1, wstep, umod);
-            *a.offset(i.wrapping_mul(C).wrapping_add(k) as isize) = x0;
-            *a.offset(
+            *a.add(i.wrapping_mul(C).wrapping_add(k)) = x0;
+            *a.add(
                 i.wrapping_mul(C)
                     .wrapping_add(k)
-                    .wrapping_add(1 as mpd_size_t) as isize,
+                    .wrapping_add(1 as mpd_size_t),
             ) = x1;
             k = k.wrapping_add(2 as mpd_size_t);
         }
@@ -394,9 +394,9 @@ pub unsafe extern "C" fn inv_four_step_fnt(
         modnum,
     );
     p0 = a;
-    p1 = p0.offset(C as isize);
-    p2 = p0.offset((2 as mpd_size_t).wrapping_mul(C) as isize);
-    while p0 < a.offset(C as isize) {
+    p1 = p0.add(C);
+    p2 = p0.add((2 as mpd_size_t).wrapping_mul(C));
+    while p0 < a.add(C) {
         std_size3_ntt(p0, p1, p2, &raw mut w3table as *mut mpd_uint_t, umod);
         p0 = p0.offset(1);
         p1 = p1.offset(1);

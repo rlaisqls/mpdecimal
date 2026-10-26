@@ -135,9 +135,9 @@ pub unsafe extern "C" fn crt3(
     let mut i: mpd_size_t = 0;
     i = 0 as mpd_size_t;
     while i < rsize {
-        a1 = *x1.offset(i as isize);
-        a2 = *x2.offset(i as isize);
-        a3 = *x3.offset(i as isize);
+        a1 = *x1.add(i);
+        a2 = *x2.add(i);
+        a3 = *x3.add(i);
         std_setmodulus(P2 as ::core::ffi::c_int, &raw mut umod);
         s = ext_submod(a2, a1, umod);
         s = x64_mulmod(s, INV_P1_MOD_P2, umod);
@@ -158,7 +158,7 @@ pub unsafe extern "C" fn crt3(
             &raw mut carry as *mut mpd_uint_t,
             &raw mut z as *mut mpd_uint_t,
         );
-        *x1.offset(i as isize) = _crt_div3(
+        *x1.add(i) = _crt_div3(
             &raw mut carry as *mut mpd_uint_t,
             &raw mut carry as *mut mpd_uint_t,
             MPD_RADIX as mpd_uint_t,
@@ -199,9 +199,9 @@ pub unsafe extern "C" fn crt3(
     let mut i: mpd_size_t = 0;
     i = 0 as mpd_size_t;
     while i < rsize {
-        a1 = *x1.offset(i as isize);
-        a2 = *x2.offset(i as isize);
-        a3 = *x3.offset(i as isize);
+        a1 = *x1.add(i);
+        a2 = *x2.add(i);
+        a3 = *x3.add(i);
         std_setmodulus(P2 as ::core::ffi::c_int, &raw mut umod);
         s = ext_submod(a2, a1, umod);
         s = std_mulmod(s, INV_P1_MOD_P2, umod);
@@ -222,7 +222,7 @@ pub unsafe extern "C" fn crt3(
             &raw mut carry as *mut mpd_uint_t,
             &raw mut z as *mut mpd_uint_t,
         );
-        *x1.offset(i as isize) = _crt_div3(
+        *x1.add(i) = _crt_div3(
             &raw mut carry as *mut mpd_uint_t,
             &raw mut carry as *mut mpd_uint_t,
             MPD_RADIX as mpd_uint_t,

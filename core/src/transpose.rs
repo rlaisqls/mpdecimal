@@ -75,7 +75,7 @@ pub unsafe extern "C" fn std_trans(
         idest = r;
         c = 0 as mpd_size_t;
         while c < cols {
-            *dest.offset(idest as isize) = *src.offset(isrc as isize);
+            *dest.add(idest) = *src.add(isrc);
             isrc = isrc.wrapping_add(1 as mpd_size_t);
             idest = idest.wrapping_add(rows);
             c = c.wrapping_add(1);
@@ -130,8 +130,8 @@ unsafe extern "C" fn swap_halfrows_pow2(
     }
     hn = 1 as mpd_size_t;
     while hn <= hmax {
-        if !(*done.offset(hn.wrapping_div(dbits) as isize)
-            & *(&raw const mpd_bits as *const mpd_size_t).offset(hn.wrapping_rem(dbits) as isize)
+        if !(*done.add(hn.wrapping_div(dbits))
+            & *(&raw const mpd_bits as *const mpd_size_t).add(hn.wrapping_rem(dbits))
             != 0)
         {
             readbuf = &raw mut buf1 as *mut mpd_uint_t;
@@ -143,44 +143,44 @@ unsafe extern "C" fn swap_halfrows_pow2(
                 } else {
                     cols.wrapping_div(2 as mpd_size_t).wrapping_sub(offset)
                 };
-                hp = matrix.offset(hn.wrapping_mul(cols).wrapping_div(2 as mpd_size_t) as isize);
+                hp = matrix.add(hn.wrapping_mul(cols).wrapping_div(2 as mpd_size_t));
                 memcpy(
                     readbuf as *mut ::core::ffi::c_void,
-                    hp.offset(offset as isize) as *const ::core::ffi::c_void,
+                    hp.add(offset) as *const ::core::ffi::c_void,
                     (stride as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                 );
                 pointerswap(&raw mut readbuf, &raw mut writebuf);
                 next = mulmod_size_t(hn, r, m);
-                hp = matrix.offset(next.wrapping_mul(cols).wrapping_div(2 as mpd_size_t) as isize);
+                hp = matrix.add(next.wrapping_mul(cols).wrapping_div(2 as mpd_size_t));
                 while next != hn {
                     memcpy(
                         readbuf as *mut ::core::ffi::c_void,
-                        hp.offset(offset as isize) as *const ::core::ffi::c_void,
+                        hp.add(offset) as *const ::core::ffi::c_void,
                         (stride as size_t)
                             .wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                     );
                     memcpy(
-                        hp.offset(offset as isize) as *mut ::core::ffi::c_void,
+                        hp.add(offset) as *mut ::core::ffi::c_void,
                         writebuf as *const ::core::ffi::c_void,
                         (stride as size_t)
                             .wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                     );
                     pointerswap(&raw mut readbuf, &raw mut writebuf);
-                    *done.offset(next.wrapping_div(dbits) as isize) |= *(&raw const mpd_bits
+                    *done.add(next.wrapping_div(dbits)) |= *(&raw const mpd_bits
                         as *const mpd_size_t)
-                        .offset(next.wrapping_rem(dbits) as isize);
+                        .add(next.wrapping_rem(dbits));
                     next = mulmod_size_t(next, r, m);
                     hp = matrix
-                        .offset(next.wrapping_mul(cols).wrapping_div(2 as mpd_size_t) as isize);
+                        .add(next.wrapping_mul(cols).wrapping_div(2 as mpd_size_t));
                 }
                 memcpy(
-                    hp.offset(offset as isize) as *mut ::core::ffi::c_void,
+                    hp.add(offset) as *mut ::core::ffi::c_void,
                     writebuf as *const ::core::ffi::c_void,
                     (stride as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                 );
-                *done.offset(hn.wrapping_div(dbits) as isize) |= *(&raw const mpd_bits
+                *done.add(hn.wrapping_div(dbits)) |= *(&raw const mpd_bits
                     as *const mpd_size_t)
-                    .offset(hn.wrapping_rem(dbits) as isize);
+                    .add(hn.wrapping_rem(dbits));
                 offset = offset.wrapping_add(b);
             }
         }
@@ -202,9 +202,9 @@ unsafe extern "C" fn squaretrans(mut buf: *mut mpd_uint_t, mut cols: mpd_size_t)
         idest = c.wrapping_mul(cols).wrapping_add(r);
         c = r.wrapping_add(1 as mpd_size_t);
         while c < cols {
-            tmp = *buf.offset(isrc as isize);
-            *buf.offset(isrc as isize) = *buf.offset(idest as isize);
-            *buf.offset(idest as isize) = tmp;
+            tmp = *buf.add(isrc);
+            *buf.add(isrc) = *buf.add(idest);
+            *buf.add(idest) = tmp;
             isrc = isrc.wrapping_add(1 as mpd_size_t);
             idest = idest.wrapping_add(cols);
             c = c.wrapping_add(1);
@@ -229,8 +229,8 @@ unsafe extern "C" fn squaretrans_pow2(mut matrix: *mut mpd_uint_t, mut size: mpd
         c = r;
         while c < size {
             from = matrix
-                .offset(r.wrapping_mul(size) as isize)
-                .offset(c as isize);
+                .add(r.wrapping_mul(size))
+                .add(c);
             to = &raw mut buf1 as *mut mpd_uint_t;
             i = 0 as mpd_size_t;
             while i < b {
@@ -239,15 +239,15 @@ unsafe extern "C" fn squaretrans_pow2(mut matrix: *mut mpd_uint_t, mut size: mpd
                     from as *const ::core::ffi::c_void,
                     (b as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                 );
-                from = from.offset(size as isize);
-                to = to.offset(b as isize);
+                from = from.add(size);
+                to = to.add(b);
                 i = i.wrapping_add(1);
             }
             squaretrans(&raw mut buf1 as *mut mpd_uint_t, b);
             if r == c {
                 to = matrix
-                    .offset(r.wrapping_mul(size) as isize)
-                    .offset(c as isize);
+                    .add(r.wrapping_mul(size))
+                    .add(c);
                 from = &raw mut buf1 as *mut mpd_uint_t;
                 i = 0 as mpd_size_t;
                 while i < b {
@@ -256,14 +256,14 @@ unsafe extern "C" fn squaretrans_pow2(mut matrix: *mut mpd_uint_t, mut size: mpd
                         from as *const ::core::ffi::c_void,
                         (b as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                     );
-                    from = from.offset(b as isize);
-                    to = to.offset(size as isize);
+                    from = from.add(b);
+                    to = to.add(size);
                     i = i.wrapping_add(1);
                 }
             } else {
                 from = matrix
-                    .offset(c.wrapping_mul(size) as isize)
-                    .offset(r as isize);
+                    .add(c.wrapping_mul(size))
+                    .add(r);
                 to = &raw mut buf2 as *mut mpd_uint_t;
                 i = 0 as mpd_size_t;
                 while i < b {
@@ -272,14 +272,14 @@ unsafe extern "C" fn squaretrans_pow2(mut matrix: *mut mpd_uint_t, mut size: mpd
                         from as *const ::core::ffi::c_void,
                         (b as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                     );
-                    from = from.offset(size as isize);
-                    to = to.offset(b as isize);
+                    from = from.add(size);
+                    to = to.add(b);
                     i = i.wrapping_add(1);
                 }
                 squaretrans(&raw mut buf2 as *mut mpd_uint_t, b);
                 to = matrix
-                    .offset(c.wrapping_mul(size) as isize)
-                    .offset(r as isize);
+                    .add(c.wrapping_mul(size))
+                    .add(r);
                 from = &raw mut buf1 as *mut mpd_uint_t;
                 i = 0 as mpd_size_t;
                 while i < b {
@@ -288,13 +288,13 @@ unsafe extern "C" fn squaretrans_pow2(mut matrix: *mut mpd_uint_t, mut size: mpd
                         from as *const ::core::ffi::c_void,
                         (b as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                     );
-                    from = from.offset(b as isize);
-                    to = to.offset(size as isize);
+                    from = from.add(b);
+                    to = to.add(size);
                     i = i.wrapping_add(1);
                 }
                 to = matrix
-                    .offset(r.wrapping_mul(size) as isize)
-                    .offset(c as isize);
+                    .add(r.wrapping_mul(size))
+                    .add(c);
                 from = &raw mut buf2 as *mut mpd_uint_t;
                 i = 0 as mpd_size_t;
                 while i < b {
@@ -303,8 +303,8 @@ unsafe extern "C" fn squaretrans_pow2(mut matrix: *mut mpd_uint_t, mut size: mpd
                         from as *const ::core::ffi::c_void,
                         (b as size_t).wrapping_mul(::core::mem::size_of::<mpd_uint_t>() as size_t),
                     );
-                    from = from.offset(b as isize);
-                    to = to.offset(size as isize);
+                    from = from.add(b);
+                    to = to.add(size);
                     i = i.wrapping_add(1);
                 }
             }
@@ -336,13 +336,13 @@ pub unsafe extern "C" fn transpose_pow2(
         }
         squaretrans_pow2(matrix, rows);
         squaretrans_pow2(
-            matrix.offset(size.wrapping_div(2 as mpd_size_t) as isize),
+            matrix.add(size.wrapping_div(2 as mpd_size_t)),
             rows,
         );
     } else if rows == mul_size_t(2 as mpd_size_t, cols) {
         squaretrans_pow2(matrix, cols);
         squaretrans_pow2(
-            matrix.offset(size.wrapping_div(2 as mpd_size_t) as isize),
+            matrix.add(size.wrapping_div(2 as mpd_size_t)),
             cols,
         );
         if swap_halfrows_pow2(matrix, cols, rows, BACKWARD_CYCLE as ::core::ffi::c_int) == 0 {

@@ -79,9 +79,9 @@ unsafe extern "C" fn bitreverse_permute(mut a: *mut mpd_uint_t, mut n: mpd_size_
     let mut t: mpd_uint_t = 0;
     loop {
         if r > x {
-            t = *a.offset(x as isize);
-            *a.offset(x as isize) = *a.offset(r as isize);
-            *a.offset(r as isize) = t;
+            t = *a.add(x);
+            *a.add(x) = *a.add(r);
+            *a.add(r) = t;
         }
         x = x.wrapping_add(1 as mpd_size_t);
         r ^= n.wrapping_sub(n >> mpd_bsf(x) + 1 as ::core::ffi::c_int);
@@ -123,19 +123,19 @@ pub unsafe extern "C" fn fnt_dif2(
     mhalf = n.wrapping_div(2 as mpd_size_t);
     j = 0 as mpd_size_t;
     while j < mhalf {
-        w0 = *wtable.offset(j as isize);
-        w1 = *wtable.offset(j.wrapping_add(1 as mpd_size_t) as isize);
-        u0 = *a.offset(j as isize);
-        v0 = *a.offset(j.wrapping_add(mhalf) as isize);
-        u1 = *a.offset(j.wrapping_add(1 as mpd_size_t) as isize);
-        v1 = *a.offset(j.wrapping_add(1 as mpd_size_t).wrapping_add(mhalf) as isize);
-        *a.offset(j as isize) = addmod(u0, v0, umod);
+        w0 = *wtable.add(j);
+        w1 = *wtable.add(j.wrapping_add(1 as mpd_size_t));
+        u0 = *a.add(j);
+        v0 = *a.add(j.wrapping_add(mhalf));
+        u1 = *a.add(j.wrapping_add(1 as mpd_size_t));
+        v1 = *a.add(j.wrapping_add(1 as mpd_size_t).wrapping_add(mhalf));
+        *a.add(j) = addmod(u0, v0, umod);
         v0 = submod(u0, v0, umod);
-        *a.offset(j.wrapping_add(1 as mpd_size_t) as isize) = addmod(u1, v1, umod);
+        *a.add(j.wrapping_add(1 as mpd_size_t)) = addmod(u1, v1, umod);
         v1 = submod(u1, v1, umod);
         x64_mulmod2(&raw mut v0, w0, &raw mut v1, w1, umod);
-        *a.offset(j.wrapping_add(mhalf) as isize) = v0;
-        *a.offset(j.wrapping_add(1 as mpd_size_t).wrapping_add(mhalf) as isize) = v1;
+        *a.add(j.wrapping_add(mhalf)) = v0;
+        *a.add(j.wrapping_add(1 as mpd_size_t).wrapping_add(mhalf)) = v1;
         j = j.wrapping_add(2 as mpd_size_t);
     }
     wstep = 2 as mpd_uint_t;
@@ -144,16 +144,16 @@ pub unsafe extern "C" fn fnt_dif2(
         mhalf = m.wrapping_div(2 as mpd_size_t);
         r = 0 as mpd_size_t;
         while r < n {
-            u0 = *a.offset(r as isize);
-            v0 = *a.offset(r.wrapping_add(mhalf) as isize);
-            u1 = *a.offset(m.wrapping_add(r) as isize);
-            v1 = *a.offset(m.wrapping_add(r).wrapping_add(mhalf) as isize);
-            *a.offset(r as isize) = addmod(u0, v0, umod);
+            u0 = *a.add(r);
+            v0 = *a.add(r.wrapping_add(mhalf));
+            u1 = *a.add(m.wrapping_add(r));
+            v1 = *a.add(m.wrapping_add(r).wrapping_add(mhalf));
+            *a.add(r) = addmod(u0, v0, umod);
             v0 = submod(u0, v0, umod);
-            *a.offset(m.wrapping_add(r) as isize) = addmod(u1, v1, umod);
+            *a.add(m.wrapping_add(r)) = addmod(u1, v1, umod);
             v1 = submod(u1, v1, umod);
-            *a.offset(r.wrapping_add(mhalf) as isize) = v0;
-            *a.offset(m.wrapping_add(r).wrapping_add(mhalf) as isize) = v1;
+            *a.add(r.wrapping_add(mhalf)) = v0;
+            *a.add(m.wrapping_add(r).wrapping_add(mhalf)) = v1;
             r = r.wrapping_add((2 as mpd_size_t).wrapping_mul(m));
         }
         j = 1 as mpd_size_t;
@@ -161,17 +161,17 @@ pub unsafe extern "C" fn fnt_dif2(
             w = *wtable.offset((j as mpd_uint_t).wrapping_mul(wstep) as isize);
             r = 0 as mpd_size_t;
             while r < n {
-                u0 = *a.offset(r.wrapping_add(j) as isize);
-                v0 = *a.offset(r.wrapping_add(j).wrapping_add(mhalf) as isize);
-                u1 = *a.offset(m.wrapping_add(r).wrapping_add(j) as isize);
-                v1 = *a.offset(m.wrapping_add(r).wrapping_add(j).wrapping_add(mhalf) as isize);
-                *a.offset(r.wrapping_add(j) as isize) = addmod(u0, v0, umod);
+                u0 = *a.add(r.wrapping_add(j));
+                v0 = *a.add(r.wrapping_add(j).wrapping_add(mhalf));
+                u1 = *a.add(m.wrapping_add(r).wrapping_add(j));
+                v1 = *a.add(m.wrapping_add(r).wrapping_add(j).wrapping_add(mhalf));
+                *a.add(r.wrapping_add(j)) = addmod(u0, v0, umod);
                 v0 = submod(u0, v0, umod);
-                *a.offset(m.wrapping_add(r).wrapping_add(j) as isize) = addmod(u1, v1, umod);
+                *a.add(m.wrapping_add(r).wrapping_add(j)) = addmod(u1, v1, umod);
                 v1 = submod(u1, v1, umod);
                 x64_mulmod2c(&raw mut v0, &raw mut v1, w, umod);
-                *a.offset(r.wrapping_add(j).wrapping_add(mhalf) as isize) = v0;
-                *a.offset(m.wrapping_add(r).wrapping_add(j).wrapping_add(mhalf) as isize) = v1;
+                *a.add(r.wrapping_add(j).wrapping_add(mhalf)) = v0;
+                *a.add(m.wrapping_add(r).wrapping_add(j).wrapping_add(mhalf)) = v1;
                 r = r.wrapping_add((2 as mpd_size_t).wrapping_mul(m));
             }
             j = j.wrapping_add(1);
@@ -214,19 +214,19 @@ pub unsafe extern "C" fn fnt_dif2(
     mhalf = n.wrapping_div(2 as mpd_size_t);
     j = 0 as mpd_size_t;
     while j < mhalf {
-        w0 = *wtable.offset(j as isize);
-        w1 = *wtable.offset(j.wrapping_add(1 as mpd_size_t) as isize);
-        u0 = *a.offset(j as isize);
-        v0 = *a.offset(j.wrapping_add(mhalf) as isize);
-        u1 = *a.offset(j.wrapping_add(1 as mpd_size_t) as isize);
-        v1 = *a.offset(j.wrapping_add(1 as mpd_size_t).wrapping_add(mhalf) as isize);
-        *a.offset(j as isize) = addmod(u0, v0, umod);
+        w0 = *wtable.add(j);
+        w1 = *wtable.add(j.wrapping_add(1 as mpd_size_t));
+        u0 = *a.add(j);
+        v0 = *a.add(j.wrapping_add(mhalf));
+        u1 = *a.add(j.wrapping_add(1 as mpd_size_t));
+        v1 = *a.add(j.wrapping_add(1 as mpd_size_t).wrapping_add(mhalf));
+        *a.add(j) = addmod(u0, v0, umod);
         v0 = submod(u0, v0, umod);
-        *a.offset(j.wrapping_add(1 as mpd_size_t) as isize) = addmod(u1, v1, umod);
+        *a.add(j.wrapping_add(1 as mpd_size_t)) = addmod(u1, v1, umod);
         v1 = submod(u1, v1, umod);
         std_mulmod2(&raw mut v0, w0, &raw mut v1, w1, umod);
-        *a.offset(j.wrapping_add(mhalf) as isize) = v0;
-        *a.offset(j.wrapping_add(1 as mpd_size_t).wrapping_add(mhalf) as isize) = v1;
+        *a.add(j.wrapping_add(mhalf)) = v0;
+        *a.add(j.wrapping_add(1 as mpd_size_t).wrapping_add(mhalf)) = v1;
         j = j.wrapping_add(2 as mpd_size_t);
     }
     wstep = 2 as mpd_uint_t;
@@ -235,34 +235,34 @@ pub unsafe extern "C" fn fnt_dif2(
         mhalf = m.wrapping_div(2 as mpd_size_t);
         r = 0 as mpd_size_t;
         while r < n {
-            u0 = *a.offset(r as isize);
-            v0 = *a.offset(r.wrapping_add(mhalf) as isize);
-            u1 = *a.offset(m.wrapping_add(r) as isize);
-            v1 = *a.offset(m.wrapping_add(r).wrapping_add(mhalf) as isize);
-            *a.offset(r as isize) = addmod(u0, v0, umod);
+            u0 = *a.add(r);
+            v0 = *a.add(r.wrapping_add(mhalf));
+            u1 = *a.add(m.wrapping_add(r));
+            v1 = *a.add(m.wrapping_add(r).wrapping_add(mhalf));
+            *a.add(r) = addmod(u0, v0, umod);
             v0 = submod(u0, v0, umod);
-            *a.offset(m.wrapping_add(r) as isize) = addmod(u1, v1, umod);
+            *a.add(m.wrapping_add(r)) = addmod(u1, v1, umod);
             v1 = submod(u1, v1, umod);
-            *a.offset(r.wrapping_add(mhalf) as isize) = v0;
-            *a.offset(m.wrapping_add(r).wrapping_add(mhalf) as isize) = v1;
+            *a.add(r.wrapping_add(mhalf)) = v0;
+            *a.add(m.wrapping_add(r).wrapping_add(mhalf)) = v1;
             r = r.wrapping_add((2 as mpd_size_t).wrapping_mul(m));
         }
         j = 1 as mpd_size_t;
         while j < mhalf {
-            w = *wtable.offset(j.wrapping_mul(wstep as mpd_size_t) as isize);
+            w = *wtable.add(j.wrapping_mul(wstep as mpd_size_t));
             r = 0 as mpd_size_t;
             while r < n {
-                u0 = *a.offset(r.wrapping_add(j) as isize);
-                v0 = *a.offset(r.wrapping_add(j).wrapping_add(mhalf) as isize);
-                u1 = *a.offset(m.wrapping_add(r).wrapping_add(j) as isize);
-                v1 = *a.offset(m.wrapping_add(r).wrapping_add(j).wrapping_add(mhalf) as isize);
-                *a.offset(r.wrapping_add(j) as isize) = addmod(u0, v0, umod);
+                u0 = *a.add(r.wrapping_add(j));
+                v0 = *a.add(r.wrapping_add(j).wrapping_add(mhalf));
+                u1 = *a.add(m.wrapping_add(r).wrapping_add(j));
+                v1 = *a.add(m.wrapping_add(r).wrapping_add(j).wrapping_add(mhalf));
+                *a.add(r.wrapping_add(j)) = addmod(u0, v0, umod);
                 v0 = submod(u0, v0, umod);
-                *a.offset(m.wrapping_add(r).wrapping_add(j) as isize) = addmod(u1, v1, umod);
+                *a.add(m.wrapping_add(r).wrapping_add(j)) = addmod(u1, v1, umod);
                 v1 = submod(u1, v1, umod);
                 std_mulmod2c(&raw mut v0, &raw mut v1, w, umod);
-                *a.offset(r.wrapping_add(j).wrapping_add(mhalf) as isize) = v0;
-                *a.offset(m.wrapping_add(r).wrapping_add(j).wrapping_add(mhalf) as isize) = v1;
+                *a.add(r.wrapping_add(j).wrapping_add(mhalf)) = v0;
+                *a.add(m.wrapping_add(r).wrapping_add(j).wrapping_add(mhalf)) = v1;
                 r = r.wrapping_add((2 as mpd_size_t).wrapping_mul(m));
             }
             j = j.wrapping_add(1);

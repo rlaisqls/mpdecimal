@@ -151,14 +151,14 @@ unsafe extern "C" fn string_to_coeff(
     let mut j: ::core::ffi::c_int = 0;
     if r > 0 as ::core::ffi::c_int {
         len = len.wrapping_sub(1);
-        *data.offset(len as isize) = 0 as mpd_uint_t;
+        *data.add(len) = 0 as mpd_uint_t;
         j = 0 as ::core::ffi::c_int;
         while j < r {
             if s == dpoint {
                 s = s.offset(1);
             }
-            *data.offset(len as isize) = (10 as mpd_uint_t)
-                .wrapping_mul(*data.offset(len as isize))
+            *data.add(len) = (10 as mpd_uint_t)
+                .wrapping_mul(*data.add(len))
                 .wrapping_add((*s as ::core::ffi::c_int - '0' as i32) as mpd_uint_t);
             j += 1;
             s = s.offset(1);
@@ -169,14 +169,14 @@ unsafe extern "C" fn string_to_coeff(
         if !(len != SIZE_MAX as size_t) {
             break;
         }
-        *data.offset(len as isize) = 0 as mpd_uint_t;
+        *data.add(len) = 0 as mpd_uint_t;
         j = 0 as ::core::ffi::c_int;
         while j < MPD_RDIGITS {
             if s == dpoint {
                 s = s.offset(1);
             }
-            *data.offset(len as isize) = (10 as mpd_uint_t)
-                .wrapping_mul(*data.offset(len as isize))
+            *data.add(len) = (10 as mpd_uint_t)
+                .wrapping_mul(*data.add(len))
                 .wrapping_add((*s as ::core::ffi::c_int - '0' as i32) as mpd_uint_t);
             j += 1;
             s = s.offset(1);
@@ -2552,7 +2552,7 @@ unsafe extern "C" fn _mpd_add_pad(
             len = len.wrapping_sub(1);
         }
         memmove(
-            cp.offset(n_fill.wrapping_mul(lpad) as isize) as *mut ::core::ffi::c_void,
+            cp.add(n_fill.wrapping_mul(lpad)) as *mut ::core::ffi::c_void,
             cp as *const ::core::ffi::c_void,
             len,
         );
@@ -2560,18 +2560,18 @@ unsafe extern "C" fn _mpd_add_pad(
         while i < lpad {
             j = 0 as size_t;
             while j < n_fill {
-                *cp.offset(i.wrapping_mul(n_fill).wrapping_add(j) as isize) =
+                *cp.add(i.wrapping_mul(n_fill).wrapping_add(j)) =
                     (*spec).fill[j as usize];
                 j = j.wrapping_add(1);
             }
             i = i.wrapping_add(1);
         }
-        cp = cp.offset(n_fill.wrapping_mul(lpad).wrapping_add(len) as isize);
+        cp = cp.add(n_fill.wrapping_mul(lpad).wrapping_add(len));
         i = 0 as size_t;
         while i < rpad {
             j = 0 as size_t;
             while j < n_fill {
-                *cp.offset(i.wrapping_mul(n_fill).wrapping_add(j) as isize) =
+                *cp.add(i.wrapping_mul(n_fill).wrapping_add(j)) =
                     (*spec).fill[j as usize];
                 j = j.wrapping_add(1);
             }
@@ -2641,7 +2641,7 @@ unsafe extern "C" fn _mpd_add_pad(
             len = len.wrapping_sub(1);
         }
         memmove(
-            cp.offset(n_fill.wrapping_mul(lpad) as isize) as *mut ::core::ffi::c_void,
+            cp.add(n_fill.wrapping_mul(lpad)) as *mut ::core::ffi::c_void,
             cp as *const ::core::ffi::c_void,
             len,
         );
@@ -2649,18 +2649,18 @@ unsafe extern "C" fn _mpd_add_pad(
         while i < lpad {
             j = 0 as size_t;
             while j < n_fill {
-                *cp.offset(i.wrapping_mul(n_fill).wrapping_add(j) as isize) =
+                *cp.add(i.wrapping_mul(n_fill).wrapping_add(j)) =
                     (*spec).fill[j as usize];
                 j = j.wrapping_add(1);
             }
             i = i.wrapping_add(1);
         }
-        cp = cp.offset(n_fill.wrapping_mul(lpad).wrapping_add(len) as isize);
+        cp = cp.add(n_fill.wrapping_mul(lpad).wrapping_add(len));
         i = 0 as size_t;
         while i < rpad {
             j = 0 as size_t;
             while j < n_fill {
-                *cp.offset(i.wrapping_mul(n_fill).wrapping_add(j) as isize) =
+                *cp.add(i.wrapping_mul(n_fill).wrapping_add(j)) =
                     (*spec).fill[j as usize];
                 j = j.wrapping_add(1);
             }
